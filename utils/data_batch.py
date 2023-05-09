@@ -94,7 +94,7 @@ def main(train):
     number_of_worker = 80       # Number of processor
 
 #    with open("data_rp/rpe_v3_x1000_SubG.pkl", "rb") as fr:
-    with open("dataset/rpe_splited/rpe_splited_v3_x1000_walks4/rpe_v3_x1000_walk4_step2_SubG_129897.pkl", "rb") as fr:
+    with open("dataset/rpe_splited_subgraph/rpe_v3_x1000_walk4_step2_SubG_129897.pkl", "rb") as fr:
         dataset = pickle.load(fr)
 
 
