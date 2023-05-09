@@ -108,6 +108,7 @@ def mkSubs(G, args, seeds, ):
   subGList, subGFeatList = [], []
   Gk = copy.deepcopy(G)
 
+
   G_full = nx2csr(G)
   # G=  nx.to_scipy_sparse_array(G) #data[0]: Graph with 35 nodes and 31 edges
   Gk = from_networkx(Gk)
@@ -149,19 +150,7 @@ def mkSubs(G, args, seeds, ):
 
   if len(batch) > 0:
     walk_set, freqs = run_walk(ptr, neighs, batch, num_walks=args.num_walks, num_steps= args.num_steps - 1, replacement=True)
-
     node_id, node_freq = freqs[:, 0], freqs[:, 1]
-
-    # print("node_id : ", node_id)
-    # print("node_freq : ", node_freq)
-    
-    # node_list 변수 정의
-    node_list = np.asarray(walk_set).flatten().tolist()
-
-    # print("node_list: ",node_list)
-
-
-
     rw_dict.update(dict(zip(batch, zip(walk_set, node_id, node_freq))))
   else:
     if batchIdx >= len(B_queues):
@@ -170,6 +159,10 @@ def mkSubs(G, args, seeds, ):
     else:
       B_pos = B_queues[batchIdx]
   batchIdx += 1
+
+
+
+
 
   S, K, F = zip(*itemgetter(*B_pos)(rw_dict))
 
@@ -187,31 +180,117 @@ def mkSubs(G, args, seeds, ):
 
   gT = mkGutils.normalization(mF, args) #normalized
 
-  # print("S: ", S)
-  # print("K: ", K)
-  # print("F: ", F)
-  # print("------------------")
-
-  # print("gT: ", gT)
-
-
-  uvw, uvx = sjoin(S, K, batch, return_idx=True)
-  
-  print(" ")
-  print(" ")
-  print("uvw: ",uvw)
-  
+  print("S: ", S)
+  print("K: ", K)
+  print("F: ", F)
   print("------------------")
-  print(" ")
-  print("uvx: ",uvx)
-  print(" ")
-  print(" ")
-  uvw = uvw.reshape(2, -1, 2)
-
-  # print("uvw[0]",uvw[0])
-  # print("uvw[1]",uvw[1])
 
 
+  print("gT: ", gT)
+
+
+#   #loss, auc = train(model, optimizer, data, gT)
+
+
+
+# # obtain set of walks, node id and DE (counts) from the dictionary
+#   S, K, F = zip(*itemgetter(*B_pos)(rw_dict))
+
+
+
+
+#   # SUREPL/main.py
+#   B_pos_edge, _ = subgraph(list(B_pos), T_edge_idx)
+#   B_full_edge, _ = subgraph(list(B_pos), F_edge_idx)
+#   #data = gen_sample(np.asarray(S), B_pos, K, B_pos_edge, B_full_edge, inf_set['X'], args, gtype=g_class.gtype)
+#   # F = np.concatenate(F)   # 각 step의 rpe 생성
+  
+#   # mF = torch.from_numpy(np.concatenate([[[0] * F.shape[-1]], F])) 
+
+# # SUREL/train.py
+#   S = torch.from_numpy(np.asarray(S)).long()  #  num_samples * num_walks; walks set 
+#   # 각 노드로부터 시작하는 Randomwalk set
+
+#   F = np.concatenate(F)
+#   F = np.concatenate([[[0] * F.shape[-1]], F])   # rpe encoding 값(step 들만)
+#   mF = torch.from_numpy(np.concatenate([[[0] * F.shape[-1]], F])) # train.py
+#   mF = torch.from_numpy(F) #    ; tensor; main.py  ; rpe encoding을 연결하면 각 노드를 연결하여 두 그래프가 공통으로 가지고 있는 노드에 대해 연결해 하나로 표현할 수 있음
+#   #print("mF: ",mF)
+
+#   # print("S: ",S) # 
+#   # print("K: ", K) # walkset 에 있는 node ID ;
+
+#   uvw, uvx = sjoin(S, K, batch, return_idx=True)
+#   # print("uvw: ",uvw)
+
+#   # print("uvw[0]",uvw[0])
+#   # print("uvw[1]",uvw[1])
+  
+#   uvw = uvw.reshape(2, -1, 2)
+
+
+#   x = torch.from_numpy(uvw)
+#   gT = mkGutils.normalization(mF, args) #normalized
+
+#   # print(type(gT))
+#   # print(gT)
+
+#   # print("gT[uvw[0]]: ",gT[uvw[0]]) 
+#   # print("gT[uvw[1]]: ",gT[uvw[1]]) 
+#   gT = torch.stack([gT[uvw[0]], gT[uvw[1]]])  # 
+        
+
+
+
+  
+
+
+  # # walk_set, freqs = run_walk(ptr, neighs, batch, num_walks=num_walks, num_steps=num_steps, replacement=False)
+  # # node_id, node_freq = freqs[:, 0], freqs[:, 1]
+  # if len(batch) > 0 :
+  #   walk_set, freqs = run_walk(ptr, neighs, batch, num_walks=args.num_walks, num_steps=args.num_steps, replacement=False)
+  #   node_id, node_freq = freqs[:, 0], freqs[:, 1]
+  #   subGList, subGFeatList = [], []
+
+  #   walksList = []
+  #   for idx, walks in enumerate(walk_set):
+  #     tempWalks = [walks[i:i+num_steps+1] for i in range(0, len(walks), num_steps+1)]
+  #     # todo 이거 병렬적으로 못하나? map 같은거..
+  #     for walk in tempWalks: 
+  #       # subG 생성
+  #       # print("walk: ", walk)
+  #       # print("node_id[idx]: ",node_id[idx]) # 0은 첫번째 워크셋을 의미 
+  #       # 각 노드의 walk set에 있는 node id로 
+
+
+  #       featL = []
+  #       subG = mkPathGraph(walk)
+  #       for idx2 in walk:         
+  #         #idx2: node id
+  #         #idx: walkset idx          
+  #         rpe  = node_freq[idx][np.where(node_id[idx] == idx2)][0] #이거 int 형으로 변경해야 사용 가능 -> astar에서 사용 가능한 타입이 int, float, str, none인데 none은 아예 비활임
+  #         featL.extend(rpe)
+  #         subG.nodes[idx2]['rpe'] = rpe
+         
+  #         attr_list = [f"r{ridx}" for ridx in range(args.num_steps + 1)]
+  #         for ridx, fname in enumerate (attr_list):   
+  #           subG.nodes[idx2].update({fname : int(rpe[ridx])})
+
+  #       #subG의 node의 attribute 추가
+  #       #walk == path
+  #       nx.set_node_attributes(subG, nodeDict)
+
+  '''
+    1. chunck를 만들면서 subgraph 생성, rpe enc 값 concat
+
+  '''  
+  # else:
+  #   if batchIdx >= len(B_queues):
+  #     print("batchIdx >= len(B_queues)")
+  #     print("B_queues: ", B_queues)
+  #   else:
+  #     B_pos = B_queues[batchIdx]
+  # walk set을 walk_step+1 길이로 나눠서 서브 그래프 생성
   return subGList, subGFeatList
 
 
@@ -238,7 +317,6 @@ def main(args):
   # mk dataset
   data = data[:100]
 
-  
   orgGIdList = []
   for orgGId in range(len(data)):
       orgG = data[orgGId]
@@ -256,8 +334,6 @@ def main(args):
   totalSubG = []
   totalSubGFeat = []
   for originGId, G in enumerate(tqdm(data)): # 원본 데이터의 오류로 없는 그래프가 종종 있음.try catch 해서 넘기기
-    
-    
     subGList, subGFeatList = mkSubs(G, args, seeds)
     try:
       #  print("idx: ",idx)

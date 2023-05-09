@@ -107,10 +107,6 @@ def graph_generation(graph, global_labels, global_edge_labels, total_ged=0):
 
 
 
-
-
-
-
 def load_generated_graphs(dataset_name, file_name='generated_graph_500'):
     dir = 'dataset/' + dataset_name + '/' + file_name
     g = open(dir, 'rb')

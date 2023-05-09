@@ -42,6 +42,10 @@ def parse_encoder(parser, arg_str=None):
     enc_parser.add_argument('--n_workers', type=int)
     enc_parser.add_argument('--tag', type=str,
                             help='tag to identify the run')
+    
+
+
+    enc_parser.add_argument('--repeat', type=int, default=1, help='number of training instances to repeat')
 
     enc_parser.set_defaults(conv_type='SAGE',
                             method_type='gnn',
