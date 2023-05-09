@@ -68,8 +68,15 @@ def parse_encoder(parser, arg_str=None):
                             tag='',
                             val_size=64,         # 4096,
                             node_anchored=False, # True
-                            num_walks = 1,
-                            num_steps =2,                            
+                            num_walks = 4,
+                            num_steps =3, 
+                            use_weight = False,
+                            norm = 'all'
+
+                            
+
+
+
                             )    
 
     # return enc_parser.parse_args(arg_str)

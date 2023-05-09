@@ -19,17 +19,6 @@
   Q. walk 수에 따른 변화
 
 
-
-SUREL 의 args
-Namespace(B_size=1500, batch_num=2000, batch_size=32, data_usage=1.0, dataset='ogbl-citation2',
- debug=False, directed=False, dropout=0.1, eval_steps=100, gpu_id=0, hidden_dim=64, k=50, l2=0.0,
-   layers=2, load_dict=False, load_model=False, log_dir='./log/', lr=0.001, memo=None, metric='mrr',
-     model='RNN', norm='all', nthread=16, num_step=4, num_walk=100, optim='adam', patience=5, repeat=1,
-       res_dir='./dataset/save', rtest=499, save=False, seed=0, stamp='050923_205618', 
-       summary_file='result_summary.log', test_ratio=1.0, train_ratio=0.05, use_degree=False, 
-       use_feature=False, use_htype=False, use_val=False, use_weight=False, valid_ratio=0.1, x_dim=0)
-
-
 '''
 from surel_gacc import run_walk
 from surel_gacc import run_sample
@@ -43,10 +32,6 @@ import sys
 from tqdm import tqdm
 import time
 
-
-
-
-
 def gen_batch(iterable, n=1, keep=False):
     length = len(iterable)
     if keep:
@@ -56,7 +41,7 @@ def gen_batch(iterable, n=1, keep=False):
         for ndx in range(0, length - n, n):
             yield iterable[ndx:min(ndx + n, length)]
 
-def np_sampling(rw_dict, ptr, neighs, bsize, target, num_walks, num_steps=3):
+def np_sampling(rw_dict, ptr, neighs, bsize, target, num_walks=100, num_steps=3):
     with tqdm(total=len(target)) as pbar:
         for batch in gen_batch(target, bsize, True):
             walk_set, freqs = run_walk(ptr, neighs, batch, num_walks=num_walks, num_steps=num_steps, replacement=True)
@@ -80,41 +65,20 @@ def mkPathGraph(path):
 
 
 
-
-from operator import itemgetter
-from torch_geometric.utils import subgraph
-import torch
-
-from config.config import parse_encoder
-import argparse
-from utils import utils
-from utils import mkGutils
-
-from surel_gacc import run_walk, run_sample, sjoin
-
-
-
-
-
 #node 각각에 feature 추가할 때 structural feature 로 enc 값 추가해야함
 # mk RPE encoding, subgraphs
-def mkSubs(G, args, seeds, ):
+def mkSubs(G, num_walks, num_steps, seeds):
   # originGraph의 feature를 가져옴
   nodeDict = dict((x, y ) for x, y in G.nodes(data=True))
-  
+    
   subGList, subGFeatList = [], []
   rw_dict = {}
-  B_queues  = []
+  rninWalk_dict = {}
 
   # G=  nx.to_scipy_sparse_array(G) #data[0]: Graph with 35 nodes and 31 edges
   G_full = nx2csr(G)
   ptr = G_full.indptr
   neighs = G_full.indices
-  
-  r = 1
-  
-  # edges for negative sampling
-  #T_edge_idx, F_edge_idx = Edge....t().contiguous(), g_class.train_edge.t().contiguous()
 
   # node 개수에 따라 전체 노드가 아닌 일부만 
   if  len(G.nodes()) > 100:
@@ -123,88 +87,10 @@ def mkSubs(G, args, seeds, ):
   else: 
     B_queues = []
     B_queues.append(list(range(len(G.nodes()))))
-
-  while True:
-      if r <= 2:
-        batchIdx, patience = 0, 0
-        B_pos = B_queues[batchIdx]
-        batch = [b for b in B_pos if b not in rw_dict]
-
-        if len(batch) > 0:
-          walk_set, freqs = run_walk(G_full.indptr, G_full.indices, batch, num_walks=args.num_walks, num_steps= args.num_steps - 1, replacement=True)
-          node_id, node_freq = freqs[:, 0], freqs[:, 1]
-          rw_dict.update(dict(zip(batch, zip(walk_set, node_id, node_freq))))
-        else:
-          if batchIdx >= len(B_queues):
-              print("BatfchIdx >= len(B_queues)")
-            # break
-          else:
-            B_pos = B_queues[batchIdx]
-        batchIdx += 1
-
-    # obtain set of walks, node id and DE (counts) from the dictionary
-        S, K, F = zip(*itemgetter(*B_pos)(rw_dict))
-       # SUREPL/main.py
-        # B_pos_edge, _ = subgraph(list(B_pos), T_edge_idx)
-        # B_full_edge, _ = subgraph(list(B_pos), F_edge_idx)
-        #data = gen_sample(np.asarray(S), B_pos, K, B_pos_edge, B_full_edge, inf_set['X'], args, gtype=g_class.gtype)
-        # F = np.concatenate(F)   # 각 step의 rpe 생성
-        
-        # mF = torch.from_numpy(np.concatenate([[[0] * F.shape[-1]], F])) 
-        
-
-      # SUREL/train.py
-
-        S = torch.from_numpy(np.asarray(S)).long()  #  num_samples * num_walks; walks set 
-        # 각 노드로부터 시작하는 Randomwalk set
-        
-        print(len(S))
-        # [print(S[i]) for i in range(len(S))]
-
-
-
-        F = np.concatenate(F)
-        F = np.concatenate([[[0] * F.shape[-1]], F])   # rpe encoding 값(step 들만)
-        mF = torch.from_numpy(np.concatenate([[[0] * F.shape[-1]], F])) # train.py
-        mF = torch.from_numpy(F) #    ; tensor; main.py
-        #print("mF: ",mF)
-
-        # print("S: ",S) # 
-        # print("K: ", K) # walkset 에 있는 node ID ;
-
-        uvw, uvx = sjoin(S, K, batch, return_idx=True)
-        # print("uvw: ",uvw)
-
-        # print("uvw[0]",uvw[0])
-        # print("uvw[1]",uvw[1])
-        
-        uvw = uvw.reshape(2, -1, 2)
-        
-
-
-        x = torch.from_numpy(uvw)
-        gT = mkGutils.normalization(mF, args) #normalized
-
-        # print(type(gT))
-        # print(gT)
-
-        # print("gT[uvw[0]]: ",gT[uvw[0]]) 
-        # print("gT[uvw[1]]: ",gT[uvw[1]]) 
-
-
-
-        gT = torch.stack([gT[uvw[0]], gT[uvw[1]]])  # 
-        
-
-        print("S: ",len(S))  # 35
-        print("gT: ", len(gT[0])) #420
-        print("gT: ", len(gT[1])) #420 = 35*3*4 = 35
-
-
-
-
   
-
+  batchIdx, patience = 0, 0
+  B_pos = B_queues[batchIdx]
+  batch = [b for b in B_pos if b not in rw_dict]
 
   # walk_set, freqs = run_walk(ptr, neighs, batch, num_walks=num_walks, num_steps=num_steps, replacement=False)
   # node_id, node_freq = freqs[:, 0], freqs[:, 1]
@@ -216,7 +102,6 @@ def mkSubs(G, args, seeds, ):
     walksList = []
 
 
-    
     for idx, walks in enumerate(walk_set):
       tempWalks = [walks[i:i+num_steps+1] for i in range(0, len(walks), num_steps+1)]
       # todo 이거 병렬적으로 못하나? map 같은거..
@@ -225,7 +110,6 @@ def mkSubs(G, args, seeds, ):
         # print("walk: ", walk)
         # print("node_id[idx]: ",node_id[idx]) # 0은 첫번째 워크셋을 의미 
         # 각 노드의 walk set에 있는 node id로 
-
 
         featL = []
         subG = mkPathGraph(walk)
@@ -244,6 +128,19 @@ def mkSubs(G, args, seeds, ):
         #walk == path
         nx.set_node_attributes(subG, nodeDict)
 
+        # print("after attribute attached")
+        # print("subG : ", subG)
+        # print("subG : ", subG.nodes(data=True))
+        # if(len(subG))>=2:  # filtering ---------------------------------- 어차피 walk는 subgraph로 합칠건데 필요한가? 의문
+        #   subGList.append(subG)
+        #   subGFeatList.append(featL)
+        # else: 
+        #   continue
+        
+    # print(len(subGFeatList))
+
+    # print(chuncked_walks)
+
     '''
       1. chunck를 만들면서 subgraph 생성, rpe enc 값 concat
   
@@ -258,25 +155,20 @@ def mkSubs(G, args, seeds, ):
   return subGList, subGFeatList
 
 
-def main(args):
+def main():
   # scene graph_원본
   with open('dataset/v3_x1000.pickle', 'rb') as f:   # time:  74.21744275093079
       data = pickle.load(f)
   # mk dataset
-  data = data[:100]
-
-  # print(data[0]) # Graph with 35 nodes and 31 edges
-  # print(data[1]) # Graph with 16 nodes and 13 edges
-
-
+  data = data[:100]  
   orgGIdList = []
   for orgGId in range(len(data)):
       orgG = data[orgGId]
       orgGIdList.append(orgGId)
       subList = []
 
-  # num_walks = 4  # walk의 총 갯수 
-  # num_steps = 3  # walk의 길이 = num_steps + 1(start node) 
+  num_walks = 4  # walk의 총 갯수 
+  num_steps =  2  # walk의 길이 = num_steps + 1(start node) 
   pools = 5
   seeds = np.random.choice(pools, 5, replace=False)
 
@@ -286,10 +178,9 @@ def main(args):
   totalSubG = []
   totalSubGFeat = []
   for originGId, G in enumerate(tqdm(data)): # 원본 데이터의 오류로 없는 그래프가 종종 있음.try catch 해서 넘기기
-    subGList, subGFeatList = mkSubs(G, args, seeds)
     try:
       #  print("idx: ",idx)
-      subGList, subGFeatList = mkSubs(G, args, seeds)
+      subGList, subGFeatList = mkSubs(G, num_walks, num_steps, seeds)
       metaData.append([originGId, len(subGList)])
       totalSubG += subGList
       totalSubGFeat += subGFeatList
@@ -333,13 +224,6 @@ def main(args):
 
 
 if __name__ == "__main__":
-  parser = argparse.ArgumentParser(description='Embedding arguments')
-  utils.parse_optimizer(parser)
-  parse_encoder(parser)
-  args = parser.parse_args()
-
-
-
-
-  main(args)
+  
+  main()
   #print("mkGraphRPE")

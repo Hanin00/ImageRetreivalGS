@@ -4,18 +4,27 @@ from copy import deepcopy
 import pickle
 import random
 
-import sys
+from surel_gacc import sjoin
+
+import torch
+
+#SUREL - https://github.com/Graph-COM/SUREL/blob/5c209a4e565440b20371dca4350717e930ffec8b/utils.py#L66
+def normalization(T, args):
+    if args.use_weight:
+        norm = torch.tensor([args.num_walks] * args.num_steps + [args.w_max], device=T.device)
+    else:
+        if args.norm == 'all':
+            norm = args.num_walks
+        elif args.norm == 'root':
+            norm = torch.tensor([args.num_walks] + [1] * args.num_steps, device=T.device)
+        else:
+            raise NotImplementedError
+    return T / norm
 
 
-
-
-
-# def return_eq(node1, node2):
-#     return node1['type']==node2['type']
-
+# with Target GEV
 def graph_generation(graph, global_labels, global_edge_labels, total_ged=0):
     new_g = deepcopy(graph)
-
     target_ged = {}
     while (True):
         target_ged['nc'] = np.random.randint(0, max(int(new_g.number_of_nodes() / 3), 1))
@@ -36,8 +45,6 @@ def graph_generation(graph, global_labels, global_edge_labels, total_ged=0):
     target_ged['ec'] = round(target_ged['ec'] * total_ged / temp_ged)
     if (target_ged['ie'] < target_ged['in']):
         target_ged['ie'] = target_ged['in']
-
-    print('target ged ', target_ged)
 
     ## edit node labels
     to_edit_idx_newg = random.sample(new_g.nodes(), target_ged['nc'])
@@ -93,10 +100,13 @@ def graph_generation(graph, global_labels, global_edge_labels, total_ged=0):
                     new_g.add_edge(curr_pair[0], curr_pair[1], type=random.choice(global_edge_labels))
                     break
 
-    # print('Total target ged', target_ged['nc'] + target_ged['ec'] + target_ged['in'] + target_ged['ie'], total_ged)
-    # print('----------------------------------------------------------------------------')
+    return new_g, target_ged, 
 
-    return target_ged, new_g
+
+
+
+
+
 
 
 
@@ -110,47 +120,67 @@ def load_generated_graphs(dataset_name, file_name='generated_graph_500'):
 
 
 
-if __name__ == "__main__":
-    ## Load graphs and the global labels, which can be accessed in dataset file;
-    dataset_name = 'AIDS'  # 'PubChem'#
-    graphs = load_generated_graphs(dataset_name, 'AIDS')
-    g = open('dataset/' + dataset_name + '/global_node_label', 'rb')
-    global_node_labels = pickle.load(g)
-    g.close()
-    g = open('dataset/' + dataset_name + '/global_edge_label', 'rb')
-    global_edge_labels = pickle.load(g)
-    g.close()
+import sys
+# based RPE walkset -> concatenation -> subgraph
+def mkSubgraph(Wu, Wv, ):
+    ''' 
+      walk 두 개를 concat ->  각 노드에는 f0 말고 특징값이 없게 되는데..? 
+    '''
 
+    subG = [Wu.nodes['RPE']]
+  
+    # print(Wu.edges(data=True))    
+    # print(Wv.edges(data=True))    
+
+    print(Wu.nodes(data=True))    
+    print(Wv.nodes(data=True))    
+
+    subG = nx.Graph()
+    subG.add_nodes_from(Wu.nodes(data=True))
+    subG.add_edges_from(Wu.edges(data=True))
+
+
+    print("1: ", subG.nodes(data=True))
+    print("1: ", subG.edges(data=True))
+
+    
+    subG.add_nodes_from(Wv.nodes(data=True))
+    subG.add_edges_from(Wv.edges(data=True))
+
+    print("add Wu")
+    print("2: ", subG.nodes(data=True))    
+    print("2: ", subG.edges(data=True)) 
+
+    return 
+
+
+
+import pickle
+
+def main():
+
+  with open('dataset/img100_walk4_step2/walkset.pkl', 'rb') as f:
+    list2 = pickle.load(f)
+  print("len(list2): ",len(list2))
+
+  Wu = list2[15]
+  Wv = list2[10]
+
+  subG = mkSubgraph(Wu, Wv)
+ 
+    
+
+
+
+
+
+
+
+
+
+if __name__ == "__main__":
+    main()
 
 #node type의 class들 -> name, feature를 전에 만들어놓은 dict를 이용해서 넣을 것; 동일 그래프 내의 node로만 생성하거나, 전체 node에 대해 생성(우선)
 
     
-
-
-
-
-    ## Here is an example of generating graph pair (graphs[0], new_g) and their corresponding target_ged;
-    ## Note that the input "total_ged" here is a randomly sampled value, it is only for reference and may not exactly equal to the returned final target_ged
-    target_ged, new_g = graph_generation(graphs[0], global_node_labels, global_edge_labels,
-                                         total_ged=random.randint(18,18))
-    
-    print(target_ged)
-    print(new_g)
-    print(graphs[0])
-
-
-
-    sys.exit()
-
-
-   #subgraph  load에 맞춰서 변경해야함
-    with open('data/v3_x1000.pickle', 'rb') as f:  # 만 개짜리 그래프ㅎㅎ 식겁했네.. # time:  74.21744275093079
-        graphs = pickle.load(f)
-    #subgraph  load에 맞춰서 변경해야함
-    with open('data/total.pickle', 'rb') as f:  # 만 개짜리 그래프ㅎㅎ 식겁했네.. # time:  74.21744275093079
-       embDict  = pickle.load(f)
-
-
-
-
-
