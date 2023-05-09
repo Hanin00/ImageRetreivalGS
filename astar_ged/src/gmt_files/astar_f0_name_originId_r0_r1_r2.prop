@@ -1,9 +1,9 @@
 ### 	:::::::::::::::::::::: IMPORTANT INFORMATION :::::::::::::::::::::::::::::::	#
 #
-#	consult the following website (and the corresponding paper) for
-# 	more detailed information about the individual parameters and
+#	consult the following website (and the corresponding paper) for 
+# 	more detailed information about the individual parameters and 
 #	their meanings:
-#
+#	
 #	http://www.fhnw.ch/wirtschaft/iwi/gmt
 #
 ### 	:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 	#
@@ -36,19 +36,36 @@ edge=1
 #########################################################################################
 # 	number of node attributes and the individual names of these attributes		#
 #########################################################################################
-numOfNodeAttr=1
+numOfNodeAttr=4
 nodeAttr0=f0
+nodeAttr1=r0
+nodeAttr2=r1
+nodeAttr3=r2
 
 
 #########################################################################################
 # 	cost function type per individual node attribute 				#
 #	(possible choices are: squared, absolute, discrete, sed)			#
-# 	if cost-function=discrete for node attribute i: nodeCostMui and nodeCostNui	#
+# 	if cost-function=discrete for node attribute i: nodeCostMui and nodeCostNui	# 
 #	(non-negative real values) have to be additionally defined 			#
 #########################################################################################
 nodeCostType0=discrete
 nodeCostMu0=0
 nodeCostNu0=1
+
+nodeCostType1=discrete
+nodeCostMu1=0
+nodeCostNu1=1
+
+nodeCostType2=discrete
+nodeCostMu2=0
+nodeCostNu2=1
+
+nodeCostType3=discrete
+nodeCostMu3=0
+nodeCostNu3=1
+
+
 
 
 #########################################################################################
@@ -56,6 +73,10 @@ nodeCostNu0=1
 #	(min=0, max=1.0; default = 1.0)							#
 #########################################################################################
 nodeAttr0Importance=1.0
+nodeAttr1Importance=1.0
+nodeAttr2Importance=1.0
+nodeAttr3Importance=1.0
+
 
 
 #########################################################################################
@@ -64,7 +85,7 @@ nodeAttr0Importance=1.0
 #	p-th root is extracted from the combined node cost 				#
 #########################################################################################
 multiplyNodeCosts=0
-pNode=1
+pNode=4
 
 
 #########################################################################################
@@ -82,19 +103,19 @@ numOfEdgeAttr=0
 #########################################################################################
 # 	cost function type per individual edge attribute 				#
 #	(possible choices are: squared, absolute, discrete, sed)			#
-# 	if cost-function=discrete for edge attribute i: nodeCostMui and nodeCostNui	#
+# 	if cost-function=discrete for edge attribute i: nodeCostMui and nodeCostNui	# 
 #	(non-negative real values) have to be additionally defined 			#
 #########################################################################################
 edgeCostType0=discrete
 edgeCostMu0=0
 edgeCostNu0=1
 
+
 #########################################################################################
 # 	weighting parameters per individual edge attribute 				#
 #	(min=0, max=1.0; default = 1.0)							#
 #########################################################################################
 edgeAttr0Importance=1.0
-
 
 #########################################################################################
 # 	individual edge costs are added (multiplyEdgeCosts=0) or 			#
@@ -122,7 +143,7 @@ outputMatching=0
 
 
 #########################################################################################
-# 	build similarities from distances or not (possible choices are 0,1,2,3,4)	#
+# 	build similarities from distances or not (possible choices are 0,1,2,3,4)	#						
 #########################################################################################
 simKernel=0
 

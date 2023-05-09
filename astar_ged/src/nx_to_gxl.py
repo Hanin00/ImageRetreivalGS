@@ -1,9 +1,10 @@
 '''
 Credit: Yang Qiao (angelinana0408@gmail.com)
 '''
-
 from bs4 import BeautifulSoup as Soup
 from collections import OrderedDict
+
+import sys
 
 
 def nx_to_gxl(G, graph_id, filename, graph_edgeids='false',
@@ -22,11 +23,22 @@ def nx_to_gxl(G, graph_id, filename, graph_edgeids='false',
     # nodes
     error_sen = ""
     nodeAttrName_type = OrderedDict()
+
+
+
+
     for nodeID in sorted(G.nodes()):
         # G.node[nodeID] is attr key-value dict
+
+    #    print("G.nodes[nodeID].items(): ",G.nodes[nodeID].items())
+
+
         for k, v in sorted(G.nodes[nodeID].items()):
+     #       print("v: ",v)
+     #       print("k: ",k)
             if (k in nodeAttrName_type) and (nodeAttrName_type[k] == None):
                 nodeAttrName_type[k] == None  # do nothing
+
             elif (k in nodeAttrName_type) and (type(v) != nodeAttrName_type[k]):
                 nodeAttrName_type[
                     k] = None  # None -- this attribute will be deleted forever for every node
@@ -37,11 +49,17 @@ def nx_to_gxl(G, graph_id, filename, graph_edgeids='false',
                     type(v)) + " is found" + "\n" + \
                     "\t\t   Graph " + graph_id + ": deleted inconsistent attribute " + k + "!"
 
-                print(error_sen)
+       #           print(error_sen)
             elif k not in nodeAttrName_type:
+                                               
+         #         print("01 - k - v:", k,' - ',v )
                 if isinstance(v, str) or isinstance(v, bool) or \
                         isinstance(v, int) or isinstance(v, float):
                     nodeAttrName_type[k] = type(v)
+
+                    
+      #              print("01 - nodeAttrName_type[k]: ",nodeAttrName_type[k])
+      #              print("01 - nodeAttrName_type.keys(): ", nodeAttrName_type.keys())
                 else:
                     # nodeAttrName_type[k] = None
                     error_sen = "Error! Wrong data type -- " + "nodeID: " + str(
@@ -52,7 +70,12 @@ def nx_to_gxl(G, graph_id, filename, graph_edgeids='false',
                     # print(G.nodes(data=True))
                     # print(error_sen)
             else:  # valid and consistent
+     #           print("02 - none - k - v:", k,' - ',v )
                 nodeAttrName_type[k] = type(v)  # do nothing
+                
+     #           print("02 - nodeAttrName_type[k]: ", nodeAttrName_type[k])
+     #           print("02 - nodeAttrName_type.keys(): ", nodeAttrName_type.keys())
+                
     for nodeID in sorted(G.nodes()):
         node_tag = soup.new_tag("node", id=nodeID)
         for k, v in sorted(G.nodes[nodeID].items()):  # G.node[nodeID] is attr
@@ -75,6 +98,12 @@ def nx_to_gxl(G, graph_id, filename, graph_edgeids='false',
             attr_tag.append(type_tag)
             node_tag.append(attr_tag)
         graph.append(node_tag)
+
+
+     #   print("node_tag: ",node_tag)
+     #   print("attr_tag: ",attr_tag)
+     #   print("type_tag: ",type_tag)
+
     # edges
     edgeAttrName_type = OrderedDict()
     for edge in sorted(G.edges()):
@@ -135,4 +164,9 @@ def nx_to_gxl(G, graph_id, filename, graph_edgeids='false',
     with open(filename, 'w') as f:
         for line in soup.prettify():
             f.write(str(line))
+
+   #   print("=======")
+  #    print("nodeAttrName_type: ", nodeAttrName_type)
+  #    print("nodeAttrName_type['originId']: ", nodeAttrName_type['originId'])
+ #     print("nodeAttrName_type['r0']: ", nodeAttrName_type['r0'])
     return nodeAttrName_type, edgeAttrName_type

@@ -1,9 +1,8 @@
 from config.config import parse_encoder
 from cbir_subsg.test import validation
 from utils import utils
-from utils import data
 from model import models
-
+from utils import data
 import torch.optim as optim
 import torch.nn as nn
 import torch
@@ -15,7 +14,7 @@ import argparse
 def build_model(args):
     if args.method_type == "gnn":
         #model = models.GnnEmbedder(1, args.hidden_dim, args)
-        model = models.GnnEmbedder(args.feature_dim , args.hidden_dim, args) #feature vector("rpe")가 num_walks = 4라 5차원
+        model = models.GnnEmbedder(args.feature_dim, args.hidden_dim, args) #feature vector("rpe")가 num_walks = 4라 5차원
     # elif args.method_type == "mlp":
     #     model = models.BaselineMLP(1, args.hidden_dim, args)
     model.to(utils.get_device())
@@ -29,7 +28,7 @@ def build_model(args):
 def make_data_source(args):
     if args.dataset == "scene":
         data_source = data.SceneDataSource("scene")
-        #data_source = data.SceneDataSource("scene_short")
+        #data_source = data.SceneDataSource("scene")
     return data_source
 
 
@@ -91,7 +90,7 @@ def train_loop(args):
 
     val = []
     batch_n = 0
-    epoch = 100
+    epoch = 1
     for e in range(epoch):
         for dataset in loaders:
             if args.test:

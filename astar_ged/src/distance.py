@@ -6,6 +6,8 @@ import fileinput
 import networkx as nx
 import numpy as np
 
+import sys
+
 
 def mcs(g1, g2):
     nx.write_gexf(g1, 'temp_1.gexf')
@@ -24,13 +26,27 @@ def ged(g1, g2, algo, debug=False, timeit=False):
     # https://github.com/dan-zam/graph-matching-toolkit
     gp = get_gmt_path()
     append_str = get_append_str(g1, g2)
-    src, t_datapath = setup_temp_data_folder(gp, append_str)
+    src, t_datapath = setup_temp_data_folder(gp, append_str) 
+
     meta1 = write_to_temp(g1, t_datapath, algo, 'g1')
     meta2 = write_to_temp(g2, t_datapath, algo, 'g2')
     if meta1 != meta2:
         raise RuntimeError(
-            'Different meta data {} vs {}'.format(meta1, meta2))
+            'Different meta data {} vs {}'.format(meta1, meta2)
+            )
     prop_file = setup_property_file(src, gp, meta1, append_str)
+    
+    
+    
+   #   print("prop_file: ", prop_file)
+   #   print("meta1: ", meta1)
+  #    print("meta2: ", meta2)
+
+    #  print("t_datapath: ", t_datapath)
+    #  print("src: ", src)
+   #   print("append_str: ", append_str)
+   #   print("gp: ", gp)
+
     rtn = []
     # print(gp)
     # print(get_root_path())
@@ -66,7 +82,6 @@ def ged(g1, g2, algo, debug=False, timeit=False):
 def normalized_ged(d, g1, g2):
     return 2 * d / (g1.number_of_nodes() + g2.number_of_nodes())
 
-
 def unnormalized_ged(d, g1, g2):
     return d * (g1.number_of_nodes() + g2.number_of_nodes()) / 2
 
@@ -82,6 +97,16 @@ def setup_temp_data_folder(gp, append_str):
 def write_to_temp(g, tp, algo, g_name):
     node_attres, edge_attrs = nx_to_gxl(g, g_name,
                                         '{}/{}.gxl'.format(tp, g_name))
+#    print("==============")
+#    print("node_attres:", node_attres)
+#    print("edge_attrs:", edge_attrs)
+#    print("g:", g)
+#    print("g_name:", g_name)
+#    print(" / format(tp, g_name):", '{}/{}.gxl'.format(tp, g_name))
+#    print("tp:", tp)
+#    print("meta: ", algo + '_' + '_'.join(sorted(list(node_attres.keys())) +
+#                                 sorted(list(edge_attrs.keys()))))   # -> 해당 이름으로 prop 파일 만들어주면됨
+
     return algo + '_' + '_'.join(sorted(list(node_attres.keys())) +
                                  sorted(list(edge_attrs.keys())))
 
@@ -113,12 +138,14 @@ def setup_property_file(src, gp, meta, append_str):
 
 
 def get_result(gp, algo, append_str):
-    result_file = '{}/result/temp_{}'.format(gp, append_str)
+    result_file = '{}/result/temp_{}'.format(gp, append_str)  # 해당 파일에서 값이 있는 line으로 지정 필요
     with open(result_file) as f:
         lines = f.readlines()
         #ln = 16 if 'beam' in algo else 15
         # t = int(lines[ln].split(': ')[1])  # msec
-        ln = 23 if 'beam' in algo else 23
+        
+        #ln = 23 if 'beam' in algo else 23  #f0
+        ln = 27 if 'beam' in algo else 27  # f0 r0
         d = float(lines[ln]) * 2  # alpha=0.5 --> / 2
         return d, result_file
 

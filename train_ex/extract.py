@@ -1,6 +1,5 @@
 from utils import utils
 from model import models
-#from common import subgraph
 from subg_acc import mkGraphRPE # gpu 06
 
 from config.config import parse_encoder
@@ -36,7 +35,8 @@ def feature_extract(args):
     # model load
     if not os.path.exists(os.path.dirname(args.model_path)):
         os.makedirs(os.path.dirname(args.model_path))
-    model = models.GnnEmbedder(1, args.hidden_dim, args)
+    #todo GnnEmbedder = input 입력값 rpe only 기준 5 
+    model = models.GnnEmbedder(args.feature_dim, args.hidden_dim, args)
     model.to(utils.get_device())
     if args.model_path:
         model.load_state_dict(torch.load(
@@ -55,6 +55,7 @@ def feature_extract(args):
         for i in querys: #i = 쿼리 그래프의 서브 그래프 하나. 
             query = temp.copy()
             query.append(i)
+
             query = utils.batch_nx_graphs(query, None)
             query = query.to(utils.get_device())
 
@@ -63,7 +64,7 @@ def feature_extract(args):
             extractTimeEnd = time.time()
             print("subGraph 하나에 대한 특징 추출 시간  : ", extractTimeEnd - extractTimeStart)
             print(emb_db_data.data)
-            sys.exit()
+            #sys.exit()
 
             print(emb_db_data.shape)
             retreival_start_time = time.time()  # subgraph 하나에 대한 추출 시간
@@ -132,7 +133,8 @@ def load_dataset(num_walks, num_steps):
     '''
     with open("dataset/v3_x1000.pickle", "rb") as fr:
         datas = pickle.load(fr)
-
+    
+    datas= datas[:100]
     db = []
     db_idx = []
 
@@ -167,7 +169,7 @@ def load_dataset(num_walks, num_steps):
     # query = mkGraphRPE.mkSubs(datas[query_number], max_node, False, True)
 
     # user-defined query images
-    with open("data/query_road_0819.pickle", "rb") as q:
+    with open("dataset/query_road_0819.pickle", "rb") as q:
         querys = pickle.load(q)
         query, queryFeatList = mkGraphRPE.mkSubs(querys[0], num_walks, num_steps, seeds)
         query_number = 1

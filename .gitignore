@@ -1,4 +1,9 @@
 __pycache__/
+*/*.pkl
+*/*.pickle
+
+dataset/
+
 env/
 log/
 log-*/
@@ -15,6 +20,6 @@ deepsnap-experimental/
 ckpt/
 astar_ged/src/graph-matching-toolkit/
 visual_genome_python_driver
-common/data
+
 common/__pycache__
 subgraph_matching/__pycache__
