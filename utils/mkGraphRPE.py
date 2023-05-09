@@ -124,130 +124,111 @@ def mkSubs(G, args, seeds, ):
     B_queues = []
     B_queues.append(list(range(len(G.nodes()))))
 
-  while True:
-      if r <= 2:
-        batchIdx, patience = 0, 0
-        B_pos = B_queues[batchIdx]
-        batch = [b for b in B_pos if b not in rw_dict]
+  # while True:
+  #     if r <= 2:
+  batchIdx, patience = 0, 0
+  B_pos = B_queues[batchIdx]
+  batch = [b for b in B_pos if b not in rw_dict]
 
-        if len(batch) > 0:
-          walk_set, freqs = run_walk(G_full.indptr, G_full.indices, batch, num_walks=args.num_walks, num_steps= args.num_steps - 1, replacement=True)
-          node_id, node_freq = freqs[:, 0], freqs[:, 1]
-          rw_dict.update(dict(zip(batch, zip(walk_set, node_id, node_freq))))
-        else:
-          if batchIdx >= len(B_queues):
-              print("BatfchIdx >= len(B_queues)")
-            # break
-          else:
-            B_pos = B_queues[batchIdx]
-        batchIdx += 1
-
-    # obtain set of walks, node id and DE (counts) from the dictionary
-        S, K, F = zip(*itemgetter(*B_pos)(rw_dict))
-       # SUREPL/main.py
-        # B_pos_edge, _ = subgraph(list(B_pos), T_edge_idx)
-        # B_full_edge, _ = subgraph(list(B_pos), F_edge_idx)
-        #data = gen_sample(np.asarray(S), B_pos, K, B_pos_edge, B_full_edge, inf_set['X'], args, gtype=g_class.gtype)
-        # F = np.concatenate(F)   # 각 step의 rpe 생성
-        
-        # mF = torch.from_numpy(np.concatenate([[[0] * F.shape[-1]], F])) 
-        
-
-      # SUREL/train.py
-
-        S = torch.from_numpy(np.asarray(S)).long()  #  num_samples * num_walks; walks set 
-        # 각 노드로부터 시작하는 Randomwalk set
-        
-        print(len(S))
-        # [print(S[i]) for i in range(len(S))]
-
-
-
-        F = np.concatenate(F)
-        F = np.concatenate([[[0] * F.shape[-1]], F])   # rpe encoding 값(step 들만)
-        mF = torch.from_numpy(np.concatenate([[[0] * F.shape[-1]], F])) # train.py
-        mF = torch.from_numpy(F) #    ; tensor; main.py
-        #print("mF: ",mF)
-
-        # print("S: ",S) # 
-        # print("K: ", K) # walkset 에 있는 node ID ;
-
-        uvw, uvx = sjoin(S, K, batch, return_idx=True)
-        # print("uvw: ",uvw)
-
-        # print("uvw[0]",uvw[0])
-        # print("uvw[1]",uvw[1])
-        
-        uvw = uvw.reshape(2, -1, 2)
-        
-
-
-        x = torch.from_numpy(uvw)
-        gT = mkGutils.normalization(mF, args) #normalized
-
-        # print(type(gT))
-        # print(gT)
-
-        # print("gT[uvw[0]]: ",gT[uvw[0]]) 
-        # print("gT[uvw[1]]: ",gT[uvw[1]]) 
-
-
-
-        gT = torch.stack([gT[uvw[0]], gT[uvw[1]]])  # 
-        
-
-        print("S: ",len(S))  # 35
-        print("gT: ", len(gT[0])) #420
-        print("gT: ", len(gT[1])) #420 = 35*3*4 = 35
-
-
-
-
-  
-
-
-  # walk_set, freqs = run_walk(ptr, neighs, batch, num_walks=num_walks, num_steps=num_steps, replacement=False)
-  # node_id, node_freq = freqs[:, 0], freqs[:, 1]
-  if len(batch) > 0 :
-    walk_set, freqs = run_walk(ptr, neighs, batch, num_walks=num_walks, num_steps=num_steps, replacement=False)
+  if len(batch) > 0:
+    walk_set, freqs = run_walk(G_full.indptr, G_full.indices, batch, num_walks=args.num_walks, num_steps= args.num_steps - 1, replacement=True)
     node_id, node_freq = freqs[:, 0], freqs[:, 1]
-    subGList, subGFeatList = [], []
-    
-    walksList = []
+    rw_dict.update(dict(zip(batch, zip(walk_set, node_id, node_freq))))
+  else:
+    if batchIdx >= len(B_queues):
+        print("BatfchIdx >= len(B_queues)")
+      # break
+    else:
+      B_pos = B_queues[batchIdx]
+  batchIdx += 1
 
-
-    
-    for idx, walks in enumerate(walk_set):
-      tempWalks = [walks[i:i+num_steps+1] for i in range(0, len(walks), num_steps+1)]
-      # todo 이거 병렬적으로 못하나? map 같은거..
-      for walk in tempWalks: 
-        # subG 생성
-        # print("walk: ", walk)
-        # print("node_id[idx]: ",node_id[idx]) # 0은 첫번째 워크셋을 의미 
-        # 각 노드의 walk set에 있는 node id로 
-
-
-        featL = []
-        subG = mkPathGraph(walk)
-        for idx2 in walk:         
-          #idx2: node id
-          #idx: walkset idx          
-          rpe  = node_freq[idx][np.where(node_id[idx] == idx2)][0] #이거 int 형으로 변경해야 사용 가능 -> astar에서 사용 가능한 타입이 int, float, str, none인데 none은 아예 비활임
-          featL.extend(rpe)
-          subG.nodes[idx2]['rpe'] = rpe
-         
-          attr_list = [f"r{ridx}" for ridx in range(num_steps + 1)]
-          for ridx, fname in enumerate (attr_list):   
-            subG.nodes[idx2].update({fname : int(rpe[ridx])})
-
-        #subG의 node의 attribute 추가
-        #walk == path
-        nx.set_node_attributes(subG, nodeDict)
-
-    '''
-      1. chunck를 만들면서 subgraph 생성, rpe enc 값 concat
+# obtain set of walks, node id and DE (counts) from the dictionary
+  S, K, F = zip(*itemgetter(*B_pos)(rw_dict))
+  # SUREPL/main.py
+  # B_pos_edge, _ = subgraph(list(B_pos), T_edge_idx)
+  # B_full_edge, _ = subgraph(list(B_pos), F_edge_idx)
+  #data = gen_sample(np.asarray(S), B_pos, K, B_pos_edge, B_full_edge, inf_set['X'], args, gtype=g_class.gtype)
+  # F = np.concatenate(F)   # 각 step의 rpe 생성
   
-    '''  
+  # mF = torch.from_numpy(np.concatenate([[[0] * F.shape[-1]], F])) 
+
+# SUREL/train.py
+  S = torch.from_numpy(np.asarray(S)).long()  #  num_samples * num_walks; walks set 
+  # 각 노드로부터 시작하는 Randomwalk set
+
+  F = np.concatenate(F)
+  F = np.concatenate([[[0] * F.shape[-1]], F])   # rpe encoding 값(step 들만)
+  mF = torch.from_numpy(np.concatenate([[[0] * F.shape[-1]], F])) # train.py
+  mF = torch.from_numpy(F) #    ; tensor; main.py
+  #print("mF: ",mF)
+
+  # print("S: ",S) # 
+  # print("K: ", K) # walkset 에 있는 node ID ;
+
+  uvw, uvx = sjoin(S, K, batch, return_idx=True)
+  # print("uvw: ",uvw)
+
+  # print("uvw[0]",uvw[0])
+  # print("uvw[1]",uvw[1])
+  
+  uvw = uvw.reshape(2, -1, 2)
+
+
+  x = torch.from_numpy(uvw)
+  gT = mkGutils.normalization(mF, args) #normalized
+
+  # print(type(gT))
+  # print(gT)
+
+  # print("gT[uvw[0]]: ",gT[uvw[0]]) 
+  # print("gT[uvw[1]]: ",gT[uvw[1]]) 
+  gT = torch.stack([gT[uvw[0]], gT[uvw[1]]])  # 
+        
+
+
+
+  
+
+
+  # # walk_set, freqs = run_walk(ptr, neighs, batch, num_walks=num_walks, num_steps=num_steps, replacement=False)
+  # # node_id, node_freq = freqs[:, 0], freqs[:, 1]
+  # if len(batch) > 0 :
+  #   walk_set, freqs = run_walk(ptr, neighs, batch, num_walks=args.num_walks, num_steps=args.num_steps, replacement=False)
+  #   node_id, node_freq = freqs[:, 0], freqs[:, 1]
+  #   subGList, subGFeatList = [], []
+
+  #   walksList = []
+  #   for idx, walks in enumerate(walk_set):
+  #     tempWalks = [walks[i:i+num_steps+1] for i in range(0, len(walks), num_steps+1)]
+  #     # todo 이거 병렬적으로 못하나? map 같은거..
+  #     for walk in tempWalks: 
+  #       # subG 생성
+  #       # print("walk: ", walk)
+  #       # print("node_id[idx]: ",node_id[idx]) # 0은 첫번째 워크셋을 의미 
+  #       # 각 노드의 walk set에 있는 node id로 
+
+
+  #       featL = []
+  #       subG = mkPathGraph(walk)
+  #       for idx2 in walk:         
+  #         #idx2: node id
+  #         #idx: walkset idx          
+  #         rpe  = node_freq[idx][np.where(node_id[idx] == idx2)][0] #이거 int 형으로 변경해야 사용 가능 -> astar에서 사용 가능한 타입이 int, float, str, none인데 none은 아예 비활임
+  #         featL.extend(rpe)
+  #         subG.nodes[idx2]['rpe'] = rpe
+         
+  #         attr_list = [f"r{ridx}" for ridx in range(args.num_steps + 1)]
+  #         for ridx, fname in enumerate (attr_list):   
+  #           subG.nodes[idx2].update({fname : int(rpe[ridx])})
+
+  #       #subG의 node의 attribute 추가
+  #       #walk == path
+  #       nx.set_node_attributes(subG, nodeDict)
+
+  '''
+    1. chunck를 만들면서 subgraph 생성, rpe enc 값 concat
+
+  '''  
   else:
     if batchIdx >= len(B_queues):
       print("batchIdx >= len(B_queues)")
@@ -337,8 +318,6 @@ if __name__ == "__main__":
   utils.parse_optimizer(parser)
   parse_encoder(parser)
   args = parser.parse_args()
-
-
 
 
   main(args)
