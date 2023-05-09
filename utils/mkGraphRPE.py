@@ -158,8 +158,8 @@ def main():
       orgGIdList.append(orgGId)
       subList = []
 
-  num_walks = 1  # walk의 총 갯수 
-  num_steps =  4  # walk의 길이 = num_steps + 1(start node) 
+  num_walks = 4  # walk의 총 갯수 
+  num_steps =  3  # walk의 길이 = num_steps + 1(start node) 
   pools = 5
   seeds = np.random.choice(pools, 5, replace=False)
 
@@ -184,22 +184,22 @@ def main():
 
 
   print("len(metaData): ",len(metaData))
-  with open('dataset/rpe_splited/rpe_v3_x1000_step1_meta.pkl', 'wb') as f:
+  with open('dataset/rpe_splited_subgraph/rpe_v3_x1000_walks4_step3_meta.pkl', 'wb') as f:
     pickle.dump(metaData, f)
 
   print("len(totalSubG): ",len(totalSubG))
-  with open('dataset/rpe_splited/rpe_v3_x1000_step1_SubG.pkl', 'wb') as f:
+  with open('dataset/rpe_splited_subgraph/rpe_v3_x1000_walks4_step3_SubG.pkl', 'wb') as f:
     pickle.dump(totalSubG, f)
 
   print("len(totalSubGFeat): ",len(totalSubGFeat))
   
-  with open('dataset/rpe_splited/rpe_v3_x1000_SubGFeat.pkl', 'wb') as f:
+  with open('dataset/rpe_splited_subgraph/rpe_v3_x1000_walks4_step3_SubGFeat.pkl', 'wb') as f:
     pickle.dump(totalSubGFeat, f)
 
   end2 = time.time()
   print("time2: ", end2-start)
 
-  with open('dataset/rpe_splited/rpe_v3_x1000_step1_SubG.pkl', 'rb') as f:
+  with open('dataset/rpe_splited_subgraph/rpe_v3_x1000_walks4_step3_SubG.pkl', 'rb') as f:
     list2 = pickle.load(f)
   print("len(list2): ",len(list2))
   
@@ -219,4 +219,3 @@ if __name__ == "__main__":
   
   main()
   #print("mkGraphRPE")
-
