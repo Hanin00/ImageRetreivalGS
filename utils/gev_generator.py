@@ -12,7 +12,6 @@ from utils.mkGraphRPE import *
 
 
 
-
 def random_walk_rpe(adj_matrix, num_iterations=50, damping_factor=0.85):
     # Step 1: Calculate transition matrix P from adjacency matrix A
     A = adj_matrix.copy()
@@ -20,14 +19,18 @@ def random_walk_rpe(adj_matrix, num_iterations=50, damping_factor=0.85):
     D = np.diag(np.sum(A, axis=1))  # degree matrix
     D_inv = np.linalg.inv(D)
     P = D_inv @ A
-    
+
+
     # Step 2: Initialize RPE vector F
     F = np.zeros((adj_matrix.shape[0], 1))
     
     # Step 3: Update RPE vector F iteratively
     for i in range(num_iterations):
         F = (1 - damping_factor) * P @ F + damping_factor * F
+
+    F = F.reshape(-1)  # F를 1차원 배열로 변환
     F = np.concatenate([[0] * F.shape[-1], F], axis=0)  # add dummy element at the beginning
+    
     mF = torch.from_numpy(F)
     return mF
 '''
@@ -37,6 +40,7 @@ mF = random_walk_rpe(adj_matrix)
 print(mF)
 
 '''
+
 
 
 
@@ -81,7 +85,7 @@ def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
     # print(subG.nodes(data=True))
 
 # --------- vvvvv 생성된 각 subG에 F0 를 더함 + 각 노드의 rpe 값을 attribute로 추가함(GED를 계산하는 것이 아니라서 벡터로 있어도 됨)  ----------------------
-# origini Id에 대한 처리. 해당 값을 제외하고 만들던가...
+# todo origini Id에 대한 처리. 해당 값을 제외하고 만들던가...
     for i in subG.nodes() :
         # subG.nodes[i].update(F0dict[nodeNameDict[i]]) #노드에 해당하는 
         subG.nodes[i]['f0'] = F0dict[nodeNameDict[i]]
@@ -147,20 +151,10 @@ def mkNG2Subs(G, args, F0dict):
     flatten_listA = list(itertools.chain(*listA))  # 35*12
 
     gT_concatenated = torch.cat((gT, gT), axis=1)
-    enc_agg = torch.mean(gT_concatenated, dim=0) # 서브 그래프 feature 값...  다 concat.. <.,..?졸려서 머리가 안돌아감. 생각 보류. 
+    enc_agg = torch.mean(gT_concatenated, dim=0) # todo 서브 그래프 feature 값...  다 concat.. <.,..?졸려서 머리가 안돌아감. 생각 보류. 
 
     nodeIDDict = dict(zip(candidates, Gnode)) # sampling하고 나면 원래의 id가 아니게 됨.. 순서 안변함.
     subG = mkMergeGraph (S, K, gT, nmDict, F0dict, nodeIDDict)
-    #   print(G.nodes())
-    #   print(listA)
-    #   print("S: ",S) 
-    #   print("K: ",K)
-    #   print("gT: ",gT)
-
-    #   print("S: ",len(S) )
-    #   print("K: ",len(K))
-    #   print("mF: ",len(mF))
-    #   print("gT: ",len(gT))
 
     '''
     listA = [a.flatten().tolist() for a in K] 
@@ -261,14 +255,10 @@ def graph_generation(graph, F0Dict, global_edge_labels, total_ged=0):
         while (True):
             curr_pair = random.sample(new_g.nodes(), 2)
             if ((curr_pair[0], curr_pair[1]) not in deleted_edges):
-                # print('poten edge', curr_pair[0], curr_pair[1])
                 if ((curr_pair[0], curr_pair[1]) not in new_g.edges()):
-                    # print('added adge', curr_pair[0], curr_pair[1])
                     new_g.add_edge(curr_pair[0], curr_pair[1], name=random.choice(global_edge_labels))
                     break
 
-    # print('Total target ged', target_ged['nc'] + target_ged['ec'] + target_ged['in'] + target_ged['ie'], total_ged)
-    # print('----------------------------------------------------------------------------')
 
     return target_ged, new_g
 
@@ -282,17 +272,43 @@ def load_generated_graphs(dataset_name, file_name='generated_graph_500'):
     return generated_graphs
 
 '''
-    originGDict : 대상 Graph의 node의 name - attribute 값(왜) ; 이름을 가지고 node relabeling을 하니까.  ; origin Id 가 좀 걸리는데..  
+    originGDict : 대상 Graph의 node의 name - attribute 값(왜) ; 이름을 가지고 node relabeling을 하니까.  ; todo origin Id 가 좀 걸리는데..  
     F0Dict : global node name - F0 embedding
 '''
 def PairDataset(Grph, F0Dict,global_edge_labels, total_ged) : 
-    
-    # originGDict = dict((x, y ) for x, y in Grph.nodes(data=True))
-    ## Here is an example of generating graph pair (graphs[0], new_g) and their corresponding target_ged;
-    ## Note that the input "total_ged" here is a randomly sampled value, it is only for reference and may not exactly equal to the returned final target_ged
     target_ged, new_g = graph_generation(Grph, F0Dict, global_edge_labels, total_ged)
-                                        #  total_ged=random.randint(18,18))
-    #  Origin 1 Graph 기준으로 node id - F0, origin Id 등의 origin 
+
+    print("Grph: ", Grph)
+    print("new_g: ",new_g)
+    mF = random_walk_rpe(nx.to_numpy_array(new_g))
+    print(mF)
+    sys.exit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                              
     graph1 = []
     graph2 = []
     ged = []
@@ -303,33 +319,13 @@ def PairDataset(Grph, F0Dict,global_edge_labels, total_ged) :
     print(target_ged)
     print("1:", new_g.nodes(data=True))
 
-    #새운 graph 생성.
-
-    # subGList, subGFeatList = mkNG2Subs(new_g, args, F0Dict, originGDict)로
-
     subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
 
     graph1.append(Grph) # 원본 서브 그래프
     graph2.append(subG) # 새로 생성한 서브 그래프
     ged.append(target_ged)  # target_ged
 
-
     subGFeatList.append(enc_agg)
-
-
-
-
-
-    print("origins_g: ", Grph.nodes())
-    print("new_g : ", new_g.nodes())
-
-    print("len(graph1) : ", len(graph1))
-    print("len(graph2) : ",len(graph2))
-    print("len(target_ged): ", len(target_ged))
-
-
-
-
 
 
 
@@ -382,12 +378,11 @@ def main(args):
 
     Grph  = graphs[55]
     total_ged=random.randint(1,1)
-    
-    #Graph 는 이미 RPE 값을 가지고 있음; 해당 RPE 값의 Feature도 동일.. 
-    #새로 만든 그래프의 RPE를 구하고, Origin Graph의 RPE를 구한 것처럼 concat, mean pooling으로
-    # 해당 subgraph의 feature 값을 구해야함
-    # 의문점; 이러면 node의 structural Feature만 있고, node 각각의 feature는 embedding이 안된 것 아닌가?
-    # node adj 등을 이용해 얻어낸 기존 방법에서 pred emb할 때, concat을 해줘야 하나?
+    print("Grph: ", Grph)
+    print("feats: ", feats[55])
+
+
+    # 여기서  64개씩 나눠서 만들면 될 듯.. 근데 개수 모자라지 않나..?  Pos, Neg가 없음 지금..?
     PairDataset(Grph, embDict,global_edge_labels, total_ged)
 
 
