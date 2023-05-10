@@ -16,10 +16,13 @@ from utils.mkGraphRPE import *
     S의 각 원소(워크셋)를 이용해 edge list를 생성하고, edge에 따라 node를 생성하는 방법으로 하나의 서브그래프로 병합
 '''
 # path 로 edge list 만들고 edge 추가하기; node path로 Graph 생성 
-def mkMergeGraph(S, K, gT, nodeNameDict, F0dict):
+def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
     # --------- vvvvv 생성된 walk에 있는 모든 노드들을 각 노드의 id에 맞게 rpe 를 concat 후 mean pooling 한 값 ----------------------
     merged_K = np.concatenate([np.asarray(k) for k in K]).tolist()
-    print(len)
+    # print("merged_K: ",merged_K)
+    merged_K = [nodeIDDict[i] for i in merged_K]
+    # print("after merged_K: ", merged_K)
+    
     sum_dict = {}
     count_dict = {}
     for k, gf in zip(merged_K, gT):
@@ -30,6 +33,7 @@ def mkMergeGraph(S, K, gT, nodeNameDict, F0dict):
             sum_dict[k] = gf
             count_dict[k] = 1
     gT_mean = {k: sum_dict[k] / count_dict[k] for k in sum_dict}
+
 # -------- ^^^^^ 생성된 walk에 있는 모든 노드들을 각 노드의 id에 맞게 rpe 를 concat 후 mean pooling 한 값 ----------------------
 
     # print("ke_ys : ",gT_mean.keys())
@@ -40,13 +44,11 @@ def mkMergeGraph(S, K, gT, nodeNameDict, F0dict):
     subG = nx.Graph() # Graph 하나에 모두 합쳐야 해서 for 문 밖에 그래프 객체를 생성
     for idx, sPath in enumerate(S):
     # path to edgelist    == [[path[i], path[i+1]] for i in range(len(path)-1)]
+        sPath = [nodeIDDict[i] for i in sPath]
         edgelist = list(zip(sPath, sPath[1:]))
         subG.add_edges_from(edgelist)
-    print(sPath)
-    print(S)
-    print(subG.nodes())
-
-    sys.exit()
+    
+    # print(subG.nodes(data=True))
 
 # --------- vvvvv 생성된 각 subG에 F0 를 더함 + 각 노드의 rpe 값을 attribute로 추가함(GED를 계산하는 것이 아니라서 벡터로 있어도 됨)  ----------------------
 # origini Id에 대한 처리. 해당 값을 제외하고 만들던가...
@@ -70,33 +72,28 @@ def mkMergeGraph(S, K, gT, nodeNameDict, F0dict):
 def mkNG2Subs(G, args, F0dict):
     # originGraph의 feature를 가져옴
     nmDict = dict((int(x), y['name'] ) for x, y in G.nodes(data=True)) # id : name 값인 Node Name Dict
-    subGList, subGFeatList = [], []
-
-    Gnode = list(G.nodes())
-    print("Gnode : ",Gnode)
-
+    Gnode = list(G.nodes())   # Gnode의 각 원소와 pools의 원소가 key-value가 되게 매칭,  -> item getter에 맞게 변경 해야함
+    # print("Gnode : ",Gnode)
+    
     G_full = nx2csr(G)
     ptr = G_full.indptr
     neighs = G_full.indices
     num_pos, num_seed, num_cand = len(set(neighs)), 100, 5
     candidates = G_full.getnnz(axis=1).argsort()[-num_seed:][::-1]
-    print("candidates: ",candidates)
+    print("candidates : ", candidates)
     rw_dict = {}
     B_queues  = []
 
     # for r in range(1, args.repeat + 1): # 모든 노드에 대해 한 번씩 할거라 repeat 필요 X
     batchIdx, patience = 0, 0
     pools = np.copy(candidates)
-    print("candidates : ",candidates)
 
     np.random.shuffle(B_queues)
     # while True:
     # if r <= 1:
-    B_queues.append(sorted(run_sample(ptr,  neighs, Gnode, thld=1500))) # pool를 인자로 넣어 모든 노드에 대해 수행하도록 함
-    print("B_queues : ",B_queues)
-
+    B_queues.append(sorted(run_sample(ptr,  neighs, pools, thld=1500))) # pool를 인자로 넣어 모든 노드에 대해 수행하도록 함
+ 
     B_pos = B_queues[batchIdx]
-    print("B_pos :", B_pos)
 
     B_w = [b for b in B_pos if b not in rw_dict]
     if len(B_w) > 0:
@@ -107,10 +104,6 @@ def mkNG2Subs(G, args, F0dict):
 
     # obtain set of walks, node id and DE (counts) from the dictionary
     S, K, F = zip(*itemgetter(*B_pos)(rw_dict))
-
-    print(rw_dict.values())
-    
-
 
     # print("S: ",S[0]): 0번 노드로 시작하는 서브 그래프( walks set ) -> len(walks set): num_walks*(num_step+1)
     # print("K: ",K[0]): 0번 노드로 시작하는 서브 그래프의 .nodes() <- 이때 해당 노드의 F0 값은 없음
@@ -123,14 +116,11 @@ def mkNG2Subs(G, args, F0dict):
     listA = [a.flatten().tolist() for a in K] 
     flatten_listA = list(itertools.chain(*listA))  # 35*12
 
-    subG = mkMergeGraph (S, K, gT, nmDict, F0dict)
-
-    print(gT) #이 값 concat
     gT_concatenated = torch.cat((gT, gT), axis=1)
-    enc_agg = torch.mean(gT_concatenated, dim=0)
-    print("enc_agg: ", enc_agg)
+    enc_agg = torch.mean(gT_concatenated, dim=0) # 서브 그래프 feature 값...  다 concat.. <.,..?졸려서 머리가 안돌아감. 생각 보류. 
 
-
+    nodeIDDict = dict(zip(candidates, Gnode)) # sampling하고 나면 원래의 id가 아니게 됨.. 순서 안변함.
+    subG = mkMergeGraph (S, K, gT, nmDict, F0dict, nodeIDDict)
     #   print(G.nodes())
     #   print(listA)
     #   print("S: ",S) 
@@ -141,17 +131,6 @@ def mkNG2Subs(G, args, F0dict):
     #   print("K: ",len(K))
     #   print("mF: ",len(mF))
     #   print("gT: ",len(gT))
-
-    sys.exit()
-
-
-
-
-    subG, subGF = mkSubGraph(S, K, gT, nodeDict)
-
-
-    subGList+=subG
-    subGFeatList+=subGF
 
     '''
     listA = [a.flatten().tolist() for a in K] 
@@ -164,7 +143,7 @@ def mkNG2Subs(G, args, F0dict):
         또 맨 위에서 만들어 둔 nodeDict를 이용해서 name에 따른 feature 값인 F0값을 부여해줘야함      
         '''
 
-    return subGList, subGFeatList
+    return subG, enc_agg
 
 
 
@@ -287,84 +266,27 @@ def PairDataset(Grph, F0Dict,global_edge_labels, total_ged) :
     graph1 = []
     graph2 = []
     ged = []
-    graph1.append(Grph)
-    graph2.append(new_g)
-    ged.append(target_ged)
-   
+
     print(Grph.nodes(data=True))
     print(target_ged)
     print("1:", new_g.nodes(data=True))
-    
 
     #새로운 graph 생성.
-    graph_pair = []
-    
+
     # subGList, subGFeatList = mkNG2Subs(new_g, args, F0Dict, originGDict)
     
+    subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
+
+    graph1.append(Grph) # 원본 서브 그래프
+    graph2.append(new_g) # 새로 생성한 서브 그래프
+    ged.append(target_ged)  # target_ged
+
     print("origins_g: ", Grph.nodes())
     print("new_g : ", new_g.nodes())
 
-    subGList, subGFeatList = mkNG2Subs(new_g, args, F0Dict)
-    print("subGList: ", subGList) 
-    print("subGFeatList: ", subGFeatList)
-    
-    print("1:", new_g.nodes(data=True))
-    
-    
-    
-
-
-
-
-     
-
-
-#    new_g에 대해 rpe encoding; 
-    # csrNG = nx2csr(new_g)
-    # ptr = csrNG.indptr
-    # neighs = csrNG.indices
-    # candidates = ptr.getnnz(axis=1).argsort()[-100:][::-1]
-    # pools = np.copy(candidates)
-
-
-    # rw_dict = {}
-    # B_queues  = []
-    # batchIdx, patience = 0, 0
-
-    # B_w = list(new_g.nodes())
-    # B_pos = B_queues[batchIdx]
-    # B_queues.append(sorted(run_sample(ptr,  neighs, pools, thld=1500))) # pool를 인자로 넣어 모든 노드에 대해 수행하도록 함
-    # B_pos = B_queues[batchIdx]
-    # B_w = [b for b in B_pos if b not in rw_dict]
-
-    
-    # walk_set, freqs = run_walk(ptr, neighs, B_w, num_walks=args.num_walks, num_steps=args.num_steps - 1, replacement=True)
-    # node_id, node_freq = freqs[:, 0], freqs[:, 1]
-    # rw_dict.update(dict(zip(B_w, zip(walk_set, node_id, node_freq))))
-    # S, K, F = zip(*itemgetter(*B_w)(rw_dict))
-
-
-
-
-    # print("walk_set: ",walk_set)
-    # print("freqs: ",freqs)
-
-
-
-
-
-    # 이렇게만 해서 freq에 따라 concat하면 되는 거 아닌가..?
-    # pools = 5
-    # seeds = np.random.choice(pools, 5, replace=False)
-    # start = time.time()
-    # # totalData = []
-    # metaData = [] # 각 originGId 당 생성된 subGList의 개수가 들어감 - originGId, len(subGList)
-    # totalSubG = []
-    # totalSubGFeat = []
-
-    # for originGId, G in enumerate(tqdm(new_g)): # 원본 데이터의 오류로 없는 그래프가 종종 있음.try catch 해서 넘기기
-    #     if(len(G.nodes()) != 0):
-    #         subGs, subGFs = mkSubs(G, args, seeds)
+    print("len(graph1) : ", len(graph1))
+    print("len(graph2) : ",len(graph2))
+    print("len(target_ged): ", len(target_ged))
 
 
 
@@ -401,7 +323,7 @@ def main(args):
     # global_node_labels = list(embDict.keys())
     global_edge_labels = [0, 0]
 
-    Grph  = graphs[50]
+    Grph  = graphs[55]
     total_ged=random.randint(1,1)
     
     #Graph 는 이미 RPE 값을 가지고 있음; 해당 RPE 값의 Feature도 동일.. 
