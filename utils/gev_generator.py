@@ -12,6 +12,36 @@ from utils.mkGraphRPE import *
 
 
 
+
+def random_walk_rpe(adj_matrix, num_iterations=50, damping_factor=0.85):
+    # Step 1: Calculate transition matrix P from adjacency matrix A
+    A = adj_matrix.copy()
+    A[A > 0] = 1  # binarize the adjacency matrix
+    D = np.diag(np.sum(A, axis=1))  # degree matrix
+    D_inv = np.linalg.inv(D)
+    P = D_inv @ A
+    
+    # Step 2: Initialize RPE vector F
+    F = np.zeros((adj_matrix.shape[0], 1))
+    
+    # Step 3: Update RPE vector F iteratively
+    for i in range(num_iterations):
+        F = (1 - damping_factor) * P @ F + damping_factor * F
+    F = np.concatenate([[0] * F.shape[-1], F], axis=0)  # add dummy element at the beginning
+    mF = torch.from_numpy(F)
+    return mF
+'''
+
+    인접 행렬로 mF 구할 수 있음
+mF = random_walk_rpe(adj_matrix)
+print(mF)
+
+'''
+
+
+
+
+
 '''
     S의 각 원소(워크셋)를 이용해 edge list를 생성하고, edge에 따라 node를 생성하는 방법으로 하나의 서브그래프로 병합
 '''
@@ -274,7 +304,7 @@ def PairDataset(Grph, F0Dict,global_edge_labels, total_ged) :
     #새로운 graph 생성.
 
     # subGList, subGFeatList = mkNG2Subs(new_g, args, F0Dict, originGDict)
-    
+
     subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
 
     graph1.append(Grph) # 원본 서브 그래프
@@ -293,6 +323,24 @@ def PairDataset(Grph, F0Dict,global_edge_labels, total_ged) :
 
 
 
+
+'''
+    mkGraphRPE.py에서 SceneGraph를 Random walk base로 나누고, RPE를 계산한다. 
+    walk를 인접한 노드끼리 합쳐 subgraph를 생성한다. (워크가 크면 노드 수가 증가할 가능성이 높음. 인접한 walk가 많을 수 O)
+    RPE 값을 concat하고 mean pooling해 해당 subgraph의 structural feature를 embedding가능
+    
+    각 노드에 subgraph 에서 해당 노드가 갖는 rpe 값들을 concat하고 mean pooling해 subgraph내 각 노드의 structural feature를 Attribute 값으로 할당했음
+
+    이렇게 만들어진 subgraph에 target_gev와 대응하는 subgraph를 생성함
+    
+    PairDataset -> graph_generation -> mkNG2Subs -> mkMergeGraph
+    1. PairDataset에서 그래프를 생성하고 이를 데이터셋 형태에 맞게 저장함 (기존 데이터셋의 경우 batch가 64였음..)
+    2. graph_generation에서 target_gev를 random 하게 생성하는데, 순서에 따라 개수가 조절되므로 고립되는 노드가 없게했다고 설명을 들었음
+    3. mkNG2Subs에서는 만들어진 서브 그래프의 rpe를 구하고 
+    4. rpe는 구했는데, mkGraphRPE에서 만든 하나의 서브그래프와 대응되는 서브그래프'를 randomwalk한 것이므로 각 값을 할당해줌. 
+    -> 맨 위의 rpe 함수를 붙이기 전에 주석을 달고 commit....
+
+'''
 
 
 def main(args):
