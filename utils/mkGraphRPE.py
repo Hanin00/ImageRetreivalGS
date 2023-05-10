@@ -21,7 +21,7 @@
 
 
 SUREL 의 args
-Namespace(B_size=1500, batch_num=2000, batch_size=32, data_usage=1.0, dataset='ogbl-citation2',
+Namespace(B_size=1500, batch_num=2000, batch_size=64, data_usage=1.0, dataset='ogbl-citation2',
  debug=False, directed=False, dropout=0.1, eval_steps=100, gpu_id=0, hidden_dim=64, k=50, l2=0.0,
    layers=2, load_dict=False, load_model=False, log_dir='./log/', lr=0.001, memo=None, metric='mrr',
      model='RNN', norm='all', nthread=16, num_step=4, num_walk=100, optim='adam', patience=5, repeat=1,
@@ -65,7 +65,6 @@ def np_sampling(rw_dict, ptr, neighs, bsize, target, num_walks, num_steps=3):
 
 
 
-
 # path 로 edge list 만들고 edge 추가하기; node path로 Graph 생성 
 def mkPathGraph(path):
   # path to edgelist    == [[path[i], path[i+1]] for i in range(len(path)-1)]
@@ -76,9 +75,8 @@ def mkPathGraph(path):
 
 
 
-
 from operator import itemgetter
-from torch_geometric.utils import subgraph,from_networkx,negative_sampling
+# from torch_geometric.utils import subgraph,from_networkx,negative_sampling
 import torch
 
 import itertools
@@ -95,7 +93,7 @@ import copy
 
 
 # networkx 는 딕셔너리 형태로 그래프를 저장하기 때문에 torch_geometric을 이용해야함
-# 노드 간 연결 관계를 표현한 csr_matrix; > 해당 리스트로 nx 를 이용해 graph 생성 가능ㅁ
+# 노드 간 연결 관계를 표현한 csr_matrix; > 해당 리스트로 nx 를 이용해 graph 생성 가능
 def nx2csr(G):
     return csr_matrix(nx.to_scipy_sparse_array(G))
 
@@ -113,7 +111,6 @@ def mkSubGraph(S, K, mF, nodeDict):
     subG = nx.Graph()
     subG.add_edges_from(edgelist)
 
-
     tensor_concat = torch.cat([x.unsqueeze(0) for x in mF[cnt: cnt + len(K[idx])]], dim=0).float()
     enc_agg = torch.mean(tensor_concat, dim=0)
 
@@ -130,19 +127,12 @@ def mkSubGraph(S, K, mF, nodeDict):
 
 
 
-
-
-
-
-
-
-
 #node 각각에 feature 추가할 때 structural feature 로 enc 값 추가해야함
 # mk RPE encoding, subgraphs
-def mkSubs(G, args, seeds, ):
+def mkSubs(G, args,  ):
   # originGraph의 feature를 가져옴
   nodeDict = dict((x, y ) for x, y in G.nodes(data=True))
-  print("G : ",G)
+  # print("G : ",G)
   subGList, subGFeatList = [], []
   G_full = nx2csr(G)
   
@@ -150,8 +140,8 @@ def mkSubs(G, args, seeds, ):
   neighs = G_full.indices
   num_pos, num_seed, num_cand = len(set(neighs)), 100, 5
   candidates = G_full.getnnz(axis=1).argsort()[-num_seed:][::-1]
-  print("candidates: ", candidates)
-  print("len(candidates): ", len(candidates))
+  # print("candidates: ", candidates)
+  # print("len(candidates): ", len(candidates))
 
   rw_dict = {}
   B_queues  = []
@@ -159,12 +149,10 @@ def mkSubs(G, args, seeds, ):
   # for r in range(1, args.repeat + 1): # 모든 노드에 대해 한 번씩 할거라 repeat 필요 X
   batchIdx, patience = 0, 0
   pools = np.copy(candidates)
-  print("pools: ", pools)
   np.random.shuffle(B_queues)
   # while True:
   # if r <= 1:
   B_queues.append(sorted(run_sample(ptr,  neighs, pools, thld=1500))) # pool를 인자로 넣어 모든 노드에 대해 수행하도록 함
-  print("B_queues: ", B_queues)
   B_pos = B_queues[batchIdx]
   B_w = [b for b in B_pos if b not in rw_dict]
   if len(B_w) > 0:
@@ -189,30 +177,14 @@ def mkSubs(G, args, seeds, ):
   mF = torch.from_numpy(np.concatenate([[[0] * F.shape[-1]], F]))  #.to(device) # walk를 각 노드에 맞춰서 concat
   gT = mkGutils.normalization(mF, args)
 
-  print("len(mF): ",len(mF))
-  print("len(gT): ",len(gT))
-
   listA = [a.flatten().tolist() for a in K] 
   flatten_listA = list(itertools.chain(*listA))  # 35*12
-  print("len(flatten_listA): ",len(flatten_listA))
-
-
 
   subG, subGF = mkSubGraph(S, K, gT, nodeDict)
 
 
   subGList+=subG
   subGFeatList+=subGF
-
-  print(mF[0]) #0,0,0
-  print(mF[1]) # 4, 4, 4
-  
-  print(gT[0]) #0,0, 0
-  print(gT[1]) # 1, 1, 1 <- walk가 step 3으로 총 노드 4 라서 4가 최댓값 1로 norm
-
-
-
-
 
   '''
   listA = [a.flatten().tolist() for a in K] 
@@ -223,14 +195,9 @@ def mkSubs(G, args, seeds, ):
 
     때문에 이를 토대로 서브 그래프 생성(mkPathGraph) 후 해당 RPE 값을  attribute로 부여해줘야하고, 
     또 맨 위에서 만들어 둔 nodeDict를 이용해서 name에 따른 feature 값인 F0값을 부여해줘야함      
-  
-
       '''
 
   return subGList, subGFeatList
-
-
-
 
 
 
@@ -239,21 +206,15 @@ def main(args):
   # scene graph_원본
   with open('dataset/v3_x1000.pickle', 'rb') as f:   # time:  74.21744275093079
       data = pickle.load(f)
-  # mk dataset
-  data = data[:2]
 
-  
-  orgGIdList = []
-  for orgGId in range(len(data)):
-      orgG = data[orgGId]
-      orgGIdList.append(orgGId)
-      subList = []
+  print(len(data))
+  # mk dataset
+  # data = data[:100]
 
   # num_walks = 4  # num_walks = walk의 총 갯수 
   # num_steps = 3  # num_steps = walk의 길이 = num_steps + 1(start node) 
   pools = 5
   seeds = np.random.choice(pools, 5, replace=False)
-
   start = time.time()
   # totalData = []
   metaData = [] # 각 originGId 당 생성된 subGList의 개수가 들어감 - originGId, len(subGList)
@@ -262,15 +223,10 @@ def main(args):
   for originGId, G in enumerate(tqdm(data)): # 원본 데이터의 오류로 없는 그래프가 종종 있음.try catch 해서 넘기기
     if(len(G.nodes()) != 0):
       subGList, subGFeatList = mkSubs(G, args, seeds)
-      metaData += (originGId, len(subGList))
+      metaData.append((originGId, len(subGList)))
       totalSubG+= subGList
       totalSubGFeat += subGFeatList
-
-  print("len(totalSubG[0]): ", len(totalSubG))
-  print("len(totalSubG[0]): ", len(totalSubG[0]))
-  print("len(totalSubG[0][0]): ", len(totalSubG[0][0]))  
   end = time.time()
-  print("time1 : ", end-start)
 
 
 
@@ -279,24 +235,21 @@ def main(args):
     pickle.dump(metaData, f)
 
   print("len(totalSubG): ",len(totalSubG))
-  with open('dataset/img100_walk4_step2/subG.pkl', 'wb') as f:
+  with open('dataset/img100_walk4_step3/subG.pkl', 'wb') as f:
     pickle.dump(totalSubG, f)
 
-  print("len(totalSubG): ",len(totalSubG))
-  with open('dataset/img100_walk4_step2/subGFeat.pkl', 'wb') as f:
+  print("len(totalSubGFeat): ",len(totalSubGFeat))
+  with open('dataset/img100_walk4_step3/subGFeat.pkl', 'wb') as f:
     pickle.dump(totalSubGFeat, f)
 
   # print("len(totalSubGFeat): ",len(totalSubGFeat))
-  
-  # with open('dataset/rpe_splited_subgraph/rpe_v3_x1000_walks4_step3_SubGFeat.pkl', 'wb') as f:
-  #   pickle.dump(totalSubGFeat, f)
 
   # end2 = time.time()
   # print("time2: ", end2-start)
 
-  # with open('dataset/rpe_splited_subgraph/rpe_v3_x1000_walks4_step3_SubG.pkl', 'rb') as f:
-  #   list2 = pickle.load(f)
-  # print("len(list2): ",len(list2))
+  with open('dataset/img100_walk4_step3/subGFeat.pkl', 'rb') as f:
+    list2 = pickle.load(f)
+  print("len(list2): ",len(list2))
   
 
 
