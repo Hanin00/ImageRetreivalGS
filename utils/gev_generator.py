@@ -6,44 +6,10 @@ from collections import defaultdict
 
 import numpy as np
 import networkx as nx
+import multiprocessing as mp
 
 from surel_gacc import run_walk
 from utils.mkGraphRPE import *
-
-
-
-def random_walk_rpe(adj_matrix, num_iterations=50, damping_factor=0.85):
-    # Step 1: Calculate transition matrix P from adjacency matrix A
-    A = adj_matrix.copy()
-    A[A > 0] = 1  # binarize the adjacency matrix
-    D = np.diag(np.sum(A, axis=1))  # degree matrix
-    D_inv = np.linalg.inv(D)
-    P = D_inv @ A
-
-
-    # Step 2: Initialize RPE vector F
-    F = np.zeros((adj_matrix.shape[0], 1))
-    
-    # Step 3: Update RPE vector F iteratively
-    for i in range(num_iterations):
-        F = (1 - damping_factor) * P @ F + damping_factor * F
-
-    F = F.reshape(-1)  # F를 1차원 배열로 변환
-    F = np.concatenate([[0] * F.shape[-1], F], axis=0)  # add dummy element at the beginning
-    
-    mF = torch.from_numpy(F)
-    return mF
-'''
-
-    인접 행렬로 mF 구할 수 있음
-mF = random_walk_rpe(adj_matrix)
-print(mF)
-
-'''
-
-
-
-
 
 
 '''
@@ -91,8 +57,8 @@ def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
         subG.nodes[i]['f0'] = F0dict[nodeNameDict[i]]
         subG.nodes[i]['rpe'] = gT_mean[i]
 
-    print(subG.nodes(data=True))
-    print(subG)
+    # print(subG.nodes(data=True))
+    # print(subG)
     return subG
 
 
@@ -114,7 +80,7 @@ def mkNG2Subs(G, args, F0dict):
     neighs = G_full.indices
     num_pos, num_seed, num_cand = len(set(neighs)), 100, 5
     candidates = G_full.getnnz(axis=1).argsort()[-num_seed:][::-1]
-    print("candidates : ", candidates)
+    # print("candidates : ", candidates)
     rw_dict = {}
     B_queues  = []
 
@@ -205,7 +171,7 @@ def graph_generation(graph, F0Dict, global_edge_labels, total_ged=0):
     if (target_ged['ie'] < target_ged['in']):
         target_ged['ie'] = target_ged['in']
 
-    print('target ged :', target_ged)
+    # print('target ged :', target_ged)
 
     ## edit node labels
     to_edit_idx_newg = random.sample(new_g.nodes(), target_ged['nc'])
@@ -275,57 +241,82 @@ def load_generated_graphs(dataset_name, file_name='generated_graph_500'):
     originGDict : 대상 Graph의 node의 name - attribute 값(왜) ; 이름을 가지고 node relabeling을 하니까.  ; todo origin Id 가 좀 걸리는데..  
     F0Dict : global node name - F0 embedding
 '''
-def PairDataset(Grph, F0Dict,global_edge_labels, total_ged) : 
-    target_ged, new_g = graph_generation(Grph, F0Dict, global_edge_labels, total_ged)
-
-    print("Grph: ", Grph)
-    print("new_g: ",new_g)
-    mF = random_walk_rpe(nx.to_numpy_array(new_g))
-    print(mF)
-    sys.exit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                              
-    graph1 = []
-    graph2 = []
-    ged = []
+def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0Dict,global_edge_labels, total_ged, train,args) : 
+    # target_ged, new_g = graph_generation(Grph, F0Dict, global_edge_labels, total_ged)
+     
+    # subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
+    g1_list = []
+    g2_list = []
+    ged_list = []
 
     subGFeatList = []
+    newGFeatList = []
 
-    print(Grph.nodes(data=True))
-    print(target_ged)
-    print("1:", new_g.nodes(data=True))
+    cnt = 0
+    length = len(dataset)
+    while True:
+        if queue.empty():
+            break
+        num = queue.get()
+        if length-num > max_row_per_worker:
+            s = num
+            e = num + max_row_per_worker
+        else:
+            s = num
+            e = len(dataset)
+        for i in range(s, e):
+            if train:
+                for _ in range(train_num_per_row): #일단 모델 사용해야해서 0, 1 나눔.. 
+                    dataset[i].graph['gid'] = 0
+                    # print(i, dataset[i])
+                    if cnt > (train_num_per_row//2):
+                        target_ged, new_g = graph_generation(dataset[i], F0Dict, global_edge_labels, total_ged)
+                        subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
+                        graph2 = subG
+                    else:
+                        target_ged, new_g = graph_generation(dataset[i], F0Dict, global_edge_labels, total_ged)
+                        subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
+                        graph2 = subG
+                    graph2.graph['gid'] = 1
+                    # d = ged(dataset[i], graph2, 'astar',
+                    #         debug=False, timeit=False)
+                    g1_list.append(dataset[i])
+                    g2_list.append(graph2)
+                    ged_list.append(target_ged)
 
-    subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
+                    subGFeatList.append(feats[i])
+                    newGFeatList.append(enc_agg)
 
-    graph1.append(Grph) # 원본 서브 그래프
-    graph2.append(subG) # 새로 생성한 서브 그래프
-    ged.append(target_ged)  # target_ged
 
-    subGFeatList.append(enc_agg)
+
+
+                    cnt += 1
+                cnt = 0
+            else:
+                r = random.randrange(length)
+                dataset[r].graph['gid'] = 0
+                target_ged, new_g = graph_generation(dataset[r], F0Dict, global_edge_labels, total_ged)
+                subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
+                graph2 = subG
+                g1_list.append(dataset[r])
+                g2_list.append(subG)
+                ged_list.append(target_ged)
+                subGFeatList.append(feats[r])
+                newGFeatList.append(enc_agg)
+
+            with open("dataset/GEDPair/rpe_gen_dataset_0511/{}_{}.pkl".format(s, e), "wb") as fw:
+                pickle.dump([g1_list, g2_list, ged_list], fw)
+            with open("dataset/GEDPair/rpe_gen_dataset_0511_subG_newGFeat/{}_{}.pkl".format(s, e), "wb") as fw:
+                pickle.dump([subGFeatList, newGFeatList, ged_list], fw)
+        
+            g1_list = []
+            g2_list = []
+            ged_list = []
+            
+            subGFeatList = []
+            newGFeatList = []
+
+
 
 
 
@@ -345,50 +336,83 @@ def PairDataset(Grph, F0Dict,global_edge_labels, total_ged) :
     4. rpe는 구했는데, mkGraphRPE에서 만든 하나의 서브그래프와 대응되는 서브그래프'를 randomwalk한 것이므로 각 값을 할당해줌. 
     -> 맨 위의 rpe 함수를 붙이기 전에 주석을 달고 commit....
 
+
+
+
+
+
+    ## GEV를 나눠서 학습할 때랑 GED로 만들어서 학습할 때 뭐가 더 잘 찾는지 궁금함
+
 '''
 
 
-def main(args):
+def main(margs):
 # #node type의 class들 -> name, feature를 전에 만들어놓은 dict를 이용해서 넣을 것; 동일 그래프 내의 node로만 생성하거나, 전체 node에 대해 생성(우선)
 
     # subgraph  load에 맞춰서 변경해야함
     # with open('dataset/img100_walk4_step3/subG.pkl', 'rb') as f:  # 
     #     graphs = pickle.load(f)
-    # with open('dataset/img100_walk4_step3/subG_100.pkl', 'wb') as f:
-    #     pickle.dump(graphs[:100], f)   
+    # with open('dataset/img100_walk4_step3/subG_1000.pkl', 'wb') as f:
+    #     pickle.dump(graphs[:1000], f)   
 
     # with open('dataset/img100_walk4_step3/subGFeat.pkl', 'rb') as f:  # 
     #     feats = pickle.load(f)
-    # with open('dataset/img100_walk4_step3/subGFeat_100.pkl', 'wb') as f:
-    #      pickle.dump(feats[:100], f)   
+    # with open('dataset/img100_walk4_step3/subGFeat_1000.pkl', 'wb') as f:
+    #      pickle.dump(feats[:1000], f)   
 
     # sys.exit()
-    with open('dataset/img100_walk4_step3/subG_100.pkl', 'rb') as f:  # 
+    with open('dataset/img100_walk4_step3/subG_1000.pkl', 'rb') as f:  # 
         graphs = pickle.load(f)
-    with open('dataset/img100_walk4_step3/subGFeat_100.pkl', 'rb') as f:  # 
+    with open('dataset/img100_walk4_step3/subGFeat_1000.pkl', 'rb') as f:  # 
         feats = pickle.load(f)
-
-
     #subgraph  load에 맞춰서 변경해야함
     with open('dataset/totalEmbDictV3_x100.pickle', 'rb') as f:  
        embDict  = pickle.load(f)
 
+
+    # PairDataset(Grph, embDict,global_edge_labels, total_ged)
+
+
+    mp.set_start_method('spawn')
+    q = mp.Queue()
+    train_num_per_row = 64      # Number of datasets created by one subgraph
+    max_row_per_worker = 64     # Number of Subgraphs processed by one processor
+    number_of_worker = 32       # Number of processor
+
+    total = graphs
     # global_node_labels = list(embDict.keys())
     global_edge_labels = [0, 0]
-
-    Grph  = graphs[55]
     total_ged=random.randint(1,1)
-    print("Grph: ", Grph)
-    print("feats: ", feats[55])
+    train = True
+
+    start = time.time()
+    for i in range(0, len(total), max_row_per_worker):
+        q.put(i)
+
+    workers = []
+    for i in range(number_of_worker):
+        worker = mp.Process(target=PairDataset, args=(
+            q, train_num_per_row, max_row_per_worker, graphs,feats,  embDict,global_edge_labels, total_ged, train, margs))
+        workers.append(worker)
+        worker.start()
+
+    for worker in workers:
+        worker.join()
+
+    end = time.time()
 
 
-    # 여기서  64개씩 나눠서 만들면 될 듯.. 근데 개수 모자라지 않나..?  Pos, Neg가 없음 지금..?
-    PairDataset(Grph, embDict,global_edge_labels, total_ged)
+    print("time: ", end-start)
 
 
 
 
-    
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
@@ -396,9 +420,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Embedding arguments')
     utils.parse_optimizer(parser)
     parse_encoder(parser)
-    args = parser.parse_args()
+    margs = parser.parse_args()
 
-    main(args)
+    main(margs)
 
 
     
