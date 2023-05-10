@@ -297,19 +297,28 @@ def PairDataset(Grph, F0Dict,global_edge_labels, total_ged) :
     graph2 = []
     ged = []
 
+    subGFeatList = []
+
     print(Grph.nodes(data=True))
     print(target_ged)
     print("1:", new_g.nodes(data=True))
 
-    #새로운 graph 생성.
+    #새운 graph 생성.
 
-    # subGList, subGFeatList = mkNG2Subs(new_g, args, F0Dict, originGDict)
+    # subGList, subGFeatList = mkNG2Subs(new_g, args, F0Dict, originGDict)로
 
     subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
 
     graph1.append(Grph) # 원본 서브 그래프
-    graph2.append(new_g) # 새로 생성한 서브 그래프
+    graph2.append(subG) # 새로 생성한 서브 그래프
     ged.append(target_ged)  # target_ged
+
+
+    subGFeatList.append(enc_agg)
+
+
+
+
 
     print("origins_g: ", Grph.nodes())
     print("new_g : ", new_g.nodes())
