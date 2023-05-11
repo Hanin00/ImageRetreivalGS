@@ -109,13 +109,12 @@ def train_loop(args):
                 batch_n += 1
 
         if not args.test:
-            print("Saving {}".format(args.model_path[:-3]+"_e"+str(e+1)+".pt"))
+            print("Saving {}".format(args.model_path[:-5]+"_e"+str(e+1)+".pt"))
             torch.save(model.state_dict(), args.model_path[:-3]+"_e"+str(e+1)+".pt")
             
             #print("Saving {}".format(args.model_path[:-5]+"_e"+str(e+1)+".pt"))
             #torch.save(model.state_dict(), args.model_path[:-5]+"_e"+str(e+1)+".pt")
 
-            
         else:
             print(len(loaders))
             print(sum(val)/len(loaders))
@@ -130,7 +129,6 @@ def main(force_test=False):
 
     if force_test:
         args.test = True
-
     train_loop(args)
 
 

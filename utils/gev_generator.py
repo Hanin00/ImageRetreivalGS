@@ -309,6 +309,8 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0D
                 g1_list.append(dataset[r])
                 g2_list.append(subG)
                 ged_list.append(target_ged)
+
+
                 subGFeatList.append(feats[r])
                 newGFeatList.append(enc_agg)
 
@@ -345,10 +347,6 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0D
     -> 맨 위의 rpe 함수를 붙이기 전에 주석을 달고 commit....
 
 
-
-
-
-
     ## GEV를 나눠서 학습할 때랑 GED로 만들어서 학습할 때 뭐가 더 잘 찾는지 궁금함
 
 '''
@@ -360,30 +358,33 @@ def main(margs):
     # # subgraph  load에 맞춰서 변경해야함
     # with open('dataset/img100_walk4_step3_0511/subG.pkl', 'rb') as f:  # 
     #     graphs = pickle.load(f)
-    # with open('dataset/img100_walk4_step3_0511/subG_1000.pkl', 'wb') as f:
-    #     pickle.dump(graphs[:1000], f)   
+    # with open('dataset/img100_walk4_step3_0511/subG_10000.pkl', 'wb') as f:
+    #     pickle.dump(graphs[:10000], f)   
 
     # with open('dataset/img100_walk4_step3_0511/subGFeat.pkl', 'rb') as f:  # 
     #     feats = pickle.load(f)
-    # with open('dataset/img100_walk4_step3_0511/subGFeat_1000.pkl', 'wb') as f:
-    #      pickle.dump(feats[:1000], f)   
+    # with open('dataset/img100_walk4_step3_0511/subGFeat_10000.pkl', 'wb') as f:
+    #      pickle.dump(feats[:10000], f)   
 
     # sys.exit()
-    with open('dataset/img100_walk4_step3_0511/subG_1000.pkl', 'rb') as f:  # 
+    # with open('dataset/img100_walk4_step3_0511/subG_1000.pkl', 'rb') as f:  # 
+    with open('dataset/img100_walk4_step3_0511/subG_10000.pkl', 'rb') as f:  #
         graphs = pickle.load(f)
-    with open('dataset/img100_walk4_step3_0511/subGFeat_1000.pkl', 'rb') as f:  # 
+    # with open('dataset/img100_walk4_step3_0511/subGFeat_1000.pkl', 'rb') as f:  # 
+    with open('dataset/img100_walk4_step3_0511/subGFeat_10000.pkl', 'rb') as f:  # 
         feats = pickle.load(f)
-    #subgraph  load에 맞춰서 변경해야함
+    # #subgraph  load에 맞춰서 변경해야함
     with open('dataset/totalEmbDictV3_x100.pickle', 'rb') as f:  
        embDict  = pickle.load(f)
     
     #일단 당장 할 거..!
-    graphs = graphs[:4]
-    feats = feats[:4]
+    # graphs = graphs[:100]
+    # feats = feats[:100]
 
 
     # PairDataset(Grph, embDict,global_edge_labels, total_ged)
 
+    print("--- data_load ---")
 
     mp.set_start_method('spawn')
     q = mp.Queue()
@@ -397,9 +398,12 @@ def main(margs):
     total_ged=random.randint(2, 6)
     train = True
 
+    print("start")
     start = time.time()
     for i in range(0, len(total), max_row_per_worker):
         q.put(i)
+
+    print("queue")
 
     workers = []
     for i in range(number_of_worker):
@@ -423,9 +427,4 @@ if __name__ == "__main__":
     margs = parser.parse_args()
 
     main(margs)
-
-
-    
-
-
 
