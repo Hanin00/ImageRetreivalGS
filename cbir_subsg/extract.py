@@ -1,7 +1,9 @@
 from utils import utils
 from model import models
 #from common import subgraph
-from subg_acc import mkGraphRPE # gpu 06
+# from utils import mkGraphRPE as mkG
+from utils import mkGraphRPE_0511 as mkG
+from utils import gev_generator # gpu 06
 
 from config.config import parse_encoder
 
@@ -12,6 +14,10 @@ import torch
 import argparse
 import pickle
 import time
+import tqdm
+
+import numpy as np
+
 
 import sys
 
@@ -23,11 +29,11 @@ def feature_extract(args):
     5 candidate DB subgraphs with similar query subgraphs.
     Finally, it counts all candidate DB subgraphs and finds The highest counted image.
     '''
-    max_node = 3
+    # max_node = 3
     R_BFS = True
     ver = 2
     #dataset, db_idx, querys, query_idx = load_dataset(max_node, R_BFS)
-    dataset, db_idx, querys, query_idx = load_dataset(args.num_walks, args.num_steps)
+    dataset, db_idx, querys, query_idx = load_dataset(args)
 
 
     db_data = utils.batch_nx_graphs(dataset, None)
@@ -39,8 +45,8 @@ def feature_extract(args):
     model = models.GnnEmbedder(1, args.hidden_dim, args)
     model.to(utils.get_device())
     if args.model_path:
-        model.load_state_dict(torch.load(
-            args.model_path, map_location=utils.get_device()))
+        model.load_state_dict(torch.load(args.model_path, map_location="cpu"))
+                                        #   map_location=utils.get_device()))
     else:
         return print("model does not exist")
 
@@ -114,7 +120,7 @@ def feature_extract(args):
 
 
 #def load_dataset(max_node, R_BFS):
-def load_dataset(num_walks, num_steps):
+def load_dataset(args):
     ''' Load subgraphs
     Load Scene Graph and then, Creat subgraphs from Scene Graphs.
     First, it reads scene graphs of Visual Genome and then, it makes subgraphs
@@ -130,8 +136,11 @@ def load_dataset(num_walks, num_steps):
     query: Query subgraphs/subgraph
     query_number: Query subgraph number
     '''
+    with open('dataset/totalEmbDictV3_x100.pickle', 'rb') as f:  
+       f0Dict  = pickle.load(f)
     with open("dataset/v3_x1000.pickle", "rb") as fr:
         datas = pickle.load(fr)
+    datas = datas[:100]
 
     db = []
     db_idx = []
@@ -150,27 +159,28 @@ def load_dataset(num_walks, num_steps):
     #seeds = np.random.choice(pools, 5, replace=False)
     seeds = 4
     query_number = 5002                         #todo meta data 기준으로 걸러야함
-    for i in range(len(datas)):
-        if query_number == i:
+    pools = 5
+    seeds = np.random.choice(pools, 5, replace=False)
+    # for i in range(len(datas)):
+    for originGId, G in tqdm.tqdm(enumerate(datas)):
+        if query_number == originGId:
             continue
        # subGList, subGFeatList = mkGraphRPE.mkSubs(datas[i], num_walks, num_steps, seeds)
-        try: 
-            subs, subGFeatList = mkGraphRPE.mkSubs(datas[i], num_walks, num_steps, seeds)
-        except:
-            print("ex")
-            continue
+        if(len(G.nodes()) != 0):
+            subGList, subGFeatList = mkG.mkSubs(G, args, seeds)
+            # metaData.append((originGId, len(subGList)))
 
-        db.extend(subs)
-        db_idx.extend([i]*len(subs))
+        db.extend(subGList)
+        db_idx.extend([originGId]*len(subGList))
 
-    # Select query image
     # query = mkGraphRPE.mkSubs(datas[query_number], max_node, False, True)
 
+    # Select query image
     # user-defined query images
-    with open("data/query_road_0819.pickle", "rb") as q:
+    with open("dataset/query_road_0819.pickle", "rb") as q:
         querys = pickle.load(q)
-        query, queryFeatList = mkGraphRPE.mkSubs(querys[0], num_walks, num_steps, seeds)
-        query_number = 1
+    query, queryFeatList = mkG.mkSubs(querys[0], args, seeds)
+    query_number = 1
     return db, db_idx, query, query_number
 
 

@@ -52,7 +52,8 @@ def parse_encoder(parser, arg_str=None):
                             dataset='scene',     # syn
                             n_layers=8,
                             batch_size=64,  # 64, batch 개수
-                            feature_dim = 4, # rpe = 3, f0 = 1
+                            # feature_dim = 1, # rpe = 3, f0 = 1 # 기존 데이터 사용 시
+                            feature_dim = 4, # rpe = 3, f0 = 1 새로운 데이터(rpe )
                             #hidden_dim=64,
                             hidden_dim=64,
                             skip="learnable",
@@ -67,7 +68,7 @@ def parse_encoder(parser, arg_str=None):
                             test_set='',
                             eval_interval=10,   # 1000, batch 반복횟수
                             n_workers=1,        # 4
-                            model_path="ckpt/final/rpe_only/rpe_v3_imgId100__e1.pt",
+                            model_path="ckpt/final/rpe_only/rpe_v3_0511_newdataset__e100.pt",
                             #model_path="ckpt/final/rpe_v3_imgId100_e1.pt",
                             tag='',
                             val_size=64,         # 4096,
@@ -76,9 +77,6 @@ def parse_encoder(parser, arg_str=None):
                             num_steps =3, 
                             use_weight = False,
                             norm = 'all'
-
-                            
-
 
 
                             )    

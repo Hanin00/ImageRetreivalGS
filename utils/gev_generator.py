@@ -55,8 +55,6 @@ def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
     for i in subG.nodes() :
         # subG.nodes[i].update(F0dict[nodeNameDict[i]]) #노드에 해당하는 
         subG.nodes[i]['f0'] = F0dict[nodeNameDict[int(i)]]
-        
-        
         subG.nodes[i]['rpe'] = gT_mean[i]
 
     # print(subG.nodes(data=True))

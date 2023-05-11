@@ -99,8 +99,7 @@ def nx2csr(G):
 
 
 # path 로 edge list 만들고 edge 추가하기; node path로 Graph 생성 
-def mkSubGraph(S, K, mF, nodeDict):
-
+def mkSubGraph(S, K, mF, nodeDict,nodeIDDict):
 
   #map이나 mp로 시간 단축 해야함. 일단 구현한다 구현..
   subGList = []
@@ -108,31 +107,43 @@ def mkSubGraph(S, K, mF, nodeDict):
   cnt = 0
   for idx, sPath in enumerate(S):
      # path to edgelist    == [[path[i], path[i+1]] for i in range(len(path)-1)]
-    edgelist = list(zip(sPath, sPath[1:]))
-    subG = nx.Graph()
-    subG.add_edges_from(edgelist)
+    try: 
+      sPath = [nodeIDDict[i] for i in sPath]
+      edgelist = list(zip(sPath, sPath[1:]))
+      subG = nx.Graph()
+      subG.add_edges_from(edgelist)
+    except:
+      print("nodeIDDict.keys():", nodeIDDict.keys())
+      print("nodeIDDict.values():", nodeIDDict.values())
+      print("sPath:", sPath)
+      # print("nodeDict:", nodeDict.keys())
+      # print("nodeIDDict:", nodeIDDict.values())
+      # print("nodeDict:", nodeDict.values())
+      
 
     tensor_concat = torch.cat([x.unsqueeze(0) for x in mF[cnt: cnt + len(K[idx])]], dim=0).float()
     enc_agg = torch.mean(tensor_concat, dim=0)
 
-    for i in range(len(K[idx])):
-      print("K[idx]: ", K[idx])      
-      # subG.nodes[K[idx][i]].update(nodeDict[int(i)]) #F0 attribute 
-      try:
-        subG.nodes[K[idx][i]].update(nodeDict[K[idx][i]]) #F0 attribute 
-      except:
-        
-        print("K[idx][i]:", K[idx][i])
-        print("nodeDict.keys():", nodeDict.keys())
-        print("nodeDict.values():", nodeDict.values())
-        print("nodeDict[i]:", nodeDict[K[idx][i]])
-        subG.nodes[K[idx][i]].update(nodeDict[str(i)]) #F0 attribute 
-        print("i:", i)
-        print("type(i):", type(i))
-        print("K[idx]:", K[idx])
-        sys.exit()
+    # for i in range(len(K[idx])):
+    for i in subG.nodes(): 
+      subG.nodes[i]['rpe'] = mF[cnt] # rpe값은 tensor임
+      subG.nodes[i].update(nodeDict[i]) #F0 attribute 
+      
+      # print("K[idx]: ", K[idx])
+      # try:
+      #   # subG.nodes[K[idx][nodeIDDict[i]]].update(nodeDict[i]) #F0 attribute 
+      # except:
+      #   print("i:", i)
+      #   print("nodeIDDict[i]:", nodeIDDict[i])
+      #   print(" nodeDict.keys()", nodeDict.keys())
+      #   print(" nodeDict.values()", nodeDict.values())
+      #   print(" nodeIDDict.keys()", nodeIDDict.keys())
 
-      subG.nodes[K[idx][i]]['rpe'] = mF[cnt] # rpe값은 tensor임
+        
+      #   print("nodeDict[nodeIDDict[i]]:", nodeDict[nodeIDDict[i]])
+      #   print("nodeDict[i]:", nodeDict[i])
+      #   sys.exit()
+
       cnt+=1
       # subG.nodes[K[idx][i]].update(n)
     subGList.append(subG)
@@ -148,6 +159,7 @@ def mkSubGraph(S, K, mF, nodeDict):
 def mkSubs(G, args, seed ):
   # originGraph의 feature를 가져옴
   nodeDict = dict((x, y ) for x, y in G.nodes(data=True))
+  Gnode = list(G.nodes())
   # print("G : ",G)
   subGList, subGFeatList = [], []
   G_full = nx2csr(G)
@@ -196,11 +208,14 @@ def mkSubs(G, args, seed ):
   listA = [a.flatten().tolist() for a in K] 
   flatten_listA = list(itertools.chain(*listA))  # 35*12
 
-  subG, subGF = mkSubGraph(S, K, gT, nodeDict)
-
-
-  subGList+=subG
-  subGFeatList+=subGF
+  # nodeIDDict = dict(zip(candidates, Gnode)) 
+  nodeIDDict = dict(zip(candidates, Gnode)) 
+  try:
+    subG, subGF = mkSubGraph(S, K, gT, nodeDict, nodeIDDict)
+    subGList+=subG
+    subGFeatList+=subGF
+  except:
+    print()
 
   '''
   listA = [a.flatten().tolist() for a in K] 
@@ -227,6 +242,7 @@ def main(args):
   # mk dataset
   # data = data[:100]
 
+
   # num_walks = 4  # num_walks = walk의 총 갯수 
   # num_steps = 3  # num_steps = walk의 길이 = num_steps + 1(start node) 
   pools = 5
@@ -246,24 +262,24 @@ def main(args):
 
 
 
-  # print("len(metaData): ",len(metaData))
-  # with open('dataset/img100_walk4_step3/walkset_meta.pkl', 'wb') as f:
-  #   pickle.dump(metaData, f)
+  print("len(metaData): ",len(metaData))
+  with open('dataset/img100_walk4_step3_0511/walkset_meta.pkl', 'wb') as f:
+    pickle.dump(metaData, f)
 
-  # print("len(totalSubG): ",len(totalSubG))
-  # with open('dataset/img100_walk4_step3/subG.pkl', 'wb') as f:
-  #   pickle.dump(totalSubG, f)
+  print("len(totalSubG): ",len(totalSubG))
+  with open('dataset/img100_walk4_step3_0511/subG.pkl', 'wb') as f:
+    pickle.dump(totalSubG, f)
 
-  # print("len(totalSubGFeat): ",len(totalSubGFeat))
-  # with open('dataset/img100_walk4_step3/subGFeat.pkl', 'wb') as f:
-  #   pickle.dump(totalSubGFeat, f)
+  print("len(totalSubGFeat): ",len(totalSubGFeat))
+  with open('dataset/img100_walk4_step3_0511/subGFeat.pkl', 'wb') as f:
+    pickle.dump(totalSubGFeat, f)
 
-  # print("len(totalSubGFeat): ",len(totalSubGFeat))
+  print("len(totalSubGFeat): ",len(totalSubGFeat))
 
-  # end2 = time.time()
-  # print("time2: ", end2-start)
+  end2 = time.time()
+  print("time2: ", end2-start)
 
-  with open('dataset/img100_walk4_step3/subGFeat.pkl', 'rb') as f:
+  with open('dataset/img100_walk4_step3_0511/subGFeat.pkl', 'rb') as f:
     list2 = pickle.load(f)
   print("len(list2): ",len(list2))
   

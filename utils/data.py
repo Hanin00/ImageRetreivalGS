@@ -120,9 +120,11 @@ def load_dataset(name):
         start = time.time()
         # for foldername in os.listdir('utils/rp_data/su_v3_x1000/'):
         
-        for filename in os.listdir('dataset/GEDPair/rpe_splited_v3_x1000_walk4_step2/'):
+        # for filename in os.listdir('dataset/GEDPair/rpe_splited_v3_x1000_walk4_step2/'):
+        for filename in os.listdir('dataset/GEDPair/rpe_gen_dataset_0511'):
             try : 
-                with open("dataset/GEDPair/rpe_splited_v3_x1000_walk4_step2"+"/"+filename, "rb") as fr:
+                with open("dataset/GEDPair/rpe_gen_dataset_0511"+"/"+filename, "rb") as fr:
+                # with open("dataset/GEDPair/rpe_splited_v3_x1000_walk4_step2"+"/"+filename, "rb") as fr:
                     tmp = pickle.load(fr)
                     print(filename)
                     for i in range(0, len(tmp[0]), 64):

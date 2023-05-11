@@ -79,7 +79,7 @@ def make_pkl(dataset, queue, train_num_per_row, max_row_per_worker, train):
                 g2_list.append(dataset[r])
                 ged_list.append(d)
 
-        with open("dataset/GEDPair/rpe_splited_v3_x1000_walk4_step2/{}_{}.pkl".format(s, e), "wb") as fw:
+        with open("dataset/GEDPair/rpe_splited_v3_x1000_walk4_step3/{}_{}.pkl".format(s, e), "wb") as fw:
             pickle.dump([g1_list, g2_list, ged_list], fw)
         g1_list = []
         g2_list = []
