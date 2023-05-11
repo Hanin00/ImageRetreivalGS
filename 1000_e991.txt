@@ -1,0 +1,123 @@
+ex
+ex
+subGraph 하나에 대한 특징 추출 시간  :  0.0028007030487060547
+tensor([[-0.0268,  0.2088, -0.0535, -0.1815],
+        [-0.0247,  0.2077, -0.0335, -0.2032],
+        [-0.0089,  0.2054,  0.1960, -0.4395],
+        ...,
+        [-0.0239,  0.2082, -0.0407, -0.1970],
+        [-0.0244,  0.2078, -0.0340, -0.2031],
+        [-0.0246,  0.2079, -0.0357, -0.2013]])
+torch.Size([2468, 4])
+Q graph nodes : {'vehicle', 'car', 'road', 'traffic_light'}
+number of DB subgraph torch.Size([2468])
+DB img id : 54
+similarity : 0.00072
+DB graph nodes : {'head', 'leg', 'fence'}
+DB img id : 22
+similarity : 0.00106
+DB graph nodes : {'window', 'car', 'road', 'grass'}
+DB img id : 10
+similarity : 0.00157
+DB graph nodes : {'desk', 'chair', 'coat', 'paper'}
+DB img id : 10
+similarity : 0.00158
+DB graph nodes : {'cup', 'earphone', 'mercantile_establishment', 'paper'}
+DB img id : 98
+similarity : 0.00186
+DB graph nodes : {'cheese', 'dish_pizza', 'pan', 'table'}
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 0.05919289588928223
+Counter({0: 2308, 1: 126, 2: 33, 3: 1})
+Counter({'set()': 2308, "{'car'}": 91, "{'road'}": 27, "{'car', 'road'}": 24, "{'car', 'traffic_light'}": 7, "{'vehicle'}": 6, "{'vehicle', 'road'}": 2, "{'traffic_light'}": 2, "{'vehicle', 'car', 'road'}": 1})
+============================================================
+subGraph 하나에 대한 특징 추출 시간  :  0.002321958541870117
+tensor([[-0.0268,  0.2088, -0.0535, -0.1815],
+        [-0.0247,  0.2077, -0.0335, -0.2032],
+        [-0.0089,  0.2054,  0.1960, -0.4395],
+        ...,
+        [-0.0239,  0.2082, -0.0407, -0.1970],
+        [-0.0244,  0.2078, -0.0340, -0.2031],
+        [-0.0246,  0.2079, -0.0357, -0.2013]])
+torch.Size([2468, 4])
+Q graph nodes : {'vehicle', 'car', 'road', 'traffic_light'}
+number of DB subgraph torch.Size([2468])
+DB img id : 10
+similarity : 0.00105
+DB graph nodes : {'desk', 'picture_frame', 'earphone', 'central_processing_unit'}
+DB img id : 73
+similarity : 0.00127
+DB graph nodes : {'back', 'shirt', 'woman', 'necklace'}
+DB img id : 34
+similarity : 0.00161
+DB graph nodes : {'table', 'painting', 'car_toy', 'printer'}
+DB img id : 19
+similarity : 0.00195
+DB graph nodes : {'computer_monitor', 'desk', 'computer', 'desktop_computer'}
+DB img id : 1
+similarity : 0.00199
+DB graph nodes : {'sign', 'gym_shoe', 'car', 'tree'}
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 0.05779099464416504
+Counter({0: 2308, 1: 126, 2: 33, 3: 1})
+Counter({'set()': 2308, "{'car'}": 91, "{'road'}": 27, "{'car', 'road'}": 24, "{'car', 'traffic_light'}": 7, "{'vehicle'}": 6, "{'vehicle', 'road'}": 2, "{'traffic_light'}": 2, "{'vehicle', 'car', 'road'}": 1})
+============================================================
+subGraph 하나에 대한 특징 추출 시간  :  0.0021185874938964844
+tensor([[-0.0268,  0.2088, -0.0535, -0.1815],
+        [-0.0247,  0.2077, -0.0335, -0.2032],
+        [-0.0089,  0.2054,  0.1960, -0.4395],
+        ...,
+        [-0.0239,  0.2082, -0.0407, -0.1970],
+        [-0.0244,  0.2078, -0.0340, -0.2031],
+        [-0.0246,  0.2079, -0.0357, -0.2013]])
+torch.Size([2468, 4])
+Q graph nodes : {'car', 'road', 'traffic_light'}
+number of DB subgraph torch.Size([2468])
+DB img id : 54
+similarity : 0.00040
+DB graph nodes : {'head', 'leg'}
+DB img id : 29
+similarity : 0.00083
+DB graph nodes : {'beach', 'house', 'woman'}
+DB img id : 96
+similarity : 0.00089
+DB graph nodes : {'fork', 'napkin', 'chump'}
+DB img id : 98
+similarity : 0.00138
+DB graph nodes : {'fork', 'napkin', 'salt'}
+DB img id : 89
+similarity : 0.00158
+DB graph nodes : {'television', 'shelf'}
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 0.11935281753540039
+Counter({0: 2314, 1: 122, 2: 32})
+Counter({'set()': 2314, "{'car'}": 91, "{'road'}": 29, "{'car', 'road'}": 25, "{'car', 'traffic_light'}": 7, "{'traffic_light'}": 2})
+============================================================
+subGraph 하나에 대한 특징 추출 시간  :  0.0025246143341064453
+tensor([[-0.0268,  0.2088, -0.0535, -0.1815],
+        [-0.0247,  0.2077, -0.0335, -0.2032],
+        [-0.0089,  0.2054,  0.1960, -0.4395],
+        ...,
+        [-0.0239,  0.2082, -0.0407, -0.1970],
+        [-0.0244,  0.2078, -0.0340, -0.2031],
+        [-0.0246,  0.2079, -0.0357, -0.2013]])
+torch.Size([2468, 4])
+Q graph nodes : {'vehicle', 'car', 'road', 'traffic_light'}
+number of DB subgraph torch.Size([2468])
+DB img id : 18
+similarity : 0.00176
+DB graph nodes : {'table', 'hair', 'central_processing_unit', 'helmet'}
+DB img id : 87
+similarity : 0.00184
+DB graph nodes : {'ripple', 'tent', 'man', 'sky'}
+DB img id : 64
+similarity : 0.00213
+DB graph nodes : {'land', 'awning', 'tree', 'sidewalk'}
+DB img id : 82
+similarity : 0.00217
+DB graph nodes : {'refrigerator', 'machine', 'counter', 'dishrag'}
+DB img id : 9
+similarity : 0.00229
+DB graph nodes : {'desk', 'window', 'mouse_pad'}
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 0.05825996398925781
+Counter({0: 2308, 1: 126, 2: 33, 3: 1})
+Counter({'set()': 2308, "{'car'}": 91, "{'road'}": 27, "{'car', 'road'}": 24, "{'car', 'traffic_light'}": 7, "{'vehicle'}": 6, "{'vehicle', 'road'}": 2, "{'traffic_light'}": 2, "{'vehicle', 'car', 'road'}": 1})
+============================================================
+Counter({10: 3, 54: 2, 98: 2, 22: 1, 73: 1, 34: 1, 19: 1, 1: 1, 29: 1, 96: 1, 89: 1, 18: 1, 87: 1, 64: 1, 82: 1, 9: 1})
