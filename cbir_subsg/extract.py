@@ -169,7 +169,6 @@ def load_dataset(args):
         if(len(G.nodes()) != 0):
             subGList, subGFeatList = mkG.mkSubs(G, args, seeds)
             # metaData.append((originGId, len(subGList)))
-
         db.extend(subGList)
         db_idx.extend([originGId]*len(subGList))
 

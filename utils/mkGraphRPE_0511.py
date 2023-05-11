@@ -147,6 +147,10 @@ def mkSubGraph(S, K, mF, nodeDict,nodeIDDict):
       cnt+=1
       # subG.nodes[K[idx][i]].update(n)
     subGList.append(subG)
+    print("subG.nodes(data=True): ",subG.nodes(data=True))
+    sys.exit()
+
+
     rpeAggList.append(enc_agg) # 노드의 rpe 값 concat
 
 

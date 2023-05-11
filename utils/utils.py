@@ -266,7 +266,10 @@ def batch_nx_graphs(graphs, anchors=None):
             except:
                 print("here")
                 print("torch.tensor(np.concatenate((rpe, f0), axis=None)): "  ,torch.tensor(np.concatenate((rpe, f0), axis=None)))
+                print(g.nodes[v])
+                print("g.nodes(data=True): ",g.nodes(data=True))
 
+                sys.exit()
                 rpe = g.nodes[v]["rpe"]
                 f0 = g.nodes[v]["f0"]
                 g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
@@ -307,7 +310,7 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
                 #g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((r0, r1,r2, [f0]), axis=None)) #rpe_f0 성능 개선
             except:
                 
-                rpe = g.nodes[v]["rpe"]
+                rpe = g.nodes[v]['rpe']
                 f0 = g.nodes[v]["f0"]
                 try:
                     g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))

@@ -129,7 +129,11 @@ def load_dataset(name):
                     print(filename)
                     for i in range(0, len(tmp[0]), 64):
                         dataset[0].append(tmp[0][i])
+                        
+                        print("tmp[0][i]: ",tmp[0][i].nodes(data=True))
                         dataset[1].append(tmp[1][i])
+                        print("tmp[1][i]: ",tmp[1][i].nodes(data=True))
+                        sys.exit()
                         dataset[2].append(tmp[2][i])
             except : 
                 continue

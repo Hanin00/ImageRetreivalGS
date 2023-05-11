@@ -17,6 +17,7 @@ from utils.mkGraphRPE import *
 '''
 # path 로 edge list 만들고 edge 추가하기; node path로 Graph 생성 
 def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
+    print("-------mkMergeGraph-------")
     # --------- vvvvv 생성된 walk에 있는 모든 노드들을 각 노드의 id에 맞게 rpe 를 concat 후 mean pooling 한 값 ----------------------
     merged_K = np.concatenate([np.asarray(k) for k in K]).tolist()
     # print("merged_K: ",merged_K)
@@ -55,6 +56,7 @@ def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
     for i in subG.nodes() :
         # subG.nodes[i].update(F0dict[nodeNameDict[i]]) #노드에 해당하는 
         subG.nodes[i]['f0'] = F0dict[nodeNameDict[int(i)]]
+        subG.nodes[i]['name'] = nodeNameDict[int(i)]
         subG.nodes[i]['rpe'] = gT_mean[i]
 
     # print(subG.nodes(data=True))
@@ -310,17 +312,17 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0D
                 subGFeatList.append(feats[r])
                 newGFeatList.append(enc_agg)
 
-            with open("dataset/GEDPair/rpe_gen_dataset_0511/{}_{}.pkl".format(s, e), "wb") as fw:
-                pickle.dump([g1_list, g2_list, ged_list], fw)
-            with open("dataset/GEDPair/rpe_gen_dataset_0511_subG_newGFeat/{}_{}.pkl".format(s, e), "wb") as fw:
-                pickle.dump([subGFeatList, newGFeatList, ged_list], fw)
+        with open("dataset/GEDPair/rpe_gen_dataset_0511/{}_{}.pkl".format(s, e), "wb") as fw:
+            pickle.dump([g1_list, g2_list, ged_list], fw)
+        with open("dataset/GEDPair/rpe_gen_dataset_0511_subG_newGFeat/{}_{}.pkl".format(s, e), "wb") as fw:
+            pickle.dump([subGFeatList, newGFeatList, ged_list], fw)
+    
+        g1_list = []
+        g2_list = []
+        ged_list = []
         
-            g1_list = []
-            g2_list = []
-            ged_list = []
-            
-            subGFeatList = []
-            newGFeatList = []
+        subGFeatList = []
+        newGFeatList = []
 
 
 
@@ -355,25 +357,29 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0D
 def main(margs):
 # #node type의 class들 -> name, feature를 전에 만들어놓은 dict를 이용해서 넣을 것; 동일 그래프 내의 node로만 생성하거나, 전체 node에 대해 생성(우선)
 
-    # subgraph  load에 맞춰서 변경해야함
-    # with open('dataset/img100_walk4_step3/subG.pkl', 'rb') as f:  # 
+    # # subgraph  load에 맞춰서 변경해야함
+    # with open('dataset/img100_walk4_step3_0511/subG.pkl', 'rb') as f:  # 
     #     graphs = pickle.load(f)
-    # with open('dataset/img100_walk4_step3/subG_1000.pkl', 'wb') as f:
+    # with open('dataset/img100_walk4_step3_0511/subG_1000.pkl', 'wb') as f:
     #     pickle.dump(graphs[:1000], f)   
 
-    # with open('dataset/img100_walk4_step3/subGFeat.pkl', 'rb') as f:  # 
+    # with open('dataset/img100_walk4_step3_0511/subGFeat.pkl', 'rb') as f:  # 
     #     feats = pickle.load(f)
-    # with open('dataset/img100_walk4_step3/subGFeat_1000.pkl', 'wb') as f:
+    # with open('dataset/img100_walk4_step3_0511/subGFeat_1000.pkl', 'wb') as f:
     #      pickle.dump(feats[:1000], f)   
 
     # sys.exit()
-    with open('dataset/img100_walk4_step3/subG_1000.pkl', 'rb') as f:  # 
+    with open('dataset/img100_walk4_step3_0511/subG_1000.pkl', 'rb') as f:  # 
         graphs = pickle.load(f)
-    with open('dataset/img100_walk4_step3/subGFeat_1000.pkl', 'rb') as f:  # 
+    with open('dataset/img100_walk4_step3_0511/subGFeat_1000.pkl', 'rb') as f:  # 
         feats = pickle.load(f)
     #subgraph  load에 맞춰서 변경해야함
     with open('dataset/totalEmbDictV3_x100.pickle', 'rb') as f:  
        embDict  = pickle.load(f)
+    
+    #일단 당장 할 거..!
+    graphs = graphs[:100]
+    feats = feats[:100]
 
 
     # PairDataset(Grph, embDict,global_edge_labels, total_ged)
@@ -383,7 +389,7 @@ def main(margs):
     q = mp.Queue()
     train_num_per_row = 64      # Number of datasets created by one subgraph
     max_row_per_worker = 64     # Number of Subgraphs processed by one processor
-    number_of_worker = 30       # Number of processor
+    number_of_worker = 1       # Number of processor
 
     total = graphs
     # global_node_labels = list(embDict.keys())
@@ -409,16 +415,6 @@ def main(margs):
 
 
     print("time: ", end-start)
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
