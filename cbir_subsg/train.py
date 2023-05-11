@@ -49,23 +49,14 @@ def train(args, model, dataset, data_source):
     pos_a, pos_b, pos_label = data_source.gen_batch( dataset, True)
     # print("pos_label: ", pos_label)
 
-
     emb_as, emb_bs = model.emb_model(pos_a), model.emb_model(pos_b)
     
-    # labels = [[label[key] for key in ['nc', 'ec', 'in', 'ie']] for label in pos_label]
-    # labels = torch.tensor(pos_label).to(utils.get_device())
 
     labels = torch.stack(pos_label, dim=0).to(utils.get_device())
-
-
-    
 
     intersect_embs = None
     pred = model(emb_as, emb_bs)
 
-    # print("len(pred) : ", len(labels))
-    # print("len(labels) : ", len(labels))
-    # print("len(labels[0]) : ",len(labels[0]))
     
 
     loss = model.criterion(pred, intersect_embs, labels)
@@ -121,12 +112,12 @@ def train_loop(args):
                 pred, labels, loss = train(
                     args, model, dataset, data_source)
 
-                if batch_n % 100 == 0:
+                if batch_n % 100 == 9:
                     print(pred, pred.shape, sep='\n')
                     print(labels, labels.shape, sep='\n')
                     print("epoch :", e, "batch :", batch_n,
                           "loss :", loss)
-                batch_n += 1
+                batch_n + 1
 
         if not args.test: 
             if e % 10 == 0: # 10 단위로 저장
@@ -135,7 +126,6 @@ def train_loop(args):
             
             #print("Saving {}".format(args.model_path[:-5]+"_e"+str(e+1)+".pt"))
             #torch.save(model.state_dict(), args.model_path[:-5]+"_e"+str(e+1)+".pt")
-
         else:
             print("len(loaders) : ", len(loaders))
             print("sum(val)/len(loaders): ", sum(val)/len(loaders))

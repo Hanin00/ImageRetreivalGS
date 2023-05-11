@@ -262,7 +262,6 @@ def load_generated_graphs(dataset_name, file_name='generated_graph_500'):
 '''
 def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0Dict,global_edge_labels, total_ged, train,args) : 
     # target_ged, new_g = graph_generation(Grph, F0Dict, global_edge_labels, total_ged)
-     
     # subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
     g1_list = []
     g2_list = []
@@ -344,12 +343,9 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0D
                 
 
 
-
-
-
-            with open("dataset/GEDPair/rpe_gen_dataset_0511_gev18/{}_{}.pkl".format(s, e), "wb") as fw:
+            with open("dataset/GEDPair/img100_walk4_step3_0512/{}_{}.pkl".format(s, e), "wb") as fw:
                 pickle.dump([g1_list, g2_list, ged_norm_list], fw)
-            with open("dataset/GEDPair/rpe_gen_dataset_0511_gev18_subG_newGFeat/{}_{}.pkl".format(s, e), "wb") as fw:
+            with open("dataset/GEDPair/img100_walk4_step3_0512_Feat/{}_{}.pkl".format(s, e), "wb") as fw:
                 pickle.dump([subGFeatList, newGFeatList, ged_norm_list], fw)
         
             g1_list = []
@@ -392,30 +388,30 @@ def main(margs):
 # #node type의 class들 -> name, feature를 전에 만들어놓은 dict를 이용해서 넣을 것; 동일 그래프 내의 node로만 생성하거나, 전체 node에 대해 생성(우선)
 
     # # subgraph  load에 맞춰서 변경해야함
-    # with open('dataset/img100_walk4_step3_0511/subG.pkl', 'rb') as f:  # 
+    # with open('dataset/img100_walk4_step3_0512/subG.pkl', 'rb') as f:  # 
     #     graphs = pickle.load(f)
-    # with open('dataset/img100_walk4_step3_0511/subG_10000.pkl', 'wb') as f:
+    # with open('dataset/img100_walk4_step3_0512/subG_10000.pkl', 'wb') as f:
     #     pickle.dump(graphs[:10000], f)   
 
-    # with open('dataset/img100_walk4_step3_0511/subGFeat.pkl', 'rb') as f:  # 
+    # with open('dataset/img100_walk4_step3_0512/subGFeat.pkl', 'rb') as f:  # 
     #     feats = pickle.load(f)
-    # with open('dataset/img100_walk4_step3_0511/subGFeat_10000.pkl', 'wb') as f:
+    # with open('dataset/img100_walk4_step3_0512/subGFeat_10000.pkl', 'wb') as f:
     #      pickle.dump(feats[:10000], f)   
 
     # sys.exit()
-    # with open('dataset/img100_walk4_step3_0511/subG_1000.pkl', 'rb') as f:  # 
-    with open('dataset/img100_walk4_step3_0511/subG_10000.pkl', 'rb') as f:  #
+    # with open('dataset/img100_walk4_step3_0512/subG_1000.pkl', 'rb') as f:  # 
+    with open('dataset/img100_walk4_step3_0512/subG_10000.pkl', 'rb') as f:  #
         graphs = pickle.load(f)
     # with open('dataset/img100_walk4_step3_0511/subGFeat_1000.pkl', 'rb') as f:  # 
-    with open('dataset/img100_walk4_step3_0511/subGFeat_10000.pkl', 'rb') as f:  # 
+    with open('dataset/img100_walk4_step3_0512/subGFeat_10000.pkl', 'rb') as f:  # 
         feats = pickle.load(f)
     # #subgraph  load에 맞춰서 변경해야함
     with open('dataset/totalEmbDictV3_x100.pickle', 'rb') as f:  
        embDict  = pickle.load(f)
     
     #일단 당장 할 거..!
-    graphs = graphs[:3000]
-    feats = feats[:3000]
+    graphs = graphs
+    feats = feats
 
     # PairDataset(Grph, embDict,global_edge_labels, total_ged)
 

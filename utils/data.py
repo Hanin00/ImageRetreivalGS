@@ -83,10 +83,6 @@ def load_dataset(name):
                     continue
         end = time.time()
         print("load time : ", end-start)
-        print("load time : ", end-start)
-        print("load time : ", end-start)
-        print("load time : ", end-start)
-        print("load time : ", end-start)
 
         return dataset
 
@@ -119,9 +115,9 @@ def load_dataset(name):
         
         
         # for filename in os.listdir('dataset/GEDPair/rpe_splited_v3_x1000_walk4_step2/'):
-        for filename in os.listdir('dataset/GEDPair/rpe_gen_dataset_0511_gev18/'):
+        for filename in os.listdir('dataset/GEDPair/img100_walk4_step3_0512/'):
             try : 
-                with open("dataset/GEDPair/rpe_gen_dataset_0511_gev18"+"/"+filename, "rb") as fr:
+                with open("dataset/GEDPair/img100_walk4_step3_0512"+"/"+filename, "rb") as fr:
                 # with open("dataset/GEDPair/rpe_splited_v3_x1000_walk4_step2"+"/"+filename, "rb") as fr:
                     tmp = pickle.load(fr)
                     # print(len(tmp[0]))
@@ -181,16 +177,15 @@ class SceneDataSource(DataSource):
         
 
     def gen_batch(self, datas, train):
-
         pos_d = datas[2]
-        # pos_a = utils.batch_nx_graphs(datas[0])
-        pos_a = utils.batch_nx_graphs_rpe(datas[0])
+        pos_a = utils.batch_nx_graphs(datas[0])
+        # pos_a = utils.batch_nx_graphs_rpe(datas[0])
         for i in range(len(datas[1])):
             if len(datas[1][i].edges()) == 0:
                 datas[1][i] = datas[0][i]
                 datas[2][i] = 0.0
-        # pos_b = utils.batch_nx_graphs(datas[1])
-        pos_b = utils.batch_nx_graphs_rpe(datas[1])
+        pos_b = utils.batch_nx_graphs(datas[1])
+        # pos_b = utils.batch_nx_graphs_rpe(datas[1])
         return pos_a, pos_b, pos_d
 
 class DiskDataSource(DataSource):

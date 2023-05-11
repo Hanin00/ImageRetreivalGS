@@ -97,10 +97,8 @@ import copy
 def nx2csr(G):
     return csr_matrix(nx.to_scipy_sparse_array(G))
 
-
 # path 로 edge list 만들고 edge 추가하기; node path로 Graph 생성 
 def mkSubGraph(S, K, mF, nodeDict,nodeIDDict):
-
   #map이나 mp로 시간 단축 해야함. 일단 구현한다 구현..
   subGList = []
   rpeAggList = []
@@ -116,10 +114,7 @@ def mkSubGraph(S, K, mF, nodeDict,nodeIDDict):
       print("nodeIDDict.keys():", nodeIDDict.keys())
       print("nodeIDDict.values():", nodeIDDict.values())
       print("sPath:", sPath)
-      # print("nodeDict:", nodeDict.keys())
-      # print("nodeIDDict:", nodeIDDict.values())
-      # print("nodeDict:", nodeDict.values())
-      
+
 
     tensor_concat = torch.cat([x.unsqueeze(0) for x in mF[cnt: cnt + len(K[idx])]], dim=0).float()
     enc_agg = torch.mean(tensor_concat, dim=0)
@@ -128,28 +123,9 @@ def mkSubGraph(S, K, mF, nodeDict,nodeIDDict):
     for i in subG.nodes(): 
       subG.nodes[i]['rpe'] = mF[cnt] # rpe값은 tensor임
       subG.nodes[i].update(nodeDict[i]) #F0 attribute 
-      
-      # print("K[idx]: ", K[idx])
-      # try:
-      #   # subG.nodes[K[idx][nodeIDDict[i]]].update(nodeDict[i]) #F0 attribute 
-      # except:
-      #   print("i:", i)
-      #   print("nodeIDDict[i]:", nodeIDDict[i])
-      #   print(" nodeDict.keys()", nodeDict.keys())
-      #   print(" nodeDict.values()", nodeDict.values())
-      #   print(" nodeIDDict.keys()", nodeIDDict.keys())
-
-        
-      #   print("nodeDict[nodeIDDict[i]]:", nodeDict[nodeIDDict[i]])
-      #   print("nodeDict[i]:", nodeDict[i])
-      #   sys.exit()
-
+    
       cnt+=1
-      # subG.nodes[K[idx][i]].update(n)
     subGList.append(subG)
-    print("subG.nodes(data=True): ",subG.nodes(data=True))
-    sys.exit()
-
 
     rpeAggList.append(enc_agg) # 노드의 rpe 값 concat
 
@@ -170,7 +146,7 @@ def mkSubs(G, args, seed ):
   
   ptr = G_full.indptr
   neighs = G_full.indices
-  num_pos, num_seed, num_cand = len(set(neighs)), 100, 5
+  num_pos, num_seed, num_cand = len(set(neighs)), 300, 5
   candidates = G_full.getnnz(axis=1).argsort()[-num_seed:][::-1]
   # print("candidates: ", candidates)
   # print("len(candidates): ", len(candidates))
@@ -203,7 +179,7 @@ def mkSubs(G, args, seed ):
   S, K, F = zip(*itemgetter(*B_pos)(rw_dict))
   # print("S: ",S[0]): 0번 노드로 시작하는 서브 그래프( walks set ) -> len(walks set): num_walks*(num_step+1)
   # print("K: ",K[0]): 0번 노드로 시작하는 서브 그래프의 .nodes() <- 이때 해당 노드의 F0 값은 없음
-  # print("F: ",F[0]): S[0]의 Feature 값; 그리도
+  # print("F: ",F[0]): S[0]의 Feature 값; 
 
   F = np.concatenate(F) #([[[0] * F.shape[-1]], F])   # rpe encoding 값(step 들만)
   mF = torch.from_numpy(np.concatenate([[[0] * F.shape[-1]], F]))  #.to(device) # walk를 각 노드에 맞춰서 concat
@@ -241,12 +217,8 @@ def main(args):
   # scene graph_원본
   with open('dataset/v3_x1000.pickle', 'rb') as f:   # time:  74.21744275093079
       data = pickle.load(f)
-
-  print(len(data))
   # mk dataset
   # data = data[:100]
-
-
   # num_walks = 4  # num_walks = walk의 총 갯수 
   # num_steps = 3  # num_steps = walk의 길이 = num_steps + 1(start node) 
   pools = 5
@@ -267,15 +239,15 @@ def main(args):
 
 
   print("len(metaData): ",len(metaData))
-  with open('dataset/img100_walk4_step3_0511/walkset_meta.pkl', 'wb') as f:
+  with open('dataset/img100_walk4_step3_0512/walkset_meta.pkl', 'wb') as f:
     pickle.dump(metaData, f)
 
   print("len(totalSubG): ",len(totalSubG))
-  with open('dataset/img100_walk4_step3_0511/subG.pkl', 'wb') as f:
+  with open('dataset/img100_walk4_step3_0512/subG.pkl', 'wb') as f:
     pickle.dump(totalSubG, f)
 
   print("len(totalSubGFeat): ",len(totalSubGFeat))
-  with open('dataset/img100_walk4_step3_0511/subGFeat.pkl', 'wb') as f:
+  with open('dataset/img100_walk4_step3_0512/subGFeat.pkl', 'wb') as f:
     pickle.dump(totalSubGFeat, f)
 
   print("len(totalSubGFeat): ",len(totalSubGFeat))
@@ -283,7 +255,7 @@ def main(args):
   end2 = time.time()
   print("time2: ", end2-start)
 
-  with open('dataset/img100_walk4_step3_0511/subGFeat.pkl', 'rb') as f:
+  with open('dataset/img100_walk4_step3_0512/subGFeat.pkl', 'rb') as f:
     list2 = pickle.load(f)
   print("len(list2): ",len(list2))
   

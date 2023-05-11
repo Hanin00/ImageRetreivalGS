@@ -241,6 +241,7 @@ def build_optimizer(args, params):
     return scheduler, optimizer
 
 
+
 def batch_nx_graphs(graphs, anchors=None):
     # motifs_batch = [pyg_utils.from_networkx(
     #    nx.convert_node_labels_to_integers(graph)) for graph in graphs]
@@ -250,33 +251,70 @@ def batch_nx_graphs(graphs, anchors=None):
         for anchor, g in zip(anchors, graphs):
             for v in g.nodes:
                 g.nodes[v]["node_feature"] = torch.tensor([float(v == anchor)])
+                
 
     for g in graphs:
-        for v in list(g.nodes):
-            try: # 기존 데이터셋
-                r0 = g.nodes[v]["r0"]
-                r1 = g.nodes[v]["r1"]
-                r2 = g.nodes[v]["r2"]
-                #r3 = g.nodes[v]["r3"]
-                #r4 = g.nodes[v]["r4"]
-                f0 = g.nodes[v]["f0"]
-                
-                g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((r0,r1,r2, f0), axis=None))
-                #g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((r0, r1,r2, [f0]), axis=None)) #rpe_f0 성능 개선
-            except:
-                print("here")
-                print("torch.tensor(np.concatenate((rpe, f0), axis=None)): "  ,torch.tensor(np.concatenate((rpe, f0), axis=None)))
-                print(g.nodes[v])
-                print("g.nodes(data=True): ",g.nodes(data=True))
+        for v in g.nodes:
+            rpe = g.nodes[v]['rpe']
+            f0 = g.nodes[v]["f0"]
+            g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
+            # g.nodes[v]["node_feature"] = torch.tensor([g.nodes[v]["f0"]])
+            
+    # print("type(graphs) : ",type(graphs))
+    # print("type(graphs[0]) : ",type(graphs[0]))
+    # print("DSGraph(g) : ",DSGraph(g))
 
-                sys.exit()
-                rpe = g.nodes[v]["rpe"]
-                f0 = g.nodes[v]["f0"]
-                g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
     batch = Batch.from_data_list([DSGraph(g) for g in graphs])
     batch = batch.to(get_device())
     # print(batch)
     return batch
+
+
+
+
+
+
+# def batch_nx_graphs(graphs, anchors=None):
+#     # motifs_batch = [pyg_utils.from_networkx(
+#     #    nx.convert_node_labels_to_integers(graph)) for graph in graphs]
+#     #loader = DataLoader(motifs_batch, batch_size=len(motifs_batch))
+#     #for b in loader: batch = b
+#     if anchors is not None:
+#         for anchor, g in zip(anchors, graphs):
+#             for v in g.nodes:
+#                 g.nodes[v]["node_feature"] = torch.tensor([float(v == anchor)])
+
+#     for g in graphs:
+#         for v in list(g.nodes):
+#             try: # 기존 데이터셋
+#                 r0 = g.nodes[v]["r0"]
+#                 r1 = g.nodes[v]["r1"]
+#                 r2 = g.nodes[v]["r2"]
+#                 #r3 = g.nodes[v]["r3"]
+#                 #r4 = g.nodes[v]["r4"]
+#                 f0 = g.nodes[v]["f0"]
+                
+#                 g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((r0,r1,r2, f0), axis=None))
+#                 #g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((r0, r1,r2, [f0]), axis=None)) #rpe_f0 성능 개선
+#             except:
+#                 print("here")
+#                 print("torch.tensor(np.concatenate((rpe, f0), axis=None)): "  ,torch.tensor(np.concatenate((rpe, f0), axis=None)))
+#                 print(g.nodes[v])
+#                 print("g.nodes(data=True): ",g.nodes(data=True))
+
+#                 sys.exit()
+#                 rpe = g.nodes[v]["rpe"]
+#                 f0 = g.nodes[v]["f0"]
+#                 g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
+#     batch = Batch.from_data_list([DSGraph(g) for g in graphs])
+#     batch = batch.to(get_device())
+#     # print(batch)
+#     return batch
+
+
+
+
+
 
 
 def batch_nx_graphs_rpe(graphs, anchors=None):
@@ -288,6 +326,8 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
         for anchor, g in zip(anchors, graphs):
             for v in g.nodes:
                 g.nodes[v]["node_feature"] = torch.tensor([float(v == anchor)])
+                print("g.nodes[v] : ",  g.nodes[v])
+
     for g in graphs:
         for v in list(g.nodes):
                 rpe = g.nodes[v]['rpe']
