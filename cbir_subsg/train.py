@@ -122,7 +122,7 @@ def train_loop(args):
                 batch_n + 1
 
         if not args.test: 
-            if e % 10 == 0: # 10 단위로 저장
+            if e % 10 == 9: # 10 단위로 저장
                 # checkpoint = {    'epoch': 10,    'model_state_dict': model.state_dict(),    }
                 # torch.save(checkpoint, 'checkpoint.pt')
                 print("Saving {}".format(args.model_path[:-5]+"_e"+str(e+1)+".pt"))

@@ -111,23 +111,20 @@ def load_dataset(name):
     elif name == "scene":
         dataset = [[], [], []]
         start = time.time()
-        # for foldername in os.listdir('utils/rp_data/su_v3_x1000/'):
-        
-        
-        # for filename in os.listdir('dataset/GEDPair/rpe_splited_v3_x1000_walk4_step2/'):
-        for filename in os.listdir('dataset/GEDPair/img100_walk4_step3_0512/'):
-            try : 
-                with open("dataset/GEDPair/img100_walk4_step3_0512"+"/"+filename, "rb") as fr:
-                # with open("dataset/GEDPair/rpe_splited_v3_x1000_walk4_step2"+"/"+filename, "rb") as fr:
+        for foldername in os.listdir('dataset/GEDPair/'):
+            for filename in os.listdir('dataset/GEDPair/'+foldername):
+                with open("dataset/GEDPair/"+foldername+"/"+filename, "rb") as fr:
+        # for filename in os.listdir('dataset/GEDPair/ged16_1000/'):
+        #     # try : 
+        #         with open("dataset/GEDPair/ged16_1000"+"/"+filename, "rb") as fr:
                     tmp = pickle.load(fr)
-                    # print(len(tmp[0]))
                     for i in range(0, len(tmp[0])):    
                         dataset[0].append(tmp[0][i])
                         dataset[1].append(tmp[1][i])
                         dataset[2].append(tmp[2][i])
 
-            except : 
-                continue
+            # except : 
+            #     continue
         end = time.time()
         print("load time : ", end-start)
 

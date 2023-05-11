@@ -64,7 +64,6 @@ def samePair(Graphset1, Graphset2):
             print(Graphset2[idx2+1][0].nodes(data=True))
             print(Graphset2[idx2+2][0])
 '''
-
             Grphs2rpeList = list(Graphset2[idx2][0].nodes('rpe')) + list(Graphset2[idx2+1][0].nodes('rpe'))
             Grphs2rpeList = [t[-1].tolist() for t in Grphs2rpeList]
 
