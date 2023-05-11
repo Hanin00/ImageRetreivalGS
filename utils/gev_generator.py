@@ -12,6 +12,19 @@ from surel_gacc import run_walk
 from utils.mkGraphRPE import *
 
 
+
+
+def normalize_labels(labels):
+    min_vals = torch.min(labels, dim=0)[0]
+    max_vals = torch.max(labels, dim=0)[0]
+    normalized_labels = (labels - min_vals) / (max_vals - min_vals)
+    return normalized_labels
+
+
+
+
+
+
 '''
     S의 각 원소(워크셋)를 이용해 edge list를 생성하고, edge에 따라 node를 생성하는 방법으로 하나의 서브그래프로 병합
 '''
@@ -283,19 +296,25 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0D
                         target_ged, new_g = graph_generation(dataset[i], F0Dict, global_edge_labels, total_ged)
                         subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
                         graph2 = subG
-                    print("*-*-*-*")
-                    print("target_ged : ", target_ged)
-                    print("target_ged : ", target_ged)
-                    print("target_ged : ", target_ged)
-                    print("*-*-*-*")
+
+                    gev = [target_ged['nc'],target_ged['ec'],target_ged['in'],target_ged['ie'],]
+                    # labels = [[label[key] for key in ['nc', 'ec', 'in', 'ie']] for label in target_ged]
+                    # print("*-*-*-*")
+                    # print("gev : ", gev)
+                    # sys.exit()
+                    # print("target_ged : ", target_ged)
+                    # print("target_ged : ", target_ged)
+                    # print("*-*-*-*")
+
                     graph2.graph['gid'] = 1
                     # d = ged(dataset[i], graph2, 'astar',
                     #         debug=False, timeit=False)
                     g1_list.append(dataset[i])
                     g2_list.append(graph2)
-                    ged_list.append(target_ged)
+                    ged_list.append(gev)  # gev로 바꿔서 넣음
 
                     subGFeatList.append(feats[i])
+
                     newGFeatList.append(enc_agg)
 
                     cnt += 1
@@ -310,14 +329,28 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0D
                 g2_list.append(subG)
                 ged_list.append(target_ged)
 
-
                 subGFeatList.append(feats[r])
                 newGFeatList.append(enc_agg)
 
-            with open("dataset/GEDPair/rpe_gen_dataset_0511/{}_{}.pkl".format(s, e), "wb") as fw:
-                pickle.dump([g1_list, g2_list, ged_list], fw)
-            with open("dataset/GEDPair/rpe_gen_dataset_0511_subG_newGFeat/{}_{}.pkl".format(s, e), "wb") as fw:
-                pickle.dump([subGFeatList, newGFeatList, ged_list], fw)
+
+            # 정규화 여기서
+            max_value = 9.0
+            ged_tensor = torch.tensor(ged_list)
+            ged_norm_list = ged_tensor / max_value
+            
+            # print("ged_norm_list: ",ged_norm_list)
+            # sys.exit()
+
+                
+
+
+
+
+
+            with open("dataset/GEDPair/rpe_gen_dataset_0511_gev18/{}_{}.pkl".format(s, e), "wb") as fw:
+                pickle.dump([g1_list, g2_list, ged_norm_list], fw)
+            with open("dataset/GEDPair/rpe_gen_dataset_0511_gev18_subG_newGFeat/{}_{}.pkl".format(s, e), "wb") as fw:
+                pickle.dump([subGFeatList, newGFeatList, ged_norm_list], fw)
         
             g1_list = []
             g2_list = []
@@ -349,6 +382,9 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0D
 
     ## GEV를 나눠서 학습할 때랑 GED로 만들어서 학습할 때 뭐가 더 잘 찾는지 궁금함
 
+
+    ### GEV를 뭐에 대해 normalize..?
+
 '''
 
 
@@ -378,9 +414,8 @@ def main(margs):
        embDict  = pickle.load(f)
     
     #일단 당장 할 거..!
-    # graphs = graphs[:100]
-    # feats = feats[:100]
-
+    graphs = graphs[:3000]
+    feats = feats[:3000]
 
     # PairDataset(Grph, embDict,global_edge_labels, total_ged)
 
@@ -390,12 +425,12 @@ def main(margs):
     q = mp.Queue()
     train_num_per_row = 64      # Number of datasets created by one subgraph
     max_row_per_worker = 64     # Number of Subgraphs processed by one processor
-    number_of_worker = 32       # Number of processor
+    number_of_worker = 40       # Number of processor
 
     total = graphs
     # global_node_labels = list(embDict.keys())
     global_edge_labels = [0, 0]
-    total_ged=random.randint(2, 6)
+    total_ged=random.randint(14, 18)
     train = True
 
     print("start")
@@ -420,6 +455,7 @@ def main(margs):
 
 
 if __name__ == "__main__":
+
 
     parser = argparse.ArgumentParser(description='Embedding arguments')
     utils.parse_optimizer(parser)

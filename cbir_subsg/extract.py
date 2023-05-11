@@ -62,7 +62,7 @@ def feature_extract(args):
         for i in querys: #i = 쿼리 그래프의 서브 그래프 하나. 
             query = temp.copy()
             query.append(i)
-            query = utils.batch_nx_graphs(query, None)
+            query = utils.batch_nx_graphs_rpe(query, None)
             query = query.to(utils.get_device())
 
             extractTimeStart = time.time()

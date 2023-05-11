@@ -29,7 +29,6 @@ from astar_ged.src.distance import ged, normalized_ged
 import time
 
 
-
 def load_dataset(name):
     """ Load real-world datasets, available in PyTorch Geometric.
 
@@ -66,7 +65,6 @@ def load_dataset(name):
         dataset = [[], [], []]
         start = time.time()
         # for foldername in os.listdir('utils/rp_data/su_v3_x1000/'):
-        print("여기")
         for foldername in os.listdir('utils/rp_data/'):
             i = 0
             for filename in os.listdir('utils/rp_data/'+foldername):
@@ -113,24 +111,25 @@ def load_dataset(name):
 
         return dataset
 
-
     # rpe 데이터 불러옴 
     elif name == "scene":
         dataset = [[], [], []]
         start = time.time()
         # for foldername in os.listdir('utils/rp_data/su_v3_x1000/'):
         
+        
         # for filename in os.listdir('dataset/GEDPair/rpe_splited_v3_x1000_walk4_step2/'):
-        for filename in os.listdir('dataset/GEDPair/rpe_gen_dataset_0511'):
+        for filename in os.listdir('dataset/GEDPair/rpe_gen_dataset_0511_gev18/'):
             try : 
-                with open("dataset/GEDPair/rpe_gen_dataset_0511"+"/"+filename, "rb") as fr:
+                with open("dataset/GEDPair/rpe_gen_dataset_0511_gev18"+"/"+filename, "rb") as fr:
                 # with open("dataset/GEDPair/rpe_splited_v3_x1000_walk4_step2"+"/"+filename, "rb") as fr:
                     tmp = pickle.load(fr)
-                    print(filename)
-                    for i in range(0, len(tmp[0]), 64):
+                    # print(len(tmp[0]))
+                    for i in range(0, len(tmp[0])):    
                         dataset[0].append(tmp[0][i])
                         dataset[1].append(tmp[1][i])
                         dataset[2].append(tmp[2][i])
+
             except : 
                 continue
         end = time.time()
@@ -174,51 +173,25 @@ class SceneDataSource(DataSource):
     def gen_data_loaders(self, batch_sizes, train=True):
         n = batch_sizes
         l1, l2, l3 = [], [], []
-        for i in range(len(self.dataset[0])//batch_sizes):
-            l1.append(self.dataset[0][i:i+batch_sizes])
-            l2.append(self.dataset[1][i:i+batch_sizes])
-            l3.append(self.dataset[2][i:i+batch_sizes])
+        l1.append(self.dataset[0][0:0+batch_sizes])
+        l2.append(self.dataset[1][0:0+batch_sizes])
+        l3.append(self.dataset[2][0:0+batch_sizes])
 
         return [[a, b, c] for a, b, c in zip(l1, l2, l3)]
+        
 
     def gen_batch(self, datas, train):
 
         pos_d = datas[2]
         # pos_a = utils.batch_nx_graphs(datas[0])
-        pos_a = utils.batch_nx_graphs_rpe(data[0])
+        pos_a = utils.batch_nx_graphs_rpe(datas[0])
         for i in range(len(datas[1])):
             if len(datas[1][i].edges()) == 0:
                 datas[1][i] = datas[0][i]
                 datas[2][i] = 0.0
         # pos_b = utils.batch_nx_graphs(datas[1])
-        pos_b = utils.batch_nx_graphs_rpe(data[1])
+        pos_b = utils.batch_nx_graphs_rpe(datas[1])
         return pos_a, pos_b, pos_d
-
-        # else:
-        #     if len(self.g1)-b > batch_size:
-        #         s = b
-        #         e = b + batch_size
-        #     else:
-        #         s = b
-        #         e = len(self.g1)
-        #     print(len(self.g1))
-        #     print(s)
-        #     print(e)
-        #     pos_a = self.g1[s:e//2]
-        #     pos_b = self.g2[s:e//2]
-        #     pos_d = self.ged[s:e//2]
-        #     neg_a = self.g1[e//2:e]
-        #     neg_b = self.g2[e//2:e]
-        #     neg_d = self.ged[e//2:e]
-        #     print(self.g1[s:e//2])
-        #     print(len(pos_a))
-        #     pos_a = utils.batch_nx_graphs(pos_a)
-        #     pos_b = utils.batch_nx_graphs(pos_b)
-        #     neg_a = utils.batch_nx_graphs(neg_a)
-        #     neg_b = utils.batch_nx_graphs(neg_b)
-
-        #     return pos_a, pos_b, neg_a, neg_b, pos_d, neg_d
-
 
 class DiskDataSource(DataSource):
     """ Uses a set of graphs saved in a dataset file to train the model.

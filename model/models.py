@@ -18,6 +18,7 @@ class BaselineMLP(nn.Module):
 
     def forward(self, emb_motif, emb_motif_mod):
         pred = self.mlp(torch.cat((emb_motif, emb_motif_mod), dim=1))
+        # pred = F.log_softmax(pred, dim=1)
         pred = F.log_softmax(pred, dim=1)
         return pred
 
@@ -36,26 +37,24 @@ class GnnEmbedder(nn.Module):
         self.margin = args.margin
         self.use_intersection = False   
 
-        self.clf_model = nn.Sequential(nn.Linear(1, 1))
+        self.clf_model = nn.Sequential(nn.Linear(4, 4)) #gev로 받으려고.. 변경함
 
     def forward(self, emb_as, emb_bs):
         return emb_as, emb_bs
 
     def predict(self, pred):
         """Predict graph edit distance(ged) of graph pairs, where emb_as, emb_bs = pred.
-
         pred: list (emb_as, emb_bs) of embeddings of graph pairs.
-
         Returns: list of ged of graph pairs.
         """
-
         emb_as, emb_bs = pred
-
-        e = torch.sum(torch.abs(emb_bs - emb_as), dim=1)
+        # e = torch.sum(torch.abs(emb_bs - emb_as), dim=1) 
+        e = torch.abs(emb_bs - emb_as)
+        # print("e.shape: ", e.shape)
 
         return e
 
-    def criterion(self, pred, intersect_embs, labels):
+    def criterion(self, pred, intersect_emunbs, labels):
         """Loss function for emb.
         The e term is the predicted ged of graph pairs.
 
@@ -64,7 +63,11 @@ class GnnEmbedder(nn.Module):
         labels: labels for each entry in pred
         """
         emb_as, emb_bs = pred
-        e = torch.sum(torch.abs(emb_bs - emb_as), dim=1)
+        e = torch.abs(emb_bs - emb_as)
+        # print("e: ",e)
+        # print("e.shape: ", e.shape)
+        # print("label: ",labels)
+
         relation_loss = torch.sum(torch.abs(labels-e))
 
         return relation_loss
@@ -140,6 +143,7 @@ class SkipLastGNN(nn.Module):
             nn.ReLU(),
             nn.Linear(hidden_dim, 256), nn.ReLU(),  # 64 256
             nn.Linear(256, hidden_dim))             # 265 64
+
         #self.batch_norm = nn.BatchNorm1d(output_dim, eps=1e-5, momentum=0.1)
         self.skip = args.skip   # True
         self.conv_type = args.conv_type     # order
@@ -168,7 +172,7 @@ class SkipLastGNN(nn.Module):
 
     def forward(self, data):
         x, edge_index, batch = data.node_feature, data.edge_index, data.batch   
-        x = x.squeeze(1)
+        # x = x.squeeze(x)
 
         x = self.pre_mp(x.float())  # torch.Size([538, 64])
 
@@ -201,7 +205,7 @@ class SkipLastGNN(nn.Module):
                 x = self.convs[i](x, edge_index)
             x = F.relu(x)
             x = F.dropout(x, p=self.dropout, training=self.training)
-            emb = torch.cat((emb, x), 1)    # torch.Size([539, 128])
+            emb = torch.cat((emb, x), 1)    # torch.Size([539, 128]) # gev 로 
             if self.skip == 'learnable':
                 # torch.Size([539, 2, 64])
                 all_emb = torch.cat((all_emb, x.unsqueeze(1)), 1)

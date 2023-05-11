@@ -15,7 +15,8 @@ import argparse
 def build_model(args):
     if args.method_type == "gnn":
         #model = models.GnnEmbedder(1, args.hidden_dim, args)
-        model = models.GnnEmbedder(args.feature_dim , args.hidden_dim, args) #feature vector("rpe")가 num_walks = 4라 5차원
+        # model = models.GnnEmbedder(args.feature_dim , args.hidden_dim, args) #feature vector("rpe")가 num_walks = 4라 5차원
+        model = models.GnnEmbedder(args.feature_dim , 4, args) #feature vector("rpe")가 num_walks = 4라 5차원
     # elif args.method_type == "mlp":
     #     model = models.BaselineMLP(1, args.hidden_dim, args)
     model.to(utils.get_device())
@@ -45,14 +46,28 @@ def train(args, model, dataset, data_source):
 
     model.train()   # dorpout 및 batchnomalization 활성화
     model.zero_grad()   # 학습하기위한 Grad 저장할 변수 초기화
-    pos_a, pos_b, pos_label = data_source.gen_batch(
-        dataset, True)
+    pos_a, pos_b, pos_label = data_source.gen_batch( dataset, True)
+    # print("pos_label: ", pos_label)
+
 
     emb_as, emb_bs = model.emb_model(pos_a), model.emb_model(pos_b)
-    labels = torch.tensor(pos_label).to(utils.get_device())
+    
+    # labels = [[label[key] for key in ['nc', 'ec', 'in', 'ie']] for label in pos_label]
+    # labels = torch.tensor(pos_label).to(utils.get_device())
+
+    labels = torch.stack(pos_label, dim=0).to(utils.get_device())
+
+
+    
 
     intersect_embs = None
     pred = model(emb_as, emb_bs)
+
+    # print("len(pred) : ", len(labels))
+    # print("len(labels) : ", len(labels))
+    # print("len(labels[0]) : ",len(labels[0]))
+    
+
     loss = model.criterion(pred, intersect_embs, labels)
     print("loss", loss)
     loss.backward()
@@ -66,9 +81,13 @@ def train(args, model, dataset, data_source):
         with torch.no_grad():
             pred = model.predict(pred)  # 해당 부분은 학습에 반영하지 않겠다
         model.clf_model.zero_grad()
-        pred = model.clf_model(pred.unsqueeze(1)).view(-1)
+        pred = model.clf_model(pred)
+
+        # pred = model.clf_model(pred.unsqueeze(1)).view(-1)
         criterion = nn.MSELoss()
         clf_loss = criterion(pred.float(), labels.float())
+
+
         clf_loss.backward()
         clf_opt.step()
 
@@ -77,6 +96,7 @@ def train(args, model, dataset, data_source):
     return pred, labels, loss.item()
 
 
+import sys
 def train_loop(args):
     if not os.path.exists(os.path.dirname(args.model_path)):
         os.makedirs(os.path.dirname(args.model_path))
@@ -86,12 +106,12 @@ def train_loop(args):
     model = build_model(args) 
 
     data_source = make_data_source(args)
-    loaders = data_source.gen_data_loaders(
-        args.batch_size, train=False)
+    loaders = data_source.gen_data_loaders(args.batch_size, train=False)
+
 
     val = []
     batch_n = 0
-    epoch = 100
+    epoch = 1000
     for e in range(epoch):
         for dataset in loaders:
             if args.test:
@@ -108,16 +128,17 @@ def train_loop(args):
                           "loss :", loss)
                 batch_n += 1
 
-        if not args.test:
-            print("Saving {}".format(args.model_path[:-5]+"_e"+str(e+1)+".pt"))
-            torch.save(model.state_dict(), args.model_path[:-3]+"_e"+str(e+1)+".pt")
+        if not args.test: 
+            if e % 10 == 0: # 10 단위로 저장
+                print("Saving {}".format(args.model_path[:-5]+"_e"+str(e+1)+".pt"))
+                torch.save(model.state_dict(), args.model_path[:-3]+"_e"+str(e+1)+".pt")
             
             #print("Saving {}".format(args.model_path[:-5]+"_e"+str(e+1)+".pt"))
             #torch.save(model.state_dict(), args.model_path[:-5]+"_e"+str(e+1)+".pt")
 
         else:
-            print(len(loaders))
-            print(sum(val)/len(loaders))
+            print("len(loaders) : ", len(loaders))
+            print("sum(val)/len(loaders): ", sum(val)/len(loaders))
 
 
 def main(force_test=False):

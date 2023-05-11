@@ -67,8 +67,8 @@ def parse_encoder(parser, arg_str=None):
                             margin=0.1,
                             test_set='',
                             eval_interval=10,   # 1000, batch 반복횟수
-                            n_workers=1,        # 4
-                            model_path="ckpt/final/rpe_only/rpe_v3_0511_newdataset_.pt",
+                            n_workers=4,        # 4
+                            model_path="ckpt/final/rpe_only/rpe_v3_0511_newdatase__.pt",
                             #model_path="ckpt/final/rpe_v3_imgId100_e1.pt",
                             tag='',
                             val_size=64,         # 4096,
@@ -76,9 +76,7 @@ def parse_encoder(parser, arg_str=None):
                             num_walks = 4,
                             num_steps =3, 
                             use_weight = False,
-                            norm = 'all'
-
-
+                            norm = 'all',
                             )    
 
     # return enc_parser.parse_args(arg_str)
