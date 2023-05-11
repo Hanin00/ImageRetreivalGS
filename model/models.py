@@ -54,7 +54,7 @@ class GnnEmbedder(nn.Module):
 
         return e
 
-    def criterion(self, pred, intersect_emunbs, labels):
+    def criterion(self, pred, intersect_embs, labels):
         """Loss function for emb.
         The e term is the predicted ged of graph pairs.
 
@@ -64,10 +64,6 @@ class GnnEmbedder(nn.Module):
         """
         emb_as, emb_bs = pred
         e = torch.abs(emb_bs - emb_as)
-        # print("e: ",e)
-        # print("e.shape: ", e.shape)
-        # print("label: ",labels)
-
         relation_loss = torch.sum(torch.abs(labels-e))
 
         return relation_loss
@@ -83,8 +79,11 @@ class SkipLastGNN(nn.Module):
         pre MLP
         '''
         # Linear(1, 64)
-        #self.pre_mp = nn.Sequential(nn.Linear(input_dim, 3*hidden_dim if args.conv_type == "PNA" else hidden_dim))
-        self.pre_mp = nn.Sequential(nn.Linear(input_dim, hidden_dim))
+        
+        self.pre_mp = nn.Sequential(nn.Linear(input_dim, 3*hidden_dim if
+                                              args.conv_type == "PNA" else hidden_dim))
+        
+        # self.pre_mp = nn.Sequential(nn.Linear(input_dim, hidden_dim))
 
         '''
         GCN
@@ -173,8 +172,9 @@ class SkipLastGNN(nn.Module):
     def forward(self, data):
         x, edge_index, batch = data.node_feature, data.edge_index, data.batch   
         # x = x.squeeze(x)
+        x = self.pre_mp(x)  # torch.Size([538, 64])
 
-        x = self.pre_mp(x.float())  # torch.Size([538, 64])
+        # x = self.pre_mp(x.float())  # torch.Size([538, 64])
 
         all_emb = x.unsqueeze(1)    # torch.Size([539, 1, 64])
         emb = x                     # torch.Size([539, 64])
@@ -192,8 +192,8 @@ class SkipLastGNN(nn.Module):
                                    self.convs_mean[i](curr_emb, edge_index),
                                    self.convs_max[i](curr_emb, edge_index)), dim=-1)
                 else:
-                    #x = self.convs[i](curr_emb, edge_index)
-                    x = self.convs[i](curr_emb, edge_index.long())
+                    x = self.convs[i](curr_emb, edge_index)
+                    # x = self.convs[i](curr_emb, edge_index.long())
             elif self.skip == 'all':
                 if self.conv_type == "PNA":
                     x = torch.cat((self.convs_sum[i](emb, edge_index),

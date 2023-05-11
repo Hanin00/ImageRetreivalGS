@@ -16,10 +16,12 @@ def build_model(args):
     if args.method_type == "gnn":
         #model = models.GnnEmbedder(1, args.hidden_dim, args)
         # model = models.GnnEmbedder(args.feature_dim , args.hidden_dim, args) #feature vector("rpe")가 num_walks = 4라 5차원
-        model = models.GnnEmbedder(args.feature_dim , 4, args) #feature vector("rpe")가 num_walks = 4라 5차원
+        model = models.GnnEmbedder(args.feature_dim , args.hidden_dim, args) #feature vector("rpe")가 num_walks = 4라 5차원
     # elif args.method_type == "mlp":
     #     model = models.BaselineMLP(1, args.hidden_dim, args)
     model.to(utils.get_device())
+    
+    # checkpoint = torch.load('checkpoint.pt')
 
     if os.path.exists(args.model_path):
         model.load_state_dict(torch.load(args.model_path,
@@ -121,13 +123,16 @@ def train_loop(args):
 
         if not args.test: 
             if e % 10 == 0: # 10 단위로 저장
+                # checkpoint = {    'epoch': 10,    'model_state_dict': model.state_dict(),    }
+                # torch.save(checkpoint, 'checkpoint.pt')
                 print("Saving {}".format(args.model_path[:-5]+"_e"+str(e+1)+".pt"))
-                torch.save(model.state_dict(), args.model_path[:-3]+"_e"+str(e+1)+".pt")
+                torch.save(model.state_dict(), 
+                       args.model_path[:-5]+"_e"+str(e+1)+".pt")
             
             #print("Saving {}".format(args.model_path[:-5]+"_e"+str(e+1)+".pt"))
             #torch.save(model.state_dict(), args.model_path[:-5]+"_e"+str(e+1)+".pt")
         else:
-            print("len(loaders) : ", len(loaders))
+            # print("len(loaders) : ", len(loaders))
             print("sum(val)/len(loaders): ", sum(val)/len(loaders))
 
 

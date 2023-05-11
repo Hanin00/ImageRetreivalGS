@@ -120,39 +120,34 @@ def feature_extract(args):
 
 
 def load_dataset(args):
-
-    with open('dataset/totalEmbDictV3_x100.pickle', 'rb') as f:  
-       f0Dict  = pickle.load(f)
-
-    with open('dataset/img100_walk4_step3_0511/subG_10000.pkl', 'rb') as f:  #
-        subGraphs = pickle.load(f)
-
-    db = []  
+    with open("dataset/v3_x1000.pickle", "rb") as fr:
+        datas = pickle.load(fr)
+    
+    datas= datas[:100]
+    db = []
     db_idx = []
 
-
-    print("subGraph: ", subGraphs[:10])
-    query_num = 100
-    for idx, sub in enumerate(subGraphs[100:]):
-        if query_num == idx:
+    seeds = 4
+    query_number = 5002                         #todo meta data 기준으로 걸러야함
+    for i in range(len(datas)):
+        if query_number == i:
             continue
-        db.extend(sub)
-        db_idx.extend([idx]*len(sub))
-    
-    # 원본은 한 scene graph에 대해 서브 그래프를 하나 만들어서 사용 일단, 서브 그래프 간 비교가 가능한 지부터 확인..
-    
-    
-    
-    query_number = 5002
-    query  = subGraphs[20:84]
+       # subGList, subGFeatList = mkGraphRPE.mkSubs(datas[i], num_walks, num_steps, seeds)
+        try: 
+            subs, subGFeatList = mkG.mkSubs(datas[i], args, seeds)
+        except:
+            print("ex")
+            continue
 
-    
+        db.extend(subs)
+        db_idx.extend([i]*len(subs))
+
+    # user-defined query images
+    with open("dataset/query_road_0819.pickle", "rb") as q:
+        querys = pickle.load(q)
+        query, queryFeatList = mkG.mkSubs(querys[0], args, seeds)
+        query_number = 1
     return db, db_idx, query, query_number
-
-
-
-
-
 
 
 
