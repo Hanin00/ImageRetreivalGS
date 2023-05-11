@@ -244,8 +244,6 @@ def main(args):
       totalSubGFeat += subGFeatList
   end = time.time()
 
-
-
   # print("len(metaData): ",len(metaData))
   # with open('dataset/img100_walk4_step3/walkset_meta.pkl', 'wb') as f:
   #   pickle.dump(metaData, f)

@@ -288,40 +288,17 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
         for anchor, g in zip(anchors, graphs):
             for v in g.nodes:
                 g.nodes[v]["node_feature"] = torch.tensor([float(v == anchor)])
-
     for g in graphs:
         for v in list(g.nodes):
-            #g.nodes[v]["node_feature"] = torch.tensor([g.nodes[v]["f0"]]) #only f0 - baseline
-            #g.nodes[v]["node_feature"] = torch.tensor([g.nodes[v]["rpe"]]) #only rpe - 단순 비교
-            #print(np.concatenate([g.nodes[v]["rpe"],[g.nodes[v]["f0"]]]))  
-#            print(g.nodes(data=True))
-#            print(g.nodes[v])
-#            print("v: ", v)
-#            print(g.nodes[v]["f0"])
-            try: # 기존 데이터셋
-                r0 = g.nodes[v]["r0"]
-                r1 = g.nodes[v]["r1"]
-                r2 = g.nodes[v]["r2"]
-                #r3 = g.nodes[v]["r3"]
-                #r4 = g.nodes[v]["r4"]
-                f0 = g.nodes[v]["f0"]
-
-                g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((r0,r1,r2, f0), axis=None))
-                #g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((r0, r1,r2, [f0]), axis=None)) #rpe_f0 성능 개선
-            except:
-                
                 rpe = g.nodes[v]['rpe']
                 f0 = g.nodes[v]["f0"]
-                try:
-                    g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
-                    
-                except:
-                    print("rpe : ",rpe)
-                    print("torch.tensor(np.concatenate((rpe, f0), axis=None)): "  ,torch.tensor(np.concatenate((rpe, f0), axis=None)))
-
-
-
-    batch = Batch.from_data_list([DSGraph(g) for g in graphs])
-    batch = batch.to(get_device())
+                g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
+                
+    try:
+        batch = Batch.from_data_list([DSGraph(g) for g in graphs])
+        batch = batch.to(get_device())
+    except:
+        print(graphs)
+        print("DSGraph(g): ",DSGraph(graphs[0]))    
     # print(batch)
     return batch

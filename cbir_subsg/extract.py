@@ -36,17 +36,18 @@ def feature_extract(args):
     dataset, db_idx, querys, query_idx = load_dataset(args)
 
 
-    db_data = utils.batch_nx_graphs(dataset, None)
+    db_data = utils.batch_nx_graphs_rpe(dataset, None)
     db_data = db_data.to(utils.get_device())
 
     # model load
     if not os.path.exists(os.path.dirname(args.model_path)):
         os.makedirs(os.path.dirname(args.model_path))
-    model = models.GnnEmbedder(1, args.hidden_dim, args)
+    # model = models.GnnEmbedder(1, args.hidden_dim, args)  
+    model = models.GnnEmbedder(args.feature_dim, args.hidden_dim, args)  
     model.to(utils.get_device())
     if args.model_path:
-        model.load_state_dict(torch.load(args.model_path, map_location="cpu"))
-                                        #   map_location=utils.get_device()))
+        model.load_state_dict(torch.load(args.model_path, map_location=utils.get_device()))
+              
     else:
         return print("model does not exist")
 

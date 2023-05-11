@@ -129,11 +129,7 @@ def load_dataset(name):
                     print(filename)
                     for i in range(0, len(tmp[0]), 64):
                         dataset[0].append(tmp[0][i])
-                        
-                        print("tmp[0][i]: ",tmp[0][i].nodes(data=True))
                         dataset[1].append(tmp[1][i])
-                        print("tmp[1][i]: ",tmp[1][i].nodes(data=True))
-                        sys.exit()
                         dataset[2].append(tmp[2][i])
             except : 
                 continue
@@ -188,12 +184,14 @@ class SceneDataSource(DataSource):
     def gen_batch(self, datas, train):
 
         pos_d = datas[2]
-        pos_a = utils.batch_nx_graphs(datas[0])
+        # pos_a = utils.batch_nx_graphs(datas[0])
+        pos_a = utils.batch_nx_graphs_rpe(data[0])
         for i in range(len(datas[1])):
             if len(datas[1][i].edges()) == 0:
                 datas[1][i] = datas[0][i]
                 datas[2][i] = 0.0
-        pos_b = utils.batch_nx_graphs(datas[1])
+        # pos_b = utils.batch_nx_graphs(datas[1])
+        pos_b = utils.batch_nx_graphs_rpe(data[1])
         return pos_a, pos_b, pos_d
 
         # else:

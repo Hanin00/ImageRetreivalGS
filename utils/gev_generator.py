@@ -312,17 +312,17 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0D
                 subGFeatList.append(feats[r])
                 newGFeatList.append(enc_agg)
 
-        with open("dataset/GEDPair/rpe_gen_dataset_0511/{}_{}.pkl".format(s, e), "wb") as fw:
-            pickle.dump([g1_list, g2_list, ged_list], fw)
-        with open("dataset/GEDPair/rpe_gen_dataset_0511_subG_newGFeat/{}_{}.pkl".format(s, e), "wb") as fw:
-            pickle.dump([subGFeatList, newGFeatList, ged_list], fw)
-    
-        g1_list = []
-        g2_list = []
-        ged_list = []
+            with open("dataset/GEDPair/rpe_gen_dataset_0511/{}_{}.pkl".format(s, e), "wb") as fw:
+                pickle.dump([g1_list, g2_list, ged_list], fw)
+            with open("dataset/GEDPair/rpe_gen_dataset_0511_subG_newGFeat/{}_{}.pkl".format(s, e), "wb") as fw:
+                pickle.dump([subGFeatList, newGFeatList, ged_list], fw)
         
-        subGFeatList = []
-        newGFeatList = []
+            g1_list = []
+            g2_list = []
+            ged_list = []
+            
+            subGFeatList = []
+            newGFeatList = []
 
 
 
@@ -378,8 +378,8 @@ def main(margs):
        embDict  = pickle.load(f)
     
     #일단 당장 할 거..!
-    graphs = graphs[:100]
-    feats = feats[:100]
+    graphs = graphs[:4]
+    feats = feats[:4]
 
 
     # PairDataset(Grph, embDict,global_edge_labels, total_ged)
@@ -389,7 +389,7 @@ def main(margs):
     q = mp.Queue()
     train_num_per_row = 64      # Number of datasets created by one subgraph
     max_row_per_worker = 64     # Number of Subgraphs processed by one processor
-    number_of_worker = 1       # Number of processor
+    number_of_worker = 32       # Number of processor
 
     total = graphs
     # global_node_labels = list(embDict.keys())
@@ -412,8 +412,6 @@ def main(margs):
         worker.join()
 
     end = time.time()
-
-
     print("time: ", end-start)
 
 
