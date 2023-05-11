@@ -38,7 +38,7 @@ class GnnEmbedder(nn.Module):
         self.use_intersection = False   
 
         # self.clf_model = nn.Sequential(nn.Linear(64, 1)) #gev로 받으려고.. 변경함
-        self.clf_model = nn.Sequential(nn.Linear(64, 1)) #gev로 받으려고.. 변경함
+        self.clf_model = nn.Sequential(nn.Linear(input_dim, 1)) #gev로 받으려고.. 변경함
 
     def forward(self, emb_as, emb_bs):
         return emb_as, emb_bs
@@ -53,9 +53,8 @@ class GnnEmbedder(nn.Module):
         e = torch.abs(emb_bs - emb_as)
         # print("e.shape: ", e.shape)
 
-
         return e
-
+    
     def criterion(self, pred, intersect_embs, labels):
         """Loss function for emb.
         The e term is the predicted ged of graph pairs.
@@ -65,17 +64,13 @@ class GnnEmbedder(nn.Module):
         labels: labels for each entry in pred
         """
         emb_as, emb_bs = pred
-        e = torch.abs(emb_bs - emb_as)# torch.Size([64, 64]) - torch.Size([64, 64]) = torch.Size([64, 64])
-        
-        
-        
-        labels = torch.unsqueeze(labels, dim=1)  # labels 크기: [64, 1, 4]
-        e = torch.unsqueeze(e, dim=2)  # e 크기: [64, 64, 1]
+        e = torch.abs(emb_bs - emb_as)  # torch.Size([64, 64])
 
-        # print(torch.abs(labels-e).size()) #torch.Size([64, 64, 4])
-        
+        labels = labels.unsqueeze(1)  # labels 크기: [64, 1, 4]
+        e = e.unsqueeze(2)  # e 크기: [64, 64, 1]
+
         relation_loss = torch.sum(torch.abs(labels - e))
-        
+
         return relation_loss
 
 
@@ -151,11 +146,19 @@ class SkipLastGNN(nn.Module):
             nn.Linear(post_input_dim, hidden_dim),  # 64 * 9, 64
             nn.Dropout(args.dropout),
             nn.LeakyReLU(0.1),
-            # nn.Linear(hidden_dim, output_dim),      # 64, 4
-            nn.Linear(hidden_dim, hidden_dim),      # 64, 64
-            nn.ReLU(),
-            nn.Linear(hidden_dim, 256), nn.ReLU(),  # 64 256
-            nn.Linear(256, hidden_dim))             # 265 64
+            nn.Linear(hidden_dim, output_dim),      # 64, 4
+        )
+
+
+        # self.post_mp = nn.Sequential(
+        #     nn.Linear(post_input_dim, hidden_dim),  # 64 * 9, 64
+        #     nn.Dropout(args.dropout),
+        #     nn.LeakyReLU(0.1),
+        #     # nn.Linear(hidden_dim, output_dim),      # 64, 4
+        #     nn.Linear(hidden_dim, hidden_dim),      # 64, 64
+        #     nn.ReLU(),
+        #     nn.Linear(hidden_dim, 256), nn.ReLU(),  # 64 256
+        #     nn.Linear(256, hidden_dim))             # 265 64
 
         #self.batch_norm = nn.BatchNorm1d(output_dim, eps=1e-5, momentum=0.1)
         self.skip = args.skip   # True

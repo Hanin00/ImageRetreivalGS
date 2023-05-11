@@ -57,10 +57,12 @@ def train(args, model, dataset, data_source):
     labels = torch.stack(pos_label, dim=0).to(utils.get_device())
 
     intersect_embs = None
-    pred = model(emb_as, emb_bs)  
-    loss = model.criterion(pred, intersect_embs, labels)
+    pred = model(emb_as, emb_bs)
 
-    print("loss: ", loss)
+    
+
+    loss = model.criterion(pred, intersect_embs, labels)
+    print("loss", loss)
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
     opt.step()
@@ -71,16 +73,14 @@ def train(args, model, dataset, data_source):
     if args.method_type == "gnn":
         with torch.no_grad():
             pred = model.predict(pred)  # 해당 부분은 학습에 반영하지 않겠다
-
-        # labels.size():  torch.Size([64, 4])
         model.clf_model.zero_grad()
-        pred = model.clf_model(pred.unsqueeze(1)).view(-1)
-        labels = torch.mean(labels, dim=1)
+        pred = model.clf_model(pred)
 
+        # pred = model.clf_model(pred.unsqueeze(1)).view(-1)
         criterion = nn.MSELoss()
-        # labels = labels.view(-1)
         clf_loss = criterion(pred.float(), labels.float())
-    
+
+
         clf_loss.backward()
         clf_opt.step()
 
