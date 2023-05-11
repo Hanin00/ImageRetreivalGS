@@ -54,7 +54,9 @@ def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
 # todo origini Id에 대한 처리. 해당 값을 제외하고 만들던가...
     for i in subG.nodes() :
         # subG.nodes[i].update(F0dict[nodeNameDict[i]]) #노드에 해당하는 
-        subG.nodes[i]['f0'] = F0dict[nodeNameDict[i]]
+        subG.nodes[i]['f0'] = F0dict[nodeNameDict[int(i)]]
+        
+        
         subG.nodes[i]['rpe'] = gT_mean[i]
 
     # print(subG.nodes(data=True))
@@ -203,8 +205,12 @@ def graph_generation(graph, F0Dict, global_edge_labels, total_ged=0):
     for idx in to_edit_idx_edge:
         while (True):
             toassigned_new_edgetype = random.choice(global_edge_labels)
-            if (toassigned_new_edgetype != new_g.edges()[idx]['name']):
-                break
+            try:
+                if (toassigned_new_edgetype != new_g.edges()[idx]['name']):
+                    break
+            except:
+                continue
+                # print('line 210 -  edge name')
         new_g.edges()[idx]['name'] = toassigned_new_edgetype
 
     ## edit node insertions
@@ -277,6 +283,11 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0D
                         target_ged, new_g = graph_generation(dataset[i], F0Dict, global_edge_labels, total_ged)
                         subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
                         graph2 = subG
+                    print("*-*-*-*")
+                    print("target_ged : ", target_ged)
+                    print("target_ged : ", target_ged)
+                    print("target_ged : ", target_ged)
+                    print("*-*-*-*")
                     graph2.graph['gid'] = 1
                     # d = ged(dataset[i], graph2, 'astar',
                     #         debug=False, timeit=False)
@@ -286,9 +297,6 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0D
 
                     subGFeatList.append(feats[i])
                     newGFeatList.append(enc_agg)
-
-
-
 
                     cnt += 1
                 cnt = 0
@@ -377,12 +385,12 @@ def main(margs):
     q = mp.Queue()
     train_num_per_row = 64      # Number of datasets created by one subgraph
     max_row_per_worker = 64     # Number of Subgraphs processed by one processor
-    number_of_worker = 32       # Number of processor
+    number_of_worker = 30       # Number of processor
 
     total = graphs
     # global_node_labels = list(embDict.keys())
     global_edge_labels = [0, 0]
-    total_ged=random.randint(1,1)
+    total_ged=random.randint(2, 6)
     train = True
 
     start = time.time()
