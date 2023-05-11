@@ -12,7 +12,7 @@ class BaselineMLP(nn.Module):
     # GNN -> concat -> MLP graph classification baseline
     def __init__(self, input_dim, hidden_dim, args):
         super(BaselineMLP, self).__init__()
-        self.emb_model = SkipLastGNN(input_dim, hidden_dim, hidden_dim, args)
+        self.emb_model = SkipLastGNN(input_dim, hidden_dim, args.output_dim, args)
         self.mlp = nn.Sequential(nn.Linear(2 * hidden_dim, 256), nn.ReLU(),
                                  nn.Linear(256, 2))
 
@@ -33,11 +33,12 @@ class GnnEmbedder(nn.Module):
     # Gnn embedder model -- contains a graph embedding model `emb_model`
     def __init__(self, input_dim, hidden_dim, args):
         super(GnnEmbedder, self).__init__()
-        self.emb_model = SkipLastGNN(input_dim, hidden_dim, hidden_dim, args)
+        self.emb_model = SkipLastGNN(input_dim, hidden_dim, args.output_dim, args)
         self.margin = args.margin
         self.use_intersection = False   
 
-        self.clf_model = nn.Sequential(nn.Linear(4, 4)) #gev로 받으려고.. 변경함
+        # self.clf_model = nn.Sequential(nn.Linear(64, 1)) #gev로 받으려고.. 변경함
+        self.clf_model = nn.Sequential(nn.Linear(64, 1)) #gev로 받으려고.. 변경함
 
     def forward(self, emb_as, emb_bs):
         return emb_as, emb_bs
@@ -52,6 +53,7 @@ class GnnEmbedder(nn.Module):
         e = torch.abs(emb_bs - emb_as)
         # print("e.shape: ", e.shape)
 
+
         return e
 
     def criterion(self, pred, intersect_embs, labels):
@@ -63,9 +65,17 @@ class GnnEmbedder(nn.Module):
         labels: labels for each entry in pred
         """
         emb_as, emb_bs = pred
-        e = torch.abs(emb_bs - emb_as)
-        relation_loss = torch.sum(torch.abs(labels-e))
+        e = torch.abs(emb_bs - emb_as)# torch.Size([64, 64]) - torch.Size([64, 64]) = torch.Size([64, 64])
+        
+        
+        
+        labels = torch.unsqueeze(labels, dim=1)  # labels 크기: [64, 1, 4]
+        e = torch.unsqueeze(e, dim=2)  # e 크기: [64, 64, 1]
 
+        # print(torch.abs(labels-e).size()) #torch.Size([64, 64, 4])
+        
+        relation_loss = torch.sum(torch.abs(labels - e))
+        
         return relation_loss
 
 
@@ -131,14 +141,18 @@ class SkipLastGNN(nn.Module):
         '''
         post MLP
         '''
-        post_input_dim = hidden_dim * (args.n_layers + 1)  # 64 * 9
+        post_input_dim = hidden_dim * (args.n_layers + 1)  # 64 * 9 # 579
+
+
+
         if args.conv_type == "PNA":
             post_input_dim *= 3
         self.post_mp = nn.Sequential(
             nn.Linear(post_input_dim, hidden_dim),  # 64 * 9, 64
             nn.Dropout(args.dropout),
             nn.LeakyReLU(0.1),
-            nn.Linear(hidden_dim, output_dim),      # 64, 64
+            # nn.Linear(hidden_dim, output_dim),      # 64, 4
+            nn.Linear(hidden_dim, hidden_dim),      # 64, 64
             nn.ReLU(),
             nn.Linear(hidden_dim, 256), nn.ReLU(),  # 64 256
             nn.Linear(256, hidden_dim))             # 265 64
@@ -213,9 +227,14 @@ class SkipLastGNN(nn.Module):
         # x = pyg_nn.global_mean_pool(x, batch)
 
         # torch.Size([32, 576])
-        emb = pyg_nn.global_add_pool(emb, batch)
-        # torch.Size([32, 64])
-        emb = self.post_mp(emb)
+        # print(emb.size()) #torch.Size([192, 576])
+      
+
+        
+        emb = pyg_nn.global_add_pool(emb, batch) # torch.Size([64, 576])
+    
+    
+        emb = self.post_mp(emb) 
 
         # emb = self.batch_norm(emb)   # TODO: test
         #out = F.log_softmax(emb, dim=1)
