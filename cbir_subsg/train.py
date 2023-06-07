@@ -59,8 +59,6 @@ def train(args, model, dataset, data_source):
     intersect_embs = None
     pred = model(emb_as, emb_bs)
 
-    
-
     loss = model.criterion(pred, intersect_embs, labels)
     print("loss", loss)
     loss.backward()
@@ -104,12 +102,15 @@ def train_loop(args):
 
     val = []
     batch_n = 0
-    epoch = 1000
+    epoch = 1 # test 시
+    cnt = 0 
     for e in range(epoch):
         for dataset in loaders:
             if args.test:
                 mae = validation(args, model, dataset, data_source)
                 val.append(mae)
+                cnt +=1 
+                # print("val: ", val)
             else:
                 pred, labels, loss = train(
                     args, model, dataset, data_source)
@@ -133,7 +134,9 @@ def train_loop(args):
             #torch.save(model.state_dict(), args.model_path[:-5]+"_e"+str(e+1)+".pt")
         else:
             # print("len(loaders) : ", len(loaders))
-            print("sum(val)/len(loaders): ", sum(val)/len(loaders))
+            # print("sum(val)/len(loaders): ", sum(val)/len(loaders))
+            print("cnt: ", cnt)
+            print("sum(val)/len(loaders): ", sum(val)/cnt)
 
 
 def main(force_test=False):

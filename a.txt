@@ -1,8 +1,0 @@
-target ged  {'nc': 0, 'ec': 0, 'in': 0, 'ie': 0}
-Graph with 2 nodes and 2 edges
-{'nc': 0, 'ec': 0, 'in': 0, 'ie': 0}
-[(0, {'name': 'shade', 'originId': 5045, 'f0': 0.023168954998254776, 'rpe': tensor([0., 0., 0.])}), (1, {'name': 'street', 'originId': 5046, 'f0': 0.011218084022402763, 'rpe': tensor([1., 0., 1.])})]
-walk_set:  [[0 0 1 0 1 0 0 0 0 0 1 0]
- [1 0 1 1 0 1 1 0 0 1 0 0]]
-freqs:  [[array([0, 1], dtype=int32)  array([[4, 2, 3],  [0, 2, 1]], dtype=int32)] 
-        [array([1, 0], dtype=int32)  array([[4, 0, 2],     [0, 4, 2]], dtype=int32)]]

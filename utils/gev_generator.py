@@ -336,15 +336,16 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0D
             max_value = 9.0
             ged_tensor = torch.tensor(ged_list)
             ged_norm_list = ged_tensor / max_value
-            
+            print("ged_norm_list: ",ged_norm_list)
+            sys.exit()
             # print("ged_norm_list: ",ged_norm_list)
             # sys.exit()
 
         
 
-            with open("dataset/GEDPair/img100_walk4_step3_0512_ged6/{}_{}.pkl".format(s, e), "wb") as fw:
+            with open("dataset/GEDPair/img100_walk4_step3_0512_ged6/__{}_{}.pkl".format(s, e), "wb") as fw:
                 pickle.dump([g1_list, g2_list, ged_norm_list], fw)
-            with open("dataset/GEDFeat/img100_walk4_step3_0512_ged6/{}_{}.pkl".format(s, e), "wb") as fw:
+            with open("dataset/GEDFeat/img100_walk4_step3_0512_ged6/__{}_{}.pkl".format(s, e), "wb") as fw:
                 pickle.dump([subGFeatList, newGFeatList, ged_norm_list], fw)
         
             g1_list = []
@@ -425,7 +426,7 @@ def main(margs):
     total = graphs
     # global_node_labels = list(embDict.keys())
     global_edge_labels = [0, 0]
-    total_ged=random.randint(6, 6)
+    total_ged=random.randint(18, 18)
     train = True
 
     print("start")

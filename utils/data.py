@@ -111,12 +111,15 @@ def load_dataset(name):
     elif name == "scene":
         dataset = [[], [], []]
         start = time.time()
-        for foldername in os.listdir('dataset/GEDPair/'):
-            for filename in os.listdir('dataset/GEDPair/'+foldername):
-                with open("dataset/GEDPair/"+foldername+"/"+filename, "rb") as fr:
-        # for filename in os.listdir('dataset/GEDPair/ged16_1000/'):
+        # ###----학습
+        # for foldername in os.listdir('dataset/GEDPair/'):
+        #     for filename in os.listdir('dataset/GEDPair/'+foldername):
+        #         with open("dataset/GEDPair/"+foldername+"/"+filename, "rb") as fr:
+                    ####---학습
+                    #---test
+        for filename in os.listdir('dataset/GEDPair/testdataset/'):
         #     # try : 
-        #         with open("dataset/GEDPair/ged16_1000"+"/"+filename, "rb") as fr:
+                with open("dataset/GEDPair/testdataset"+"/"+filename, "rb") as fr:
                     tmp = pickle.load(fr)
                     for i in range(0, len(tmp[0])):    
                         dataset[0].append(tmp[0][i])

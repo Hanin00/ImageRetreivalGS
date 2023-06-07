@@ -18,14 +18,11 @@ def validation(args, model, dataset, data_source):
 
     with torch.no_grad():
         emb_as, emb_bs = model.emb_model(pos_a), model.emb_model(pos_b)
-   
+
         # labels = [[label[key] for key in ['nc', 'ec', 'in', 'ie']] for label in pos_label]
         # labels = torch.tensor(labels).to(utils.get_device())
-
         labels = torch.stack(pos_label, dim=0).to(utils.get_device())
         # labels = torch.tensor(pos_label).to(utils.get_device()) #원본은 float 값 이었음
-
-
         pred = model(emb_as, emb_bs)
         raw_pred = model.predict(pred)
         pre_pred = raw_pred.clone().detach()
@@ -57,7 +54,7 @@ def validation(args, model, dataset, data_source):
     # print(pred)
     # print(labels.shape)
     # print(labels)
-    print("loss :", torch.sum(torch.abs(labels-pre_pred)).item())
+    print("loss !!:", torch.sum(torch.abs(labels-pre_pred)).item())
 
     mae = mean_absolute_error(labels.cpu(), pre_pred.cpu())
 
