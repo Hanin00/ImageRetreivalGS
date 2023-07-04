@@ -2,6 +2,13 @@ __pycache__/
 */*.pkl
 */*.pickle
 
+cc.en.300.bin
+cc.en.300.bin.gz
+
+*/cc.en.300.bin
+*/cc.en.300.bin.gz
+
+
 dataset/*
 dataset/rpe_splited_subgraph/*
 
