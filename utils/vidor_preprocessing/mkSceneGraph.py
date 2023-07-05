@@ -13,24 +13,18 @@
 
 
 import os, sys
-import numpy as np
 import pandas as pd
 import math
-import torch
-import csv
-import torch_geometric.utils
-
 import networkx as nx
-import matplotlib.pyplot as plt
 from gensim.models import FastText
 import fasttext.util
 from tqdm import tqdm
-import time
 import json
-from collections import Counter
 import pickle
-import nltk
-from nltk.corpus import conll2000
+
+import multiprocessing as mp
+
+
 
 # https://daydreamx.tistory.com/entry/NLP-FastText-%EC%9D%98-pretrained-model%EC%97%90-text-classification%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%B6%94%EA%B0%80%ED%95%99%EC%8A%B5%ED%95%98%EA%B8%B0 - fasttext 사용
 
@@ -182,15 +176,27 @@ def addEdge(gList,relation):
 # 데이터셋의 trajectory에 아예 없는 frame이 있어 해당 프레임을 삭제함
 def dropEmpty(gList):
    dropedList = [g for g in gList if len(g.nodes) > 1]
-  #  print(len(dropedList))
    dropedList = [g for g in gList if len(g.edges) > 0]
-  #  print("len(dropedList) - ", len(dropedList))
    dropedList = [g for g in gList if len(g.nodes) > 1]
-  #  print("node num")
-  #  print([len(g.nodes()) for g in gList])
 
    return dropedList
 
+
+def process_file(file_name, path_to_folder, synsDict):
+  file_path = os.path.join(path_to_folder, file_name)
+  with open(file_path, 'r') as f:
+    json_data = json.load(f)
+    gList = use1video(json_data, synsDict) #1 json data = 1 video data
+    addEdge(gList, json_data['relation_instances'])  #relation_instance 기준으로 predicate 및 edge 생성, bbox 기준으로 attribute 추가
+    gList = dropEmpty(gList)
+
+    return gList
+
+
+def save_results(results, metadata, chunk_index):
+    # 결과값과 metadata를 pickle 파일로 저장
+    with open(f'data/Vidor/scenegraph/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
+        pickle.dump((results, metadata), f)
 
 def main():
   # mkTextEmb()
@@ -198,40 +204,40 @@ def main():
     synsDict = pickle.load(fr)
 
   # # 폴더 경로 지정
-  path_to_folder = 'data/Vidor/training_total/'
-
-# 약 100만개의 이미지에 대해 추출하기 위해 사용
-  file_path = 'data/Vidor/out.txt'
-  file_list = []
-  with open(file_path, "r") as file:
-     for line in file:
-        file_name = line.split(":")[0] # :로 strip 후 앞부분만 추출
-        file_list.append(file_name)
+  path_to_folder = 'data/Vidor/training_total/'  
+  file_list = os.listdir(path_to_folder)
   
-  totalGList = []
-  for json_file in file_list:
-    file_path = os.path.join(path_to_folder, json_file)
-    with open(file_path, 'r') as f:
-        # print("file_name: " ,json_file)
-        json_data = json.load(f)
-        # use1video(json_data, synsDict) #1 json data = 1 video data
-        gList = use1video(json_data, synsDict) #1 json data = 1 video data
-        # print("before drop empty:", len(gList))
-        addEdge(gList, json_data['relation_instances'])  #relation_instance 기준으로 predicate 및 edge 생성, bbox 기준으로 attribute 추가
-        # totalGraphs.extend(gList)
-        gList = dropEmpty(gList)
-        # print("After drop empty:", len(gList))
-        totalGList += gList
-    # with open("data/Vidor/scenegraph/{}.pickle".format(json_file[:-5]), "wb") as fw:
-    #   pickle.dump(gList, fw)
+  # 프로세스 풀 생성
+  pool = mp.Pool()
 
-  with open("data/Vidor/scenegraph/total_glist_out.pickle", "wb") as fw:
-      pickle.dump(totalGList, fw) 
-  
-  print("len(totalGList): ",len(totalGList))
+  chunk_index = 0
+  chunk_results = []
+  chunk_metadata = []
 
+  for file_name in tqdm(file_list):
+      # 파일 처리 작업 수행
+      result = pool.apply(process_file, args=(file_name, path_to_folder, synsDict ))
 
-            
+      # 결과값과 metadata를 chunk에 추가
+      chunk_results.append(result)
+      chunk_metadata.append(file_name)
+
+      # 결과값과 metadata를 5개마다 묶어서 저장
+      if len(chunk_results) == 20:
+          save_results(chunk_results, chunk_metadata, chunk_index)
+          # chunk 초기화
+          chunk_results = []
+          chunk_metadata = []
+          chunk_index += 1
+
+  # 남은 결과값과 metadata를 저장
+  if chunk_results:
+      save_results(chunk_results, chunk_metadata, chunk_index)
+
+  # 프로세스 풀 닫기
+  pool.close()
+  pool.join()
+           
 
     
 if __name__ == "__main__":
