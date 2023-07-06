@@ -3,15 +3,29 @@ import pickle
 import os, sys
 from tqdm import tqdm
 
-# with open('data/Vidor/scenegraph_upper6/00_upper6_merge_scenegraphs', 'rb') as fr:
+
+# with open('data/Vidor/scenegraph/0_2754378442_6188920051.pkl', 'rb') as fr:
 #   data = pickle.load(fr)
+# print(data[0][0])
+# print(len(data[0]))
+# print(len(data[0][0]))
 
-# cnt = 0
-# for graphs in tqdm(data[0]) :
-#   cnt += len(graphs)
-# print("cnt: ",cnt)
+# for video in data[0]:
+#   for graph in video:
+#     if len(graph) != 0:
+#       print(len(graph))
 
 
+with open('data/Vidor/scenegraph/merge_scenegraphs.pkl', 'rb') as fr:
+  data = pickle.load(fr)
+
+cnt = 0
+for graphs in tqdm(data[0]) :
+  cnt += len(graphs)
+print("cnt: ",cnt)
+
+
+sys.exit()
 
 # with open('data/Vidor/scenegraph/merge_scenegraphs', 'rb') as fr:
 #   data = pickle.load(fr)
@@ -45,7 +59,7 @@ for file_name in tqdm(file_list): # 파일 명
         upper5Graph.append(video)
         totalFileNameList.append(fileNameList)
 
-# with open('data/Vidor/scenegraph/merge_scenegraphs', 'wb') as f:
+# with open('data/Vidor/scenegraph/merge_scenegraphs.pkl', 'wb') as f:
 #         pickle.dump((upper5Graph, totalFileNameList), f)
 
 print("cnt: ", cnt)

@@ -111,14 +111,9 @@ def use1video(data, synsDict):
   for idx, img in enumerate(data['trajectories']):
     # print("img: ",img)
     if len(img)>5:
-      # print("img: ",img)
-      # print("len(img): ",len(img))
       G = mk1Graph(img, synsDict, tid_category_dict) # json 하나에서 trajectories 하나를 기준으로 graph 하나 만듦 -> scene graph 한장 당 프레임id 하나에 매칭됨 
       gList.append(G)
       fidList.append(idx)
-      # if len(gList) == 395: 
-      #   print(gList[394])
-      #   sys.exit()
   return gList, fidList
   
 
@@ -132,6 +127,7 @@ def mk1Graph(sceneG, synsDict, tid_category_dict):
                                             'tracker': sceneG[idx]['tracker'],
                                             'txtemb': synsDict[tid_category_dict[sceneG[idx]['tid']]],
                                             'name': tid_category_dict[sceneG[idx]['tid']],
+                                            'fid': idx
                                             })])
   return testG
 

@@ -21,10 +21,6 @@ def normalize_labels(labels):
     return normalized_labels
 
 
-
-
-
-
 '''
     S의 각 원소(워크셋)를 이용해 edge list를 생성하고, edge에 따라 node를 생성하는 방법으로 하나의 서브그래프로 병합
 '''
@@ -49,11 +45,9 @@ def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
     gT_mean = {k: sum_dict[k] / count_dict[k] for k in sum_dict}
 
 # -------- ^^^^^ 생성된 walk에 있는 모든 노드들을 각 노드의 id에 맞게 rpe 를 concat 후 mean pooling 한 값 ----------------------
-
     # print("ke_ys : ",gT_mean.keys())
     # print("values: ",gT_mean.values())
 
-   
 # --------- vvvvv S의 각 워크를 edge list로 만들어 SubG에 더함 ----------------------
     subG = nx.Graph() # Graph 하나에 모두 합쳐야 해서 for 문 밖에 그래프 객체를 생성
     for idx, sPath in enumerate(S):

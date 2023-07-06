@@ -218,12 +218,24 @@ def mkSubs(G, args, seed ):
 
 def main(args):
   # scene graph_원본
-  with open('dataset/v3_x1000.pickle', 'rb') as f:   # time:  74.21744275093079
+  # with open('dataset/v3_x1000.pickle', 'rb') as f:   # time:  74.21744275093079
+  with open('data/Vidor/scenegraph/0_2754378442_6188920051.pkl', 'rb') as f:   # time:  74.21744275093079
       data = pickle.load(f)
-
   print(len(data))
-  # mk dataset
-  # data = data[:100]
+  print(len(data[0]))
+
+  for idx, file in enumerate(data[0]): #graph List List
+     print("file: ", file)
+     if len(file)!= 0:      
+        print(data[0][idx]) #graph  
+        print(data[1][idx]) #json file name
+        print(data[2][idx]) #fid
+        sys.exit()
+
+  sys.exit()
+
+
+  
 
   # num_walks = 4  # num_walks = walk의 총 갯수 
   # num_steps = 3  # num_steps = walk의 길이 = num_steps + 1(start node) 
