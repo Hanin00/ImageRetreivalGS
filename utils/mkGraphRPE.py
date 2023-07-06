@@ -100,8 +100,6 @@ def nx2csr(G):
 
 # path 로 edge list 만들고 edge 추가하기; node path로 Graph 생성 
 def mkSubGraph(S, K, mF, nodeDict):
-
-
   #map이나 mp로 시간 단축 해야함. 일단 구현한다 구현..
   subGList = []
   rpeAggList = []

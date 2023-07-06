@@ -102,6 +102,7 @@ def mkTextEmb():
 '''
 def use1video(data, synsDict):
   gList = []
+  fidList = []
 # subj/obj id - class dict
   tid_category_dict = {
       item['tid']: item['category'] for item in data['subject/objects']
@@ -114,10 +115,11 @@ def use1video(data, synsDict):
       # print("len(img): ",len(img))
       G = mk1Graph(img, synsDict, tid_category_dict) # json 하나에서 trajectories 하나를 기준으로 graph 하나 만듦 -> scene graph 한장 당 프레임id 하나에 매칭됨 
       gList.append(G)
+      fidList.append(idx)
       # if len(gList) == 395: 
       #   print(gList[394])
       #   sys.exit()
-  return gList
+  return gList, fidList
   
 
 # json 하나에서 trajectories 하나를 기준으로 graph 하나 만듦 -> scene graph 한장 당 프레임id 하나에 매칭됨
@@ -186,17 +188,16 @@ def process_file(file_name, path_to_folder, synsDict):
   file_path = os.path.join(path_to_folder, file_name)
   with open(file_path, 'r') as f:
     json_data = json.load(f)
-    gList = use1video(json_data, synsDict) #1 json data = 1 video data
+    gList, fidList = use1video(json_data, synsDict) #1 json data = 1 video data
     addEdge(gList, json_data['relation_instances'])  #relation_instance 기준으로 predicate 및 edge 생성, bbox 기준으로 attribute 추가
     gList = dropEmpty(gList)
+    return gList, fidList
 
-    return gList
 
-
-def save_results(results, metadata, chunk_index):
+def save_results(results, metadata, fidList, chunk_index):
     # 결과값과 metadata를 pickle 파일로 저장
     with open(f'data/Vidor/scenegraph/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
-        pickle.dump((results, metadata), f)
+        pickle.dump((results, metadata, fidList), f)
 
 def main():
   # mkTextEmb()
@@ -206,33 +207,35 @@ def main():
   # # 폴더 경로 지정
   path_to_folder = 'data/Vidor/training_total/'  
   file_list = os.listdir(path_to_folder)
-  
+    
   # 프로세스 풀 생성
   pool = mp.Pool()
 
   chunk_index = 0
   chunk_results = []
+  chunk_fidList = []
   chunk_metadata = []
 
   for file_name in tqdm(file_list):
       # 파일 처리 작업 수행
-      result = pool.apply(process_file, args=(file_name, path_to_folder, synsDict ))
-
+      result, fidList = pool.apply(process_file, args=(file_name, path_to_folder, synsDict ))
       # 결과값과 metadata를 chunk에 추가
       chunk_results.append(result)
+      chunk_fidList.append(fidList)
       chunk_metadata.append(file_name)
 
       # 결과값과 metadata를 5개마다 묶어서 저장
-      if len(chunk_results) == 20:
-          save_results(chunk_results, chunk_metadata, chunk_index)
+      if len(chunk_results) == 30:
+          save_results(chunk_results, chunk_metadata, chunk_fidList, chunk_index)
           # chunk 초기화
           chunk_results = []
+          chunk_fidList = []
           chunk_metadata = []
           chunk_index += 1
 
   # 남은 결과값과 metadata를 저장
   if chunk_results:
-      save_results(chunk_results, chunk_metadata, chunk_index)
+      save_results(chunk_results, chunk_metadata, chunk_fidList, chunk_index)
 
   # 프로세스 풀 닫기
   pool.close()
