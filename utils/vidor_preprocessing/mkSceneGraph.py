@@ -6,9 +6,6 @@
   2. trajectories를 기준으로 tid 의 bbox를 비롯한 attribute를 생성
   3. relationship은 begin_fid, end_fid로 node(tid)간의 relation을 표현한다. 
   4. 생성한 scene graph 는 /data/Vidor/scenegraph 에 각 jsonfile(1개의 video)와 동명인 pickle file로 저장된다. 
-
-
-
 '''
 
 
@@ -71,13 +68,37 @@ def mkTotalClass(path_to_folder): # 걸린 시간 : 79.74567 sec
     # CSV 파일로 저장
     df.to_csv('data/Vidor/classList_unique.csv', index=False)
 
+def mkTotalPredicate():
+  predicateList = []
+  # # 폴더 경로 지정
+  path_to_folder = 'data/Vidor/training_annotation/'
+  folder_list = os.listdir(path_to_folder) 
+  
+  for folder in tqdm(folder_list):
+    file_list = os.listdir(os.path.join(path_to_folder,folder))
+    for json_file in file_list:
+        file_path = os.path.join(path_to_folder, folder, json_file)
+        with open(file_path, 'r') as f:
+            json_data = json.load(f)
+            try: 
+                [predicateList.append(json_data['relation_instances'][idx]['predicate']) for idx in range(len(json_data['relation_instances']))]
+                # print(predicateList)
+            except:
+                continue
+            # sys.exit()
+  # 데이터프레임 생성
+  df = pd.DataFrame({'predicate': predicateList})
+  unique_classList =  list(set(predicateList))
+  # CSV 파일로 저장
+  df.to_csv('data/Vidor/predicate_unique.csv', index=False)
 
 
 
 def mkTextEmb():
-  corpus_fname = pd.read_csv('data/Vidor/classList_unique.csv')
+  # corpus_fname = pd.read_csv('data/Vidor/classList_unique.csv')
+  corpus_fname = pd.read_csv('data/Vidor/predicate_unique.csv')
   model_fname = '/home/dblab/Haeun/CBIR/ImageRetreivalGS/data/Vidor/model'
-  words = corpus_fname['classList'].tolist()
+  words = corpus_fname['predicate'].tolist()
 
   model = fasttext.load_model('cc.en.300.bin')
   fasttext.util.reduce_model(model, 10)
@@ -91,7 +112,9 @@ def mkTextEmb():
     # print(len(model.get_word_vector(word)))
     # sys.exit()
 
-  with open("data/Vidor/class_unique_textemb.pickle", "wb") as fw:
+
+  # with open("data/Vidor/class_unique_textemb.pickle", "wb") as fw:
+  with open("data/Vidor/predicate_unique_textemb.pickle", "wb") as fw:
     pickle.dump(synsDict, fw)
   
 
@@ -110,7 +133,8 @@ def use1video(data, synsDict):
 #scene graph    
   for idx, img in enumerate(data['trajectories']):
     # print("img: ",img)
-    if len(img)>5:
+    # if len(img)>5:
+    if len(img)>2:
       G = mk1Graph(img, synsDict, tid_category_dict) # json 하나에서 trajectories 하나를 기준으로 graph 하나 만듦 -> scene graph 한장 당 프레임id 하나에 매칭됨 
       gList.append(G)
       fidList.append(idx)
@@ -192,11 +216,12 @@ def process_file(file_name, path_to_folder, synsDict):
 
 def save_results(results, metadata, fidList, chunk_index):
     # 결과값과 metadata를 pickle 파일로 저장
-    with open(f'data/Vidor/scenegraph/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
+    with open(f'data/Vidor/scenegraph_over2/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
         pickle.dump((results, metadata, fidList), f)
 
 def main():
   # mkTextEmb()
+
   with open("data/Vidor/class_unique_textemb.pickle", "rb") as fr:
     synsDict = pickle.load(fr)
 

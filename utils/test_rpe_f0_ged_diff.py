@@ -9,7 +9,6 @@ import sys
 import numpy as np
 import time
 
-
 '''
     astar 계산 시 rpe 값도 특징으로 보도록 변경
 
@@ -18,8 +17,6 @@ import time
     rpe_v3_x1000_step1_SubG 에서 node attribute만 변경함
 
 '''
-
-
 
 
 def make_pkl(dataset, queue, train_num_per_row, max_row_per_worker, train, filePath, bigGED):
@@ -49,7 +46,8 @@ def make_pkl(dataset, queue, train_num_per_row, max_row_per_worker, train, fileP
     length = len(dataset)
 
     '''
-    GED가 클 경우
+    GED가 클 경우4
+     
     1. node 수가 차이가 많이 나는 경우
     2. edge 수가 차이 나는 경우
     3. node name이 일치하지 않는 경우
@@ -59,7 +57,6 @@ def make_pkl(dataset, queue, train_num_per_row, max_row_per_worker, train, fileP
     2. node 가 동일할 경우
     
     '''
-
 
     while True:
         if queue.empty():

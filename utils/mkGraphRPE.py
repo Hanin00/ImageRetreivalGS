@@ -63,8 +63,6 @@ def np_sampling(rw_dict, ptr, neighs, bsize, target, num_walks, num_steps=3):
             pbar.update(len(batch))
     return rw_dict
 
-
-
 # path 로 edge list 만들고 edge 추가하기; node path로 Graph 생성 
 def mkPathGraph(path):
   # path to edgelist    == [[path[i], path[i+1]] for i in range(len(path)-1)]
@@ -86,9 +84,7 @@ from config.config import parse_encoder
 import argparse
 from utils import utils
 from utils import mkGutils
-
 from surel_gacc import run_walk, run_sample, sjoin
-
 import copy
 
 
@@ -96,7 +92,6 @@ import copy
 # 노드 간 연결 관계를 표현한 csr_matrix; > 해당 리스트로 nx 를 이용해 graph 생성 가능
 def nx2csr(G):
     return csr_matrix(nx.to_scipy_sparse_array(G))
-
 
 # path 로 edge list 만들고 edge 추가하기; node path로 Graph 생성 
 def mkSubGraph(S, K, mF, nodeDict):
@@ -109,7 +104,6 @@ def mkSubGraph(S, K, mF, nodeDict):
     edgelist = list(zip(sPath, sPath[1:]))
     subG = nx.Graph()
     subG.add_edges_from(edgelist)
-
     tensor_concat = torch.cat([x.unsqueeze(0) for x in mF[cnt: cnt + len(K[idx])]], dim=0).float()
     enc_agg = torch.mean(tensor_concat, dim=0)
 
@@ -119,7 +113,6 @@ def mkSubGraph(S, K, mF, nodeDict):
       try:
         subG.nodes[K[idx][i]].update(nodeDict[K[idx][i]]) #F0 attribute 
       except:
-        
         print("K[idx][i]:", K[idx][i])
         print("nodeDict.keys():", nodeDict.keys())
         print("nodeDict.values():", nodeDict.values())
@@ -128,7 +121,7 @@ def mkSubGraph(S, K, mF, nodeDict):
         print("i:", i)
         print("type(i):", type(i))
         print("K[idx]:", K[idx])
-        sys.exit()
+
 
       subG.nodes[K[idx][i]]['rpe'] = mF[cnt] # rpe값은 tensor임
       cnt+=1
@@ -149,7 +142,14 @@ def mkSubs(G, args, seed ):
   # print("G : ",G)
   subGList, subGFeatList = [], []
   G_full = nx2csr(G)
+
+  print("G_full: ", G_full)
+  sys.exit()
   
+
+
+
+
   ptr = G_full.indptr
   neighs = G_full.indices
   num_pos, num_seed, num_cand = len(set(neighs)), 100, 5
@@ -179,7 +179,6 @@ def mkSubs(G, args, seed ):
   #     else:
   #         B_pos = B_queues[batchIdx]
   batchIdx += 1
-
 
   # obtain set of walks, node id and DE (counts) from the dictionary
   S, K, F = zip(*itemgetter(*B_pos)(rw_dict))
@@ -221,21 +220,29 @@ def main(args):
   # with open('dataset/v3_x1000.pickle', 'rb') as f:   # time:  74.21744275093079
   with open('data/Vidor/scenegraph/0_2754378442_6188920051.pkl', 'rb') as f:   # time:  74.21744275093079
       data = pickle.load(f)
-  print(len(data))
-  print(len(data[0]))
 
+  # for idx, file in enumerate(data[0]): #graph List List
+  #    print("file: ", file)
+  #    if len(file)!= 0:      
+  #       print(data[0][idx]) #graph  
+  #       print(data[1][idx]) #json file name
+  #       print(data[2][idx]) #fid
+
+  totalGraph = []
+
+  cnt = 0
   for idx, file in enumerate(data[0]): #graph List List
-     print("file: ", file)
-     if len(file)!= 0:      
-        print(data[0][idx]) #graph  
-        print(data[1][idx]) #json file name
-        print(data[2][idx]) #fid
-        sys.exit()
-
-  sys.exit()
-
-
+    #  print("file: ", file)
+    if len(file)!= 0:    
+      totalGraph.extend(data[0][idx])
   
+  # print("len(totalGraph): ", len(totalGraph))
+
+  # with open("data/Vidor/scenegraph/only_upper6nodesGraph.pickle", "wb") as fw:
+  #   pickle.dump(totalGraph, fw)
+
+  # sys.exit()
+
 
   # num_walks = 4  # num_walks = walk의 총 갯수 
   # num_steps = 3  # num_steps = walk의 길이 = num_steps + 1(start node) 
@@ -276,13 +283,10 @@ def main(args):
   print("len(list2): ",len(list2))
   
 
-
 # ---------------------------- ^^^ 저장 ^^^ ----------------------------
-
   # # totalData = {"origin Graph Id ": int, "subGraphs": [(int) subgraphId, (networkx graph) subgraph , (4*4 vector; np array?) sfeature  } }
   # totalData = {}
   # totalData.update(dict(zip(orgGId, zip(subGId, subG, sFeat))))
-
 
 
 if __name__ == "__main__":
