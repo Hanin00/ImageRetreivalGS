@@ -93,7 +93,7 @@ def mkNG2Subs(G, args, F0dict):
     
     # G_full = nx2csr(G) # mkGraphRPE에 있는 함수, return csr_matrix(nx.to_scipy_sparse_array(G))
     G_full = csr_matrix(nx.to_scipy_sparse_array(G))
-    print("G_full: ", G_full) #각 노드간 연결을 표현할 뿐, 그 외는 표현 불가능
+    # print("G_full: ", G_full) #각 노드간 연결을 표현할 뿐, 그 외는 표현 불가능
 
     ptr = G_full.indptr
     neighs = G_full.indices
@@ -247,7 +247,7 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
                                'xmax': random.randint(0, 500), 'ymax': random.randint(0, 300)},
                        txtemb = (F0Dict[label_name])
                        )
-        print("edge feature cal")
+        # print("edge feature cal")
 
         if (curr_num_node !=to_insert_edge): 
             #mkSceneGraph에서 사용한 것 할 수 없음 - edge feature 사용
@@ -341,9 +341,6 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                         
                         new_g, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
                         origin_g, enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
-
-                        sys.exit()
-
                         graph2 = subG
                     else:
                         #text emb 값
@@ -397,11 +394,15 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
             else:
                 r = random.randrange(length)
                 dataset[r].graph['gid'] = 0
-                target_ged, new_g = graph_generation(dataset[r], F0Dict, PredictDict, total_ged)
-                subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
-                graph2 = subG
-                g1_list.append(dataset[r])
-                g2_list.append(subG)
+                target_ged, new_g = graph_generation(dataset[i], F0Dict, PredictDict, total_ged)
+
+                new_g, new_enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
+                origin_g, origin_enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
+
+                
+                graph2 = new_g
+                g1_list.append(origin_g)
+                g2_list.append(graph2)
                 ged_list.append(target_ged)
 
                 # subGFeatList.append(feats[r])
@@ -416,10 +417,10 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
             # sys.exit()
             # print("ged_norm_list: ",ged_norm_list)
 
-
-            with open("dataset/GEDPair/img100_walk4_step3_0512_ged6/__{}_{}.pkl".format(s, e), "wb") as fw:
+            
+            with open("data/Vidor/GEDPair/0_2754378442_6188920051/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
                 pickle.dump([g1_list, g2_list, ged_norm_list], fw)
-            with open("dataset/GEDFeat/img100_walk4_step3_0512_ged6/__{}_{}.pkl".format(s, e), "wb") as fw:
+            with open("dataset/GEDFeat/0_2754378442_6188920051/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
                 pickle.dump([subGFeatList, newGFeatList, ged_norm_list], fw)
         
             g1_list = []
