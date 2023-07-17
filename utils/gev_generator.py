@@ -1,4 +1,4 @@
-import sys
+import sys, os
 import pickle
 import random
 from copy import deepcopy
@@ -341,7 +341,7 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                         
                         new_g, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
                         origin_g, enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
-                        graph2 = subG
+                        graph2 = new_g
                     else:
                         #text emb 값
                         target_ged, new_g = graph_generation(dataset[i], F0Dict, PredictDict, total_ged)
@@ -382,7 +382,7 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                     graph2.graph['gid'] = 1
                     # d = ged(dataset[i], graph2, 'astar',
                     #         debug=False, timeit=False)
-                    g1_list.append(dataset[i])
+                    g1_list.append(origin_g)
                     g2_list.append(graph2)
                     ged_list.append(gev)  # gev로 바꿔서 넣음
 
@@ -418,9 +418,9 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
             # print("ged_norm_list: ",ged_norm_list)
 
             
-            with open("data/Vidor/GEDPair/0_2754378442_6188920051/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
+            with open("data/Vidor/GEDPair/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
                 pickle.dump([g1_list, g2_list, ged_norm_list], fw)
-            with open("dataset/GEDFeat/0_2754378442_6188920051/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
+            with open("data/Vidor/GEDFeat/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
                 pickle.dump([subGFeatList, newGFeatList, ged_norm_list], fw)
         
             g1_list = []
@@ -457,8 +457,7 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
 def main(margs):
     # global edge Label List 생성 -> Predicate dict
 
-    with open('data/Vidor/scenegraph/0_2754378442_6188920051.pkl', 'rb') as f:   # time:  74.21744275093079
-        data = pickle.load(f)
+
     with open('data/Vidor/class_unique_textemb.pickle', 'rb') as f:  
        embDict  = pickle.load(f)
     with open('data/Vidor/predicate_unique_textemb.pickle', 'rb') as f:
@@ -473,12 +472,27 @@ def main(margs):
 
     graphs = []
     cnt = 0
-    for idx, file in enumerate(data[0]): #graph List List
-        #  print("file: ", file)
-        if len(file)!= 0:    
-            graphs.extend(data[0][idx])
+
+    with open('data/Vidor/scenegraph/merge_scenegraphs.pkl','rb') as f:   # time:  74.21744275093079
+        data = pickle.load(f)
+        for idx, file in enumerate(data[0]): #graph List Li t
+            if len(file)!= 0:    
+                graphs.extend(data[0][idx])
+
+    # for filename in os.listdir('data/Vidor/scenegraph'):
+    #     with open('data/Vidor/scenegraph/'+filename, 'rb') as f:   # time:  74.21744275093079
+    #         data = pickle.load(f)
+    #         for idx, file in enumerate(data[0]): #graph List Li t
+    #             #  print("file: ", file)
+    #             try:
+    #                 if len(file)!= 0:    
+    #                     graphs.extend(data[0][idx])
+    #             except: 
+    #                 print("filename: ", filename)
+    #                 print("file: ", file)
+    #                 continue
     
-    #일단 당장 할 거..!
+#일단 당장 할 거..!
     graphs = graphs
     # feats = feats
     # PairDataset(Grph, embDict,global_edge_labels, total_ged)
@@ -493,6 +507,7 @@ def main(margs):
     total = graphs
     # global_node_labels = list(embDict.keys())
     # global_edge_labels = list(predDict.keys())
+
 
     total_ged=random.randint(18, 18)
     train = True

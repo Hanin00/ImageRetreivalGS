@@ -256,7 +256,7 @@ def batch_nx_graphs(graphs, anchors=None):
     for g in graphs:
         for v in g.nodes:
             rpe = g.nodes[v]['rpe']
-            f0 = g.nodes[v]["f0"]
+            f0 = g.nodes[v]["txtemb"]
             g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
             # g.nodes[v]["node_feature"] = torch.tensor([g.nodes[v]["f0"]])
             

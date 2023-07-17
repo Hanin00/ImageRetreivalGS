@@ -117,9 +117,9 @@ def load_dataset(name):
         #         with open("dataset/GEDPair/"+foldername+"/"+filename, "rb") as fr:
                     ####---학습
                     #---test
-        for filename in os.listdir('dataset/GEDPair/testdataset/'):
+        for filename in os.listdir('data/Vidor/GEDPair/0_2754378442_6188920051/'):
         #     # try : 
-                with open("dataset/GEDPair/testdataset"+"/"+filename, "rb") as fr:
+                with open("data/Vidor/GEDPair/0_2754378442_6188920051"+"/"+filename, "rb") as fr:
                     tmp = pickle.load(fr)
                     for i in range(0, len(tmp[0])):    
                         dataset[0].append(tmp[0][i])
