@@ -130,7 +130,6 @@ def load_dataset(name):
             #     continue
         end = time.time()
         print("load time : ", end-start)
-
         return dataset
 
     if task == "graph":
@@ -178,14 +177,14 @@ class SceneDataSource(DataSource):
 
     def gen_batch(self, datas, train):
         pos_d = datas[2]
-        pos_a = utils.batch_nx_graphs(datas[0])
-        # pos_a = utils.batch_nx_graphs_rpe(datas[0])
+        # pos_a = utils.batch_nx_graphs(datas[0])
+        pos_a = utils.batch_nx_graphs_rpe(datas[0])
         for i in range(len(datas[1])):
             if len(datas[1][i].edges()) == 0:
                 datas[1][i] = datas[0][i]
                 datas[2][i] = 0.0
-        pos_b = utils.batch_nx_graphs(datas[1])
-        # pos_b = utils.batch_nx_graphs_rpe(datas[1])
+        # pos_b = utils.batch_nx_graphs(datas[1])
+        pos_b = utils.batch_nx_graphs_rpe(datas[1])
         return pos_a, pos_b, pos_d
 
 class DiskDataSource(DataSource):

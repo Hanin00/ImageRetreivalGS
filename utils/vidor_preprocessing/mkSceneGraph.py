@@ -183,7 +183,8 @@ def addEdge(gList,relation):
             g.add_edges_from([(rel['subject_tid'],rel['object_tid'], {'distribute': distance}),
                               (rel['subject_tid'],rel['object_tid'], {'angle_AB': angle_AB}),
                                 (rel['subject_tid'],rel['object_tid'], {'angle_BA': angle_BA}),
-                                (rel['subject_tid'],rel['object_tid'], {'predicate': rel['predicate']})
+                                (rel['subject_tid'],rel['object_tid'], {'predicate': rel['predicate']}),
+                                (rel['subject_tid'],rel['object_tid'], {'predemb': rel['predembDict[rel['predicate']]']})
                                 ])
             
           except:

@@ -85,7 +85,7 @@ def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
     특징값 concat 할 때, 기존과 동일하도록 concat 필요
 '''
 # def mkNG2Subs(G, args, F0dict, originGDict):
-def mkNG2Subs(G, args, F0dict):
+def mkNG2Subs(G, args, F0dict, PredEmbDict):
     # originGraph의 feature를 가져옴
     nmDict = dict((int(x), y['name'] ) for x, y in G.nodes(data=True)) # id : name 값인 Node Name Dict
     Gnode = list(G.nodes())   # Gnode의 각 원소와 pools의 원소가 key-value가 되게 매칭,  -> item getter에 맞게 변경 해야함
@@ -268,11 +268,13 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
             deltaY_BA = center_a[1] - center_b[1]
             angle_BA = math.degrees(math.atan2(deltaY_BA, deltaX_BA))
 
+            predicate=random.choice(global_edge_labels)
             # add edge to the newly inserted ndoe
             new_g.add_edge(curr_num_node, to_insert_edge, 
-                        predicate=random.choice(global_edge_labels),
+                        # predicate=predicate,
+                        txtemb = (PredictDict[predicate]),
                         distribute= distance, angle_AB = angle_AB,
-                        angle_BA = angle_BA 
+                        angle_BA = angle_BA
                         )
         
     ## edit edge insertions
@@ -382,6 +384,11 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                     graph2.graph['gid'] = 1
                     # d = ged(dataset[i], graph2, 'astar',
                     #         debug=False, timeit=False)
+
+                    print("origin_g: ", origin_g)
+                    print("new_g: ", graph2)
+                    print("gev: ", gev)
+
                     g1_list.append(origin_g)
                     g2_list.append(graph2)
                     ged_list.append(gev)  # gev로 바꿔서 넣음
@@ -459,9 +466,13 @@ def main(margs):
 
 
     with open('data/Vidor/class_unique_textemb.pickle', 'rb') as f:  
-       embDict  = pickle.load(f)
+       data  = pickle.load(f)
+    embDict = data.copy()
+
     with open('data/Vidor/predicate_unique_textemb.pickle', 'rb') as f:
-        predDict = pickle.load(f)
+        data  = pickle.load(f)
+    predDict = data.copy()
+
 
   # for idx, file in enumerate(data[0]): #graph List List
   #    print("file: ", file)
@@ -502,8 +513,8 @@ def main(margs):
     q = mp.Queue()
     train_num_per_row = 64      # Number of datasets created by one subgraph
     max_row_per_worker = 64     # Number of Subgraphs processed by one processor
-    # number_of_worker = 40       # Number of processord
-    number_of_worker = 40       # Number of processord
+    # number_of_worker = 40       # Number of processor
+    number_of_worker = 20       # Number of processor
     total = graphs
     # global_node_labels = list(embDict.keys())
     # global_edge_labels = list(predDict.keys())

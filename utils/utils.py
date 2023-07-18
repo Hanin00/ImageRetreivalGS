@@ -13,6 +13,8 @@ import random
 import scipy.stats as stats
 from tqdm import tqdm
 
+import pickle
+
 import sys
 
 
@@ -252,7 +254,6 @@ def batch_nx_graphs(graphs, anchors=None):
             for v in g.nodes:
                 g.nodes[v]["node_feature"] = torch.tensor([float(v == anchor)])
                 
-
     for g in graphs:
         for v in g.nodes:
             rpe = g.nodes[v]['rpe']
@@ -322,23 +323,42 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
     #    nx.convert_node_labels_to_integers(graph)) for graph in graphs]
     #loader = DataLoader(motifs_batch, batch_size=len(motifs_batch))
     #for b in loader: batch = b
+
+
+    with open("data/Vidor/predicate_unique_textemb.pickle", "rb") as fr:
+        predEmbDict = pickle.load(fr)
+
     if anchors is not None:
         for anchor, g in zip(anchors, graphs):
             for v in g.nodes:
                 g.nodes[v]["node_feature"] = torch.tensor([float(v == anchor)])
                 print("g.nodes[v] : ",  g.nodes[v])
+            
+            for e in g.edges:
+                g.edges[e]["edge_feature"] = torch.tensor([float(v == anchor)])
+                print("g.nodes[v] : ",  g.nodes[v])
 
     for g in graphs:
         for v in list(g.nodes):
                 rpe = g.nodes[v]['rpe']
-                f0 = g.nodes[v]["f0"]
+                f0 = g.nodes[v]["txtemb"]
                 g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
-                
+    
+        for e in list(g.edges):
+                predicate = g.edges[e[0], e[1]]['predicate']
+                print('predicate: ', predicate)
+                distribute = g.edges[e[0], e[1]]["distribute"]
+                angle_AB = g.edges[e[0], e[1]]["angle_AB"]
+                angle_BA = g.edges[e[0], e[1]]["angle_BA"]
+                g.edges[e[0], e[1]]["edge_feature"] = torch.tensor(np.concatenate((predEmbDict[predicate], distribute,angle_AB,angle_BA), axis=None))
+
+    GList = [DSGraph(g) for g in graphs]    
+    
+    batch = Batch.from_data_list(GList)         
     try:
-        batch = Batch.from_data_list([DSGraph(g) for g in graphs])
         batch = batch.to(get_device())
     except:
         print(graphs)
-        print("DSGraph(g): ",DSGraph(graphs[0]))    
+        # print("DSGraph(g): ",DSGraph(graphs[0]))    
     # print(batch)
     return batch
