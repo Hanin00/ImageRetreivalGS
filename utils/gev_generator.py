@@ -85,7 +85,7 @@ def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
     특징값 concat 할 때, 기존과 동일하도록 concat 필요
 '''
 # def mkNG2Subs(G, args, F0dict, originGDict):
-def mkNG2Subs(G, args, F0dict, PredEmbDict):
+def mkNG2Subs(G, args, F0dict):
     # originGraph의 feature를 가져옴
     nmDict = dict((int(x), y['name'] ) for x, y in G.nodes(data=True)) # id : name 값인 Node Name Dict
     Gnode = list(G.nodes())   # Gnode의 각 원소와 pools의 원소가 key-value가 되게 매칭,  -> item getter에 맞게 변경 해야함
@@ -143,7 +143,7 @@ def mkNG2Subs(G, args, F0dict, PredEmbDict):
     for nodeId in list(G.nodes()):
         G.nodes()[nodeId]['rpe']  = rpeDict[nodeId]
 
-    '''
+    ''' 
     listA = [a.flatten().tolist() for a in K] 
     flatten_listA = list(itertools.chain(*listA))  # 35*12
     print(len(flatten_listA))
@@ -154,7 +154,7 @@ def mkNG2Subs(G, args, F0dict, PredEmbDict):
         또 맨 위에서 만들어 둔 nodeDict를 이용해서 name에 따른 feature 값인 F0값을 부여해줘야함      
         '''
     return G, enc_agg
-
+ 
 
 
 
@@ -359,7 +359,7 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                         # print("origin_g.edges(): ", dataset[i].edges(data=True))
                         # print("new_g.edges(): ", new_g.edges(data=True))
 
-                        new_g, new_enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
+                        new_g, new_enc_agg = mkNG2Subs(new_g, args, F0Dict, )  # Gs에 Feature 붙임
                         origin_g, origin_enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
 
                         # print("new_g ")
@@ -469,23 +469,17 @@ def main(margs):
        data  = pickle.load(f)
     embDict = data.copy()
 
+
     with open('data/Vidor/predicate_unique_textemb.pickle', 'rb') as f:
         data  = pickle.load(f)
     predDict = data.copy()
 
-
-  # for idx, file in enumerate(data[0]): #graph List List
-  #    print("file: ", file)
-  #    if len(file)!= 0:      
-  #       print(data[0][idx]) #graph  
-  #       print(data[1][idx]) #json file name
-  #       print(data[2][idx]) #fid
-
     graphs = []
     cnt = 0
 
-    with open('data/Vidor/scenegraph/merge_scenegraphs.pkl','rb') as f:   # time:  74.21744275093079
-        data = pickle.load(f)
+    with open('data/Vidor/scenegraph/merge_scenegraphs_0.pkl','rb') as f:   # time:  74.21744275093079
+        data = pickle.load(f)        
+
         for idx, file in enumerate(data[0]): #graph List Li t
             if len(file)!= 0:    
                 graphs.extend(data[0][idx])
@@ -504,7 +498,6 @@ def main(margs):
     #                 continue
     
 #일단 당장 할 거..!
-    graphs = graphs
     # feats = feats
     # PairDataset(Grph, embDict,global_edge_labels, total_ged)
     print("--- data_load ---")
@@ -545,12 +538,13 @@ def main(margs):
     print("time: ", end-start)
 
 
-if __name__ == "__main__":
 
+
+
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Embedding arguments')
     utils.parse_optimizer(parser)
     parse_encoder(parser)
     margs = parser.parse_args()
 
     main(margs)
-

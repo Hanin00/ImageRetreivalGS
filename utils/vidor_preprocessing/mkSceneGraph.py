@@ -184,7 +184,7 @@ def addEdge(gList,relation):
                               (rel['subject_tid'],rel['object_tid'], {'angle_AB': angle_AB}),
                                 (rel['subject_tid'],rel['object_tid'], {'angle_BA': angle_BA}),
                                 (rel['subject_tid'],rel['object_tid'], {'predicate': rel['predicate']}),
-                                (rel['subject_tid'],rel['object_tid'], {'predemb': rel['predembDict[rel['predicate']]']})
+                                # (rel['subject_tid'],rel['object_tid'], {'predemb': rel[predembDict[rel['predicate']]]})
                                 ])
             
           except:
@@ -217,7 +217,7 @@ def process_file(file_name, path_to_folder, synsDict):
 
 def save_results(results, metadata, fidList, chunk_index):
     # 결과값과 metadata를 pickle 파일로 저장
-    with open(f'data/Vidor/scenegraph_over2/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
+    with open(f'data/Vidor/scenegraph/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
         pickle.dump((results, metadata, fidList), f)
 
 def main():
