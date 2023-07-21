@@ -226,13 +226,10 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
     for idx in to_edit_idx_edge:
         while (True):
             toassigned_new_edgetype = random.choice(global_edge_labels)
-            try:
-                if (toassigned_new_edgetype != new_g.edges()[idx]['name']):
-                    break
-            except:
-                continue
+            if (toassigned_new_edgetype != new_g.edges()[idx]['predicate']):
+                break
                 # print('line 210 -  edge name')
-        new_g.edges()[idx]['name'] = toassigned_new_edgetype
+        new_g.edges()[idx]['predicate'] = toassigned_new_edgetype
 
     ## edit node insertions
     for num in range(target_ged['in']):
@@ -272,11 +269,10 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
             # add edge to the newly inserted ndoe
             new_g.add_edge(curr_num_node, to_insert_edge, 
                         # predicate=predicate,
-                        txtemb = (PredictDict[predicate]),
+                        txtemb = PredictDict[predicate],
                         distribute= distance, angle_AB = angle_AB,
                         angle_BA = angle_BA
                         )
-        
     ## edit edge insertions
     for num in range(to_ins):
         curr_num_egde = new_g.number_of_edges()
@@ -284,8 +280,16 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
             curr_pair = random.sample(new_g.nodes(), 2)
             if ((curr_pair[0], curr_pair[1]) not in deleted_edges):
                 if ((curr_pair[0], curr_pair[1]) not in new_g.edges()):
-                    new_g.add_edge(curr_pair[0], curr_pair[1], name=random.choice(global_edge_labels))
+                    new_g.add_edge(curr_pair[0], curr_pair[1], name=random.choice(global_edge_labels),
+                                   txtemb = PredictDict[predicate],
+                                   distribute= distance, angle_AB = angle_AB,
+                                   angle_BA = angle_BA                               
+                    )
                     break
+            else:
+                break
+
+
     return target_ged, new_g
 
 
@@ -331,12 +335,6 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                     if cnt > (train_num_per_row//2):
                         #F0Dict - global_node_list / Predict - global_edge_list -> 각 Dict의 key를 node와 edge의 후보군으로 사용
                         target_ged, new_g = graph_generation(dataset[i], F0Dict, PredictDict, total_ged)
-
-                        # print("origin_g: ", dataset[i])
-                        # print("new_g: ", new_g)
-                        # print("target_ged: ", target_ged)
-                        # print("total_ged: ", total_ged)
-
                         # targetGED에 따라 생성한 그래프에 RPE 적용
                         # -> RPE 과정에서 concat될 때, concat 결과가 기존의 edge를 반영하는 것 같지 않음
                         # 해당 내용 확인 필요 
@@ -347,28 +345,9 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                     else:
                         #text emb 값
                         target_ged, new_g = graph_generation(dataset[i], F0Dict, PredictDict, total_ged)
-                    
-                        # print("여기")
-                        # print("origin_g: ", dataset[i])
-                        # print("new_g: ", new_g)
-                        # print("target_ged: ", target_ged)
-                        # print("total_ged: ", total_ged)
-
-                        # print("origin_g.nodes(): ", dataset[i].nodes(data=True))
-                        # print("new_g.nodes(): ", new_g.nodes(data=True))
-                        # print("origin_g.edges(): ", dataset[i].edges(data=True))
-                        # print("new_g.edges(): ", new_g.edges(data=True))
-
+                        
                         new_g, new_enc_agg = mkNG2Subs(new_g, args, F0Dict, )  # Gs에 Feature 붙임
                         origin_g, origin_enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
-
-                        # print("new_g ")
-                        # print("nodes: ", new_g.nodes(data=True))
-                        # print("edges: ", new_g.edges(data=True))
-
-                        # print("origin_g: ", origin_g)
-                        # print("nodes: ", origin_g.nodes(data=True))
-                        # print("edges: ", origin_g.edges(data=True))
 
                         graph2 = new_g
 
@@ -406,7 +385,6 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                 new_g, new_enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
                 origin_g, origin_enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
 
-                
                 graph2 = new_g
                 g1_list.append(origin_g)
                 g2_list.append(graph2)
@@ -425,9 +403,9 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
             # print("ged_norm_list: ",ged_norm_list)
 
             
-            with open("data/Vidor/GEDPair/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
+            with open("data/Vidor/GEDPair/walk4_step3_ged18/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
                 pickle.dump([g1_list, g2_list, ged_norm_list], fw)
-            with open("data/Vidor/GEDFeat/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
+            with open("data/Vidor/GEDFeat/walk4_step3_ged18/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
                 pickle.dump([subGFeatList, newGFeatList, ged_norm_list], fw)
         
             g1_list = []
@@ -477,8 +455,8 @@ def main(margs):
     graphs = []
     cnt = 0
 
-    with open('data/Vidor/scenegraph/merge_scenegraphs_0.pkl','rb') as f:   # time:  74.21744275093079
-        data = pickle.load(f)        
+    with open('data/Vidor/scenegraph_merge/merge_scenegraphs_until_29.pkl','rb') as f:   # time:  74.21744275093079
+        data = pickle.load(f)         
 
         for idx, file in enumerate(data[0]): #graph List Li t
             if len(file)!= 0:    
@@ -504,10 +482,13 @@ def main(margs):
 
     mp.set_start_method('spawn')
     q = mp.Queue()
-    train_num_per_row = 64      # Number of datasets created by one subgraph
-    max_row_per_worker = 64     # Number of Subgraphs processed by one processor
-    # number_of_worker = 40       # Number of processor
-    number_of_worker = 20       # Number of processor
+    # train_num_per_row = 64      # Number of datasets created by one subgraph
+    # max_row_per_worker = 64     # Number of Subgraphs processed by one processor
+    
+    train_num_per_row = 32      # Number of datasets created by one subgraph
+    max_row_per_worker = 32     # Number of Subgraphs processed by one processor
+    # number_of_worker = 20       # Number of processor
+    number_of_worker = 1       # Number of processor
     total = graphs
     # global_node_labels = list(embDict.keys())
     # global_edge_labels = list(predDict.keys())
@@ -536,9 +517,6 @@ def main(margs):
 
     end = time.time()
     print("time: ", end-start)
-
-
-
 
 
 if __name__ == "__main__":

@@ -35,7 +35,6 @@ def make_data_source(args):
         #data_source = data.SceneDataSource("scene_short")
     return data_source
 
-
 def train(args, model, dataset, data_source):
     """Train the embedding model.
     args: Commandline arguments
