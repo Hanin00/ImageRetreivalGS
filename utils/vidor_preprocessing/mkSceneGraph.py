@@ -103,7 +103,7 @@ def mkTextEmb():
   model = fasttext.load_model('cc.en.300.bin')
   fasttext.util.reduce_model(model, 10)
   # model = FastText(words, size=10, workers=4, sg=1, iter=6, word_ngrams=1)
-  # model.save(model_fname)
+  # model.save(model_fname) 
 
   synsDict = {}
   for idx, word in enumerate(words):
@@ -114,7 +114,7 @@ def mkTextEmb():
 
 
   # with open("data/Vidor/class_unique_textemb.pickle", "wb") as fw:
-  with open("data/Vidor/predicate_unique_textemb.pickle", "wb") as fw:
+  with open("data/predicate_unique_textemb.pickle", "wb") as fw:
     pickle.dump(synsDict, fw)
   
 
@@ -134,7 +134,7 @@ def use1video(data, synsDict):
   for idx, img in enumerate(data['trajectories']):
     # print("img: ",img)
     # if len(img)>5:
-    if len(img)>2:
+    if len(img)>4:
       G = mk1Graph(img, synsDict, tid_category_dict) # json 하나에서 trajectories 하나를 기준으로 graph 하나 만듦 -> scene graph 한장 당 프레임id 하나에 매칭됨 
       gList.append(G)
       fidList.append(idx)
@@ -156,7 +156,7 @@ def mk1Graph(sceneG, synsDict, tid_category_dict):
   return testG
 
 #relation_instance 기준으로 predicate 및 edge 생성, bbox 기준으로 attribute 추가
-def addEdge(gList,relation): 
+def addEdge(gList,relation, predDict): 
    cnt = 0
    for rel in relation:
       for idx in (rel['begin_fid'], rel['end_fid'] ):
@@ -180,11 +180,12 @@ def addEdge(gList,relation):
             deltaY_BA = center_a[1] - center_b[1]
             angle_BA = math.degrees(math.atan2(deltaY_BA, deltaX_BA))
 
+            predicate = rel['predicate']
             g.add_edges_from([(rel['subject_tid'],rel['object_tid'], {'distribute': distance}),
                               (rel['subject_tid'],rel['object_tid'], {'angle_AB': angle_AB}),
                                 (rel['subject_tid'],rel['object_tid'], {'angle_BA': angle_BA}),
-                                (rel['subject_tid'],rel['object_tid'], {'predicate': rel['predicate']}),
-                                # (rel['subject_tid'],rel['object_tid'], {'predemb': rel[predembDict[rel['predicate']]]})
+                                (rel['subject_tid'],rel['object_tid'], {'predicate': predicate}),
+                                (rel['subject_tid'],rel['object_tid'], {'txtemb': predDict[predicate]}),
                                 ])
             
           except:
@@ -205,29 +206,33 @@ def dropEmpty(gList):
    return dropedList
 
 
-def process_file(file_name, path_to_folder, synsDict):
+def process_file(file_name, path_to_folder, synsDict,predDict):
   file_path = os.path.join(path_to_folder, file_name)
   with open(file_path, 'r') as f:
     json_data = json.load(f)
-    gList, fidList = use1video(json_data, synsDict) #1 json data = 1 video data
-    addEdge(gList, json_data['relation_instances'])  #relation_instance 기준으로 predicate 및 edge 생성, bbox 기준으로 attribute 추가
+    gList, fidList = use1video(json_data, synsDict, ) #1 json data = 1 video data
+    addEdge(gList, json_data['relation_instances'], predDict)  #relation_instance 기준으로 predicate 및 edge 생성, bbox 기준으로 attribute 추가
     gList = dropEmpty(gList)
     return gList, fidList
 
 
 def save_results(results, metadata, fidList, chunk_index):
     # 결과값과 metadata를 pickle 파일로 저장
-    with open(f'data/Vidor/scenegraph/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
+    with open(f'data/scenegraph/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
         pickle.dump((results, metadata, fidList), f)
 
 def main():
   # mkTextEmb()
 
-  with open("data/Vidor/class_unique_textemb.pickle", "rb") as fr:
+  with open("data/class_unique_textemb.pickle", "rb") as fr:
     synsDict = pickle.load(fr)
 
+  with open('data/predicate_unique_textemb.pickle', 'rb') as f:
+      data  = pickle.load(f)
+  predDict = data.copy()
+
   # # 폴더 경로 지정
-  path_to_folder = 'data/Vidor/training_total/'  
+  path_to_folder = 'data/training_total/'  
   file_list = os.listdir(path_to_folder)
     
   # 프로세스 풀 생성
@@ -240,7 +245,7 @@ def main():
 
   for file_name in tqdm(file_list):
       # 파일 처리 작업 수행
-      result, fidList = pool.apply(process_file, args=(file_name, path_to_folder, synsDict ))
+      result, fidList = pool.apply(process_file, args=(file_name, path_to_folder, synsDict, predDict ))
       # 결과값과 metadata를 chunk에 추가
       chunk_results.append(result)
       chunk_fidList.append(fidList)

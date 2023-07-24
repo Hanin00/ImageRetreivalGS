@@ -1,6 +1,5 @@
 deepsnap == 0.2.1
 networkx == 2.8.6
-numpy == 1.23.2
 scikit_learn == 1.1.2
 scipy == 1.9.1
 seaborn == 0.12.0
@@ -12,4 +11,6 @@ BeautifulSoup4 == 4.11.1
 lxml == 4.9.1
 matplotlib == 3.5.3
 pytz == 2022.2.1
-
+numpy
+gensim
+fasttext

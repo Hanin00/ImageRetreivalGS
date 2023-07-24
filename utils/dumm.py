@@ -87,7 +87,6 @@ def samePair(Graphset1, Graphset2):
 
 
 def main():
-    
     # merge, dataChk        
     filePath = "data/ged_f0_rpe/02ged_f0_rpe_node_same_edge_1diff"   
     print("----------------------- norm -----------------------" )

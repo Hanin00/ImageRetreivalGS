@@ -325,7 +325,7 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
     #for b in loader: batch = b
 
 
-    with open("data/Vidor/predicate_unique_textemb.pickle", "rb") as fr:
+    with open("data/predicate_unique_textemb.pickle", "rb") as fr:
         predEmbDict = pickle.load(fr)
 
     if anchors is not None:

@@ -37,7 +37,7 @@ from tqdm import tqdm
 
 
 # # #fid graph 에 tag 넣어야하는데 노드에 넣을건가?
-path_to_folder = 'data/Vidor/scenegraph/'  
+path_to_folder = 'data/scenegraph/'  
 file_list = os.listdir(path_to_folder)
 
 listIdx = len(file_list)//4
@@ -70,7 +70,7 @@ for idx, file_list_name in enumerate(target_list): # 파일 명
           upper5Graph.append(video)
           totalFileNameList.append(fileNameList)
 
-  with open('data/Vidor/scenegraph/merge_scenegraphs_{}.pkl'.format(idx), 'wb') as f:
+  with open('data/scenegraph_merge/merge_scenegraphs_{}.pkl'.format(idx), 'wb') as f:
           pickle.dump((upper5Graph, totalFileNameList), f)
 
   print("cnt: ", cnt)
