@@ -121,6 +121,13 @@ def main():
 
 if __name__ == "__main__":
     
+    with open('data/Vidor/GEDPair/walk4_step3_ged18_480_512.pkl', 'rb') as f:
+        graphs = pickle.load(f)
+    print("graphs: ",graphs)
+    print("len(graphs): ",len(graphs))
+
+    sys.exit()
+
     #main()
     #sys.exit()
     '''

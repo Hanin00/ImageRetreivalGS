@@ -318,15 +318,15 @@ def batch_nx_graphs(graphs, anchors=None):
 
 
 
+#DSGraph로 변경하는 과정에서 변수명이 key에 없어 된지 않음 -> edge 삭제 후 재생성 시, feature를 변경해서 입력해봄
 def batch_nx_graphs_rpe(graphs, anchors=None):
     # motifs_batch = [pyg_utils.from_networkx(
     #    nx.convert_node_labels_to_integers(graph)) for graph in graphs]
     #loader = DataLoader(motifs_batch, batch_size=len(motifs_batch))
     #for b in loader: batch = b
+    newGraphs = []
 
 
-    with open("data/predicate_unique_textemb.pickle", "rb") as fr:
-        predEmbDict = pickle.load(fr)
 
     if anchors is not None:
         for anchor, g in zip(anchors, graphs):
@@ -336,25 +336,40 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
             
             for e in g.edges:
                 g.edges[e]["edge_feature"] = torch.tensor([float(v == anchor)])
-                print("g.nodes[v] : ",  g.nodes[v])
+                print("g.edges[v] : ",  g.edges[v])
 
     for g in graphs:
+        newG = nx.Graph()
+        newG.add_nodes_from(g.nodes(data=True))
+        newG.add_edges_from(g.edges())
+        # graphA의 엣지의 predicate 속성만 graphB로 복사합니다.
+        # for u, v, data in g.edges(data=True):
+        #     if 'predicate' in data:
+                # newG.add_edge(u, v, edge_label=data['predicate'])
+
         for v in list(g.nodes):
                 rpe = g.nodes[v]['rpe']
                 f0 = g.nodes[v]["txtemb"]
-                g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
-    
+                # g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
+                newG.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
+
         for e in list(g.edges):
-                predicate = g.edges[e[0], e[1]]['predicate']
-                print('predicate: ', predicate)
+                # predicate = g.edges[e[0], e[1]]['predicate']
+                txtemb = g.edges[e[0], e[1]]['txtemb']
+                # print('predicate: ', predicate)
+                # print('txtemb: ', txtemb)
                 distribute = g.edges[e[0], e[1]]["distribute"]
                 angle_AB = g.edges[e[0], e[1]]["angle_AB"]
                 angle_BA = g.edges[e[0], e[1]]["angle_BA"]
-                g.edges[e[0], e[1]]["edge_feature"] = torch.tensor(np.concatenate((predEmbDict[predicate], distribute,angle_AB,angle_BA), axis=None))
+                # print('edge feature: ', g.edges[e])
+                # g.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb, distribute,angle_AB,angle_BA), axis=None))
+                newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb, distribute,angle_AB,angle_BA), axis=None))
 
-    GList = [DSGraph(g) for g in graphs]    
-    
-    batch = Batch.from_data_list(GList)         
+        newGraphs.append(newG)
+
+
+    batch = Batch.from_data_list([DSGraph(g) for g in newGraphs])  
+
     try:
         batch = batch.to(get_device())
     except:

@@ -4,6 +4,17 @@ import os, sys
 from tqdm import tqdm
 
 
+# with open('data/Vidor/scenegraph/merge_scenegraphs_1.pkl', 'rb') as fr:
+#   data = pickle.load(fr)
+# print(len(data[0][0]))
+# print(data[0][0][0])
+
+
+# sys.exit()
+
+
+
+
 # with open('data/Vidor/scenegraph/0_2754378442_6188920051.pkl', 'rb') as fr:
 #   data = pickle.load(fr)
 # print(data[0][0])
@@ -49,13 +60,17 @@ file_list4 = file_list[listIdx*3 :]
 target_list = [file_list1, file_list2, file_list3, file_list4]
 
 
-for idx, file_list_name in enumerate(target_list): # 파일 명 
-  cnt = 0
-  upper5Graph = []
-  totalFileNameList = []
-  #file list의 file name을 기반으로 읽어서 노드의 개수가 다섯개 이상인 것들만..!
-  for file_name in tqdm(file_list_name): # 파일 명 
-    with open(os.path.join(path_to_folder,file_name), "rb") as fr:
+#비어있는 scenegraph filtering
+for idx in range(0, len(file_list), 5): # 파일 명 
+  for idx2 in range(5):
+    try:
+      file_list_name = file_list[idx+idx2]
+    except:
+      file_list_name = file_list[:-1]
+    cnt = 0
+    upper5Graph = []
+    totalFileNameList = []
+    with open(os.path.join(path_to_folder,file_list_name), "rb") as fr:
       data = pickle.load(fr) 
       scenegraphs = data[0]
       for idx2, videojson in enumerate(scenegraphs): #5개 파일에 대한 scenegraph list
@@ -76,4 +91,4 @@ for idx, file_list_name in enumerate(target_list): # 파일 명
   print("cnt: ", cnt)
   print("len(upper5Graph) :",len(upper5Graph))
   print("len(totalFileNameList) :",len(totalFileNameList))
-  
+

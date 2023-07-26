@@ -1,4 +1,4 @@
-import os
+import os, sys
 import pickle
 import random
 
@@ -89,11 +89,10 @@ def load_dataset(name):
     elif name == "scene_short": #<- su_v3_x1000 중 일부 데이터만..
         dataset = [[], [], []]
         start = time.time()
-
-        for filename in os.listdir('dataset/GEDPair/rpe_splited_v3_x1000_walk4_step2/'):
+        for filename in os.listdir('data/Vidor/GEDPair/walk4_step3_ged18/'):
             print(filename)
             try : 
-                with open("dataset/GEDPair/rpe_splited_v3_x1000_walk4_step2"+"/"+filename, "rb") as fr:
+                with open("data/Vidor/GEDPair/walk4_step3_ged18"+"/"+filename, "rb") as fr:
                     tmp = pickle.load(fr)
                     print(filename)
                     for i in range(0, len(tmp[0]), 64):
@@ -111,12 +110,14 @@ def load_dataset(name):
     elif name == "scene":
         dataset = [[], [], []]
         start = time.time()
+    
         # ###----학습
         # for foldername in os.listdir('dataset/GEDPair/'):
         #     for filename in os.listdir('dataset/GEDPair/'+foldername):
         #         with open("dataset/GEDPair/"+foldername+"/"+filename, "rb") as fr:
                     ####---학습
                     #---test
+
         for filename in os.listdir('data/GEDPair/walk4_step3_ged18/'):
         #     # try : 
                 with open("data/GEDPair/walk4_step3_ged18"+"/"+filename, "rb") as fr:
@@ -171,7 +172,6 @@ class SceneDataSource(DataSource):
         l1.append(self.dataset[0][0:0+batch_sizes])
         l2.append(self.dataset[1][0:0+batch_sizes])
         l3.append(self.dataset[2][0:0+batch_sizes])
-
         return [[a, b, c] for a, b, c in zip(l1, l2, l3)]
         
 
@@ -186,6 +186,8 @@ class SceneDataSource(DataSource):
         # pos_b = utils.batch_nx_graphs(datas[1])
         pos_b = utils.batch_nx_graphs_rpe(datas[1])
         return pos_a, pos_b, pos_d
+    
+
 
 class DiskDataSource(DataSource):
     """ Uses a set of graphs saved in a dataset file to train the model.

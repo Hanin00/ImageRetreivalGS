@@ -402,10 +402,10 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
             # sys.exit()
             # print("ged_norm_list: ",ged_norm_list)
 
-            
             with open("data/GEDPair/walk4_step3_ged18/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
                 pickle.dump([g1_list, g2_list, ged_norm_list], fw)
             with open("data/GEDFeat/walk4_step3_ged18/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
+
                 pickle.dump([subGFeatList, newGFeatList, ged_norm_list], fw)
         
             g1_list = []
@@ -442,7 +442,6 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
 def main(margs):
     # global edge Label List 생성 -> Predicate dict
 
-
     with open('data/class_unique_textemb.pickle', 'rb') as f:  
        data  = pickle.load(f)
     embDict = data.copy()
@@ -454,13 +453,15 @@ def main(margs):
 
     graphs = []
     cnt = 0
+    #merge_scenegraphs_0 - 1061643 / 1 - 1040267 / 2 - 1003420 / 3 - 
 
-    with open('data/scenegraph_merge/merge_scenegraphs_0.pkl','rb') as f:   # time:  74.21744275093079
+    with open('data/scenegraph_merge/merge_scenegraphs_3.pkl','rb') as f:   # time:  74.21744275093079
         data = pickle.load(f)         
-
         for idx, file in enumerate(data[0]): #graph List Li t
             if len(file)!= 0:    
                 graphs.extend(data[0][idx])
+    print("len(graphs): ", len(graphs))
+    sys.exit()
 
     # for filename in os.listdir('data/Vidor/scenegraph'):
     #     with open('data/Vidor/scenegraph/'+filename, 'rb') as f:   # time:  74.21744275093079
@@ -484,11 +485,12 @@ def main(margs):
     q = mp.Queue()
     # train_num_per_row = 64      # Number of datasets created by one subgraph
     # max_row_per_worker = 64     # Number of Subgraphs processed by one processor
-    
+
     train_num_per_row = 64      # Number of datasets created by one subgraph
     max_row_per_worker = 64     # Number of Subgraphs processed by one processor
     # number_of_worker = 20       # Number of processor
     number_of_worker = 10     # Number of processor
+
     total = graphs
     # global_node_labels = list(embDict.keys())
     # global_edge_labels = list(predDict.keys())

@@ -53,9 +53,9 @@ def parse_encoder(parser, arg_str=None):
                             n_layers=8,
                             batch_size=32,  # 64, batch 개수
                             # feature_dim = 1, # rpe = 3, f0 = 1 # 기존 데이터 사용 시
-                            feature_dim = 4, # rpe = 3, f0 = 1 새로운 데이터(rpe )
+                            feature_dim = 13, # rpe = 3, f0 = 1 새로운 데이터(rpe )
                             #hidden_dim=64,
-                            hidden_dim= 4,
+                            hidden_dim= 128,
                             skip="learnable",
                             dropout=0.0,
                             n_batches=10,  # 1000000, total 반복

@@ -4,6 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch_geometric.nn as pyg_nn
 import torch_geometric.utils as pyg_utils
+import numpy as np
 
 import sys
 
@@ -63,8 +64,13 @@ class GnnEmbedder(nn.Module):
         labels: labels for each entry in pred
         """
         emb_as, emb_bs = pred
-        e = torch.abs(emb_bs - emb_as)
-        relation_loss = torch.sum(torch.abs(labels-e))
+        e = torch.abs(emb_bs - emb_as)# labels 와  GEV 처럼 4차원으로 변경 필요
+        reshaped_e = torch.mean(e.view(32, 4, 32), dim=2) # batch가 32 여서 여기서도 32
+
+        # 평균 풀링을 통해 128 차원을 4로 축소합니다.
+        # relation_loss = torch.sum(torch.abs(labels-reshaped_e))
+        relation_loss = torch.abs(labels-reshaped_e)  #기존에는 scalar 값(GED)으로 오차를 줄였지만, GEV를 이용하므로 4차원
+
 
         return relation_loss
 
@@ -170,10 +176,13 @@ class SkipLastGNN(nn.Module):
             print("unrecognized model type")
 
     def forward(self, data):
-        x, edge_index, batch = data.node_feature, data.edge_index, data.batch   
-        # x = x.squeeze(x)
-        x = self.pre_mp(x)  # torch.Size([538, 64])
+        x, edge_index, batch = data.node_feature, data.edge_index, data.batch  
+        print("edge index")
+        print("x: " ,x)
+        print("x size: ", x.size())
+        
 
+        x = self.pre_mp(x)   # torch.Size([538, 64])
         # x = self.pre_mp(x.float())  # torch.Size([538, 64])
 
         all_emb = x.unsqueeze(1)    # torch.Size([539, 1, 64])
@@ -197,6 +206,9 @@ class SkipLastGNN(nn.Module):
             elif self.skip == 'all':
                 if self.conv_type == "PNA":
                     x = torch.cat((self.convs_sum[i](emb, edge_index),
+
+
+
                                    self.convs_mean[i](emb, edge_index),
                                    self.convs_max[i](emb, edge_index)), dim=-1)
                 else:
