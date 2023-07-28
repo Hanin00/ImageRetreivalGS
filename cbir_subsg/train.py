@@ -82,7 +82,6 @@ def train(args, model, dataset, data_source):
         criterion = nn.MSELoss()
         clf_loss = criterion(pred.float(), labels.float())
 
-
         clf_loss.backward()
         clf_opt.step()
 

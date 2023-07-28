@@ -305,11 +305,19 @@ def load_generated_graphs(dataset_name, file_name='generated_graph_500'):
     F0Dict : global node name - F0 embedding
 '''
 # def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0Dict,PredictDict, total_ged, train,args) : 
-def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,PredictDict, total_ged, train,args) : 
+# def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,PredictDict, total_ged, train,args) : 
+def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,PredictDict, total_ged, train, args) : 
     # target_ged, new_g = graph_generation(Grph, F0Dict, global_edge_labels, total_ged)
     # subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
+    print("------- PairDataset ---------")
+
+
+
+
     g1_list = []
     g2_list = []
+
+
     ged_list = []
 
     subGFeatList = []
@@ -350,6 +358,7 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                         origin_g, origin_enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
 
                         graph2 = new_g
+
 
                     gev = [target_ged['nc'],target_ged['ec'],target_ged['in'],target_ged['ie'],]
                     # labels = [[label[key] for key in ['nc', 'ec', 'in', 'ie']] for label in target_ged]
@@ -416,6 +425,31 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
             newGFeatList = []
 
 
+# 데이터를 처리하는 함수 (예시로 간단히 출력)
+def process_data(q, data_list,  embDict, predDict, total_ged,margs):
+    print("------- process_data ---------")
+    while True:
+        indices = q.get()  # Queue에서 구간 인덱스를 가져옴
+        # print("indices: ",indices)
+        if indices is None:
+            break
+        data = data_list[indices[0] : indices[-1]]
+        print("len(data): ", len(data))
+        # print("data: ", data)
+
+        train_num_per_row = 64      # Number of datasets created by one subgraph
+        max_row_per_worker = 64     # Number of Subgraphs processed by one processor
+        # number_of_worker = 10     # Number of processor
+
+        graphs = data
+        train = True
+
+        PairDataset(q, train_num_per_row, max_row_per_worker, graphs, embDict, predDict, total_ged, train, margs)
+
+        # for idx in indices:
+        #     data = data_list[idx]
+        #     print("Processed data from index", idx, ":", data)
+        
 
 
 '''
@@ -437,7 +471,7 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
     ### GEV를 뭐에 대해 normalize..?
 
 '''
-
+import multiprocessing
 
 def main(margs):
     # global edge Label List 생성 -> Predicate dict
@@ -446,26 +480,113 @@ def main(margs):
        data  = pickle.load(f)
     embDict = data.copy()
 
-
     with open('data/predicate_unique_textemb.pickle', 'rb') as f:
         data  = pickle.load(f)
     predDict = data.copy()
-
     graphs = []
     cnt = 0
-    #merge_scenegraphs_0 - 1061643 / 1 - 1040267 / 2 - 1003420 / 3 - 
+    with open('data/scenegraph_merge/merge_scenegraphs_3_onlyGraphs.pkl','rb') as f:   # time:  74.21744275093079
+        data = pickle.load(f)         
+        # print(type(data[0])) #비디오 파일들
+        # print(data[0][0]) # 그래프 리스트
+        # print(data[0][0][0]) #그래프 하나
+        for idx, file in enumerate(data): #graph List Li t
+            if len(file)!= 0:    
+                graphs.extend(data[idx])
 
+    num_processes = 40
+    total_ged=random.randint(18, 18)
+    q = multiprocessing.Queue()
+
+    # 인덱스 구간을 Queue에 넣음
+    # chunk_size = len(graphs) // num_processes
+    chunk_size = len(graphs) // 120
+    for i in range(num_processes):
+        start_idx = i * chunk_size
+        end_idx = start_idx + chunk_size if i < num_processes - 1 else len(graphs)
+        indices = list(range(start_idx, end_idx))
+        q.put(indices)
+
+    # 데이터 처리 프로세스 생성
+
+
+    process_processes = []
+    for _ in range(num_processes):
+        p = multiprocessing.Process(target=process_data, args=(q, graphs,  embDict, predDict, total_ged,margs))
+        p.start()
+        process_processes.append(p)
+
+    # 모든 데이터 처리 프로세스가 끝날 때까지 기다림
+    for p in process_processes:
+        p.join()
+
+    print("All processes have finished.")
+
+
+
+
+
+    # print("--- data_load ---")
+
+    # mp.set_start_method('spawn')
+    # q = mp.Queue()
+    # train_num_per_row = 64      # Number of datasets created by one subgraph
+    # max_row_per_worker = 64     # Number of Subgraphs processed by one processor
+    
+    # number_of_worker = 10     # Number of processor
+
+    # total = graphs
+
+    # total_ged=random.randint(18, 18)
+    # train = True
+    # print("start")
+
+    # start = time.time()
+    # for i in range(0, len(total), max_row_per_worker):
+    #     q.put(i)
+    # print("queue")
+
+    # workers = []
+    # for i in range(number_of_worker):
+    #     worker = mp.Process(target=PairDataset, args=(
+    #         q, train_num_per_row, max_row_per_worker, graphs, embDict, predDict, total_ged, train, margs))
+    #     workers.append(worker)
+    #     worker.start()
+
+    # for worker in workers:
+    #     worker.join()
+
+    # end = time.time()
+    # print("time: ", end-start)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Embedding arguments')
+    utils.parse_optimizer(parser)
+    parse_encoder(parser)
+    margs = parser.parse_args()
+    main(margs)
+
+    #merge_scenegraphs_0 - 1061643 / 1 - 1040267 / 2 - 1003420 / 3 - 
+'''
     with open('data/scenegraph_merge/merge_scenegraphs_3.pkl','rb') as f:   # time:  74.21744275093079
         data = pickle.load(f)         
+        # print(type(data[0])) #비디오 파일들
+        # print(data[0][0]) # 그래프 리스트
+        # print(data[0][0][0]) #그래프 하나
         for idx, file in enumerate(data[0]): #graph List Li t
             if len(file)!= 0:    
                 graphs.extend(data[0][idx])
-    print("len(graphs): ", len(graphs))
-    sys.exit()
+        print(graphs)
+        sys.exit()
+    #불러 오는 건 걍.. 걍.. 해도 되는 거 아닐까...?
 
+
+        
     # for filename in os.listdir('data/Vidor/scenegraph'):
     #     with open('data/Vidor/scenegraph/'+filename, 'rb') as f:   # time:  74.21744275093079
     #         data = pickle.load(f)
+
     #         for idx, file in enumerate(data[0]): #graph List Li t
     #             #  print("file: ", file)
     #             try:
@@ -479,52 +600,4 @@ def main(margs):
 #일단 당장 할 거..!
     # feats = feats
     # PairDataset(Grph, embDict,global_edge_labels, total_ged)
-    print("--- data_load ---")
-
-    mp.set_start_method('spawn')
-    q = mp.Queue()
-    # train_num_per_row = 64      # Number of datasets created by one subgraph
-    # max_row_per_worker = 64     # Number of Subgraphs processed by one processor
-
-    train_num_per_row = 64      # Number of datasets created by one subgraph
-    max_row_per_worker = 64     # Number of Subgraphs processed by one processor
-    # number_of_worker = 20       # Number of processor
-    number_of_worker = 10     # Number of processor
-
-    total = graphs
-    # global_node_labels = list(embDict.keys())
-    # global_edge_labels = list(predDict.keys())
-
-
-    total_ged=random.randint(18, 18)
-    train = True
-
-    print("start")
-    start = time.time()
-    for i in range(0, len(total), max_row_per_worker):
-        q.put(i)
-
-    print("queue")
-
-    workers = []
-    for i in range(number_of_worker):
-        worker = mp.Process(target=PairDataset, args=(
-            q, train_num_per_row, max_row_per_worker, graphs, embDict, predDict, total_ged, train, margs))
-            # q, train_num_per_row, max_row_per_worker, graphs,feats,  embDict, predDict, total_ged, train, margs))
-        workers.append(worker)
-        worker.start()
-
-    for worker in workers:
-        worker.join()
-
-    end = time.time()
-    print("time: ", end-start)
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Embedding arguments')
-    utils.parse_optimizer(parser)
-    parse_encoder(parser)
-    margs = parser.parse_args()
-
-    main(margs)
+'''
