@@ -325,9 +325,6 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
     #loader = DataLoader(motifs_batch, batch_size=len(motifs_batch))
     #for b in loader: batch = b
     newGraphs = []
-
-
-
     if anchors is not None:
         for anchor, g in zip(anchors, graphs):
             for v in g.nodes:

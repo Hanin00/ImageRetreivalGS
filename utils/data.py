@@ -60,52 +60,6 @@ def load_dataset(name):
         dataset = [g for g in nx.graph_atlas_g()[1:] if nx.is_connected(g)]
 
 
-    # 검증 데이터 셋<- data 폴더 내 모든 파일 불러오는 코드
-    elif name == "scene_all":
-        dataset = [[], [], []]
-        start = time.time()
-        # for foldername in os.listdir('utils/rp_data/su_v3_x1000/'):
-        for foldername in os.listdir('utils/rp_data/'):
-            i = 0
-            for filename in os.listdir('utils/rp_data/'+foldername):
-                i += 1
-                if i >= 4:
-                    break
-                try : 
-                    with open("utils/rp_data/"+foldername+"/"+filename, "rb") as fr:
-                        tmp = pickle.load(fr)
-                        print(filename)
-                        for i in range(0, len(tmp[0]), 64):
-                            dataset[0].append(tmp[0][i])
-                            dataset[1].append(tmp[1][i])
-                            dataset[2].append(tmp[2][i])
-                except : 
-                    continue
-        end = time.time()
-        print("load time : ", end-start)
-
-        return dataset
-
-    elif name == "scene_short": #<- su_v3_x1000 중 일부 데이터만..
-        dataset = [[], [], []]
-        start = time.time()
-        for filename in os.listdir('data/Vidor/GEDPair/walk4_step3_ged18/'):
-            print(filename)
-            try : 
-                with open("data/Vidor/GEDPair/walk4_step3_ged18"+"/"+filename, "rb") as fr:
-                    tmp = pickle.load(fr)
-                    print(filename)
-                    for i in range(0, len(tmp[0]), 64):
-                        dataset[0].append(tmp[0][i])
-                        dataset[1].append(tmp[1][i])
-                        dataset[2].append(tmp[2][i])
-            except : 
-                continue
-        end = time.time()
-        print("load time : ", end-start)
-
-        return dataset
-
     # rpe 데이터 불러옴 
     elif name == "scene":
         dataset = [[], [], []]

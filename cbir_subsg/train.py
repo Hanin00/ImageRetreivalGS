@@ -64,7 +64,6 @@ def train(args, model, dataset, data_source):
     # print(type(pos_label))
     # sys.exit()
 
-
     loss = model.criterion(pred, intersect_embs, pos_label)
     print("loss", loss)
     loss.backward()
@@ -107,7 +106,7 @@ def train_loop(args):
 
     val = []
     batch_n = 0
-    epoch = 10000 # test 시
+    epoch = 300 # test 시
     cnt = 0 
     for e in range(epoch):
         for dataset in loaders:
