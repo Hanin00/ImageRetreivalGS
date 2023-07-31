@@ -50,19 +50,27 @@ def train(args, model, dataset, data_source):
     pos_a, pos_b, pos_label = data_source.gen_batch( dataset, True)
     # print("pos_label: ", pos_label)
 
-    emb_as, emb_bs = model.emb_model(pos_a), model.emb_model(pos_b)
-    
+    emb_as, emb_bs = model.emb_model(pos_a), model.emb_model(pos_b)    
+    pos_label = torch.tensor(pos_label, dtype=torch.float32).to(utils.get_device())
 
-    labels = torch.stack(pos_label, dim=0).to(utils.get_device())
+    # pos_label = torch.stack(pos_label, dim=0).to(utils.get_device())
 
     intersect_embs = None
     pred = model(emb_as, emb_bs)
     emb_as, emb_bs = pred
 
-    loss = model.criterion(pred, intersect_embs, labels)
+    # print(type(emb_as))
+    # print(type(emb_bs))
+    # print(type(pos_label))
+    # sys.exit()
 
+
+    loss = model.criterion(pred, intersect_embs, pos_label)
+    print("loss", loss)
     loss.backward()
+
     torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+
     opt.step()
     if scheduler:
         scheduler.step()
@@ -76,17 +84,16 @@ def train(args, model, dataset, data_source):
 
         # pred = model.clf_model(pred.unsqueeze(1)).view(-1)
         criterion = nn.MSELoss()
-        clf_loss = criterion(pred.float(), labels.float())
+        
+        clf_loss = criterion(pred.float(), pos_label.float())
 
         clf_loss.backward()
         clf_opt.step()
 
     # acc = torch.mean((pred == labels).type(torch.float))
 
-    return pred, labels, loss.item()
+    return pred, pos_label, loss.item()
 
-
-import sys
 def train_loop(args):
     if not os.path.exists(os.path.dirname(args.model_path)):
         os.makedirs(os.path.dirname(args.model_path))
@@ -98,10 +105,9 @@ def train_loop(args):
     data_source = make_data_source(args)
     loaders = data_source.gen_data_loaders(args.batch_size, train=False)
 
-
     val = []
     batch_n = 0
-    epoch = 1 # test 시
+    epoch = 10000 # test 시
     cnt = 0 
     for e in range(epoch):
         for dataset in loaders:
@@ -113,7 +119,7 @@ def train_loop(args):
             else:
                 pred, labels, loss = train(
                     args, model, dataset, data_source)
-
+                    
                 if batch_n % 100 == 9:
                     print(pred, pred.shape, sep='\n')
                     print(labels, labels.shape, sep='\n')

@@ -4,7 +4,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch_geometric.nn as pyg_nn
 import torch_geometric.utils as pyg_utils
-import numpy as np
 
 import sys
 
@@ -19,7 +18,6 @@ class BaselineMLP(nn.Module):
 
     def forward(self, emb_motif, emb_motif_mod):
         pred = self.mlp(torch.cat((emb_motif, emb_motif_mod), dim=1))
-        # pred = F.log_softmax(pred, dim=1)
         pred = F.log_softmax(pred, dim=1)
         return pred
 
@@ -36,26 +34,24 @@ class GnnEmbedder(nn.Module):
         super(GnnEmbedder, self).__init__()
         self.emb_model = SkipLastGNN(input_dim, hidden_dim, hidden_dim, args)
         self.margin = args.margin
-        self.use_intersection = False   
+        self.use_intersection = False
 
-        self.clf_model = nn.Sequential(nn.Linear(4, 4)) #gev로 받으려고.. 변경함
+        self.clf_model = nn.Sequential(nn.Linear(32, 1))
 
     def forward(self, emb_as, emb_bs):
         return emb_as, emb_bs
 
     def predict(self, pred):
         """Predict graph edit distance(ged) of graph pairs, where emb_as, emb_bs = pred.
+
         pred: list (emb_as, emb_bs) of embeddings of graph pairs.
+
         Returns: list of ged of graph pairs.
         """
         emb_as, emb_bs = pred
-        e = F.cosine_similarity(emb_bs, emb_as)
-        
-        print("pred len(emb_as): ",len(emb_as))
-        print("pred len(emb_bs): ",len(emb_bs))
-        print("pred len(e): ",len(e))
+        s = F.cosine_similarity(emb_as, emb_bs)
 
-        return e
+        return s
 
     def criterion(self, pred, intersect_embs, labels):
         """Loss function for emb.
@@ -66,17 +62,14 @@ class GnnEmbedder(nn.Module):
         labels: labels for each entry in pred
         """
         emb_as, emb_bs = pred
-        print("crit len(emb_as):  ",len(emb_as))
-        print("crit len(emb_bs): ",len(emb_bs))
+        # e = torch.sum(torch.abs(emb_bs - emb_as), dim=1)
+        
+        s = F.cosine_similarity(emb_as, emb_bs)
 
-        e = torch.abs(emb_bs - emb_as) #labels 와  GEV 처럼 4차원으로 변경 필요
-        print("e : ", e)
-        print("crit len(e): ",len(e))
+        loss_func = nn.MSELoss()
+        loss = loss_func(s, labels)
 
-        relation_loss = F.cosine_similarity(labels, e)  #기존에는 scalar 값(GED)으로 오차를 줄였지만, GEV를 이용하므로 4차원
-
-
-        return relation_loss
+        return loss
 
 
 class SkipLastGNN(nn.Module):
@@ -89,11 +82,8 @@ class SkipLastGNN(nn.Module):
         pre MLP
         '''
         # Linear(1, 64)
-        
         self.pre_mp = nn.Sequential(nn.Linear(input_dim, 3*hidden_dim if
                                               args.conv_type == "PNA" else hidden_dim))
-        
-        # self.pre_mp = nn.Sequential(nn.Linear(input_dim, hidden_dim))
 
         '''
         GCN
@@ -179,9 +169,8 @@ class SkipLastGNN(nn.Module):
             print("unrecognized model type")
 
     def forward(self, data):
-        x, edge_index, batch = data.node_feature, data.edge_index, data.batch        
-        x = self.pre_mp(x)   # torch.Size([538, 64])
-        # x = self.pre_mp(x.float())  # torch.Size([538, 64])
+        x, edge_index, batch = data.node_feature, data.edge_index, data.batch
+        x = self.pre_mp(x)  # torch.Size([538, 64])
 
         all_emb = x.unsqueeze(1)    # torch.Size([539, 1, 64])
         emb = x                     # torch.Size([539, 64])
@@ -200,7 +189,6 @@ class SkipLastGNN(nn.Module):
                                    self.convs_max[i](curr_emb, edge_index)), dim=-1)
                 else:
                     x = self.convs[i](curr_emb, edge_index)
-                    # x = self.convs[i](curr_emb, edge_index.long())
             elif self.skip == 'all':
                 if self.conv_type == "PNA":
                     x = torch.cat((self.convs_sum[i](emb, edge_index),
@@ -212,16 +200,24 @@ class SkipLastGNN(nn.Module):
                 x = self.convs[i](x, edge_index)
             x = F.relu(x)
             x = F.dropout(x, p=self.dropout, training=self.training)
-            emb = torch.cat((emb, x), 1)    # torch.Size([539, 128]) # gev 로 
+            emb = torch.cat((emb, x), 1)    # torch.Size([539, 128])
             if self.skip == 'learnable':
                 # torch.Size([539, 2, 64])
                 all_emb = torch.cat((all_emb, x.unsqueeze(1)), 1)
 
+        # x = pyg_nn.global_mean_pool(x, batch)
+
+        # torch.Size([32, 576])
         emb = pyg_nn.global_add_pool(emb, batch)
+        # torch.Size([32, 64])
         emb = self.post_mp(emb)
+
+        # emb = self.batch_norm(emb)   # TODO: test
+        #out = F.log_softmax(emb, dim=1)
         return emb
 
     def loss(self, pred, label):
+        # return F.nll_loss(pred, label)
         return F.MSELoss(pred, label)
 
 
@@ -246,6 +242,8 @@ class SAGEConv(pyg_nn.MessagePassing):
                 Required if operating in a bipartite graph and :obj:`concat` is
                 :obj:`True`. (default: :obj:`None`)
         """
+        # edge_index, edge_weight = add_remaining_self_loops(
+        #    edge_index, edge_weight, 1, x.size(self.node_dim))
         edge_index, _ = pyg_utils.remove_self_loops(edge_index)
 
         return self.propagate(edge_index, size=size, x=x,
@@ -258,6 +256,7 @@ class SAGEConv(pyg_nn.MessagePassing):
     def update(self, aggr_out, x, res_n_id):
         aggr_out = torch.cat([aggr_out, x], dim=-1)
         aggr_out = self.lin_update(aggr_out)
+
         return aggr_out
 
     def __repr__(self):
@@ -278,6 +277,7 @@ class GINConv(pyg_nn.MessagePassing):
         self.reset_parameters()
 
     def reset_parameters(self):
+        # reset(self.nn)
         self.eps.data.fill_(self.initial_eps)
 
     def forward(self, x, edge_index, edge_weight=None):

@@ -266,7 +266,7 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
             angle_BA = math.degrees(math.atan2(deltaY_BA, deltaX_BA))
 
             predicate=random.choice(global_edge_labels)
-            # add edge to the newly inserted ndoe
+            # add edge to the newly inserted node
             new_g.add_edge(curr_num_node, to_insert_edge, 
                         # predicate=predicate,
                         txtemb = PredictDict[predicate],
@@ -302,7 +302,6 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
 
     subGFeatList = []
     newGFeatList = []
-
 
     cnt = 0
     length = len(dataset)
@@ -364,25 +363,26 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                 graph2 = new_g
                 g1_list.append(origin_g)
                 g2_list.append(graph2)
-                ged_list.append(target_ged)
+                ged_list = [total_ged for _ in range(len(g2_list))]
+                # ged_list.append(target_ged)
 
                 # subGFeatList.append(feats[r])
                 # newGFeatList.append(enc_agg)
 
             # 정규화 여기서
-            max_value = 9.0
-            ged_tensor = torch.tensor(ged_list)
-            ged_norm_list = ged_tensor / max_value
+            # max_value = 9.0
+            # ged_tensor = torch.tensor(ged_list)
+            # ged_norm_list = ged_tensor / max_value
             # print("ged_norm_list: ",ged_norm_list)
 
             # sys.exit()
             # print("ged_norm_list: ",ged_norm_list)
 
             with open("data/GEDPair/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
-                pickle.dump([g1_list, g2_list, ged_norm_list], fw)
+                pickle.dump([g1_list, g2_list, ged_list], fw)
             with open("data/GEDFeat/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
 
-                pickle.dump([subGFeatList, newGFeatList, ged_norm_list], fw)
+                pickle.dump([subGFeatList, newGFeatList, ged_list], fw)
         
             g1_list = []
             g2_list = []

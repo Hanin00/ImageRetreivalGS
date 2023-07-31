@@ -110,22 +110,16 @@ def load_dataset(name):
     elif name == "scene":
         dataset = [[], [], []]
         start = time.time()
-    
-        # ###----학습
-        # for foldername in os.listdir('dataset/GEDPair/'):
-        #     for filename in os.listdir('dataset/GEDPair/'+foldername):
-        #         with open("dataset/GEDPair/"+foldername+"/"+filename, "rb") as fr:
-                    ####---학습
-                    #---test
+        print("data load - data.py - datasource")
 
-        for filename in os.listdir('data/GEDPair/walk4_step3_ged18/'):
+        for filename in os.listdir('data/GEDPair/walk4_step3_ged10/'):
         #     # try : 
-                with open("data/GEDPair/walk4_step3_ged18"+"/"+filename, "rb") as fr:
+                with open("data/GEDPair/walk4_step3_ged10"+"/"+filename, "rb") as fr:
                     tmp = pickle.load(fr)
                     for i in range(0, len(tmp[0])):    
                         dataset[0].append(tmp[0][i])
                         dataset[1].append(tmp[1][i])
-                        dataset[2].append(tmp[2][i])
+                        dataset[2].append(sum(tmp[2][i])) #GEV -> GED
 
             # except : 
             #     continue
