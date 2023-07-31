@@ -219,6 +219,7 @@ def process_file(file_name, path_to_folder, synsDict,predDict):
 def save_results(results, metadata, fidList, chunk_index):
     # 결과값과 metadata를 pickle 파일로 저장
     with open(f'data/scenegraph/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
+    # with open(f'data/sg_temp/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
         pickle.dump((results, metadata, fidList), f)
 
 def main():
@@ -234,6 +235,10 @@ def main():
   # # 폴더 경로 지정
   path_to_folder = 'data/training_total/'  
   file_list = os.listdir(path_to_folder)
+  # file_list = file_list[:10]
+  
+
+  
     
   # 프로세스 풀 생성
   pool = mp.Pool()
@@ -251,8 +256,8 @@ def main():
       chunk_fidList.append(fidList)
       chunk_metadata.append(file_name)
 
-      # 결과값과 metadata를 5개마다 묶어서 저장
-      if len(chunk_results) == 30:
+      # 결과값과 metadata를 2개마다 묶어서 저장
+      if len(chunk_results) == 2:
           save_results(chunk_results, chunk_metadata, chunk_fidList, chunk_index)
           # chunk 초기화
           chunk_results = []

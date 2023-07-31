@@ -26,7 +26,7 @@ def normalize_labels(labels):
 '''
 # path 로 edge list 만들고 edge 추가하기; node path로 Graph 생성 
 def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
-    print("-------mkMergeGraph-------")
+    # print("-------mkMergeGraph-------")
     # --------- vvvvv 생성된 walk에 있는 모든 노드들을 각 노드의 id에 맞게 rpe 를 concat 후 mean pooling 한 값 ----------------------
     merged_K = np.concatenate([np.asarray(k) for k in K]).tolist()
     # print("merged_K: ",merged_K)
@@ -288,47 +288,29 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
                     break
             else:
                 break
-
-
     return target_ged, new_g
 
 
-def load_generated_graphs(dataset_name, file_name='generated_graph_500'):
-    dir = 'dataset/' + dataset_name + '/' + file_name
-    g = open(dir, 'rb')
-    generated_graphs = pickle.load(g)
-    g.close()
-    return generated_graphs
-
-'''
-    originGDict : 대상 Graph의 node의 name - attribute 값(왜) ; 이름을 가지고 node relabeling을 하니까.  ; todo origin Id 가 좀 걸리는데..  
-    F0Dict : global node name - F0 embedding
-'''
-# def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset,feats, F0Dict,PredictDict, total_ged, train,args) : 
-# def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,PredictDict, total_ged, train,args) : 
 def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,PredictDict, total_ged, train, args) : 
     # target_ged, new_g = graph_generation(Grph, F0Dict, global_edge_labels, total_ged)
     # subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
     print("------- PairDataset ---------")
 
-
-
-
     g1_list = []
     g2_list = []
-
-
     ged_list = []
 
     subGFeatList = []
     newGFeatList = []
 
+
     cnt = 0
     length = len(dataset)
+
     while True:
         if queue.empty():
             break
-        num = queue.get()
+        num = len(queue.get())
         if length-num > max_row_per_worker:
             s = num
             e = num + max_row_per_worker
@@ -361,17 +343,7 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
 
 
                     gev = [target_ged['nc'],target_ged['ec'],target_ged['in'],target_ged['ie'],]
-                    # labels = [[label[key] for key in ['nc', 'ec', 'in', 'ie']] for label in target_ged]
-                    # print("*-*-*-*")
-                    # print("gev : ", gev)
-                    # sys.exit()
-                    # print("target_ged : ", target_ged)
-                    # print("target_ged : ", target_ged)
-                    # print("*-*-*-*")
-
                     graph2.graph['gid'] = 1
-                    # d = ged(dataset[i], graph2, 'astar',
-                    #         debug=False, timeit=False)
 
                     print("origin_g: ", origin_g)
                     print("new_g: ", graph2)
@@ -380,10 +352,6 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                     g1_list.append(origin_g)
                     g2_list.append(graph2)
                     ged_list.append(gev)  # gev로 바꿔서 넣음
-
-                    # subGFeatList.append(feats[i])
-                    # newGFeatList.append(enc_agg)
-
                     cnt += 1
                 cnt = 0
             else:
@@ -425,31 +393,56 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
             newGFeatList = []
 
 
+'''
+    originGDict : 대상 Graph의 node의 name - attribute 값(왜) ; 이름을 가지고 node relabeling을 하니까.  ; todo origin Id 가 좀 걸리는데..  
+    F0Dict : global node name - F0 embedding
+'''
 # 데이터를 처리하는 함수 (예시로 간단히 출력)
-def process_data(q, data_list,  embDict, predDict, total_ged,margs):
-    print("------- process_data ---------")
+def process_data(q,  buffer, worker_id, embDict, predDict , total_ged, margs):
     while True:
-        indices = q.get()  # Queue에서 구간 인덱스를 가져옴
-        # print("indices: ",indices)
-        if indices is None:
+        filenames = q.get()  # Queue에서 파일명을 가져옴
+        if filenames is None:
             break
-        data = data_list[indices[0] : indices[-1]]
-        print("len(data): ", len(data))
-        # print("data: ", data)
-
-        train_num_per_row = 64      # Number of datasets created by one subgraph
-        max_row_per_worker = 64     # Number of Subgraphs processed by one processor
-        # number_of_worker = 10     # Number of processor
-
-        graphs = data
-        train = True
-
-        PairDataset(q, train_num_per_row, max_row_per_worker, graphs, embDict, predDict, total_ged, train, margs)
-
-        # for idx in indices:
-        #     data = data_list[idx]
-        #     print("Processed data from index", idx, ":", data)
         
+        for fileN in filenames:
+            # fpath = "data/scenegraph/"+str(fileN)         
+            fpath = "data/scenegraph/"+str(fileN)    
+            # 파일을 읽어와서 원하는 작업을 수행하는 예시로, pickle 파일을 읽고 데이터를 출력합니다.
+            with open(fpath, 'rb') as file:
+                data = pickle.load(file)
+                data = data[0][0]
+                # data = data[:10]
+                # print(data)
+                # print("data: ",data)
+
+                num_processes = 4
+                train_num_per_row = 64      # Number of datasets created by one subgraph
+                max_row_per_worker = 64     # Number of Subgraphs processed by one processor
+                train = True
+
+                graphsq = multiprocessing.Queue()
+
+                # 인덱스 구간을 Queue에 넣음
+                chunk_size = len(data) // num_processes
+                for i in range(num_processes):
+                    start_idx = i * chunk_size
+                    end_idx = start_idx + chunk_size if i < num_processes - 1 else len(data)
+                    indices = list(range(start_idx, end_idx))
+                    graphsq.put(indices)
+
+                # 데이터 처리 프로세스 생성
+                process_processes = []
+                for _ in range(num_processes):
+                    p = multiprocessing.Process(target=PairDataset, args=(graphsq, train_num_per_row, max_row_per_worker, data, embDict,predDict, total_ged, train, margs))
+                    p.start()
+                    process_processes.append(p)
+
+                # 모든 데이터 처리 프로세스가 끝날 때까지 기다림
+                for p in process_processes:
+                    p.join()
+
+                print("All processes have finished.")
+
 
 
 '''
@@ -469,7 +462,6 @@ def process_data(q, data_list,  embDict, predDict, total_ged,margs):
     -> 맨 위의 rpe 함수를 붙이기 전에 주석을 달고 commit....
     ## GEV를 나눠서 학습할 때랑 GED로 만들어서 학습할 때 뭐가 더 잘 찾는지 궁금함
     ### GEV를 뭐에 대해 normalize..?
-
 '''
 import multiprocessing
 
@@ -483,81 +475,48 @@ def main(margs):
     with open('data/predicate_unique_textemb.pickle', 'rb') as f:
         data  = pickle.load(f)
     predDict = data.copy()
-    graphs = []
-    cnt = 0
-    with open('data/scenegraph_merge/merge_scenegraphs_3_onlyGraphs.pkl','rb') as f:   # time:  74.21744275093079
-        data = pickle.load(f)         
-        # print(type(data[0])) #비디오 파일들
-        # print(data[0][0]) # 그래프 리스트
-        # print(data[0][0][0]) #그래프 하나
-        for idx, file in enumerate(data): #graph List Li t
-            if len(file)!= 0:    
-                graphs.extend(data[idx])
 
-    num_processes = 40
-    total_ged=random.randint(18, 18)
+# 0728 - 비디오 5개씩 묶어서 생성한 scene graph에 대해 병렬처리;
+# 파일 명을 queue에 담아뒀다가 호출해서 multiprocessing 가능하도록 구현할 것
+
+#  queue: Counter for checking processed subgraphs (rule flag)
+    # folderpath = "data/scenegraph"
+    folderpath = "data/scenegraph"
+    filename = os.listdir(folderpath)
+
+    filename = filename[:10]
+    
+    total_ged = 18
+    num_workers = 4
     q = multiprocessing.Queue()
-
-    # 인덱스 구간을 Queue에 넣음
-    # chunk_size = len(graphs) // num_processes
-    chunk_size = len(graphs) // 120
-    for i in range(num_processes):
-        start_idx = i * chunk_size
-        end_idx = start_idx + chunk_size if i < num_processes - 1 else len(graphs)
-        indices = list(range(start_idx, end_idx))
-        q.put(indices)
+    
+    # 파일 크기 계산 (예시로 모든 파일의 크기를 동일하다고 가정)
+    # file_size = os.path.getsize(filename[0])
+    file_size = os.path.getsize(folderpath+'/' + filename[0])
 
     # 데이터 처리 프로세스 생성
-
-
     process_processes = []
-    for _ in range(num_processes):
-        p = multiprocessing.Process(target=process_data, args=(q, graphs,  embDict, predDict, total_ged,margs))
+    for i in range(num_workers):
+        buffer = multiprocessing.Manager().list([None])  # 각 워커의 버퍼를 생성
+        p = multiprocessing.Process(target=process_data, args=(q, buffer, i, embDict, predDict,  total_ged, margs))
         p.start()
         process_processes.append(p)
 
-    # 모든 데이터 처리 프로세스가 끝날 때까지 기다림
+    # 파일명을 구간별로 Queue에 넣음
+    chunk_size = len(filename) // num_workers
+    for i in range(num_workers):
+        start_idx = i * chunk_size
+        end_idx = start_idx + chunk_size if i < num_workers - 1 else len(filename)
+        q.put(filename[start_idx:end_idx])
+    # 모든 파일 처리가 끝남을 알리는 None을 Queue에 넣음
+    for _ in range(num_workers):
+        q.put(None)
+
+    # 데이터 처리 프로세스가 끝날 때까지 기다림
     for p in process_processes:
         p.join()
 
     print("All processes have finished.")
-
-
-
-
-
-    # print("--- data_load ---")
-
-    # mp.set_start_method('spawn')
-    # q = mp.Queue()
-    # train_num_per_row = 64      # Number of datasets created by one subgraph
-    # max_row_per_worker = 64     # Number of Subgraphs processed by one processor
-    
-    # number_of_worker = 10     # Number of processor
-
-    # total = graphs
-
-    # total_ged=random.randint(18, 18)
-    # train = True
-    # print("start")
-
-    # start = time.time()
-    # for i in range(0, len(total), max_row_per_worker):
-    #     q.put(i)
-    # print("queue")
-
-    # workers = []
-    # for i in range(number_of_worker):
-    #     worker = mp.Process(target=PairDataset, args=(
-    #         q, train_num_per_row, max_row_per_worker, graphs, embDict, predDict, total_ged, train, margs))
-    #     workers.append(worker)
-    #     worker.start()
-
-    # for worker in workers:
-    #     worker.join()
-
-    # end = time.time()
-    # print("time: ", end-start)
 
 
 if __name__ == "__main__":
@@ -566,38 +525,3 @@ if __name__ == "__main__":
     parse_encoder(parser)
     margs = parser.parse_args()
     main(margs)
-
-    #merge_scenegraphs_0 - 1061643 / 1 - 1040267 / 2 - 1003420 / 3 - 
-'''
-    with open('data/scenegraph_merge/merge_scenegraphs_3.pkl','rb') as f:   # time:  74.21744275093079
-        data = pickle.load(f)         
-        # print(type(data[0])) #비디오 파일들
-        # print(data[0][0]) # 그래프 리스트
-        # print(data[0][0][0]) #그래프 하나
-        for idx, file in enumerate(data[0]): #graph List Li t
-            if len(file)!= 0:    
-                graphs.extend(data[0][idx])
-        print(graphs)
-        sys.exit()
-    #불러 오는 건 걍.. 걍.. 해도 되는 거 아닐까...?
-
-
-        
-    # for filename in os.listdir('data/Vidor/scenegraph'):
-    #     with open('data/Vidor/scenegraph/'+filename, 'rb') as f:   # time:  74.21744275093079
-    #         data = pickle.load(f)
-
-    #         for idx, file in enumerate(data[0]): #graph List Li t
-    #             #  print("file: ", file)
-    #             try:
-    #                 if len(file)!= 0:    
-    #                     graphs.extend(data[0][idx])
-    #             except: 
-    #                 print("filename: ", filename)
-    #                 print("file: ", file)
-    #                 continue
-    
-#일단 당장 할 거..!
-    # feats = feats
-    # PairDataset(Grph, embDict,global_edge_labels, total_ged)
-'''
