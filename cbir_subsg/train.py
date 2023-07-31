@@ -57,13 +57,9 @@ def train(args, model, dataset, data_source):
 
     intersect_embs = None
     pred = model(emb_as, emb_bs)
-    print("pred: ", pred)
     emb_as, emb_bs = pred
-    print("emb_as: ", emb_as)
-    print("emb_bs: ", emb_bs)
 
     loss = model.criterion(pred, intersect_embs, labels)
-    print("loss", loss)
 
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)

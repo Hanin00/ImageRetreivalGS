@@ -49,9 +49,11 @@ class GnnEmbedder(nn.Module):
         Returns: list of ged of graph pairs.
         """
         emb_as, emb_bs = pred
-        # e = torch.sum(torch.abs(emb_bs - emb_as), dim=1) 
-        e = torch.abs(emb_bs - emb_as)
-        # print("e.shape: ", e.shape)
+        e = F.cosine_similarity(emb_bs, emb_as)
+        
+        print("pred len(emb_as): ",len(emb_as))
+        print("pred len(emb_bs): ",len(emb_bs))
+        print("pred len(e): ",len(e))
 
         return e
 
@@ -64,12 +66,14 @@ class GnnEmbedder(nn.Module):
         labels: labels for each entry in pred
         """
         emb_as, emb_bs = pred
-        e = torch.abs(emb_bs - emb_as)# labels 와  GEV 처럼 4차원으로 변경 필요
-        reshaped_e = torch.mean(e.view(32, 4, 32), dim=2) # batch가 32 여서 여기서도 32
+        print("crit len(emb_as):  ",len(emb_as))
+        print("crit len(emb_bs): ",len(emb_bs))
 
-        # 평균 풀링을 통해 128 차원을 4로 축소합니다.
-        # relation_loss = torch.sum(torch.abs(labels-reshaped_e))
-        relation_loss = torch.abs(labels-reshaped_e)  #기존에는 scalar 값(GED)으로 오차를 줄였지만, GEV를 이용하므로 4차원
+        e = torch.abs(emb_bs - emb_as) #labels 와  GEV 처럼 4차원으로 변경 필요
+        print("e : ", e)
+        print("crit len(e): ",len(e))
+
+        relation_loss = F.cosine_similarity(labels, e)  #기존에는 scalar 값(GED)으로 오차를 줄였지만, GEV를 이용하므로 4차원
 
 
         return relation_loss
@@ -148,7 +152,6 @@ class SkipLastGNN(nn.Module):
             nn.ReLU(),
             nn.Linear(hidden_dim, 256), nn.ReLU(),  # 64 256
             nn.Linear(256, hidden_dim))             # 265 64
-
         #self.batch_norm = nn.BatchNorm1d(output_dim, eps=1e-5, momentum=0.1)
         self.skip = args.skip   # True
         self.conv_type = args.conv_type     # order
@@ -176,12 +179,7 @@ class SkipLastGNN(nn.Module):
             print("unrecognized model type")
 
     def forward(self, data):
-        x, edge_index, batch = data.node_feature, data.edge_index, data.batch  
-        print("edge index")
-        print("x: " ,x)
-        print("x size: ", x.size())
-        
-
+        x, edge_index, batch = data.node_feature, data.edge_index, data.batch        
         x = self.pre_mp(x)   # torch.Size([538, 64])
         # x = self.pre_mp(x.float())  # torch.Size([538, 64])
 
@@ -206,9 +204,6 @@ class SkipLastGNN(nn.Module):
             elif self.skip == 'all':
                 if self.conv_type == "PNA":
                     x = torch.cat((self.convs_sum[i](emb, edge_index),
-
-
-
                                    self.convs_mean[i](emb, edge_index),
                                    self.convs_max[i](emb, edge_index)), dim=-1)
                 else:
@@ -222,19 +217,11 @@ class SkipLastGNN(nn.Module):
                 # torch.Size([539, 2, 64])
                 all_emb = torch.cat((all_emb, x.unsqueeze(1)), 1)
 
-        # x = pyg_nn.global_mean_pool(x, batch)
-
-        # torch.Size([32, 576])
         emb = pyg_nn.global_add_pool(emb, batch)
-        # torch.Size([32, 64])
         emb = self.post_mp(emb)
-
-        # emb = self.batch_norm(emb)   # TODO: test
-        #out = F.log_softmax(emb, dim=1)
         return emb
 
     def loss(self, pred, label):
-        # return F.nll_loss(pred, label)
         return F.MSELoss(pred, label)
 
 
@@ -259,8 +246,6 @@ class SAGEConv(pyg_nn.MessagePassing):
                 Required if operating in a bipartite graph and :obj:`concat` is
                 :obj:`True`. (default: :obj:`None`)
         """
-        # edge_index, edge_weight = add_remaining_self_loops(
-        #    edge_index, edge_weight, 1, x.size(self.node_dim))
         edge_index, _ = pyg_utils.remove_self_loops(edge_index)
 
         return self.propagate(edge_index, size=size, x=x,
@@ -272,16 +257,7 @@ class SAGEConv(pyg_nn.MessagePassing):
 
     def update(self, aggr_out, x, res_n_id):
         aggr_out = torch.cat([aggr_out, x], dim=-1)
-
         aggr_out = self.lin_update(aggr_out)
-        #aggr_out = torch.matmul(aggr_out, self.weight)
-
-        # if self.bias is not None:
-        #    aggr_out = aggr_out + self.bias
-
-        # if self.normalize:
-        #    aggr_out = F.normalize(aggr_out, p=2, dim=-1)
-
         return aggr_out
 
     def __repr__(self):
@@ -302,7 +278,6 @@ class GINConv(pyg_nn.MessagePassing):
         self.reset_parameters()
 
     def reset_parameters(self):
-        # reset(self.nn)
         self.eps.data.fill_(self.initial_eps)
 
     def forward(self, x, edge_index, edge_weight=None):

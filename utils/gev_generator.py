@@ -338,7 +338,6 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                         
                         new_g, new_enc_agg = mkNG2Subs(new_g, args, F0Dict, )  # Gs에 Feature 붙임
                         origin_g, origin_enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
-
                         graph2 = new_g
 
 
@@ -379,9 +378,9 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
             # sys.exit()
             # print("ged_norm_list: ",ged_norm_list)
 
-            with open("data/GEDPair/walk4_step3_ged18/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
+            with open("data/GEDPair/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
                 pickle.dump([g1_list, g2_list, ged_norm_list], fw)
-            with open("data/GEDFeat/walk4_step3_ged18/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
+            with open("data/GEDFeat/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
 
                 pickle.dump([subGFeatList, newGFeatList, ged_norm_list], fw)
         
@@ -391,7 +390,6 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
             
             subGFeatList = []
             newGFeatList = []
-
 
 '''
     originGDict : 대상 Graph의 node의 name - attribute 값(왜) ; 이름을 가지고 node relabeling을 하니까.  ; todo origin Id 가 좀 걸리는데..  
@@ -444,7 +442,6 @@ def process_data(q,  buffer, worker_id, embDict, predDict , total_ged, margs):
                 print("All processes have finished.")
 
 
-
 '''
     mkGraphRPE.py에서 SceneGraph를 Random walk base로 나누고, RPE를 계산한다. 
     walk를 인접한 노드끼리 합쳐 subgraph를 생성한다. (워크가 크면 노드 수가 증가할 가능성이 높음. 인접한 walk가 많을 수 O)
@@ -467,7 +464,6 @@ import multiprocessing
 
 def main(margs):
     # global edge Label List 생성 -> Predicate dict
-
     with open('data/class_unique_textemb.pickle', 'rb') as f:  
        data  = pickle.load(f)
     embDict = data.copy()
@@ -483,10 +479,8 @@ def main(margs):
     # folderpath = "data/scenegraph"
     folderpath = "data/scenegraph"
     filename = os.listdir(folderpath)
-
-    filename = filename[:10]
     
-    total_ged = 18
+    total_ged = 10
     num_workers = 4
     q = multiprocessing.Queue()
     
