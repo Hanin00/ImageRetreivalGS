@@ -66,6 +66,7 @@ class GnnEmbedder(nn.Module):
         
         s = F.cosine_similarity(emb_as, emb_bs)
 
+        # loss_func = nn.MSELoss()
         loss_func = nn.MSELoss()
         loss = loss_func(s, labels)
 
@@ -215,7 +216,6 @@ class SkipLastGNN(nn.Module):
         # emb = self.batch_norm(emb)   # TODO: test
         #out = F.log_softmax(emb, dim=1)
         return emb
-
     def loss(self, pred, label):
         # return F.nll_loss(pred, label)
         return F.MSELoss(pred, label)

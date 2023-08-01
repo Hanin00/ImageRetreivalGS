@@ -52,7 +52,6 @@ def train(args, model, dataset, data_source):
 
     emb_as, emb_bs = model.emb_model(pos_a), model.emb_model(pos_b)    
     pos_label = torch.tensor(pos_label, dtype=torch.float32).to(utils.get_device())
-
     # pos_label = torch.stack(pos_label, dim=0).to(utils.get_device())
 
     intersect_embs = None
@@ -118,7 +117,7 @@ def train_loop(args):
             else:
                 pred, labels, loss = train(
                     args, model, dataset, data_source)
-                    
+                
                 if batch_n % 100 == 9:
                     print(pred, pred.shape, sep='\n')
                     print(labels, labels.shape, sep='\n')

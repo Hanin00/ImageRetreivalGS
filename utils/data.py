@@ -67,16 +67,19 @@ def load_dataset(name):
         print("data load - data.py - datasource")
 
         for filename in os.listdir('data/GEDPair/walk4_step3_ged10/'):
-        #     # try : 
                 with open("data/GEDPair/walk4_step3_ged10"+"/"+filename, "rb") as fr:
-                    tmp = pickle.load(fr)
-                    for i in range(0, len(tmp[0])):    
-                        dataset[0].append(tmp[0][i])
-                        dataset[1].append(tmp[1][i])
-                        dataset[2].append(sum(tmp[2][i])) #GEV -> GED
+                    try : 
+                        tmp = pickle.load(fr)
+                        for i in range(0, len(tmp[0])):    
+                            dataset[0].append(tmp[0][i])
+                            dataset[1].append(tmp[1][i])
+                            dataset[2].append(sum(tmp[2][i])) #GEV -> GED
 
-            # except : 
-            #     continue
+                    except : 
+                        print("ERR - data.py - load_dataset")
+                        continue
+
+
         end = time.time()
         print("load time : ", end-start)
         return dataset
@@ -264,6 +267,7 @@ class DiskDataSource(DataSource):
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
+    
     plt.rcParams.update({"font.size": 14})
     for name in ["enzymes", "reddit-binary", "cox2"]:
         data_source = DiskDataSource(name)

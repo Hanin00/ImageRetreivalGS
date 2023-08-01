@@ -16,7 +16,7 @@ import os
 
 
 import pickle
-import multiprocessing
+import concurrent.futures
 
 
 def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
@@ -314,8 +314,18 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
 
             else :
                 print("length is 0 -> killed")
-distribute_files_by_size
 
+
+def distribute_files_by_size(file_list, num_processes):
+    # 파일 크기에 따라 파일 리스트를 정렬
+    sorted_files = sorted(file_list, key=lambda f: os.path.getsize(f), reverse=True)
+
+    # 정렬된 파일 리스트를 프로세스에 균등하게 분배
+    split_filenames = [[] for _ in range(num_processes)]
+    for i, file_name in enumerate(sorted_files):
+        split_filenames[i % num_processes].append(file_name)
+
+    return split_filenames
 
 def main(margs):
     with open('data/class_unique_textemb.pickle', 'rb') as f:  
