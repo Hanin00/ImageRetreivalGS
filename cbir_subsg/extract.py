@@ -94,7 +94,7 @@ def feature_extract(args):
             extractTimeStart = time.time()
             emb_query_data = model.emb_model(query) # 서브그래프 하나에 대한 특징 추출
             extractTimeEnd = time.time()
-            print("subGraph 하나에 대한 특징 추출 시간  : ", extractTimeEnd - extractTimeStart)
+            print("subGraph 하나에 대한 특징 추출 시간 -+ : ", extractTimeEnd - extractTimeStart)
             print(emb_db_data.data)
             print(emb_db_data.data.size())
             sys.exit()

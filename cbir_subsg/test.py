@@ -22,7 +22,7 @@ def validation(args, model, dataset, data_source):
         # labels = [[label[key] for key in ['nc', 'ec', 'in', 'ie']] for label in pos_label]
         # # labels = torch.tensor(labels).to(utils.get_device())
         # labels = torch.stack(pos_label, dim=0).to(utils.get_device())
-        print("여기")
+
         labels = torch.tensor(labels, dtype=torch.float32).to(utils.get_device())
 
 

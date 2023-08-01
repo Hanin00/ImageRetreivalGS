@@ -13,8 +13,8 @@ import os, sys
 import pandas as pd
 import math
 import networkx as nx
-from gensim.models import FastText
-import fasttext.util
+# from gensim.models import FastText
+# import fasttext.util
 from tqdm import tqdm
 import json
 import pickle
@@ -218,8 +218,8 @@ def process_file(file_name, path_to_folder, synsDict,predDict):
 
 def save_results(results, metadata, fidList, chunk_index):
     # 결과값과 metadata를 pickle 파일로 저장
-    with open(f'data/scenegraph/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
-    # with open(f'data/sg_temp/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
+    # with open(f'data/scenegraph/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
+    with open(f'data/scenegraph_1/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
         pickle.dump((results, metadata, fidList), f)
 
 def main():
@@ -257,7 +257,7 @@ def main():
       chunk_metadata.append(file_name)
 
       # 결과값과 metadata를 2개마다 묶어서 저장
-      if len(chunk_results) == 2:
+      if len(chunk_results) == 1:
           save_results(chunk_results, chunk_metadata, chunk_fidList, chunk_index)
           # chunk 초기화
           chunk_results = []

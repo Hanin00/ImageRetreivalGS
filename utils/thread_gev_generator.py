@@ -1,4 +1,7 @@
-import sys, os
+import os
+import pickle
+import threading
+
 import pickle
 import random
 from copy import deepcopy
@@ -6,20 +9,30 @@ from collections import defaultdict
 
 import numpy as np
 import networkx as nx
-import multiprocessing as mp
 
 from surel_gacc import run_walk
 from utils.mkGraphRPE import *
 import random
 import math
+from tqdm import tqdm
 
 
+def check_deadlock():
+    # 현재 실행 중인 스레드 확인
+    current_thread = threading.current_thread()
 
-def normalize_labels(labels):
-    min_vals = torch.min(labels, dim=0)[0]
-    max_vals = torch.max(labels, dim=0)[0]
-    normalized_labels = (labels - min_vals) / (max_vals - min_vals)
-    return normalized_labels
+    # 모든 스레드 확인
+    all_threads = threading.enumerate()
+
+    # 모든 스레드의 상태와 락 상태 출력
+    for thread in all_threads:
+        print(f"Thread name: {thread.name}, is alive: {thread.is_alive()}, lock status: {thread.locked()}")
+        
+import logging
+
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+
 
 '''
     S의 각 원소(워크셋)를 이용해 edge list를 생성하고, edge에 따라 node를 생성하는 방법으로 하나의 서브그래프로 병합
@@ -48,37 +61,7 @@ def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
     # print('gT_mean:' ,gT_mean)
     
     return gT_mean 
-#그래프를 여기서 만드는 게 아니라 각 노드별 rpe 값만 반환
 
-# # -------- ^^^^^ 생성된 walk에 있는 모든 노드들을 각 노드의 id에 맞게 rpe 를 concat 후 mean pooling 한 값 ----------------------
-#     # print("ke_ys : ",gT_mean.keys())
-#     # print("values: ",gT_mean.values())
-
-# # --------- vvvvv S의 각 워크를 edge list로 만들어 SubG에 더함 ----------------------
-#     subG = nx.Graph() # Graph 하나에 모두 합쳐야 해서 for 문 밖에 그래프 객체를 생성
-#     for idx, sPath in enumerate(S):
-#     # path to edgelist    == [[path[i], path[i+1]] for i in range(len(path)-1)]
-#         sPath = [nodeIDDict[i] for i in sPath]
-#         edgelist = list(zip(sPath, sPath[1:]))
-#         subG.add_edges_from(edgelist)
-    
-#     # print(subG.nodes(data=True))
-
-# # --------- vvvvv 생성된 각 subG에 F0 를 더함 + 각 노드의 rpe 값을 attribute로 추가함(GED를 계산하는 것이 아니라서 벡터로 있어도 됨)  ----------------------
-# # todo origini Id에 대한 처리. 해당 값을 제외하고 만들던가...
-#     for i in subG.nodes() :
-#         # subG.nodes[i].update(F0dict[nodeNameDict[i]]) #노드에 해당하는 
-#         subG.nodes[i]['f0'] = F0dict[nodeNameDict[int(i)]]
-#         subG.nodes[i]['name'] = nodeNameDict[int(i)]
-#         subG.nodes[i]['rpe'] = gT_mean[i]
-
-#     # print(subG.nodes(data=True))
-#     # print(subG)
-#     return subG
-
-
-#node 각각에 feature 추가할 때 structural feature 로 enc 값 추가해야함
-# mk RPE encoding, subgraphs
 '''
     새로운 그래프 new_에 대해 run_walk를 이용해 rpe enc값을 추출하고, 특징값을 concat + 하나의 서브 그래프로 병합 -> 과정에서 불필요한 값이 추가됨; 이를 확인 필요
      -> 해당 subgraph에 대한 rpe embedding값을 얻을 수 있고, 새로 생성해서 사라진 name과 node idx 값 외의 속성을 추가(F0, rpe값)
@@ -156,11 +139,6 @@ def mkNG2Subs(G, args, F0dict):
     return G, enc_agg
  
 
-
-
-
-# def return_eq(node1, node2):
-#     return node1['type']==node2['type']
 '''
     targer GEV 를 랜덤으로 생성하고 그에 맞는 pair graph를 생성
 @@@
@@ -230,7 +208,7 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
                 break
                 # print('line 210 -  edge name')
         new_g.edges()[idx]['predicate'] = toassigned_new_edgetype
-
+    
     ## edit node insertions
     for num in range(target_ged['in']):
         curr_num_node = new_g.number_of_nodes()
@@ -245,7 +223,7 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
                        txtemb = (F0Dict[label_name])
                        )
         # print("edge feature cal")
-
+        
         if (curr_num_node !=to_insert_edge): 
             #mkSceneGraph에서 사용한 것 할 수 없음 - edge feature 사용
             bbox_a = new_g.nodes[curr_num_node]['bbox']
@@ -267,91 +245,41 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
 
             predicate=random.choice(global_edge_labels)
             # add edge to the newly inserted node
+            
             new_g.add_edge(curr_num_node, to_insert_edge, 
                         # predicate=predicate,
                         txtemb = PredictDict[predicate],
                         distribute= distance, angle_AB = angle_AB,
                         angle_BA = angle_BA
                         )
+    
     ## edit edge insertions
-    # try:
     for num in range(to_ins):
         curr_num_egde = new_g.number_of_edges()
-        predicate=random.choice(global_edge_labels)
-        try:
-            # while (True):
-                curr_pair = random.sample(new_g.nodes(), 2)
-
-                bbox_a = new_g.nodes[curr_pair[0]]['bbox']
-                bbox_b = new_g.nodes[curr_pair[1]]['bbox']
-
-                center_a = ((bbox_a['xmin'] + bbox_a['xmax']) / 2, (bbox_a['ymin'] + bbox_a['ymax']) / 2)
-                center_b = ((bbox_b['xmin'] + bbox_b['xmax']) / 2, (bbox_b['ymin'] + bbox_b['ymax']) / 2)
-
-                # A와 B의 거리 계산
-                distance = math.sqrt((center_b[0] - center_a[0])**2 + (center_b[1] - center_a[1])**2)
-                # 객체 A를 기준으로 객체 B의 상대 각도 계산
-                deltaX_AB = center_b[0] - center_a[0]
-                deltaY_AB = center_b[1] - center_a[1]
-                angle_AB = math.degrees(math.atan2(deltaY_AB, deltaX_AB))
-                # 객체 B를 기준으로 객체 A의 상대 각도 계산
-                deltaX_BA = center_a[0] - center_b[0]
-                deltaY_BA = center_a[1] - center_b[1]
-                angle_BA = math.degrees(math.atan2(deltaY_BA, deltaX_BA))
-
-                predicate=random.choice(global_edge_labels)
-
+        while (True):
+            curr_pair = random.sample(new_g.nodes(), 2)
+            predicate=random.choice(global_edge_labels)
+            # add edge to the newly inserted node
+            # print("predicate: ",predicate)
+            try:
                 if ((curr_pair[0], curr_pair[1]) not in deleted_edges):
-                    if ((curr_pair[0], curr_pair[1]) not in new_g.edges()):
-                        new_g.add_edge(curr_pair[0], curr_pair[1], name=predicate,
+                    if ((curr_pair[0], curr_pair[1]) not in new_g.edges()):                    
+                        new_g.add_edge(curr_pair[0], curr_pair[1], name=random.choice(global_edge_labels),
                                     txtemb = PredictDict[predicate],
-                                    distribute= distance, angle_AB = angle_AB,
+                                    distribute= distance, 
+                                    angle_AB = angle_AB,
                                     angle_BA = angle_BA                               
                         )
                         break
                 else:
                     break
-        except:
-            print("EXCEPT")
-            curr_pair = random.sample(new_g.nodes(), 2)
-
-            bbox_a = new_g.nodes[curr_pair[0]]['bbox']
-            bbox_b = new_g.nodes[curr_pair[1]]['bbox']
-
-            center_a = ((bbox_a['xmin'] + bbox_a['xmax']) / 2, (bbox_a['ymin'] + bbox_a['ymax']) / 2)
-            center_b = ((bbox_b['xmin'] + bbox_b['xmax']) / 2, (bbox_b['ymin'] + bbox_b['ymax']) / 2)
-
-            # A와 B의 거리 계산
-            distance = math.sqrt((center_b[0] - center_a[0])**2 + (center_b[1] - center_a[1])**2)
-            # 객체 A를 기준으로 객체 B의 상대 각도 계산
-            deltaX_AB = center_b[0] - center_a[0]
-            deltaY_AB = center_b[1] - center_a[1]
-            angle_AB = math.degrees(math.atan2(deltaY_AB, deltaX_AB))
-            # 객체 B를 기준으로 객체 A의 상대 각도 계산
-            deltaX_BA = center_a[0] - center_b[0]
-            deltaY_BA = center_a[1] - center_b[1]
-            angle_BA = math.degrees(math.atan2(deltaY_BA, deltaX_BA))
-
-            predicate=random.choice(global_edge_labels)
-
-            print("curr_pair[0]: ",curr_pair[0])
-            print("curr_pair[1]: ",curr_pair[1])
-            print("predicate: ",predicate)
-            print("PredictDict[predicate]: ",PredictDict[predicate])
-            print("distance: ",distance)
-            print("angle_BA: ",angle_BA)
-            sys.exit()
-
-
-
-        
-
-    # except:
-    #     print("Except")
+            except:
+                print("EXCEPT")
+    
     return target_ged, new_g
 
 
-def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,PredictDict, total_ged, train, args) : 
+def PairDataset(file_path,train_num_per_row,  dataset, F0Dict,PredictDict, total_ged, train, args) : 
     # target_ged, new_g = graph_generation(Grph, F0Dict, global_edge_labels, total_ged)
     # subG, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
     print("------- PairDataset ---------")
@@ -360,25 +288,13 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
     g2_list = []
     ged_list = []
 
-    # subGFeatList = []
-    # newGFeatList = []
-
-    cnt = 0
     length = len(dataset)
-
-    while True:
-        if queue.empty():
-            break
-        num = len(queue.get())
-        if length-num > max_row_per_worker:
-            s = num
-            e = num + max_row_per_worker
-        else:
-            s = num
-            e = len(dataset)
-        for i in range(s, e):
+    cnt = 0
+    if length != 0:
+        print("tqdm - length: ", length)
+        for i in tqdm(range(length)):            
             if train:
-                # print(" - train - ")
+                print(" ---- mk GEVPair start ---- ")
                 for _ in range(train_num_per_row): #일단 모델 사용해야해서 0, 1 나눔.. 
                     dataset[i].graph['gid'] = 0
                     # print(i, dataset[i])
@@ -399,7 +315,6 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                         new_g, new_enc_agg = mkNG2Subs(new_g, args, F0Dict, )  # Gs에 Feature 붙임
                         origin_g, origin_enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
                         graph2 = new_g
-
 
                     gev = [target_ged['nc'],target_ged['ec'],target_ged['in'],target_ged['ie'],]
                     graph2.graph['gid'] = 1
@@ -425,154 +340,81 @@ def PairDataset(queue, train_num_per_row, max_row_per_worker, dataset, F0Dict,Pr
                 g1_list.append(origin_g)
                 g2_list.append(graph2)
                 ged_list = [total_ged for _ in range(len(g2_list))]
-                # ged_list.append(target_ged)
+                
+            print("done - 1")
 
-                # subGFeatList.append(feats[r])
-                # newGFeatList.append(enc_agg)
+        else :
+            print("length is 0 -> killed")
 
-            # 정규화 여기서
-            # max_value = 9.0
-            # ged_tensor = torch.tensor(ged_list)
-            # ged_norm_list = ged_tensor / max_value
-            # print("ged_norm_list: ",ged_norm_list)
+        with open("data/GEDPair/walk4_step3_ged10/walk{}_step{}_ged{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, file_path[-8:-4]), "wb") as fw:
+            pickle.dump([g1_list, g2_list, ged_list], fw)
+        # with open("data/GEDFeat/walk4_step3_ged10/walk{}_step{}_ged{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, file_path[-8:-4]), "wb") as fw:
+        #     pickle.dump([subGFeatList, newGFeatList, ged_list], fw)
+       
+        # print("len(g1_list): ", g1_list)
+        print("len(g1_list[0]): ", g1_list[0])
 
-            # sys.exit()
-            # print("ged_norm_list: ",ged_norm_list)
-            try:
-
-                with open("data/GEDPair/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
-                    pickle.dump([g1_list, g2_list, ged_list], fw)
-            except:
-                print("dump - EXCETP ")
-            # with open("data/GEDFeat/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, s, e), "wb") as fw:
-            #     pickle.dump([subGFeatList, newGFeatList, ged_list], fw)
+        g1_list = []
+        g2_list = []
+        ged_list = []
         
-            g1_list = []
-            g2_list = []
-            ged_list = []
-            
-            # subGFeatList = []
-            # newGFeatList = []
+        # subGFeatList = []
+        # newGFeatList = []
 
 
-'''
-    originGDict : 대상 Graph의 node의 name - attribute 값(왜) ; 이름을 가지고 node relabeling을 하니까.  ; todo origin Id 가 좀 걸리는데..  
-    F0Dict : global node name - F0 embedding
-'''
-# 데이터를 처리하는 함수 (예시로 간단히 출력)
-def process_data(q,  buffer, worker_id, embDict, predDict , total_ged, margs):
-    while True:
-        filenames = q.get()  # Queue에서 파일명을 가져옴
-        if filenames is None:
-            break
-        
-        for fileN in filenames:
-            # fpath = "data/scenegraph/"+str(fileN)         
-            fpath = "data/scenegraph/"+str(fileN)    
-            # 파일을 읽어와서 원하는 작업을 수행하는 예시로, pickle 파일을 읽고 데이터를 출력합니다.
-            with open(fpath, 'rb') as file:
-                data = pickle.load(file)
-                data = data[0][0]
-                # data = data[:10]
-                # print(data)
-                # print("data: ",data)
+def process_file(file_path, F0Dict,PredictDict, total_ged, train, margs):
+    train_num_per_row = 64      # Number of datasets created by one subgraph
+    F0Dict = F0Dict.copy()
+    PredictDict = PredictDict.copy()
 
-                num_processes = 4
-                train_num_per_row = 64      # Number of datasets created by one subgraph
-                max_row_per_worker = 64     # Number of Subgraphs processed by one processor
-                train = True
-
-                graphsq = multiprocessing.Queue()
-
-                # 인덱스 구간을 Queue에 넣음
-                chunk_size = len(data) // num_processes
-                for i in range(num_processes):
-                    start_idx = i * chunk_size
-                    end_idx = start_idx + chunk_size if i < num_processes - 1 else len(data)
-                    indices = list(range(start_idx, end_idx))
-                    graphsq.put(indices)
-
-                # 데이터 처리 프로세스 생성
-                process_processes = []
-                for _ in range(num_processes):
-                    p = multiprocessing.Process(target=PairDataset, args=(graphsq, train_num_per_row, max_row_per_worker, data, embDict,predDict, total_ged, train, margs))
-                    p.start()
-                    process_processes.append(p)
-
-                # 모든 데이터 처리 프로세스가 끝날 때까지 기다림
-                for p in process_processes:
-                    p.join()
-
-                print("All processes have finished.")
-
-
-'''
-    mkGraphRPE.py에서 SceneGraph를 Random walk base로 나누고, RPE를 계산한다. 
-    walk를 인접한 노드끼리 합쳐 subgraph를 생성한다. (워크가 크면 노드 수가 증가할 가능성이 높음. 인접한 walk가 많을 수 O)
-    RPE 값을 concat하고 mean pooling해 해당 subgraph의 structural feature를 embedding가능
+    fpath = "data/scenegraph_1/"+str(file_path)    
+    with open(fpath, 'rb') as file:
+        data = pickle.load(file)
+        content = data[0] #graphs
     
-    각 노드에 subgraph 에서 해당 노드가 갖는 rpe 값들을 concat하고 mean pooling해 subgraph내 각 노드의 structural feature를 Attribute 값으로 할당했음
-
-    이렇게 만들어진 subgraph에 target_gev와 대응하는 subgraph를 생성함
+    PairDataset(file_path, train_num_per_row, *content, F0Dict,PredictDict, total_ged, train, margs)  # 여기에 특정 함수를 호출하고 결과를 저장
     
-    PairDataset -> graph_generation -> mkNG2Subs -> mkMergeGraph
-    1. PairDataset에서 그래프를 생성하고 이를 데이터셋 형태에 맞게 저장함 (기존 데이터셋의 경우 batch가 64였음..)
-    2. graph_generation에서 target_gev를 random 하게 생성하는데, 순서에 따라 개수가 조절되므로 고립되는 노드가 없게했다고 설명을 들었음
-    3. mkNG2Subs에서는 만들어진 서브 그래프의 rpe를 구하고 
-    4. rpe는 구했는데, mkGraphRPE에서 만든 하나의 서브그래프와 대응되는 서브그래프'를 randomwalk한 것이므로 각 값을 할당해줌. 
-    -> 맨 위의 rpe 함수를 붙이기 전에 주석을 달고 commit....
-'''
-import multiprocessing
+    return
 
-def main(margs):
+
+def process_files_in_threads(file_list, num_threads, margs,):
     # global edge Label List 생성 -> Predicate dict
     with open('data/class_unique_textemb.pickle', 'rb') as f:  
        data  = pickle.load(f)
-    embDict = data.copy()
+    F0Dict = data
 
     with open('data/predicate_unique_textemb.pickle', 'rb') as f:
         data  = pickle.load(f)
-    predDict = data.copy()
+    PredictDict = data
 
-# 0728 - 비디오 5개씩 묶어서 생성한 scene graph에 대해 병렬처리;
-# 파일 명을 queue에 담아뒀다가 호출해서 multiprocessing 가능하도록 구현할 것
-
-#  queue: Counter for checking processed subgraphs (rule flag)
-    # folderpath = "data/scenegraph"
-    folderpath = "data/scenegraph"
-    filename = os.listdir(folderpath)
-    
+    train = True
     total_ged = 10
-    num_workers = 4
-    q = multiprocessing.Queue()
-    
-    # 파일 크기 계산 (예시로 모든 파일의 크기를 동일하다고 가정)
-    # file_size = os.path.getsize(filename[0])
-    file_size = os.path.getsize(folderpath+'/' + filename[0])
 
-    # 데이터 처리 프로세스 생성
-    process_processes = []
-    for i in range(num_workers):
-        buffer = multiprocessing.Manager().list([None])  # 각 워커의 버퍼를 생성
-        p = multiprocessing.Process(target=process_data, args=(q, buffer, i, embDict, predDict,  total_ged, margs))
-        p.start()
-        process_processes.append(p)
+    # 각 스레드를 생성하고 실행
+    def process_files_thread(thread_files, F0Dict,PredictDict, total_ged, train,):
+        for file in thread_files:
+            process_file(file, F0Dict, PredictDict, total_ged, train, margs)
 
-    # 파일명을 구간별로 Queue에 넣음
-    chunk_size = len(filename) // num_workers
-    for i in range(num_workers):
-        start_idx = i * chunk_size
-        end_idx = start_idx + chunk_size if i < num_workers - 1 else len(filename)
-        q.put(filename[start_idx:end_idx])
-    # 모든 파일 처리가 끝남을 알리는 None을 Queue에 넣음
-    for _ in range(num_workers):
-        q.put(None)
+    # 각 스레드가 처리할 파일 개수를 계산
+    files_per_thread = len(file_list) // num_threads
+    # 스레드를 담을 리스트를 생성
+    threads = []
 
-    # 데이터 처리 프로세스가 끝날 때까지 기다림
-    for p in process_processes:
-        p.join()
+    # 스레드 생성 및 실행
+    for i in range(num_threads):
+        start_idx = i * files_per_thread
+        end_idx = start_idx + files_per_thread if i < num_threads - 1 else len(file_list)
+        thread_files = file_list[start_idx:end_idx]
 
-    print("=====All processes have finished.=====")
+        # thread = threading.Thread(target=process_files_thread, args=(thread_files, F0Dict,PredictDict, total_ged, train,))
+        thread = threading.Thread(target=process_files_thread, args=(thread_files, F0Dict,PredictDict, total_ged, train,))
+        thread.start()
+        threads.append(thread)
+
+    for thread in threads:
+        thread.join()
+    return
+
 
 
 if __name__ == "__main__":
@@ -580,4 +422,12 @@ if __name__ == "__main__":
     utils.parse_optimizer(parser)
     parse_encoder(parser)
     margs = parser.parse_args()
-    main(margs)
+    # main(margs)
+
+    folderpath = "data/scenegraph_1"
+    # folderpath = "data/scenegraph"
+    file_list = os.listdir(folderpath)
+    file_list = file_list[:10]
+    # 5개의 스레드를 사용하여 파일 처리를 실행
+    num_threads = 100
+    process_files_in_threads(file_list, num_threads, margs)
