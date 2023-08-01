@@ -327,6 +327,17 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
             print("length is 0 -> killed")
 
 
+def distribute_files_by_size(file_list, num_processes):
+    # 파일 크기에 따라 파일 리스트를 정렬
+    sorted_files = sorted(file_list, key=lambda f: os.path.getsize("data/scenegraph_1/" + f), reverse=True)
+
+    # 정렬된 파일 리스트를 프로세스에 균등하게 분배
+    split_filenames = [[] for _ in range(num_processes)]
+    for i, file_name in enumerate(sorted_files):
+        split_filenames[i % num_processes].append(file_name)
+
+    return split_filenames
+
 
 def main(margs):
     with open('data/class_unique_textemb.pickle', 'rb') as f:  
@@ -348,7 +359,7 @@ def main(margs):
 
     # 파일 목록을 프로세스별로 분할
     num_processes = multiprocessing.cpu_count()
-    split_filenames = [file_list[i::num_processes] for i in range(num_processes)]
+    split_filenames = distribute_files_by_size(file_list, num_processes)
 
     # 프로세스를 생성하고 딕셔너리를 개별적으로 전달
     processes = []

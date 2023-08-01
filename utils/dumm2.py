@@ -6,7 +6,6 @@ from collections import defaultdict
 
 import numpy as np
 import networkx as nx
-import multiprocessing as mp
 
 from surel_gacc import run_walk
 from utils.mkGraphRPE import *
@@ -186,41 +185,43 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
     
     for num in range(to_ins):
         curr_num_egde = new_g.number_of_edges()
-        while (True):
-            try:
-                curr_pair = random.sample(new_g.nodes(), 2)
+        # while (True):
+        try:
+            curr_pair = random.sample(new_g.nodes(), 2)
 
-                bbox_a = new_g.nodes[curr_pair[0]]['bbox']
-                bbox_b = new_g.nodes[curr_pair[1]]['bbox']
+            bbox_a = new_g.nodes[curr_pair[0]]['bbox']
+            bbox_b = new_g.nodes[curr_pair[1]]['bbox']
 
-                center_a = ((bbox_a['xmin'] + bbox_a['xmax']) / 2, (bbox_a['ymin'] + bbox_a['ymax']) / 2)
-                center_b = ((bbox_b['xmin'] + bbox_b['xmax']) / 2, (bbox_b['ymin'] + bbox_b['ymax']) / 2)
+            center_a = ((bbox_a['xmin'] + bbox_a['xmax']) / 2, (bbox_a['ymin'] + bbox_a['ymax']) / 2)
+            center_b = ((bbox_b['xmin'] + bbox_b['xmax']) / 2, (bbox_b['ymin'] + bbox_b['ymax']) / 2)
 
-                # A와 B의 거리 계산
-                distance = math.sqrt((center_b[0] - center_a[0])**2 + (center_b[1] - center_a[1])**2)
-                # 객체 A를 기준으로 객체 B의 상대 각도 계산
-                deltaX_AB = center_b[0] - center_a[0]
-                deltaY_AB = center_b[1] - center_a[1]
-                angle_AB = math.degrees(math.atan2(deltaY_AB, deltaX_AB))
-                # 객체 B를 기준으로 객체 A의 상대 각도 계산
-                deltaX_BA = center_a[0] - center_b[0]
-                deltaY_BA = center_a[1] - center_b[1]
-                angle_BA = math.degrees(math.atan2(deltaY_BA, deltaX_BA))
+            # A와 B의 거리 계산
+            distance = math.sqrt((center_b[0] - center_a[0])**2 + (center_b[1] - center_a[1])**2)
+            # 객체 A를 기준으로 객체 B의 상대 각도 계산
+            deltaX_AB = center_b[0] - center_a[0]
+            deltaY_AB = center_b[1] - center_a[1]
+            angle_AB = math.degrees(math.atan2(deltaY_AB, deltaX_AB))
+            # 객체 B를 기준으로 객체 A의 상대 각도 계산
+            deltaX_BA = center_a[0] - center_b[0]
+            deltaY_BA = center_a[1] - center_b[1]
+            angle_BA = math.degrees(math.atan2(deltaY_BA, deltaX_BA))
 
-                predicate=random.choice(global_edge_labels)
-                if ((curr_pair[0], curr_pair[1]) not in deleted_edges):
-                    if ((curr_pair[0], curr_pair[1]) not in new_g.edges()):                    
-                        new_g.add_edge(curr_pair[0], curr_pair[1], name=random.choice(global_edge_labels),
-                                    txtemb = PredictDict[predicate],
-                                    distribute= distance, 
-                                    angle_AB = angle_AB,
-                                    angle_BA = angle_BA                               
-                        )
-                        break
-                else:
+            predicate=random.choice(global_edge_labels)
+            if ((curr_pair[0], curr_pair[1]) not in deleted_edges):
+                if ((curr_pair[0], curr_pair[1]) not in new_g.edges()):                    
+                    new_g.add_edge(curr_pair[0], curr_pair[1], name=random.choice(global_edge_labels),
+                                txtemb = PredictDict[predicate],
+                                distribute= distance, 
+                                angle_AB = angle_AB,
+                                angle_BA = angle_BA          
+                    )
                     break
-            except:
-                print("EXCEPT")
+            else:
+                break
+        except:
+            print("EXCEPT")
+            # continue
+            break
     
     return target_ged, new_g
 
@@ -228,6 +229,7 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
 def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
     train_num_per_row = 64
     # file_path,train_num_per_row,  dataset, total_ged, train, args
+    print("len(filenames): ", len(filenames))
     for filename in filenames:
         # 파일 처리 작업
         # print("filename: ", filename)
@@ -314,7 +316,18 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
 
             else :
                 print("length is 0 -> killed")
-distribute_files_by_size
+
+
+def distribute_files_by_size(file_list, num_processes):
+    # 파일 크기에 따라 파일 리스트를 정렬
+    sorted_files = sorted(file_list, key=lambda f: os.path.getsize("data/scenegraph_1/" + f), reverse=True)
+
+    # 정렬된 파일 리스트를 프로세스에 균등하게 분배
+    split_filenames = [[] for _ in range(num_processes)]
+    for i, file_name in enumerate(sorted_files):
+        split_filenames[i % num_processes].append(file_name)
+
+    return split_filenames
 
 
 def main(margs):
@@ -330,17 +343,15 @@ def main(margs):
     folderpath = "data/scenegraph_1"
     file_list = os.listdir(folderpath)
 
-    file_list = file_list[:10]
-
+    file_list = file_list[:5]
     train = True
     total_ged = 10
 
     # 파일 목록을 프로세스별로 분할
     num_processes = multiprocessing.cpu_count()
-    split_filenames = [file_list[i::num_processes] for i in range(num_processes)]
-
-    # 프로세스를 생성하고 딕셔너리를 개별적으로 전달
+    split_filenames = distribute_files_by_size(file_list, num_processes)
     processes = []
+
     for i in range(num_processes):
         process = multiprocessing.Process(target=PairDataset, args=(split_filenames[i], F0Dict, PredictDict, total_ged, train, margs ))
         process.start()
@@ -356,5 +367,3 @@ if __name__ == "__main__":
     parse_encoder(parser)
     margs = parser.parse_args()
     main(margs)
-
-   

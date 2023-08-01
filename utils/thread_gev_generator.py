@@ -15,6 +15,7 @@ from utils.mkGraphRPE import *
 import random
 import math
 from tqdm import tqdm
+import multiprocessing
 
 
 def check_deadlock():
@@ -192,41 +193,42 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
     
     for num in range(to_ins):
         curr_num_egde = new_g.number_of_edges()
-        while (True):
-            try:
-                curr_pair = random.sample(new_g.nodes(), 2)
+        # while (True):
+        try:
+            curr_pair = random.sample(new_g.nodes(), 2)
 
-                bbox_a = new_g.nodes[curr_pair[0]]['bbox']
-                bbox_b = new_g.nodes[curr_pair[1]]['bbox']
+            bbox_a = new_g.nodes[curr_pair[0]]['bbox']
+            bbox_b = new_g.nodes[curr_pair[1]]['bbox']
 
-                center_a = ((bbox_a['xmin'] + bbox_a['xmax']) / 2, (bbox_a['ymin'] + bbox_a['ymax']) / 2)
-                center_b = ((bbox_b['xmin'] + bbox_b['xmax']) / 2, (bbox_b['ymin'] + bbox_b['ymax']) / 2)
+            center_a = ((bbox_a['xmin'] + bbox_a['xmax']) / 2, (bbox_a['ymin'] + bbox_a['ymax']) / 2)
+            center_b = ((bbox_b['xmin'] + bbox_b['xmax']) / 2, (bbox_b['ymin'] + bbox_b['ymax']) / 2)
 
-                # A와 B의 거리 계산
-                distance = math.sqrt((center_b[0] - center_a[0])**2 + (center_b[1] - center_a[1])**2)
-                # 객체 A를 기준으로 객체 B의 상대 각도 계산
-                deltaX_AB = center_b[0] - center_a[0]
-                deltaY_AB = center_b[1] - center_a[1]
-                angle_AB = math.degrees(math.atan2(deltaY_AB, deltaX_AB))
-                # 객체 B를 기준으로 객체 A의 상대 각도 계산
-                deltaX_BA = center_a[0] - center_b[0]
-                deltaY_BA = center_a[1] - center_b[1]
-                angle_BA = math.degrees(math.atan2(deltaY_BA, deltaX_BA))
+            # A와 B의 거리 계산
+            distance = math.sqrt((center_b[0] - center_a[0])**2 + (center_b[1] - center_a[1])**2)
+            # 객체 A를 기준으로 객체 B의 상대 각도 계산
+            deltaX_AB = center_b[0] - center_a[0]
+            deltaY_AB = center_b[1] - center_a[1]
+            angle_AB = math.degrees(math.atan2(deltaY_AB, deltaX_AB))
+            # 객체 B를 기준으로 객체 A의 상대 각도 계산
+            deltaX_BA = center_a[0] - center_b[0]
+            deltaY_BA = center_a[1] - center_b[1]
+            angle_BA = math.degrees(math.atan2(deltaY_BA, deltaX_BA))
 
-                predicate=random.choice(global_edge_labels)
-                if ((curr_pair[0], curr_pair[1]) not in deleted_edges):
-                    if ((curr_pair[0], curr_pair[1]) not in new_g.edges()):                    
-                        new_g.add_edge(curr_pair[0], curr_pair[1], name=random.choice(global_edge_labels),
-                                    txtemb = PredictDict[predicate],
-                                    distribute= distance, 
-                                    angle_AB = angle_AB,
-                                    angle_BA = angle_BA                               
-                        )
-                        break
-                else:
+            predicate=random.choice(global_edge_labels)
+            if ((curr_pair[0], curr_pair[1]) not in deleted_edges):
+                if ((curr_pair[0], curr_pair[1]) not in new_g.edges()):                    
+                    new_g.add_edge(curr_pair[0], curr_pair[1], name=random.choice(global_edge_labels),
+                                txtemb = PredictDict[predicate],
+                                distribute= distance, 
+                                angle_AB = angle_AB,
+                                angle_BA = angle_BA                               
+                    )
                     break
-            except:
-                print("EXCEPT")
+            else:
+                break
+        except:
+            print("EXCEPT")
+            continue
     
     return target_ged, new_g
 
@@ -243,13 +245,11 @@ def PairDataset(filenames, F0Dict,PredictDict, total_ged, train, args):
           data = pickle.load(file)
         dataset = data[0][0] #video 내 graphs
         print("------- PairDataset ---------")
-
         g1_list = []
         g2_list = []
         ged_list = []
-        
-        length = len(dataset)
 
+        length = len(dataset)
         if length != 0:
             print("tqdm - length: ", length)
             print("tqdm - filename: ", filename)
@@ -302,15 +302,15 @@ def PairDataset(filenames, F0Dict,PredictDict, total_ged, train, args):
                     
                 try:
                     file_counter = 0
-                    save_file = f"data/GEDPair/walk4_step3_ged10/walk{args.num_walks}_step{args.num_steps}_ged{total_ged}_{fpath[-8:-4]}_{file_counter}.pkl"
+                    save_file = f"data/GEDPair/walk4_step3_ged10_th/walk{args.num_walks}_step{args.num_steps}_ged{total_ged}_{fpath[-8:-4]}_{file_counter}.pkl"
 
                     # 파일이 이미 있으면 새로운 파일명 생성
                     while os.path.exists(save_file):
                         file_counter += 1
-                        save_file = f"data/GEDPair/walk4_step3_ged10/walk{args.num_walks}_step{args.num_steps}_ged{total_ged}_{fpath[-8:-4]}_{file_counter}.pkl"
+                        save_file = f"data/GEDPair/walk4_step3_ged10_th/walk{args.num_walks}_step{args.num_steps}_ged{total_ged}_{fpath[-8:-4]}_{file_counter}.pkl"
 
                     # 조건에 따라 파일 저장
-                    if cnt == 64 or i == length-1:
+                    if cnt == 100 or i == length-1:
                         with open(save_file, "wb") as fw:
                             pickle.dump([g1_list, g2_list, ged_list], fw)
 
@@ -326,7 +326,18 @@ def PairDataset(filenames, F0Dict,PredictDict, total_ged, train, args):
         else :
             print("length is 0 -> killed")
 
+def distribute_files_by_size(file_list, num_processes):
+    # 파일 크기에 따라 파일 리스트를 정렬
+    sorted_files = sorted(file_list, key=lambda f: os.path.getsize("data/scenegraph_1/" + f), reverse=True)
 
+    # 정렬된 파일 리스트를 프로세스에 균등하게 분배
+    split_filenames = [[] for _ in range(num_processes)]
+    for i, file_name in enumerate(sorted_files):
+        split_filenames[i % num_processes].append(file_name)
+
+    return split_filenames
+
+    
 def process_files_in_threads(file_list, num_threads, margs,):
     with open('data/class_unique_textemb.pickle', 'rb') as f:  
        data  = pickle.load(f)
@@ -346,12 +357,17 @@ def process_files_in_threads(file_list, num_threads, margs,):
     files_per_thread = len(file_list) // num_threads
     threads = []
 
-    for i in range(num_threads):
-        start_idx = i * files_per_thread
-        end_idx = start_idx + files_per_thread if i < num_threads - 1 else len(file_list)
-        thread_files = file_list[start_idx:end_idx]
+    
 
-        thread = threading.Thread(target=process_files_thread, args=(thread_files, F0Dict,PredictDict, total_ged, train,))
+    # split_filenames = [file_list[i::num_processes] for i in range(num_processes)]
+    split_filenames = distribute_files_by_size(file_list, num_threads)
+
+    for i in range(num_threads):
+        # start_idx = i * files_per_thread
+        # end_idx = start_idx + files_per_thread if i < num_threads - 1 else len(file_list)
+        # thread_files = file_list[start_idx:end_idx]
+
+        thread = threading.Thread(target=process_files_thread, args=(split_filenames[i], F0Dict,PredictDict, total_ged, train,))
         thread.start()
         threads.append(thread)
 
@@ -373,5 +389,6 @@ if __name__ == "__main__":
     folderpath = "data/scenegraph_1"
     file_list = os.listdir(folderpath)
     # file_list = file_list[:10]
-    num_threads = 20
+    # 파일 목록을 프로세스별로 분할
+    num_threads = multiprocessing.cpu_count()
     process_files_in_threads(file_list, num_threads, margs)
