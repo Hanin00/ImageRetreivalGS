@@ -61,12 +61,10 @@ class GnnEmbedder(nn.Module):
         intersect_embs: not used
         labels: labels for each entry in pred
         """
-        emb_as, emb_bs = pred
         # e = torch.sum(torch.abs(emb_bs - emb_as), dim=1)
-        
+        emb_as, emb_bs = pred
         s = F.cosine_similarity(emb_as, emb_bs)
-
-        # loss_func = nn.MSELoss()
+        
         loss_func = nn.MSELoss()
         loss = loss_func(s, labels)
 
@@ -171,17 +169,15 @@ class SkipLastGNN(nn.Module):
 
     def forward(self, data):
         x, edge_index, batch = data.node_feature, data.edge_index, data.batch
-        x = self.pre_mp(x)  # torch.Size([538, 64])
+        x = self.pre_mp(x) 
 
-        all_emb = x.unsqueeze(1)    # torch.Size([539, 1, 64])
-        emb = x                     # torch.Size([539, 64])
+        all_emb = x.unsqueeze(1)    
+        emb = x                     
         for i in range(len(self.convs_sum) if self.conv_type == "PNA" else    # i -> 0 ~ 7
                        len(self.convs)):
             if self.skip == 'learnable':
                 skip_vals = self.learnable_skip[i,
                                                 :i+1].unsqueeze(0).unsqueeze(-1)
-                # print(skip_vals.shape)    # torch.Size([1, 1~8, 1])
-                # -1 x 1 x 64 * 1 x 1 x 1 // 모든 원소에 sigmoid 값 곱하기
                 curr_emb = all_emb * torch.sigmoid(skip_vals)
                 curr_emb = curr_emb.view(x.size(0), -1)         # 539 x 64
                 if self.conv_type == "PNA":
@@ -201,23 +197,19 @@ class SkipLastGNN(nn.Module):
                 x = self.convs[i](x, edge_index)
             x = F.relu(x)
             x = F.dropout(x, p=self.dropout, training=self.training)
-            emb = torch.cat((emb, x), 1)    # torch.Size([539, 128])
+            emb = torch.cat((emb, x), 1) 
             if self.skip == 'learnable':
-                # torch.Size([539, 2, 64])
                 all_emb = torch.cat((all_emb, x.unsqueeze(1)), 1)
 
         # x = pyg_nn.global_mean_pool(x, batch)
 
-        # torch.Size([32, 576])
         emb = pyg_nn.global_add_pool(emb, batch)
-        # torch.Size([32, 64])
         emb = self.post_mp(emb)
 
         # emb = self.batch_norm(emb)   # TODO: test
         #out = F.log_softmax(emb, dim=1)
         return emb
     def loss(self, pred, label):
-        # return F.nll_loss(pred, label)
         return F.MSELoss(pred, label)
 
 
