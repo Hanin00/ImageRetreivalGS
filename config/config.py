@@ -56,7 +56,6 @@ def parse_encoder(parser, arg_str=None):
                             feature_dim = 13, # rpe = 3, f0 = 1 새로운 데이터(rpe )
                             #hidden_dim=64,
                             hidden_dim= 64,
-                            skip="learnable",
                             dropout=0.0,
                             n_batches=10,  # 1000000, total 반복
                             opt='adam',     # opt_enc_parser

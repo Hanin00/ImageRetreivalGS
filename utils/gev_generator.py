@@ -300,7 +300,11 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
                     
                 try:
                     if i == length-1:
+<<<<<<< HEAD
                         with open("data/GEDPair/walk4_step3_ged5/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, fpath[-8:-4], i), "wb") as fw:
+=======
+                        with open("data/GEDPair/walk4_step3_ged10_20-40/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, fpath[-8:-4], i), "wb") as fw:
+>>>>>>> b0847c0420bd083f543f6b2a3155e8c968c46bab
                             pickle.dump([g1_list, g2_list, ged_list], fw)
                         print("dump! - i: {} / filename: {}".format(i,filename))
                         g1_list = []
@@ -309,7 +313,11 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
 
                     # elif cnt == 100:
                     elif cnt == 50:
+<<<<<<< HEAD
                         with open("data/GEDPair/walk4_step3_ged5/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, fpath[-8:-4], i),  "wb") as fw:
+=======
+                        with open("data/GEDPair/walk4_step3_ged10_20-40/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, fpath[-8:-4], i),  "wb") as fw:
+>>>>>>> b0847c0420bd083f543f6b2a3155e8c968c46bab
                             pickle.dump([g1_list, g2_list, ged_list], fw)
                         print("dump! - i: {} / filename: {} / cnt: {}".format(i, filename, cnt))
 
@@ -365,12 +373,19 @@ def main(margs):
     # with open("data/fileNameList_ordered.pkl", "wb") as fw:
     #         pickle.dump( split_filenames  , fw)
     
+<<<<<<< HEAD
     # sys.exit()
 
     with open('data/fileNameList_ordered.pkl', 'rb') as f:
         fileNameList  = pickle.load(f)
     fileNameList = fileNameList[:][:20] # walk4_step3_ged5
     # fileNameList = fileNameList[:][20:40] # walk4_step3_ged5_20*40
+=======
+    with open('data/fileNameList_ordered.pkl', 'rb') as f:
+        fileNameList  = pickle.load(f)
+    # fileNameList = fileNameList[:][:20] # walk4_step3_ged10
+    fileNameList = fileNameList[:][20:40] # walk4_step3_ged10_20-40
+>>>>>>> b0847c0420bd083f543f6b2a3155e8c968c46bab
 
 
     # 프로세스를 생성하고 딕셔너리를 개별적으로 전달

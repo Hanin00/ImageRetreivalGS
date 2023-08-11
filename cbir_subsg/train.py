@@ -14,11 +14,7 @@ import argparse
 
 def build_model(args):
     if args.method_type == "gnn":
-        #model = models.GnnEmbedder(1, args.hidden_dim, args)
-        # model = models.GnnEmbedder(args.feature_dim , args.hidden_dim, args) #feature vector("rpe")가 num_walks = 4라 5차원
         model = models.GnnEmbedder(args.feature_dim , args.hidden_dim, args) #feature vector("rpe")가 num_walks = 4라 5차원
-    # elif args.method_type == "mlp":
-    #     model = models.BaselineMLP(1, args.hidden_dim, args)
     model.to(utils.get_device())
     
     # checkpoint = torch.load('checkpoint.pt')
@@ -32,12 +28,11 @@ def build_model(args):
 def make_data_source(args):
     if args.dataset == "scene":
         data_source = data.SceneDataSource("scene")
-        #data_source = data.SceneDataSource("scene_short")
     return data_source
 
 def train(args, model, dataset, data_source):
     """Train the embedding model.
-    args: Commandline arguments
+    args: Commandline arguments - config.py
     dataset: Dataset of batch size
     data_source: DataSource class
     """
@@ -58,37 +53,27 @@ def train(args, model, dataset, data_source):
     pred = model(emb_as, emb_bs)
     emb_as, emb_bs = pred
 
-    # print(type(emb_as))
-    # print(type(emb_bs))
-    # print(type(pos_label))
-    # sys.exit()
-
     loss = model.criterion(pred, intersect_embs, pos_label)
     print("loss", loss)
     loss.backward()
-
     torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
 
     opt.step()
     if scheduler:
         scheduler.step()
 
-    # 분류하기 위해서
     if args.method_type == "gnn":
         with torch.no_grad():
-            pred = model.predict(pred)  # 해당 부분은 학습에 반영하지 않겠다
+            pred = model.predict(pred) 
         model.clf_model.zero_grad()
         pred = model.clf_model(pred)
 
-        # pred = model.clf_model(pred.unsqueeze(1)).view(-1)
         criterion = nn.MSELoss()
         
         clf_loss = criterion(pred.float(), pos_label.float())
 
         clf_loss.backward()
         clf_opt.step()
-
-    # acc = torch.mean((pred == labels).type(torch.float))
 
     return pred, pos_label, loss.item()
 
@@ -113,7 +98,7 @@ def train_loop(args):
                 mae = validation(args, model, dataset, data_source)
                 val.append(mae)
                 cnt +=1 
-                # print("val: ", val)
+
             else:
                 pred, labels, loss = train(
                     args, model, dataset, data_source)
