@@ -65,19 +65,33 @@ def load_dataset(name):
         dataset = [[], [], []]
         start = time.time()
         print("data load - data.py - datasource")
+        # for filename in os.listdir('data/GEDPair/walk4_step3_ged10/'):
+        #         with open("data/GEDPair/walk4_step3_ged10"+"/"+filename, "rb") as fr:
 
-        for filename in os.listdir('data/GEDPair/walk4_step3_ged10/'):
-                with open("data/GEDPair/walk4_step3_ged10"+"/"+filename, "rb") as fr:
-                    try : 
-                        tmp = pickle.load(fr)
-                        for i in range(0, len(tmp[0])):    
-                            dataset[0].append(tmp[0][i])
-                            dataset[1].append(tmp[1][i])
-                            dataset[2].append(sum(tmp[2][i])) #GEV -> GED
+        num = 60
+        #gpu 06,07,08에서 생성한 데이터
+        for foldername in os.listdir('data/GEDPair/train/'):
+            file_names = os.listdir('data/GEDPair/train/'+foldername)
+            # for j in range(len(file_names)):
+            for j in range(num if len(file_names)>=num else len(file_names) ):
+                    filename = file_names[j]
+            #  for filename in os.listdir('data/GEDPair/train/'+foldername):
+                    with open("data/GEDPair/train"+"/"+foldername+'/'+filename, "rb") as fr:
+                        try : 
+                            tmp = pickle.load(fr)
+                            for i in range(0, len(tmp[0])):    
+                                dataset[0].append(tmp[0][i])
+                                dataset[1].append(tmp[1][i])
+                                dataset[2].append(sum(tmp[2][i])) #GEV -> GED
+                                # print("dataset: ", len(dataset[0]))
+                                # print("dataset: ", len(dataset[1]))
+                                # print("dataset: ", len(dataset[2]))
+                        except : 
+                            print("ERR - data.py - load_dataset")
+                            continue
 
-                    except : 
-                        print("ERR - data.py - load_dataset")
-                        continue
+        print("len(dataset[0]): ", len(dataset[0]))
+        # sys.exit()
 
 
         end = time.time()

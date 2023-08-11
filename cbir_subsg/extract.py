@@ -23,7 +23,7 @@ import sys
 
 '''
 def load_dataset(args):
-    with open("data/GEDPair/walk4_step3_ged10/walk4_step3_ged10_38_102.pkl", "rb") as fr:
+    with open("data/GEDPair/walk4_step3_ged5/walk4_step3_ged5_1604_50.pkl", "rb") as fr:
         datas = pickle.load(fr)
     
     # datas= datas[:10]
@@ -63,6 +63,11 @@ def feature_extract(args):
     dataset, db_idx, querys, query_idx = load_dataset(args)
     db_data = utils.batch_nx_graphs_rpe(dataset, None)
 
+    # print("querys: ", len(querys[0]))
+
+    # sys.exit()
+
+
     # model load
     if not os.path.exists(os.path.dirname(args.model_path)):
         os.makedirs(os.path.dirname(args.model_path))
@@ -97,8 +102,6 @@ def feature_extract(args):
             print("subGraph 하나에 대한 특징 추출 시간 -+ : ", extractTimeEnd - extractTimeStart)
             print(emb_db_data.data)
             print(emb_db_data.data.size())
-            sys.exit()
-
             print(emb_db_data.shape)
             retreival_start_time = time.time()  # subgraph 하나에 대한 추출 시간
             e = torch.sum(torch.abs(emb_query_data - emb_db_data), dim=1)
@@ -109,10 +112,12 @@ def feature_extract(args):
             print("number of DB subgraph", e.shape)
             # result = [(query_idx+1, i)]
             result = []
+
             for n, d in rank[:5]:
                 print("DB img id :", db_idx[n]+1)
                 print("similarity : {:.5f}".format(d.item()))
-                print("DB graph nodes :", db_check[n])
+                print("DB graph nodes :", 
+            sys.exit()[n])
                 result.append((db_idx[n]+1, dataset[n]))
 
                 candidate_imgs.append(db_idx[n]+1)
@@ -120,7 +125,8 @@ def feature_extract(args):
             results.append(result)
             retreival_time = time.time() - retreival_start_time
             print("@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ :", retreival_time)
-
+            
+            sys.exit()
             # Check similar/same class count with subgraph in DB
             checking_in_db = [len(q_check) - len(q_check - i)
                               for i in db_check]

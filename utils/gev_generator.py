@@ -14,7 +14,6 @@ import random
 import math
 import os
 
-
 import pickle
 import multiprocessing
 
@@ -86,7 +85,6 @@ def mkNG2Subs(G, args, F0dict):
 
     return G, enc_agg
  
-
 
 def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
     new_g = deepcopy(graph)
@@ -251,7 +249,7 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
             print("tqdm - filename: ", filename)
             cnt = 0
             # for i in tqdm(range(length)):    
-            for i in (range(length)):   
+            for i in range(length):   
                 if train:
                     # print(" ---- mk GEVPair start ---- ")
                     for _ in range(train_num_per_row):
@@ -278,12 +276,14 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
                             # print("new_g: ", graph2)
                             # print("gev: ", gev)
 
+
                             g1_list.append(origin_g)
                             g2_list.append(graph2)
                             ged_list.append(gev)  
                         except:
                             print("ERR - dataset[i]: {}".format(dataset[i]))
                             print("ERR - len(dataset[i]): {}".format(len(dataset[i])))
+                            # print("ERR - dataset[i]: {}".format(dataset[i].edges(data=True)))
                             sys.exit()
                 else:
                     r = random.randrange(length-1)
@@ -300,7 +300,7 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
                     
                 try:
                     if i == length-1:
-                        with open("data/GEDPair/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, fpath[-8:-4], i), "wb") as fw:
+                        with open("data/GEDPair/walk4_step3_ged5/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, fpath[-8:-4], i), "wb") as fw:
                             pickle.dump([g1_list, g2_list, ged_list], fw)
                         print("dump! - i: {} / filename: {}".format(i,filename))
                         g1_list = []
@@ -309,7 +309,7 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
 
                     # elif cnt == 100:
                     elif cnt == 50:
-                        with open("data/GEDPair/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, fpath[-8:-4], i),  "wb") as fw:
+                        with open("data/GEDPair/walk4_step3_ged5/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, fpath[-8:-4], i),  "wb") as fw:
                             pickle.dump([g1_list, g2_list, ged_list], fw)
                         print("dump! - i: {} / filename: {} / cnt: {}".format(i, filename, cnt))
 
@@ -352,19 +352,31 @@ def main(margs):
     folderpath = "data/scenegraph_1"
     file_list = os.listdir(folderpath)
 
-    file_list = file_list[:5]
 
+    # file_list = file_list[:5]
     train = True
-    total_ged = 10
+    total_ged = 5
 
     # 파일 목록을 프로세스별로 분할
     num_processes = multiprocessing.cpu_count()
-    split_filenames = distribute_files_by_size(file_list, num_processes)
+    # split_filenames = distribute_files_by_size(file_list, num_processes)
+
+
+    # with open("data/fileNameList_ordered.pkl", "wb") as fw:
+    #         pickle.dump( split_filenames  , fw)
+    
+    # sys.exit()
+
+    with open('data/fileNameList_ordered.pkl', 'rb') as f:
+        fileNameList  = pickle.load(f)
+    fileNameList = fileNameList[:][:20] # walk4_step3_ged5
+    # fileNameList = fileNameList[:][20:40] # walk4_step3_ged5_20*40
+
 
     # 프로세스를 생성하고 딕셔너리를 개별적으로 전달
     processes = []
     for i in range(num_processes):
-        process = multiprocessing.Process(target=PairDataset, args=(split_filenames[i], F0Dict, PredictDict, total_ged, train, margs ))
+        process = multiprocessing.Process(target=PairDataset, args=(fileNameList[i], F0Dict, PredictDict, total_ged, train, margs ))
         process.start()
         processes.append(process)
 
