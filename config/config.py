@@ -55,7 +55,7 @@ def parse_encoder(parser, arg_str=None):
                             # feature_dim = 1, # rpe = 3, f0 = 1 # 기존 데이터 사용 시
                             feature_dim = 13, # rpe = 3, f0 = 1 새로운 데이터(rpe )
                             #hidden_dim=64,
-                            hidden_dim= 64,
+                            hidden_dim= 128,
                             dropout=0.0,
                             n_batches=10,  # 1000000, total 반복
                             opt='adam',     # opt_enc_parser
@@ -68,11 +68,7 @@ def parse_encoder(parser, arg_str=None):
                             test_set='',
                             eval_interval=10,   # 1000, batch 반복횟수
                             n_workers=40,        # 4
-                            # model_path="ckpt/final/rpe_only/rpe_v3_0511_newdatase_e100_e991.pt",
-                            # model_path="ckpt/final/rpe_only/rpe_v3_0512_newdatase_1_e991.pt",
-                            # model_path="ckpt/final/rpe_v3_imgId100_e1.pt",
-                            model_path="ckpt/final/hidden_64/rpe_v3_ged_diff_all_e2000.pt",
-                            # model_path="ckpt/final/rpe_v3_imgId100_ged_e1000.pt",
+                            model_path="ckpt/final/hidden_64_layer8/rpe_v3_ged_diff_all_e2000.pt",
                             tag='',
                             val_size=64,         # 4096,
                             node_anchored=False, # True

@@ -36,7 +36,7 @@ class GnnEmbedder(nn.Module):
         self.margin = args.margin
         self.use_intersection = False
 
-        self.clf_model = nn.Sequential(nn.Linear(32, 1))
+        self.clf_model = nn.Sequential(nn.Linear(32, 1))    
 
     def forward(self, emb_as, emb_bs):
         return emb_as, emb_bs
@@ -83,7 +83,6 @@ class SkipLastGNN(nn.Module):
         # Linear(1, 64)
         self.pre_mp = nn.Sequential(nn.Linear(input_dim, 3*hidden_dim if
                                               args.conv_type == "PNA" else hidden_dim))
-
         '''
         GCN
         '''
