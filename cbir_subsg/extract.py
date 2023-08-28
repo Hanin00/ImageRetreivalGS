@@ -13,6 +13,8 @@ import tqdm
 
 import numpy as np
 
+import networkx as nx
+import matplotlib.pyplot as plt
 
 import sys
 
@@ -25,27 +27,71 @@ import sys
     하지만, 지금은 비디오 내 프레임별로 scenegraph 를 생성하므로 파일명과 몇 번째 그래프인지를 표현해주면 됨
 '''
 def load_dataset(args):
-    with open("data/GEDPair/train/walk4_step3_ged5/walk4_step3_ged5_1604_50.pkl", "rb") as fr:
-        datas = pickle.load(fr)
+    # with open("data/scenegraph_1/0_6096540713_6096540713.pkl", "rb") as fr:
+    #     datas = pickle.load(fr)
     db = []
     db_idx = []
-
     seeds = 4
-    query_number = 5002                         #todo meta data 기준으로 걸러야함
-    for i in range(len(datas)):
-        if query_number == i:
-            continue
-        db.extend(datas[0])
-        #db_idx.extend([i]*len(datas))# 기존에는 그래프의 id를 subgraph 개수만큼 생성했
+    query_number = 5002       
+    
+    # ------- scenegraph ----------------
+    # dbScenegraphs = os.listdir('data/scenegraph_1/') #scenegraph file이 있는 폴더명
+    # for file_name in dbScenegraphs[:20]:
+    #     vID = file_name.split('_')[0]
+    #     # vName = file_name.split('_')[1] # video Name
+    #     with open("data/scenegraph_1/"+file_name, "rb") as fr:
+    #         tmp = pickle.load(fr)
+    #         db.extend(*tmp[0])
+    #         db_idx.extend([vID + '_' + str(i) for i in range(len(*tmp[0]))])
+    #         # print("db_idx: ", db_idx) # vid_fid -> vid는 Scenegraph 생성시 붙인 번호
+    # ------- scenegraph ----------------
+
+    # 형태 맞아야 하는지 확인하려고 잠깐 함
+
+    gevpair_dbScenegraphs = os.listdir('data/GEDPair/train/walk4_step3_ged10/') #scenegraph file이 있는 폴더명
+    for file_name in gevpair_dbScenegraphs[:2]:
+        vID = file_name.split('_')[-2] +'-' + file_name.split('_')[-1]+'-' 
+        # vName = file_name.split('_')[1] # video Name
+        with open("data/GEDPair/train/walk4_step3_ged10/"+file_name, "rb") as fr:
+            tmp = pickle.load(fr)
+            # print("*tmp[0]: " , tmp[0][0]) # tmp[0]: g / tmp[1]: g' / tmp[2]: GEV            
+            # db.extend(tmp[0]), 
+            db.extend(tmp[1])
+            db_idx.extend([vID + '_' + str(i) for i in range(len(tmp[0]))])
+        # print("db_idx: ", db_idx) # vid_fid -> vid는 Scenegraph 생성시 붙인 번호
+
+    print("len(datset) : ", len(db))
+
 
     # user-defined query images
     with open("data/query_ged.pkl", "rb") as q:
         query = pickle.load(q)
-        query = query[0][:20] # 비디오별 scenegraph를 포함하고 있기 때문
+        query = query[0][:10] # 비디오별 scenegraph를 포함하고 있기 때문
         # print("query: ",query)
         # query, queryFeatList = mkG.mkSubs(querys[0], args, seeds)
         query_number = 1
     return db, db_idx, query, query_number
+
+
+def showGraph(graph, type, title):
+    #query graph 시각화, 저장
+    plt.figure(figsize = (8, 8))
+    pos = nx.spring_layout(graph, k = 0.8)
+    node_labels = nx.get_node_attributes(graph, 'name')
+    edge_labels = nx.get_edge_attributes(graph, 'predicate')
+    # print("edge_labels: ", edge_labels)
+    nx.draw_networkx_labels(graph, pos, labels=node_labels)
+    nx.draw_networkx_edge_labels(graph, pos, edge_labels = edge_labels)
+    nx.draw(graph, pos, node_size = 400, node_color = 'blue',)
+    plt.show()
+    plt.title('query graph')
+    plt.savefig('result/'+type+'/'+title+'.png',
+    facecolor='#eeeeee',
+    edgecolor='black',
+    format='png', dpi=200)
+
+
+
 
 
 def feature_extract(args):
@@ -61,6 +107,8 @@ def feature_extract(args):
     #dataset, db_idx, querys, query_idx = load_dataset(max_node, R_BFS)
     dataset, db_idx, querys, query_idx = load_dataset(args)
     db_data = utils.batch_nx_graphs_rpe(dataset, None)
+    print("db_data: ", db_data)
+    # print("db_data: ", len(db_data))
 
     # model load
     if not os.path.exists(os.path.dirname(args.model_path)):
@@ -73,7 +121,6 @@ def feature_extract(args):
     else:
         return print("model does not exist")
 
-
     db_check = [{i[1] for i in d.nodes(data="name")}for d in dataset]
     temp = []
     results = []
@@ -83,9 +130,9 @@ def feature_extract(args):
         # emb_db_data = model.emb_model(db_data)
 
         emb_db_data = model.emb_model(db_data)
-        for i in querys: #i = 쿼리 그래프의 서브 그래프 하나.
+        for idx, queryG  in enumerate(querys): #i = 쿼리 그래프의 서브 그래프 하나.
             query = temp.copy()
-            query.append(i)
+            query.append(queryG)
             query = utils.batch_nx_graphs_rpe(query, None)
             query = query.to(utils.get_device())
 
@@ -93,34 +140,43 @@ def feature_extract(args):
             emb_query_data = model.emb_model(query) # 서브그래프 하나에 대한 특징 추출
             extractTimeEnd = time.time()
             print("subGraph 하나에 대한 특징 추출 시간 -+ : ", extractTimeEnd - extractTimeStart)
-            print(emb_db_data.data)
-            print(emb_db_data.data.size())
-            print(emb_db_data.shape)
+            # print(emb_db_data.data)
+            # print(emb_db_data.data.size())
+            # print(emb_db_data.shape)
             retreival_start_time = time.time()  # subgraph 하나에 대한 추출 시간
             e = torch.sum(torch.abs(emb_query_data - emb_db_data), dim=1)
             rank = [(i, d) for i, d in enumerate(e)]
             rank.sort(key=lambda x: x[1])
-            q_check = {n[1] for n in i.nodes(data="name")}
+            q_check = {n[1] for n in queryG.nodes(data="name")}
             print("Q graph nodes :", q_check)
+            print("Q graph: ", queryG)
+            
             print("number of DB subgraph", e.shape)
             # result = [(query_idx+1, i)]
             result = []
             for n, d in rank[:5]:
-                print("db_idx: ", db_idx) #<- 이거 메타 데이터를 어떻게 해야하지..?
                 # sys.exit()
                 # print("DB img :", db_idx.item())
                 # print("DB img id :", db_idx.item())
                 print("similarity : {:.5f}".format(d.item()))
-                print("DB graph nodes :", [n])
-                sys.exit()
-                # print("DB img :", db_idx.item())
-                # print("rank graph id - n:", n)
-                # print("rank graph id - d:", d)
-                # sys.exit()
-                result.append((db_idx[n]+1, dataset[n]))
+                print("n : ",n)
+                #db_data 는 batch.. 
+                # print("DB graph :", dataset[int(n)])
+                # print("DB graph :", dataset[n].nodes(data=True))
+                
+                result.append((db_idx[n], dataset[n]))
+                print("db_idx[n] = filename: ", db_idx[n]) 
+                print("dataset[n] = graph: ", dataset[n])
+                candidate_imgs.append(db_idx[n])            
 
-                candidate_imgs.append(db_idx[n]+1)
+            # [print("id: ", ranks[0], "\n graphs: ", ranks[1].nodes(data=True))  for ranks in result]
+            [print("id: ", ranks[0], "\n graphs: ", ranks[1])  for ranks in result]
 
+            showGraph(queryG, 'query', 'qurey_'+str(idx))# query graph 저장
+            [showGraph(rank[1],'ranks', 'qid_'+str(idx)+'-rank_'+ str(i)+'-id_'+rank[0])  for i, rank in enumerate (result)]
+            print("쨔")
+            
+           
             results.append(result)
             retreival_time = time.time() - retreival_start_time
             print("@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ :", retreival_time)
@@ -137,6 +193,7 @@ def feature_extract(args):
                 str(q_check - (q_check - i)) for i in db_check]
             value_checking_result = Counter(value_checking_in_db)
             print(value_checking_result)
+            print("란")
             print("==="*20)
     # Final image rank
     imgs = Counter(candidate_imgs)

@@ -42,9 +42,7 @@ def train(args, model, dataset, data_source):
 
     model.train()   # dorpout 및 batchnomalization 활성화
     model.zero_grad()   # 학습하기위한 Grad 저장할 변수 초기화
-    pos_a, pos_b, pos_label = data_source.gen_batch(
-        
-        dataset, True)
+    pos_a, pos_b, pos_label = data_source.gen_batch( dataset, True)
     # print("pos_label: ", pos_label)
 
     emb_as, emb_bs = model.emb_model(pos_a), model.emb_model(pos_b)    
@@ -95,7 +93,6 @@ def train_loop(args):
     epoch = 200 # 2000
     cnt = 0 
     for e in range(epoch):
-
         for dataset in loaders:
             if args.test:
                 mae = validation(args, model, dataset, data_source)

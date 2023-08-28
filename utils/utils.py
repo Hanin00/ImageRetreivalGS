@@ -40,8 +40,6 @@ def sample_neigh(graphs, size):
             frontier = [x for x in frontier if x not in visited]
         if len(neigh) == size:
             return graph, neigh
-
-
 cached_masks = None
 
 
@@ -167,16 +165,6 @@ def gen_baseline_queries_mfinder(queries, targets, n_samples=10000,
             neigh.nodes[v]["anchor"] = 1
             neigh.remove_edges_from(nx.selfloop_edges(neigh))
             counts[wl_hash(neigh, node_anchored=node_anchored)].append(neigh)
-        #bads, t = 0, 0
-        # for ka, nas in counts.items():
-        #    for kb, nbs in counts.items():
-        #        if ka != kb:
-        #            for a in nas:
-        #                for b in nbs:
-        #                    if nx.is_isomorphic(a, b):
-        #                        bads += 1
-        #                        print("bad", bads, t)
-        #                    t += 1
 
         for _, neighs in list(sorted(counts.items(), key=lambda x: len(x[1]),
                                      reverse=True))[:count]:
@@ -184,9 +172,7 @@ def gen_baseline_queries_mfinder(queries, targets, n_samples=10000,
             out.append(random.choice(neighs))
     return out
 
-
 device_cache = None
-
 
 def get_device():
     global device_cache
@@ -195,7 +181,6 @@ def get_device():
             else torch.device("cpu")
         #device_cache = torch.device("cpu")
     return device_cache
-
 
 def parse_optimizer(parser):
     opt_parser = parser.add_argument_group()
@@ -259,71 +244,16 @@ def batch_nx_graphs(graphs, anchors=None):
             rpe = g.nodes[v]['rpe']
             f0 = g.nodes[v]["txtemb"]
             g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
-            # g.nodes[v]["node_feature"] = torch.tensor([g.nodes[v]["f0"]])
-            
-    # print("type(graphs) : ",type(graphs))
-    # print("type(graphs[0]) : ",type(graphs[0]))
-    # print("DSGraph(g) : ",DSGraph(g))
 
     batch = Batch.from_data_list([DSGraph(g) for g in graphs])
     batch = batch.to(get_device())
     # print(batch)
     return batch
 
-
-
-
-
-
-# def batch_nx_graphs(graphs, anchors=None):
-#     # motifs_batch = [pyg_utils.from_networkx(
-#     #    nx.convert_node_labels_to_integers(graph)) for graph in graphs]
-#     #loader = DataLoader(motifs_batch, batch_size=len(motifs_batch))
-#     #for b in loader: batch = b
-#     if anchors is not None:
-#         for anchor, g in zip(anchors, graphs):
-#             for v in g.nodes:
-#                 g.nodes[v]["node_feature"] = torch.tensor([float(v == anchor)])
-
-#     for g in graphs:
-#         for v in list(g.nodes):
-#             try: # 기존 데이터셋
-#                 r0 = g.nodes[v]["r0"]
-#                 r1 = g.nodes[v]["r1"]
-#                 r2 = g.nodes[v]["r2"]
-#                 #r3 = g.nodes[v]["r3"]
-#                 #r4 = g.nodes[v]["r4"]
-#                 f0 = g.nodes[v]["f0"]
-                
-#                 g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((r0,r1,r2, f0), axis=None))
-#                 #g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((r0, r1,r2, [f0]), axis=None)) #rpe_f0 성능 개선
-#             except:
-#                 print("here")
-#                 print("torch.tensor(np.concatenate((rpe, f0), axis=None)): "  ,torch.tensor(np.concatenate((rpe, f0), axis=None)))
-#                 print(g.nodes[v])
-#                 print("g.nodes(data=True): ",g.nodes(data=True))
-
-#                 sys.exit()
-#                 rpe = g.nodes[v]["rpe"]
-#                 f0 = g.nodes[v]["f0"]
-#                 g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
-#     batch = Batch.from_data_list([DSGraph(g) for g in graphs])
-#     batch = batch.to(get_device())
-#     # print(batch)
-#     return batch
-
-
-
-
-
-
-
 #DSGraph로 변경하는 과정에서 변수명이 key에 없어 된지 않음 -> edge 삭제 후 재생성 시, feature를 변경해서 입력해봄
 def batch_nx_graphs_rpe(graphs, anchors=None):
-    # motifs_batch = [pyg_utils.from_networkx(
-    #    nx.convert_node_labels_to_integers(graph)) for graph in graphs]
-    #loader = DataLoader(motifs_batch, batch_size=len(motifs_batch))
-    #for b in loader: batch = b
+    print("len(graphs): ", len(graphs))
+    
     newGraphs = []
     if anchors is not None:
         for anchor, g in zip(anchors, graphs):
@@ -339,31 +269,20 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
         newG = nx.Graph()
         newG.add_nodes_from(g.nodes(data=True))
         newG.add_edges_from(g.edges())
-        # graphA의 엣지의 predicate 속성만 graphB로 복사합니다.
-        # for u, v, data in g.edges(data=True):
-        #     if 'predicate' in data:
-                # newG.add_edge(u, v, edge_label=data['predicate'])
 
         for v in list(g.nodes):
                 rpe = g.nodes[v]['rpe']
                 f0 = g.nodes[v]["txtemb"]
-                # g.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
                 newG.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
 
         for e in list(g.edges):
-                # predicate = g.edges[e[0], e[1]]['predicate']
                 txtemb = g.edges[e[0], e[1]]['txtemb']
-                # print('predicate: ', predicate)
-                # print('txtemb: ', txtemb)
                 distribute = g.edges[e[0], e[1]]["distribute"]
                 angle_AB = g.edges[e[0], e[1]]["angle_AB"]
                 angle_BA = g.edges[e[0], e[1]]["angle_BA"]
-                # print('edge feature: ', g.edges[e])
-                # g.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb, distribute,angle_AB,angle_BA), axis=None))
                 newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb, distribute,angle_AB,angle_BA), axis=None))
 
         newGraphs.append(newG)
-
 
     batch = Batch.from_data_list([DSGraph(g) for g in newGraphs])  
 
@@ -371,6 +290,5 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
         batch = batch.to(get_device())
     except:
         print(graphs)
-        # print("DSGraph(g): ",DSGraph(graphs[0]))    
     # print(batch)
     return batch

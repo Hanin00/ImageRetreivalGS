@@ -86,7 +86,11 @@ def load_dataset(name):
                         except : 
                             print("ERR - data.py - load_dataset")
                             continue
+
         print("len(dataset[0]): ", len(dataset[0]))
+        # sys.exit()
+
+
         end = time.time()
         print("load time : ", end-start)
         return dataset
