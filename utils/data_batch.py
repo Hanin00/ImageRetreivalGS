@@ -97,13 +97,11 @@ def main(train):
     with open("dataset/rpe_splited_subgraph/rpe_v3_x1000_walk4_step2_SubG_129897.pkl", "rb") as fr:
         dataset = pickle.load(fr)
 
-
     #print(dataset[0].nodes[2])
     #{'r0': 1, 'r1': 0, 'r2': 0, 'r3': 0, 'r4': 0, 'name': 'gym_shoe', 'originId': 5048, 'f0': -0.19570904970169067}
 
-
     total = dataset
-    
+
     start = time.time()
     #전체 129897 을 64로 나눠서 4/5지점부터 GED Pair 생성
     for i in range(77938, len(total), max_row_per_worker):

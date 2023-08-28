@@ -21,12 +21,12 @@ import sys
     1. 서브그래프를 사용하지 않음
     2. 그래프 형식이 다름 - edge feature 있음;
 
+    db_idx.extend([i]*len(datas))# 기존에는 그래프의 id를 subgraph 개수만큼 생성
+    하지만, 지금은 비디오 내 프레임별로 scenegraph 를 생성하므로 파일명과 몇 번째 그래프인지를 표현해주면 됨
 '''
 def load_dataset(args):
-    with open("data/GEDPair/walk4_step3_ged5/walk4_step3_ged5_1604_50.pkl", "rb") as fr:
+    with open("data/GEDPair/train/walk4_step3_ged5/walk4_step3_ged5_1604_50.pkl", "rb") as fr:
         datas = pickle.load(fr)
-    
-    # datas= datas[:10]
     db = []
     db_idx = []
 
@@ -36,7 +36,7 @@ def load_dataset(args):
         if query_number == i:
             continue
         db.extend(datas[0])
-        db_idx.extend([i]*len(datas))
+        #db_idx.extend([i]*len(datas))# 기존에는 그래프의 id를 subgraph 개수만큼 생성했
 
     # user-defined query images
     with open("data/query_ged.pkl", "rb") as q:
@@ -48,7 +48,6 @@ def load_dataset(args):
     return db, db_idx, query, query_number
 
 
-#
 def feature_extract(args):
     ''' Extract feature from subgraphs
     It extracts all subgraphs feature using a trained model.
@@ -63,11 +62,6 @@ def feature_extract(args):
     dataset, db_idx, querys, query_idx = load_dataset(args)
     db_data = utils.batch_nx_graphs_rpe(dataset, None)
 
-    # print("querys: ", len(querys[0]))
-
-    # sys.exit()
-
-
     # model load
     if not os.path.exists(os.path.dirname(args.model_path)):
         os.makedirs(os.path.dirname(args.model_path))
@@ -75,22 +69,21 @@ def feature_extract(args):
     model = models.GnnEmbedder(args.feature_dim, args.hidden_dim, args)  
     model.to(utils.get_device())
     if args.model_path:
-        model.load_state_dict(torch.load(args.model_path, map_location=utils.get_device()))
-              
+        model.load_state_dict(torch.load(args.model_path, map_location=utils.get_device()))  
     else:
         return print("model does not exist")
 
-    # db_check = [{i[1] for i in d.nodes(data="name")}for d in dataset]
+
+    db_check = [{i[1] for i in d.nodes(data="name")}for d in dataset]
     temp = []
     results = []
     candidate_imgs = []
     model.eval()
     with torch.no_grad():
         # emb_db_data = model.emb_model(db_data)
-        
+
         emb_db_data = model.emb_model(db_data)
         for i in querys: #i = 쿼리 그래프의 서브 그래프 하나.
-
             query = temp.copy()
             query.append(i)
             query = utils.batch_nx_graphs_rpe(query, None)
@@ -112,12 +105,18 @@ def feature_extract(args):
             print("number of DB subgraph", e.shape)
             # result = [(query_idx+1, i)]
             result = []
-
             for n, d in rank[:5]:
-                print("DB img id :", db_idx[n]+1)
+                print("db_idx: ", db_idx) #<- 이거 메타 데이터를 어떻게 해야하지..?
+                # sys.exit()
+                # print("DB img :", db_idx.item())
+                # print("DB img id :", db_idx.item())
                 print("similarity : {:.5f}".format(d.item()))
-                print("DB graph nodes :", 
-            sys.exit()[n])
+                print("DB graph nodes :", [n])
+                sys.exit()
+                # print("DB img :", db_idx.item())
+                # print("rank graph id - n:", n)
+                # print("rank graph id - d:", d)
+                # sys.exit()
                 result.append((db_idx[n]+1, dataset[n]))
 
                 candidate_imgs.append(db_idx[n]+1)
@@ -126,7 +125,7 @@ def feature_extract(args):
             retreival_time = time.time() - retreival_start_time
             print("@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ :", retreival_time)
             
-            sys.exit()
+            # sys.exit()
             # Check similar/same class count with subgraph in DB
             checking_in_db = [len(q_check) - len(q_check - i)
                               for i in db_check]

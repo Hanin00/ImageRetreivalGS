@@ -154,7 +154,7 @@ def load_dataset(args):
         db_idx.extend([i]*len(subs))
 
     # user-defined query images
-    with open("dataset/query_road_0819.pickle", "rb") as q:
+    with open("data/query_road_0819.pickle", "rb") as q:
         querys = pickle.load(q)
         query, queryFeatList = mkG.mkSubs(querys[0], args, seeds)
         query_number = 1

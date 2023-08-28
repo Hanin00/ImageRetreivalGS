@@ -83,17 +83,10 @@ def load_dataset(name):
                                 dataset[0].append(tmp[0][i])
                                 dataset[1].append(tmp[1][i])
                                 dataset[2].append(sum(tmp[2][i])) #GEV -> GED
-                                # print("dataset: ", len(dataset[0]))
-                                # print("dataset: ", len(dataset[1]))
-                                # print("dataset: ", len(dataset[2]))
                         except : 
                             print("ERR - data.py - load_dataset")
                             continue
-
         print("len(dataset[0]): ", len(dataset[0]))
-        # sys.exit()
-
-
         end = time.time()
         print("load time : ", end-start)
         return dataset

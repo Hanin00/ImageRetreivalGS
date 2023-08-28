@@ -42,7 +42,9 @@ def train(args, model, dataset, data_source):
 
     model.train()   # dorpout 및 batchnomalization 활성화
     model.zero_grad()   # 학습하기위한 Grad 저장할 변수 초기화
-    pos_a, pos_b, pos_label = data_source.gen_batch( dataset, True)
+    pos_a, pos_b, pos_label = data_source.gen_batch(
+        
+        dataset, True)
     # print("pos_label: ", pos_label)
 
     emb_as, emb_bs = model.emb_model(pos_a), model.emb_model(pos_b)    
@@ -93,6 +95,7 @@ def train_loop(args):
     epoch = 200 # 2000
     cnt = 0 
     for e in range(epoch):
+
         for dataset in loaders:
             if args.test:
                 mae = validation(args, model, dataset, data_source)
@@ -111,12 +114,12 @@ def train_loop(args):
                 batch_n + 1
 
         if not args.test: 
-            if e % 10 == 9: # 10 단위로 저장
+            # if e % 10 == 9: # 10 단위로 저장
                 # checkpoint = {    'epoch': 10,    'model_state_dict': model.state_dict(),    }
                 # torch.save(checkpoint, 'checkpoint.pt')
-                print("Saving {}".format(args.model_path[:-5]+"_e"+str(e+1)+".pt"))
+                print("Saving {}".format(args.model_path[:-6]+"_e"+str(e+1)+".pt"))
                 torch.save(model.state_dict(), 
-                       args.model_path[:-5]+"_e"+str(e+1)+".pt")
+                       args.model_path[:-6]+"_e"+str(e+1)+".pt")
             
             #print("Saving {}".format(args.model_path[:-5]+"_e"+str(e+1)+".pt"))
             #torch.save(model.state_dict(), args.model_path[:-5]+"_e"+str(e+1)+".pt")
