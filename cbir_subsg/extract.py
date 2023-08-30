@@ -52,13 +52,9 @@ def load_dataset(args):
         # vName = file_name.split('_')[1] # video Name
         with open("data/GEDPair/train/walk4_step3_ged10/"+file_name, "rb") as fr:
             tmp = pickle.load(fr)
-            # print("*tmp[0]: " , tmp[0][0]) # tmp[0]: g / tmp[1]: g' / tmp[2]: GEV            
-            # db.extend(tmp[0]), 
             db.extend(tmp[0][0])
             db_idx.extend([vID + '_' + str(i) for i in range(len(tmp[0]))])
-        # print("db_idx: ", db_idx) # vid_fid -> vid는 Scenegraph 생성시 붙인 번호
-    print("len(datset) : ", len(db))
-
+        
     # user-defined query images
     with open("data/query_graphs.pkl", "rb") as q:
         query = pickle.load(q)
@@ -99,7 +95,7 @@ def showGraph(graph, type, title):
     nx.draw_networkx_edge_labels(graph, pos, edge_labels = edge_labels)
     nx.draw(graph, pos, node_size = 400, node_color = 'blue',)
     plt.show()
-    plt.title('query graph')
+    plt.title(type+'-'+title)
     plt.savefig('result/'+type+'/'+title+'.png',
     facecolor='#eeeeee',
     edgecolor='black',
@@ -142,7 +138,8 @@ def feature_extract(args):
     with torch.no_grad():
         emb_db_data = model.emb_model(db_data)
         for idx, queryG  in enumerate(querys): #i = 쿼리 그래프의 서브 그래프 하나.
-            print("---vvv---"*10)
+            print("---vvv---"*3)
+
             query = temp.copy()
             query.append(queryG)
             query = utils.batch_nx_graphs_rpe(query, None)
@@ -159,24 +156,22 @@ def feature_extract(args):
             rank = [(i, d) for i, d in enumerate(e)]
             rank.sort(key=lambda x: x[1])
             q_check = {n[1] for n in queryG.nodes(data="name")} #query graph의 name
+            print("Query num: ",idx)
             print("Q graph nodes :", q_check)
             print("Q graph: ", queryG)
             print("number of DB subgraph", e.shape)
             # result = [(query_idx+1, i)]
             result = []
-            for n, d in rank[:20]:
+            for n, d in rank[:5]:
                 print("similarity : {:.5f}".format(d.item()))
                 print("n : ",n)
-                
                 result.append((db_idx[n], dataset[n]))
                 print("db_idx[n] = filename: ", db_idx[n]) 
                 print("dataset[n] = graph: ", dataset[n])
+                
                 candidate_imgs.append(db_idx[n])            
 
-            # [print("id: ", ranks[0], "\n graphs: ", ranks[1].nodes(data=True))  for ranks in result]
-
-            
-            [print("id: ", ranks[0], "\n graphs: ", ranks[1])  for ranks in result]
+            # [print("id: ", ranks[0], "\n graphs: ", ranks[1])  for ranks in result]
             showGraph(queryG, 'query', 'qurey_'+str(idx))# query graph 저장
             [showGraph(rank[1],'ranks', 'qid_'+str(idx)+'-rank_'+ str(i)+'-id_'+str(rank[0]))  for i, rank in enumerate (result)]
            
@@ -197,7 +192,7 @@ def feature_extract(args):
                 str(q_check - (q_check - i)) for i in db_check]
             value_checking_result = Counter(value_checking_in_db)
             print(value_checking_result)
-            print("---^^^---"*10)
+            print("---^^^---"*3)
             
     # Final image rank -> 서브 그래프에 대해서 이미지 검색을 한 것이 아니라서 해당 Counter는 필요 없음
     # imgs = Counter(candidate_imgs)

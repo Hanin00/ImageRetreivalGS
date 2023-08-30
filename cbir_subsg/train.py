@@ -90,7 +90,7 @@ def train_loop(args):
 
     val = []
     batch_n = 0
-    epoch = 200 # 2000
+    epoch = 24 # 200
     cnt = 0 
     for e in range(epoch):
         for dataset in loaders:
