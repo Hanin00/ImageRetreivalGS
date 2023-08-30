@@ -1,0 +1,2624 @@
+len(datset) :  484
+len(graphs):  484
+db_data:  Batch(G=[484], batch=[4440], bbox=[484], edge_feature=[31962, 13], edge_index=[2, 31962], edge_label_index=[2, 31962], fid=[4440], generated=[4440], name=[484], node_feature=[4440, 13], node_label_index=[4440], rpe=[4440, 3], tracker=[484], txtemb=[484])
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.004608154296875
+Q graph nodes : {'table', 'cellphone', 'cup', 'child', 'toy', 'adult', 'cake', 'dish'}
+Q graph:  Graph with 18 nodes and 104 edges
+number of DB subgraph torch.Size([484])
+similarity : 25.86037
+n :  165
+db_idx[n] = filename:  165
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 26.21844
+n :  23
+db_idx[n] = filename:  23
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 26.21844
+n :  57
+db_idx[n] = filename:  57
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 26.30987
+n :  232
+db_idx[n] = filename:  232
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 340.91614
+n :  325
+db_idx[n] = filename:  325
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.06055
+n :  173
+db_idx[n] = filename:  173
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.06055
+n :  235
+db_idx[n] = filename:  235
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.06055
+n :  284
+db_idx[n] = filename:  284
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.06055
+n :  341
+db_idx[n] = filename:  341
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.09329
+n :  133
+db_idx[n] = filename:  133
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.09680
+n :  230
+db_idx[n] = filename:  230
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.09729
+n :  179
+db_idx[n] = filename:  179
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.09729
+n :  184
+db_idx[n] = filename:  184
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.09729
+n :  198
+db_idx[n] = filename:  198
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.09729
+n :  380
+db_idx[n] = filename:  380
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.09729
+n :  468
+db_idx[n] = filename:  468
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.11063
+n :  20
+db_idx[n] = filename:  20
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.11063
+n :  205
+db_idx[n] = filename:  205
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.11063
+n :  299
+db_idx[n] = filename:  299
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 341.11877
+n :  183
+db_idx[n] = filename:  183
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+id:  165 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  23 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  57 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  232 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  325 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  173 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  235 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  284 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  341 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  133 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  230 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  179 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  184 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  198 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  380 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  468 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  20 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  205 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  299 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  183 
+ graphs:  Graph with 18 nodes and 104 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 16.917848825454712
+Counter({2: 163, 3: 132, 1: 99, 4: 37, 8: 27, 6: 17, 5: 8, 7: 1})
+Counter({"{'adult', 'table', 'cup'}": 126, "{'adult', 'table'}": 123, "{'adult'}": 99, "{'child', 'toy'}": 40, "{'table', 'cellphone', 'cup', 'child', 'toy', 'adult', 'cake', 'dish'}": 27, "{'adult', 'table', 'cake', 'cup'}": 19, "{'table', 'cup', 'child', 'toy', 'adult', 'dish'}": 17, "{'child', 'adult', 'table', 'cake'}": 15, "{'child', 'adult', 'table'}": 6, "{'table', 'cup', 'child', 'toy', 'dish'}": 6, "{'child', 'adult', 'cake', 'cup'}": 3, "{'table', 'cup', 'child', 'adult', 'cake'}": 2, "{'table', 'cellphone', 'cup', 'child', 'adult', 'cake', 'dish'}": 1})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.0036056041717529297
+Q graph nodes : {'table', 'bottle', 'cup', 'laptop', 'adult'}
+Q graph:  Graph with 16 nodes and 59 edges
+number of DB subgraph torch.Size([484])
+similarity : 1.31160
+n :  427
+db_idx[n] = filename:  427
+dataset[n] = graph:  Graph with 16 nodes and 59 edges
+similarity : 11.83929
+n :  175
+db_idx[n] = filename:  175
+dataset[n] = graph:  Graph with 15 nodes and 56 edges
+similarity : 17.21826
+n :  71
+db_idx[n] = filename:  71
+dataset[n] = graph:  Graph with 13 nodes and 51 edges
+similarity : 17.21847
+n :  324
+db_idx[n] = filename:  324
+dataset[n] = graph:  Graph with 13 nodes and 51 edges
+similarity : 17.21928
+n :  348
+db_idx[n] = filename:  348
+dataset[n] = graph:  Graph with 13 nodes and 51 edges
+similarity : 22.87439
+n :  86
+db_idx[n] = filename:  86
+dataset[n] = graph:  Graph with 16 nodes and 62 edges
+similarity : 24.00660
+n :  25
+db_idx[n] = filename:  25
+dataset[n] = graph:  Graph with 13 nodes and 54 edges
+similarity : 42.19553
+n :  105
+db_idx[n] = filename:  105
+dataset[n] = graph:  Graph with 12 nodes and 44 edges
+similarity : 55.89315
+n :  211
+db_idx[n] = filename:  211
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 55.89407
+n :  33
+db_idx[n] = filename:  33
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 55.89407
+n :  56
+db_idx[n] = filename:  56
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 55.89407
+n :  94
+db_idx[n] = filename:  94
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 55.89407
+n :  258
+db_idx[n] = filename:  258
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 55.89407
+n :  273
+db_idx[n] = filename:  273
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 55.89407
+n :  482
+db_idx[n] = filename:  482
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 56.22221
+n :  90
+db_idx[n] = filename:  90
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 56.22221
+n :  126
+db_idx[n] = filename:  126
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 56.22221
+n :  172
+db_idx[n] = filename:  172
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 56.22221
+n :  275
+db_idx[n] = filename:  275
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 56.22221
+n :  288
+db_idx[n] = filename:  288
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+id:  427 
+ graphs:  Graph with 16 nodes and 59 edges
+id:  175 
+ graphs:  Graph with 15 nodes and 56 edges
+id:  71 
+ graphs:  Graph with 13 nodes and 51 edges
+id:  324 
+ graphs:  Graph with 13 nodes and 51 edges
+id:  348 
+ graphs:  Graph with 13 nodes and 51 edges
+id:  86 
+ graphs:  Graph with 16 nodes and 62 edges
+id:  25 
+ graphs:  Graph with 13 nodes and 54 edges
+id:  105 
+ graphs:  Graph with 12 nodes and 44 edges
+id:  211 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  33 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  56 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  94 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  258 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  273 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  482 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  90 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  126 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  172 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  275 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  288 
+ graphs:  Graph with 14 nodes and 59 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 12.255483388900757
+Counter({3: 218, 2: 128, 1: 67, 0: 39, 5: 20, 4: 12})
+Counter({"{'adult', 'table', 'cup'}": 161, "{'adult', 'table'}": 86, "{'adult'}": 66, "{'adult', 'table', 'bottle'}": 53, 'set()': 39, "{'adult', 'bottle'}": 33, "{'adult', 'table', 'bottle', 'cup', 'laptop'}": 20, "{'adult', 'table', 'bottle', 'cup'}": 8, "{'table', 'cup'}": 6, "{'adult', 'table', 'laptop'}": 4, "{'adult', 'table', 'laptop', 'cup'}": 3, "{'adult', 'cup'}": 3, "{'adult', 'table', 'laptop', 'bottle'}": 1, "{'laptop'}": 1})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.003621339797973633
+Q graph nodes : {'adult', 'elephant'}
+Q graph:  Graph with 9 nodes and 28 edges
+number of DB subgraph torch.Size([484])
+similarity : 0.17312
+n :  298
+db_idx[n] = filename:  298
+dataset[n] = graph:  Graph with 9 nodes and 28 edges
+similarity : 0.17312
+n :  449
+db_idx[n] = filename:  449
+dataset[n] = graph:  Graph with 9 nodes and 28 edges
+similarity : 0.17312
+n :  479
+db_idx[n] = filename:  479
+dataset[n] = graph:  Graph with 9 nodes and 28 edges
+similarity : 1.69925
+n :  50
+db_idx[n] = filename:  50
+dataset[n] = graph:  Graph with 8 nodes and 27 edges
+similarity : 1.69925
+n :  93
+db_idx[n] = filename:  93
+dataset[n] = graph:  Graph with 8 nodes and 27 edges
+similarity : 1.69925
+n :  118
+db_idx[n] = filename:  118
+dataset[n] = graph:  Graph with 8 nodes and 27 edges
+similarity : 1.69925
+n :  176
+db_idx[n] = filename:  176
+dataset[n] = graph:  Graph with 8 nodes and 27 edges
+similarity : 1.69925
+n :  216
+db_idx[n] = filename:  216
+dataset[n] = graph:  Graph with 8 nodes and 27 edges
+similarity : 2.31182
+n :  79
+db_idx[n] = filename:  79
+dataset[n] = graph:  Graph with 9 nodes and 29 edges
+similarity : 2.31182
+n :  461
+db_idx[n] = filename:  461
+dataset[n] = graph:  Graph with 9 nodes and 29 edges
+similarity : 2.89017
+n :  5
+db_idx[n] = filename:  5
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 2.89017
+n :  7
+db_idx[n] = filename:  7
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 2.89017
+n :  35
+db_idx[n] = filename:  35
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 2.89017
+n :  52
+db_idx[n] = filename:  52
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 2.89017
+n :  65
+db_idx[n] = filename:  65
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 2.89017
+n :  67
+db_idx[n] = filename:  67
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 2.89017
+n :  70
+db_idx[n] = filename:  70
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 2.89017
+n :  77
+db_idx[n] = filename:  77
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 2.89017
+n :  99
+db_idx[n] = filename:  99
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 2.89017
+n :  104
+db_idx[n] = filename:  104
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+id:  298 
+ graphs:  Graph with 9 nodes and 28 edges
+id:  449 
+ graphs:  Graph with 9 nodes and 28 edges
+id:  479 
+ graphs:  Graph with 9 nodes and 28 edges
+id:  50 
+ graphs:  Graph with 8 nodes and 27 edges
+id:  93 
+ graphs:  Graph with 8 nodes and 27 edges
+id:  118 
+ graphs:  Graph with 8 nodes and 27 edges
+id:  176 
+ graphs:  Graph with 8 nodes and 27 edges
+id:  216 
+ graphs:  Graph with 8 nodes and 27 edges
+id:  79 
+ graphs:  Graph with 9 nodes and 29 edges
+id:  461 
+ graphs:  Graph with 9 nodes and 29 edges
+id:  5 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  7 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  35 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  52 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  65 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  67 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  70 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  77 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  99 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  104 
+ graphs:  Graph with 10 nodes and 31 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 9.502622127532959
+Counter({1: 428, 0: 46, 2: 10})
+Counter({"{'adult'}": 428, 'set()': 46, "{'adult', 'elephant'}": 10})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.0033783912658691406
+Q graph nodes : {'adult', 'stool'}
+Q graph:  Graph with 7 nodes and 15 edges
+number of DB subgraph torch.Size([484])
+similarity : 0.74053
+n :  367
+db_idx[n] = filename:  367
+dataset[n] = graph:  Graph with 8 nodes and 16 edges
+similarity : 0.86568
+n :  360
+db_idx[n] = filename:  360
+dataset[n] = graph:  Graph with 7 nodes and 16 edges
+similarity : 0.97143
+n :  8
+db_idx[n] = filename:  8
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  18
+db_idx[n] = filename:  18
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  22
+db_idx[n] = filename:  22
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  27
+db_idx[n] = filename:  27
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  31
+db_idx[n] = filename:  31
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  34
+db_idx[n] = filename:  34
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  44
+db_idx[n] = filename:  44
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  48
+db_idx[n] = filename:  48
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  58
+db_idx[n] = filename:  58
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  76
+db_idx[n] = filename:  76
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  81
+db_idx[n] = filename:  81
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  83
+db_idx[n] = filename:  83
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  132
+db_idx[n] = filename:  132
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  187
+db_idx[n] = filename:  187
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  191
+db_idx[n] = filename:  191
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  208
+db_idx[n] = filename:  208
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  223
+db_idx[n] = filename:  223
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  229
+db_idx[n] = filename:  229
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+id:  367 
+ graphs:  Graph with 8 nodes and 16 edges
+id:  360 
+ graphs:  Graph with 7 nodes and 16 edges
+id:  8 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  18 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  22 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  27 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  31 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  34 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  44 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  48 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  58 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  76 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  81 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  83 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  132 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  187 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  191 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  208 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  223 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  229 
+ graphs:  Graph with 6 nodes and 15 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 7.459853887557983
+Counter({1: 438, 0: 46})
+Counter({"{'adult'}": 438, 'set()': 46})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.0033953189849853516
+Q graph nodes : {'adult', 'stool'}
+Q graph:  Graph with 7 nodes and 15 edges
+number of DB subgraph torch.Size([484])
+similarity : 0.74053
+n :  367
+db_idx[n] = filename:  367
+dataset[n] = graph:  Graph with 8 nodes and 16 edges
+similarity : 0.86568
+n :  360
+db_idx[n] = filename:  360
+dataset[n] = graph:  Graph with 7 nodes and 16 edges
+similarity : 0.97143
+n :  8
+db_idx[n] = filename:  8
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  18
+db_idx[n] = filename:  18
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  22
+db_idx[n] = filename:  22
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  27
+db_idx[n] = filename:  27
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  31
+db_idx[n] = filename:  31
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  34
+db_idx[n] = filename:  34
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  44
+db_idx[n] = filename:  44
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  48
+db_idx[n] = filename:  48
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  58
+db_idx[n] = filename:  58
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  76
+db_idx[n] = filename:  76
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  81
+db_idx[n] = filename:  81
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  83
+db_idx[n] = filename:  83
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  132
+db_idx[n] = filename:  132
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  187
+db_idx[n] = filename:  187
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  191
+db_idx[n] = filename:  191
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  208
+db_idx[n] = filename:  208
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  223
+db_idx[n] = filename:  223
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  229
+db_idx[n] = filename:  229
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+id:  367 
+ graphs:  Graph with 8 nodes and 16 edges
+id:  360 
+ graphs:  Graph with 7 nodes and 16 edges
+id:  8 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  18 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  22 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  27 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  31 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  34 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  44 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  48 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  58 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  76 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  81 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  83 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  132 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  187 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  191 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  208 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  223 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  229 
+ graphs:  Graph with 6 nodes and 15 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 7.868200063705444
+Counter({1: 438, 0: 46})
+Counter({"{'adult'}": 438, 'set()': 46})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.0036592483520507812
+Q graph nodes : {'table', 'cup', 'ball/sports_ball', 'adult', 'baby', 'cake'}
+Q graph:  Graph with 11 nodes and 50 edges
+number of DB subgraph torch.Size([484])
+similarity : 4.77875
+n :  211
+db_idx[n] = filename:  211
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 4.78087
+n :  33
+db_idx[n] = filename:  33
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 4.78087
+n :  56
+db_idx[n] = filename:  56
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 4.78087
+n :  94
+db_idx[n] = filename:  94
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 4.78087
+n :  258
+db_idx[n] = filename:  258
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 4.78087
+n :  273
+db_idx[n] = filename:  273
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 4.78087
+n :  482
+db_idx[n] = filename:  482
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 8.22108
+n :  106
+db_idx[n] = filename:  106
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  113
+db_idx[n] = filename:  113
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  146
+db_idx[n] = filename:  146
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  224
+db_idx[n] = filename:  224
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  227
+db_idx[n] = filename:  227
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  250
+db_idx[n] = filename:  250
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  266
+db_idx[n] = filename:  266
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  291
+db_idx[n] = filename:  291
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  356
+db_idx[n] = filename:  356
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  385
+db_idx[n] = filename:  385
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22645
+n :  90
+db_idx[n] = filename:  90
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22645
+n :  126
+db_idx[n] = filename:  126
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22645
+n :  172
+db_idx[n] = filename:  172
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+id:  211 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  33 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  56 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  94 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  258 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  273 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  482 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  106 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  113 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  146 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  224 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  227 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  250 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  266 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  291 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  356 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  385 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  90 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  126 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  172 
+ graphs:  Graph with 14 nodes and 59 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 11.781446695327759
+Counter({3: 161, 2: 135, 1: 99, 0: 40, 4: 30, 6: 19})
+Counter({"{'adult', 'table', 'cup'}": 143, "{'adult', 'table'}": 129, "{'adult'}": 99, 'set()': 40, "{'adult', 'table', 'cake', 'cup'}": 30, "{'adult', 'table', 'baby', 'cup', 'ball/sports_ball', 'cake'}": 19, "{'adult', 'table', 'cake'}": 15, "{'table', 'cup'}": 6, "{'adult', 'cake', 'cup'}": 3})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.0036520957946777344
+Q graph nodes : {'adult', 'elephant'}
+Q graph:  Graph with 11 nodes and 50 edges
+number of DB subgraph torch.Size([484])
+similarity : 8.22542
+n :  211
+db_idx[n] = filename:  211
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 8.22783
+n :  33
+db_idx[n] = filename:  33
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 8.22783
+n :  56
+db_idx[n] = filename:  56
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 8.22783
+n :  94
+db_idx[n] = filename:  94
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 8.22783
+n :  258
+db_idx[n] = filename:  258
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 8.22783
+n :  273
+db_idx[n] = filename:  273
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 8.22783
+n :  482
+db_idx[n] = filename:  482
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 10.09510
+n :  106
+db_idx[n] = filename:  106
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 10.09510
+n :  113
+db_idx[n] = filename:  113
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 10.09510
+n :  146
+db_idx[n] = filename:  146
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 10.09510
+n :  224
+db_idx[n] = filename:  224
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 10.09510
+n :  227
+db_idx[n] = filename:  227
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 10.09510
+n :  250
+db_idx[n] = filename:  250
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 10.09510
+n :  266
+db_idx[n] = filename:  266
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 10.09510
+n :  291
+db_idx[n] = filename:  291
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 10.09510
+n :  356
+db_idx[n] = filename:  356
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 10.09510
+n :  385
+db_idx[n] = filename:  385
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 10.09727
+n :  64
+db_idx[n] = filename:  64
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 10.09727
+n :  226
+db_idx[n] = filename:  226
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 10.09727
+n :  249
+db_idx[n] = filename:  249
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+id:  211 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  33 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  56 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  94 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  258 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  273 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  482 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  106 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  113 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  146 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  224 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  227 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  250 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  266 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  291 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  356 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  385 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  64 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  226 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  249 
+ graphs:  Graph with 14 nodes and 59 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 12.353437662124634
+Counter({1: 428, 0: 46, 2: 10})
+Counter({"{'adult'}": 428, 'set()': 46, "{'adult', 'elephant'}": 10})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.004890918731689453
+Q graph nodes : {'table', 'cup', 'child', 'toy', 'adult', 'dish'}
+Q graph:  Graph with 18 nodes and 104 edges
+number of DB subgraph torch.Size([484])
+similarity : 14.48395
+n :  325
+db_idx[n] = filename:  325
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.51827
+n :  183
+db_idx[n] = filename:  183
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.53028
+n :  133
+db_idx[n] = filename:  133
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.64011
+n :  173
+db_idx[n] = filename:  173
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.64011
+n :  235
+db_idx[n] = filename:  235
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.64011
+n :  284
+db_idx[n] = filename:  284
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.64011
+n :  341
+db_idx[n] = filename:  341
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.70420
+n :  20
+db_idx[n] = filename:  20
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.70420
+n :  205
+db_idx[n] = filename:  205
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.70420
+n :  299
+db_idx[n] = filename:  299
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.74213
+n :  230
+db_idx[n] = filename:  230
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.77594
+n :  179
+db_idx[n] = filename:  179
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.77594
+n :  184
+db_idx[n] = filename:  184
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.77594
+n :  198
+db_idx[n] = filename:  198
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.77594
+n :  380
+db_idx[n] = filename:  380
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.77594
+n :  468
+db_idx[n] = filename:  468
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.86343
+n :  4
+db_idx[n] = filename:  4
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 108.19818
+n :  162
+db_idx[n] = filename:  162
+dataset[n] = graph:  Graph with 19 nodes and 112 edges
+similarity : 249.37471
+n :  9
+db_idx[n] = filename:  9
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+similarity : 249.37471
+n :  26
+db_idx[n] = filename:  26
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+id:  325 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  183 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  133 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  173 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  235 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  284 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  341 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  20 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  205 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  299 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  230 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  179 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  184 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  198 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  380 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  468 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  4 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  162 
+ graphs:  Graph with 19 nodes and 112 edges
+id:  9 
+ graphs:  Graph with 18 nodes and 108 edges
+id:  26 
+ graphs:  Graph with 18 nodes and 108 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 17.463366746902466
+Counter({3: 169, 2: 163, 1: 99, 6: 44, 5: 7, 4: 2})
+Counter({"{'adult', 'table', 'cup'}": 145, "{'adult', 'table'}": 123, "{'adult'}": 99, "{'adult', 'table', 'cup', 'child', 'toy', 'dish'}": 44, "{'child', 'toy'}": 40, "{'child', 'adult', 'table'}": 21, "{'table', 'cup', 'child', 'toy', 'dish'}": 6, "{'child', 'adult', 'cup'}": 3, "{'child', 'adult', 'table', 'cup'}": 2, "{'table', 'cup', 'child', 'adult', 'dish'}": 1})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.0047190189361572266
+Q graph nodes : {'table', 'cup', 'child', 'toy', 'adult', 'dish'}
+Q graph:  Graph with 18 nodes and 104 edges
+number of DB subgraph torch.Size([484])
+similarity : 14.48395
+n :  325
+db_idx[n] = filename:  325
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.51827
+n :  183
+db_idx[n] = filename:  183
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.53028
+n :  133
+db_idx[n] = filename:  133
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.64011
+n :  173
+db_idx[n] = filename:  173
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.64011
+n :  235
+db_idx[n] = filename:  235
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.64011
+n :  284
+db_idx[n] = filename:  284
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.64011
+n :  341
+db_idx[n] = filename:  341
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.70420
+n :  20
+db_idx[n] = filename:  20
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.70420
+n :  205
+db_idx[n] = filename:  205
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.70420
+n :  299
+db_idx[n] = filename:  299
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.74213
+n :  230
+db_idx[n] = filename:  230
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.77594
+n :  179
+db_idx[n] = filename:  179
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.77594
+n :  184
+db_idx[n] = filename:  184
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.77594
+n :  198
+db_idx[n] = filename:  198
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.77594
+n :  380
+db_idx[n] = filename:  380
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.77594
+n :  468
+db_idx[n] = filename:  468
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 14.86343
+n :  4
+db_idx[n] = filename:  4
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 108.19818
+n :  162
+db_idx[n] = filename:  162
+dataset[n] = graph:  Graph with 19 nodes and 112 edges
+similarity : 249.37471
+n :  9
+db_idx[n] = filename:  9
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+similarity : 249.37471
+n :  26
+db_idx[n] = filename:  26
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+id:  325 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  183 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  133 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  173 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  235 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  284 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  341 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  20 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  205 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  299 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  230 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  179 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  184 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  198 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  380 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  468 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  4 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  162 
+ graphs:  Graph with 19 nodes and 112 edges
+id:  9 
+ graphs:  Graph with 18 nodes and 108 edges
+id:  26 
+ graphs:  Graph with 18 nodes and 108 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 17.515666961669922
+Counter({3: 169, 2: 163, 1: 99, 6: 44, 5: 7, 4: 2})
+Counter({"{'adult', 'table', 'cup'}": 145, "{'adult', 'table'}": 123, "{'adult'}": 99, "{'adult', 'table', 'cup', 'child', 'toy', 'dish'}": 44, "{'child', 'toy'}": 40, "{'child', 'adult', 'table'}": 21, "{'table', 'cup', 'child', 'toy', 'dish'}": 6, "{'child', 'adult', 'cup'}": 3, "{'child', 'adult', 'table', 'cup'}": 2, "{'table', 'cup', 'child', 'adult', 'dish'}": 1})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.004842281341552734
+Q graph nodes : {'table', 'cup', 'ball/sports_ball', 'adult', 'baby', 'cake'}
+Q graph:  Graph with 13 nodes and 70 edges
+number of DB subgraph torch.Size([484])
+similarity : 5.25715
+n :  3
+db_idx[n] = filename:  3
+dataset[n] = graph:  Graph with 13 nodes and 70 edges
+similarity : 104.01034
+n :  84
+db_idx[n] = filename:  84
+dataset[n] = graph:  Graph with 16 nodes and 79 edges
+similarity : 107.30595
+n :  323
+db_idx[n] = filename:  323
+dataset[n] = graph:  Graph with 13 nodes and 68 edges
+similarity : 128.38121
+n :  74
+db_idx[n] = filename:  74
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 128.38121
+n :  155
+db_idx[n] = filename:  155
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 128.38121
+n :  190
+db_idx[n] = filename:  190
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 128.38121
+n :  199
+db_idx[n] = filename:  199
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 128.38121
+n :  321
+db_idx[n] = filename:  321
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 128.38121
+n :  337
+db_idx[n] = filename:  337
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 128.47093
+n :  29
+db_idx[n] = filename:  29
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 128.47093
+n :  46
+db_idx[n] = filename:  46
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 128.47093
+n :  374
+db_idx[n] = filename:  374
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 140.71848
+n :  131
+db_idx[n] = filename:  131
+dataset[n] = graph:  Graph with 18 nodes and 84 edges
+similarity : 140.71848
+n :  416
+db_idx[n] = filename:  416
+dataset[n] = graph:  Graph with 18 nodes and 84 edges
+similarity : 149.80356
+n :  464
+db_idx[n] = filename:  464
+dataset[n] = graph:  Graph with 13 nodes and 67 edges
+similarity : 149.88196
+n :  129
+db_idx[n] = filename:  129
+dataset[n] = graph:  Graph with 13 nodes and 67 edges
+similarity : 154.37140
+n :  276
+db_idx[n] = filename:  276
+dataset[n] = graph:  Graph with 17 nodes and 87 edges
+similarity : 160.84274
+n :  91
+db_idx[n] = filename:  91
+dataset[n] = graph:  Graph with 14 nodes and 77 edges
+similarity : 160.84274
+n :  96
+db_idx[n] = filename:  96
+dataset[n] = graph:  Graph with 14 nodes and 77 edges
+similarity : 160.84274
+n :  231
+db_idx[n] = filename:  231
+dataset[n] = graph:  Graph with 14 nodes and 77 edges
+id:  3 
+ graphs:  Graph with 13 nodes and 70 edges
+id:  84 
+ graphs:  Graph with 16 nodes and 79 edges
+id:  323 
+ graphs:  Graph with 13 nodes and 68 edges
+id:  74 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  155 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  190 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  199 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  321 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  337 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  29 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  46 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  374 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  131 
+ graphs:  Graph with 18 nodes and 84 edges
+id:  416 
+ graphs:  Graph with 18 nodes and 84 edges
+id:  464 
+ graphs:  Graph with 13 nodes and 67 edges
+id:  129 
+ graphs:  Graph with 13 nodes and 67 edges
+id:  276 
+ graphs:  Graph with 17 nodes and 87 edges
+id:  91 
+ graphs:  Graph with 14 nodes and 77 edges
+id:  96 
+ graphs:  Graph with 14 nodes and 77 edges
+id:  231 
+ graphs:  Graph with 14 nodes and 77 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 14.783812999725342
+Counter({3: 161, 2: 135, 1: 99, 0: 40, 4: 30, 6: 19})
+Counter({"{'adult', 'table', 'cup'}": 143, "{'adult', 'table'}": 129, "{'adult'}": 99, 'set()': 40, "{'adult', 'table', 'cake', 'cup'}": 30, "{'adult', 'table', 'baby', 'cup', 'ball/sports_ball', 'cake'}": 19, "{'adult', 'table', 'cake'}": 15, "{'table', 'cup'}": 6, "{'adult', 'cake', 'cup'}": 3})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.0034792423248291016
+Q graph nodes : {'adult', 'table', 'laptop', 'cup'}
+Q graph:  Graph with 11 nodes and 29 edges
+number of DB subgraph torch.Size([484])
+similarity : 0.10624
+n :  357
+db_idx[n] = filename:  357
+dataset[n] = graph:  Graph with 11 nodes and 29 edges
+similarity : 1.99741
+n :  149
+db_idx[n] = filename:  149
+dataset[n] = graph:  Graph with 9 nodes and 26 edges
+similarity : 1.99744
+n :  78
+db_idx[n] = filename:  78
+dataset[n] = graph:  Graph with 9 nodes and 26 edges
+similarity : 1.99744
+n :  136
+db_idx[n] = filename:  136
+dataset[n] = graph:  Graph with 9 nodes and 26 edges
+similarity : 2.75459
+n :  441
+db_idx[n] = filename:  441
+dataset[n] = graph:  Graph with 7 nodes and 21 edges
+similarity : 4.20320
+n :  49
+db_idx[n] = filename:  49
+dataset[n] = graph:  Graph with 8 nodes and 21 edges
+similarity : 4.20320
+n :  72
+db_idx[n] = filename:  72
+dataset[n] = graph:  Graph with 8 nodes and 21 edges
+similarity : 4.20320
+n :  141
+db_idx[n] = filename:  141
+dataset[n] = graph:  Graph with 8 nodes and 21 edges
+similarity : 4.20320
+n :  188
+db_idx[n] = filename:  188
+dataset[n] = graph:  Graph with 8 nodes and 21 edges
+similarity : 7.30424
+n :  298
+db_idx[n] = filename:  298
+dataset[n] = graph:  Graph with 9 nodes and 28 edges
+similarity : 7.30424
+n :  449
+db_idx[n] = filename:  449
+dataset[n] = graph:  Graph with 9 nodes and 28 edges
+similarity : 7.30424
+n :  479
+db_idx[n] = filename:  479
+dataset[n] = graph:  Graph with 9 nodes and 28 edges
+similarity : 7.95973
+n :  360
+db_idx[n] = filename:  360
+dataset[n] = graph:  Graph with 7 nodes and 16 edges
+similarity : 7.96504
+n :  8
+db_idx[n] = filename:  8
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 7.96504
+n :  18
+db_idx[n] = filename:  18
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 7.96504
+n :  22
+db_idx[n] = filename:  22
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 7.96504
+n :  27
+db_idx[n] = filename:  27
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 7.96504
+n :  31
+db_idx[n] = filename:  31
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 7.96504
+n :  34
+db_idx[n] = filename:  34
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 7.96504
+n :  44
+db_idx[n] = filename:  44
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+id:  357 
+ graphs:  Graph with 11 nodes and 29 edges
+id:  149 
+ graphs:  Graph with 9 nodes and 26 edges
+id:  78 
+ graphs:  Graph with 9 nodes and 26 edges
+id:  136 
+ graphs:  Graph with 9 nodes and 26 edges
+id:  441 
+ graphs:  Graph with 7 nodes and 21 edges
+id:  49 
+ graphs:  Graph with 8 nodes and 21 edges
+id:  72 
+ graphs:  Graph with 8 nodes and 21 edges
+id:  141 
+ graphs:  Graph with 8 nodes and 21 edges
+id:  188 
+ graphs:  Graph with 8 nodes and 21 edges
+id:  298 
+ graphs:  Graph with 9 nodes and 28 edges
+id:  449 
+ graphs:  Graph with 9 nodes and 28 edges
+id:  479 
+ graphs:  Graph with 9 nodes and 28 edges
+id:  360 
+ graphs:  Graph with 7 nodes and 16 edges
+id:  8 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  18 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  22 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  27 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  31 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  34 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  44 
+ graphs:  Graph with 6 nodes and 15 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 8.080756902694702
+Counter({3: 174, 2: 148, 1: 100, 0: 39, 4: 23})
+Counter({"{'adult', 'table', 'cup'}": 169, "{'adult', 'table'}": 139, "{'adult'}": 99, 'set()': 39, "{'adult', 'table', 'laptop', 'cup'}": 23, "{'table', 'cup'}": 6, "{'adult', 'table', 'laptop'}": 5, "{'adult', 'cup'}": 3, "{'laptop'}": 1})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.00512385368347168
+Q graph nodes : {'table', 'cellphone', 'cup', 'child', 'toy', 'adult', 'cake', 'dish'}
+Q graph:  Graph with 18 nodes and 108 edges
+number of DB subgraph torch.Size([484])
+similarity : 39.80514
+n :  9
+db_idx[n] = filename:  9
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+similarity : 39.80514
+n :  26
+db_idx[n] = filename:  26
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+similarity : 39.80514
+n :  125
+db_idx[n] = filename:  125
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+similarity : 39.80514
+n :  267
+db_idx[n] = filename:  267
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+similarity : 39.80514
+n :  377
+db_idx[n] = filename:  377
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+similarity : 39.80514
+n :  409
+db_idx[n] = filename:  409
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+similarity : 39.96470
+n :  95
+db_idx[n] = filename:  95
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+similarity : 39.96470
+n :  101
+db_idx[n] = filename:  101
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+similarity : 39.96470
+n :  454
+db_idx[n] = filename:  454
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+similarity : 152.46056
+n :  162
+db_idx[n] = filename:  162
+dataset[n] = graph:  Graph with 19 nodes and 112 edges
+similarity : 246.12787
+n :  183
+db_idx[n] = filename:  183
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 246.16245
+n :  133
+db_idx[n] = filename:  133
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 246.20009
+n :  4
+db_idx[n] = filename:  4
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 246.28491
+n :  20
+db_idx[n] = filename:  20
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 246.28491
+n :  205
+db_idx[n] = filename:  205
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 246.28491
+n :  299
+db_idx[n] = filename:  299
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 246.28728
+n :  173
+db_idx[n] = filename:  173
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 246.28728
+n :  235
+db_idx[n] = filename:  235
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 246.28728
+n :  284
+db_idx[n] = filename:  284
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 246.28728
+n :  341
+db_idx[n] = filename:  341
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+id:  9 
+ graphs:  Graph with 18 nodes and 108 edges
+id:  26 
+ graphs:  Graph with 18 nodes and 108 edges
+id:  125 
+ graphs:  Graph with 18 nodes and 108 edges
+id:  267 
+ graphs:  Graph with 18 nodes and 108 edges
+id:  377 
+ graphs:  Graph with 18 nodes and 108 edges
+id:  409 
+ graphs:  Graph with 18 nodes and 108 edges
+id:  95 
+ graphs:  Graph with 18 nodes and 108 edges
+id:  101 
+ graphs:  Graph with 18 nodes and 108 edges
+id:  454 
+ graphs:  Graph with 18 nodes and 108 edges
+id:  162 
+ graphs:  Graph with 19 nodes and 112 edges
+id:  183 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  133 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  4 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  20 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  205 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  299 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  173 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  235 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  284 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  341 
+ graphs:  Graph with 18 nodes and 104 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 17.966197729110718
+Counter({2: 163, 3: 132, 1: 99, 4: 37, 8: 27, 6: 17, 5: 8, 7: 1})
+Counter({"{'adult', 'table', 'cup'}": 126, "{'adult', 'table'}": 123, "{'adult'}": 99, "{'child', 'toy'}": 40, "{'table', 'cellphone', 'cup', 'child', 'toy', 'adult', 'cake', 'dish'}": 27, "{'adult', 'table', 'cake', 'cup'}": 19, "{'table', 'cup', 'child', 'toy', 'adult', 'dish'}": 17, "{'child', 'adult', 'table', 'cake'}": 15, "{'child', 'adult', 'table'}": 6, "{'table', 'cup', 'child', 'toy', 'dish'}": 6, "{'child', 'adult', 'cake', 'cup'}": 3, "{'table', 'cup', 'child', 'adult', 'cake'}": 2, "{'table', 'cellphone', 'cup', 'child', 'adult', 'cake', 'dish'}": 1})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.0034384727478027344
+Q graph nodes : {'adult', 'elephant'}
+Q graph:  Graph with 11 nodes and 46 edges
+number of DB subgraph torch.Size([484])
+similarity : 8.28927
+n :  71
+db_idx[n] = filename:  71
+dataset[n] = graph:  Graph with 13 nodes and 51 edges
+similarity : 8.28932
+n :  324
+db_idx[n] = filename:  324
+dataset[n] = graph:  Graph with 13 nodes and 51 edges
+similarity : 8.29417
+n :  348
+db_idx[n] = filename:  348
+dataset[n] = graph:  Graph with 13 nodes and 51 edges
+similarity : 15.22847
+n :  175
+db_idx[n] = filename:  175
+dataset[n] = graph:  Graph with 15 nodes and 56 edges
+similarity : 16.65724
+n :  427
+db_idx[n] = filename:  427
+dataset[n] = graph:  Graph with 16 nodes and 59 edges
+similarity : 26.04276
+n :  25
+db_idx[n] = filename:  25
+dataset[n] = graph:  Graph with 13 nodes and 54 edges
+similarity : 33.43980
+n :  86
+db_idx[n] = filename:  86
+dataset[n] = graph:  Graph with 16 nodes and 62 edges
+similarity : 38.09821
+n :  105
+db_idx[n] = filename:  105
+dataset[n] = graph:  Graph with 12 nodes and 44 edges
+similarity : 50.11895
+n :  338
+db_idx[n] = filename:  338
+dataset[n] = graph:  Graph with 9 nodes and 36 edges
+similarity : 52.80479
+n :  39
+db_idx[n] = filename:  39
+dataset[n] = graph:  Graph with 14 nodes and 47 edges
+similarity : 58.88805
+n :  40
+db_idx[n] = filename:  40
+dataset[n] = graph:  Graph with 9 nodes and 35 edges
+similarity : 58.88875
+n :  17
+db_idx[n] = filename:  17
+dataset[n] = graph:  Graph with 9 nodes and 35 edges
+similarity : 58.88875
+n :  144
+db_idx[n] = filename:  144
+dataset[n] = graph:  Graph with 9 nodes and 35 edges
+similarity : 58.88875
+n :  269
+db_idx[n] = filename:  269
+dataset[n] = graph:  Graph with 9 nodes and 35 edges
+similarity : 58.88875
+n :  481
+db_idx[n] = filename:  481
+dataset[n] = graph:  Graph with 9 nodes and 35 edges
+similarity : 58.88969
+n :  42
+db_idx[n] = filename:  42
+dataset[n] = graph:  Graph with 9 nodes and 35 edges
+similarity : 58.88969
+n :  69
+db_idx[n] = filename:  69
+dataset[n] = graph:  Graph with 9 nodes and 35 edges
+similarity : 58.88969
+n :  312
+db_idx[n] = filename:  312
+dataset[n] = graph:  Graph with 9 nodes and 35 edges
+similarity : 58.88969
+n :  393
+db_idx[n] = filename:  393
+dataset[n] = graph:  Graph with 9 nodes and 35 edges
+similarity : 59.57881
+n :  407
+db_idx[n] = filename:  407
+dataset[n] = graph:  Graph with 9 nodes and 35 edges
+id:  71 
+ graphs:  Graph with 13 nodes and 51 edges
+id:  324 
+ graphs:  Graph with 13 nodes and 51 edges
+id:  348 
+ graphs:  Graph with 13 nodes and 51 edges
+id:  175 
+ graphs:  Graph with 15 nodes and 56 edges
+id:  427 
+ graphs:  Graph with 16 nodes and 59 edges
+id:  25 
+ graphs:  Graph with 13 nodes and 54 edges
+id:  86 
+ graphs:  Graph with 16 nodes and 62 edges
+id:  105 
+ graphs:  Graph with 12 nodes and 44 edges
+id:  338 
+ graphs:  Graph with 9 nodes and 36 edges
+id:  39 
+ graphs:  Graph with 14 nodes and 47 edges
+id:  40 
+ graphs:  Graph with 9 nodes and 35 edges
+id:  17 
+ graphs:  Graph with 9 nodes and 35 edges
+id:  144 
+ graphs:  Graph with 9 nodes and 35 edges
+id:  269 
+ graphs:  Graph with 9 nodes and 35 edges
+id:  481 
+ graphs:  Graph with 9 nodes and 35 edges
+id:  42 
+ graphs:  Graph with 9 nodes and 35 edges
+id:  69 
+ graphs:  Graph with 9 nodes and 35 edges
+id:  312 
+ graphs:  Graph with 9 nodes and 35 edges
+id:  393 
+ graphs:  Graph with 9 nodes and 35 edges
+id:  407 
+ graphs:  Graph with 9 nodes and 35 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 10.630223035812378
+Counter({1: 428, 0: 46, 2: 10})
+Counter({"{'adult'}": 428, 'set()': 46, "{'adult', 'elephant'}": 10})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.003802061080932617
+Q graph nodes : {'adult', 'stool'}
+Q graph:  Graph with 7 nodes and 15 edges
+number of DB subgraph torch.Size([484])
+similarity : 0.74053
+n :  367
+db_idx[n] = filename:  367
+dataset[n] = graph:  Graph with 8 nodes and 16 edges
+similarity : 0.86568
+n :  360
+db_idx[n] = filename:  360
+dataset[n] = graph:  Graph with 7 nodes and 16 edges
+similarity : 0.97143
+n :  8
+db_idx[n] = filename:  8
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  18
+db_idx[n] = filename:  18
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  22
+db_idx[n] = filename:  22
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  27
+db_idx[n] = filename:  27
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  31
+db_idx[n] = filename:  31
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  34
+db_idx[n] = filename:  34
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  44
+db_idx[n] = filename:  44
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  48
+db_idx[n] = filename:  48
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  58
+db_idx[n] = filename:  58
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  76
+db_idx[n] = filename:  76
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  81
+db_idx[n] = filename:  81
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  83
+db_idx[n] = filename:  83
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  132
+db_idx[n] = filename:  132
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  187
+db_idx[n] = filename:  187
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  191
+db_idx[n] = filename:  191
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  208
+db_idx[n] = filename:  208
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  223
+db_idx[n] = filename:  223
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+similarity : 0.97143
+n :  229
+db_idx[n] = filename:  229
+dataset[n] = graph:  Graph with 6 nodes and 15 edges
+id:  367 
+ graphs:  Graph with 8 nodes and 16 edges
+id:  360 
+ graphs:  Graph with 7 nodes and 16 edges
+id:  8 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  18 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  22 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  27 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  31 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  34 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  44 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  48 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  58 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  76 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  81 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  83 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  132 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  187 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  191 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  208 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  223 
+ graphs:  Graph with 6 nodes and 15 edges
+id:  229 
+ graphs:  Graph with 6 nodes and 15 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 7.5247743129730225
+Counter({1: 438, 0: 46})
+Counter({"{'adult'}": 438, 'set()': 46})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.0033855438232421875
+Q graph nodes : {'table', 'cup', 'ball/sports_ball', 'adult', 'baby', 'cake'}
+Q graph:  Graph with 11 nodes and 50 edges
+number of DB subgraph torch.Size([484])
+similarity : 4.77875
+n :  211
+db_idx[n] = filename:  211
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 4.78087
+n :  33
+db_idx[n] = filename:  33
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 4.78087
+n :  56
+db_idx[n] = filename:  56
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 4.78087
+n :  94
+db_idx[n] = filename:  94
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 4.78087
+n :  258
+db_idx[n] = filename:  258
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 4.78087
+n :  273
+db_idx[n] = filename:  273
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 4.78087
+n :  482
+db_idx[n] = filename:  482
+dataset[n] = graph:  Graph with 12 nodes and 53 edges
+similarity : 8.22108
+n :  106
+db_idx[n] = filename:  106
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  113
+db_idx[n] = filename:  113
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  146
+db_idx[n] = filename:  146
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  224
+db_idx[n] = filename:  224
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  227
+db_idx[n] = filename:  227
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  250
+db_idx[n] = filename:  250
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  266
+db_idx[n] = filename:  266
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  291
+db_idx[n] = filename:  291
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  356
+db_idx[n] = filename:  356
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22108
+n :  385
+db_idx[n] = filename:  385
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22645
+n :  90
+db_idx[n] = filename:  90
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22645
+n :  126
+db_idx[n] = filename:  126
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+similarity : 8.22645
+n :  172
+db_idx[n] = filename:  172
+dataset[n] = graph:  Graph with 14 nodes and 59 edges
+id:  211 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  33 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  56 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  94 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  258 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  273 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  482 
+ graphs:  Graph with 12 nodes and 53 edges
+id:  106 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  113 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  146 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  224 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  227 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  250 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  266 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  291 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  356 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  385 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  90 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  126 
+ graphs:  Graph with 14 nodes and 59 edges
+id:  172 
+ graphs:  Graph with 14 nodes and 59 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 13.072512149810791
+Counter({3: 161, 2: 135, 1: 99, 0: 40, 4: 30, 6: 19})
+Counter({"{'adult', 'table', 'cup'}": 143, "{'adult', 'table'}": 129, "{'adult'}": 99, 'set()': 40, "{'adult', 'table', 'cake', 'cup'}": 30, "{'adult', 'table', 'baby', 'cup', 'ball/sports_ball', 'cake'}": 19, "{'adult', 'table', 'cake'}": 15, "{'table', 'cup'}": 6, "{'adult', 'cake', 'cup'}": 3})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.005132198333740234
+Q graph nodes : {'table', 'cellphone', 'cup', 'child', 'toy', 'adult', 'cake', 'dish'}
+Q graph:  Graph with 19 nodes and 112 edges
+number of DB subgraph torch.Size([484])
+similarity : 38.54431
+n :  162
+db_idx[n] = filename:  162
+dataset[n] = graph:  Graph with 19 nodes and 112 edges
+similarity : 100.53423
+n :  4
+db_idx[n] = filename:  4
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.76696
+n :  183
+db_idx[n] = filename:  183
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.78780
+n :  133
+db_idx[n] = filename:  133
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.81731
+n :  173
+db_idx[n] = filename:  173
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.81731
+n :  235
+db_idx[n] = filename:  235
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.81731
+n :  284
+db_idx[n] = filename:  284
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.81731
+n :  341
+db_idx[n] = filename:  341
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.82327
+n :  20
+db_idx[n] = filename:  20
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.82327
+n :  205
+db_idx[n] = filename:  205
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.82327
+n :  299
+db_idx[n] = filename:  299
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.88661
+n :  325
+db_idx[n] = filename:  325
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.91302
+n :  179
+db_idx[n] = filename:  179
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.91302
+n :  184
+db_idx[n] = filename:  184
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.91302
+n :  198
+db_idx[n] = filename:  198
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.91302
+n :  380
+db_idx[n] = filename:  380
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.91302
+n :  468
+db_idx[n] = filename:  468
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 100.93698
+n :  230
+db_idx[n] = filename:  230
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 172.13425
+n :  95
+db_idx[n] = filename:  95
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+similarity : 172.13425
+n :  101
+db_idx[n] = filename:  101
+dataset[n] = graph:  Graph with 18 nodes and 108 edges
+id:  162 
+ graphs:  Graph with 19 nodes and 112 edges
+id:  4 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  183 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  133 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  173 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  235 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  284 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  341 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  20 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  205 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  299 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  325 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  179 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  184 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  198 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  380 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  468 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  230 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  95 
+ graphs:  Graph with 18 nodes and 108 edges
+id:  101 
+ graphs:  Graph with 18 nodes and 108 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 17.40568995475769
+Counter({2: 163, 3: 132, 1: 99, 4: 37, 8: 27, 6: 17, 5: 8, 7: 1})
+Counter({"{'adult', 'table', 'cup'}": 126, "{'adult', 'table'}": 123, "{'adult'}": 99, "{'child', 'toy'}": 40, "{'table', 'cellphone', 'cup', 'child', 'toy', 'adult', 'cake', 'dish'}": 27, "{'adult', 'table', 'cake', 'cup'}": 19, "{'table', 'cup', 'child', 'toy', 'adult', 'dish'}": 17, "{'child', 'adult', 'table', 'cake'}": 15, "{'child', 'adult', 'table'}": 6, "{'table', 'cup', 'child', 'toy', 'dish'}": 6, "{'child', 'adult', 'cake', 'cup'}": 3, "{'table', 'cup', 'child', 'adult', 'cake'}": 2, "{'table', 'cellphone', 'cup', 'child', 'adult', 'cake', 'dish'}": 1})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.003622293472290039
+Q graph nodes : {'piano', 'adult', 'bench', 'chair'}
+Q graph:  Graph with 10 nodes and 35 edges
+number of DB subgraph torch.Size([484])
+similarity : 0.39519
+n :  222
+db_idx[n] = filename:  222
+dataset[n] = graph:  Graph with 10 nodes and 35 edges
+similarity : 0.39519
+n :  368
+db_idx[n] = filename:  368
+dataset[n] = graph:  Graph with 10 nodes and 35 edges
+similarity : 0.39568
+n :  37
+db_idx[n] = filename:  37
+dataset[n] = graph:  Graph with 10 nodes and 35 edges
+similarity : 3.84227
+n :  62
+db_idx[n] = filename:  62
+dataset[n] = graph:  Graph with 13 nodes and 40 edges
+similarity : 5.46599
+n :  92
+db_idx[n] = filename:  92
+dataset[n] = graph:  Graph with 10 nodes and 35 edges
+similarity : 8.28278
+n :  61
+db_idx[n] = filename:  61
+dataset[n] = graph:  Graph with 10 nodes and 36 edges
+similarity : 10.26582
+n :  137
+db_idx[n] = filename:  137
+dataset[n] = graph:  Graph with 8 nodes and 28 edges
+similarity : 10.26582
+n :  320
+db_idx[n] = filename:  320
+dataset[n] = graph:  Graph with 8 nodes and 28 edges
+similarity : 12.92742
+n :  189
+db_idx[n] = filename:  189
+dataset[n] = graph:  Graph with 9 nodes and 35 edges
+similarity : 13.19791
+n :  5
+db_idx[n] = filename:  5
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 13.19791
+n :  7
+db_idx[n] = filename:  7
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 13.19791
+n :  35
+db_idx[n] = filename:  35
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 13.19791
+n :  52
+db_idx[n] = filename:  52
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 13.19791
+n :  65
+db_idx[n] = filename:  65
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 13.19791
+n :  67
+db_idx[n] = filename:  67
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 13.19791
+n :  70
+db_idx[n] = filename:  70
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 13.19791
+n :  77
+db_idx[n] = filename:  77
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 13.19791
+n :  99
+db_idx[n] = filename:  99
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 13.19791
+n :  104
+db_idx[n] = filename:  104
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+similarity : 13.19791
+n :  108
+db_idx[n] = filename:  108
+dataset[n] = graph:  Graph with 10 nodes and 31 edges
+id:  222 
+ graphs:  Graph with 10 nodes and 35 edges
+id:  368 
+ graphs:  Graph with 10 nodes and 35 edges
+id:  37 
+ graphs:  Graph with 10 nodes and 35 edges
+id:  62 
+ graphs:  Graph with 13 nodes and 40 edges
+id:  92 
+ graphs:  Graph with 10 nodes and 35 edges
+id:  61 
+ graphs:  Graph with 10 nodes and 36 edges
+id:  137 
+ graphs:  Graph with 8 nodes and 28 edges
+id:  320 
+ graphs:  Graph with 8 nodes and 28 edges
+id:  189 
+ graphs:  Graph with 9 nodes and 35 edges
+id:  5 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  7 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  35 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  52 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  65 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  67 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  70 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  77 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  99 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  104 
+ graphs:  Graph with 10 nodes and 31 edges
+id:  108 
+ graphs:  Graph with 10 nodes and 31 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 9.500638723373413
+Counter({1: 306, 2: 126, 0: 45, 3: 4, 4: 3})
+Counter({"{'adult'}": 305, "{'adult', 'chair'}": 126, 'set()': 45, "{'piano', 'adult', 'chair'}": 4, "{'piano', 'adult', 'bench', 'chair'}": 3, "{'chair'}": 1})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.0035610198974609375
+Q graph nodes : {'adult', 'table', 'laptop', 'bottle'}
+Q graph:  Graph with 5 nodes and 8 edges
+number of DB subgraph torch.Size([484])
+similarity : 0.00800
+n :  400
+db_idx[n] = filename:  400
+dataset[n] = graph:  Graph with 5 nodes and 8 edges
+similarity : 0.72819
+n :  1
+db_idx[n] = filename:  1
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  51
+db_idx[n] = filename:  51
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  89
+db_idx[n] = filename:  89
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  100
+db_idx[n] = filename:  100
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  107
+db_idx[n] = filename:  107
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  114
+db_idx[n] = filename:  114
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  119
+db_idx[n] = filename:  119
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  161
+db_idx[n] = filename:  161
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  164
+db_idx[n] = filename:  164
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  167
+db_idx[n] = filename:  167
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  171
+db_idx[n] = filename:  171
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  193
+db_idx[n] = filename:  193
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  207
+db_idx[n] = filename:  207
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  209
+db_idx[n] = filename:  209
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  212
+db_idx[n] = filename:  212
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  215
+db_idx[n] = filename:  215
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  248
+db_idx[n] = filename:  248
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  261
+db_idx[n] = filename:  261
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+similarity : 0.72819
+n :  263
+db_idx[n] = filename:  263
+dataset[n] = graph:  Graph with 6 nodes and 10 edges
+id:  400 
+ graphs:  Graph with 5 nodes and 8 edges
+id:  1 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  51 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  89 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  100 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  107 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  114 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  119 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  161 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  164 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  167 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  171 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  193 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  207 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  209 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  212 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  215 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  248 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  261 
+ graphs:  Graph with 6 nodes and 10 edges
+id:  263 
+ graphs:  Graph with 6 nodes and 10 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 6.7481982707977295
+Counter({2: 280, 1: 76, 3: 68, 0: 39, 4: 21})
+Counter({"{'adult', 'table'}": 247, "{'adult'}": 69, "{'adult', 'table', 'bottle'}": 61, 'set()': 39, "{'adult', 'bottle'}": 33, "{'adult', 'table', 'laptop', 'bottle'}": 21, "{'adult', 'table', 'laptop'}": 7, "{'table'}": 6, "{'laptop'}": 1})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.0048503875732421875
+Q graph nodes : {'table', 'bottle', 'cup', 'ball/sports_ball', 'adult', 'baby', 'cake'}
+Q graph:  Graph with 14 nodes and 80 edges
+number of DB subgraph torch.Size([484])
+similarity : 10.09478
+n :  234
+db_idx[n] = filename:  234
+dataset[n] = graph:  Graph with 14 nodes and 80 edges
+similarity : 152.79564
+n :  271
+db_idx[n] = filename:  271
+dataset[n] = graph:  Graph with 17 nodes and 91 edges
+similarity : 152.83133
+n :  477
+db_idx[n] = filename:  477
+dataset[n] = graph:  Graph with 17 nodes and 91 edges
+similarity : 192.15121
+n :  439
+db_idx[n] = filename:  439
+dataset[n] = graph:  Graph with 18 nodes and 97 edges
+similarity : 192.22453
+n :  19
+db_idx[n] = filename:  19
+dataset[n] = graph:  Graph with 18 nodes and 97 edges
+similarity : 222.09349
+n :  91
+db_idx[n] = filename:  91
+dataset[n] = graph:  Graph with 14 nodes and 77 edges
+similarity : 222.09349
+n :  96
+db_idx[n] = filename:  96
+dataset[n] = graph:  Graph with 14 nodes and 77 edges
+similarity : 222.09349
+n :  231
+db_idx[n] = filename:  231
+dataset[n] = graph:  Graph with 14 nodes and 77 edges
+similarity : 255.81195
+n :  303
+db_idx[n] = filename:  303
+dataset[n] = graph:  Graph with 20 nodes and 95 edges
+similarity : 255.81195
+n :  370
+db_idx[n] = filename:  370
+dataset[n] = graph:  Graph with 20 nodes and 95 edges
+similarity : 255.81195
+n :  410
+db_idx[n] = filename:  410
+dataset[n] = graph:  Graph with 20 nodes and 95 edges
+similarity : 255.81195
+n :  445
+db_idx[n] = filename:  445
+dataset[n] = graph:  Graph with 20 nodes and 95 edges
+similarity : 255.81195
+n :  459
+db_idx[n] = filename:  459
+dataset[n] = graph:  Graph with 20 nodes and 95 edges
+similarity : 289.40295
+n :  29
+db_idx[n] = filename:  29
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 289.40295
+n :  46
+db_idx[n] = filename:  46
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 289.40295
+n :  374
+db_idx[n] = filename:  374
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 289.44421
+n :  74
+db_idx[n] = filename:  74
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 289.44421
+n :  155
+db_idx[n] = filename:  155
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 289.44421
+n :  190
+db_idx[n] = filename:  190
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+similarity : 289.44421
+n :  199
+db_idx[n] = filename:  199
+dataset[n] = graph:  Graph with 19 nodes and 93 edges
+id:  234 
+ graphs:  Graph with 14 nodes and 80 edges
+id:  271 
+ graphs:  Graph with 17 nodes and 91 edges
+id:  477 
+ graphs:  Graph with 17 nodes and 91 edges
+id:  439 
+ graphs:  Graph with 18 nodes and 97 edges
+id:  19 
+ graphs:  Graph with 18 nodes and 97 edges
+id:  91 
+ graphs:  Graph with 14 nodes and 77 edges
+id:  96 
+ graphs:  Graph with 14 nodes and 77 edges
+id:  231 
+ graphs:  Graph with 14 nodes and 77 edges
+id:  303 
+ graphs:  Graph with 20 nodes and 95 edges
+id:  370 
+ graphs:  Graph with 20 nodes and 95 edges
+id:  410 
+ graphs:  Graph with 20 nodes and 95 edges
+id:  445 
+ graphs:  Graph with 20 nodes and 95 edges
+id:  459 
+ graphs:  Graph with 20 nodes and 95 edges
+id:  29 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  46 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  374 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  74 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  155 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  190 
+ graphs:  Graph with 19 nodes and 93 edges
+id:  199 
+ graphs:  Graph with 19 nodes and 93 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 16.910364627838135
+Counter({3: 195, 2: 114, 1: 66, 4: 50, 0: 40, 6: 11, 7: 8})
+Counter({"{'adult', 'table', 'cup'}": 123, "{'adult', 'table'}": 75, "{'adult'}": 66, "{'adult', 'table', 'bottle'}": 54, 'set()': 40, "{'adult', 'bottle'}": 33, "{'adult', 'table', 'cake', 'cup'}": 30, "{'adult', 'table', 'bottle', 'cup'}": 20, "{'adult', 'table', 'cake'}": 15, "{'table', 'cup', 'ball/sports_ball', 'adult', 'baby', 'cake'}": 11, "{'adult', 'table', 'baby', 'bottle', 'cup', 'ball/sports_ball', 'cake'}": 8, "{'table', 'cup'}": 6, "{'adult', 'cake', 'cup'}": 3})
+란
+============================================================
+len(graphs):  1
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.004912376403808594
+Q graph nodes : {'piano', 'table', 'child', 'guitar', 'laptop', 'adult', 'chair'}
+Q graph:  Graph with 14 nodes and 87 edges
+number of DB subgraph torch.Size([484])
+similarity : 116.83405
+n :  102
+db_idx[n] = filename:  102
+dataset[n] = graph:  Graph with 15 nodes and 90 edges
+similarity : 406.69690
+n :  23
+db_idx[n] = filename:  23
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 406.69690
+n :  57
+db_idx[n] = filename:  57
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 406.71686
+n :  232
+db_idx[n] = filename:  232
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 406.75519
+n :  165
+db_idx[n] = filename:  165
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 438.66315
+n :  452
+db_idx[n] = filename:  452
+dataset[n] = graph:  Graph with 15 nodes and 94 edges
+similarity : 573.78027
+n :  19
+db_idx[n] = filename:  19
+dataset[n] = graph:  Graph with 18 nodes and 97 edges
+similarity : 574.07593
+n :  439
+db_idx[n] = filename:  439
+dataset[n] = graph:  Graph with 18 nodes and 97 edges
+similarity : 579.60046
+n :  179
+db_idx[n] = filename:  179
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 579.60046
+n :  184
+db_idx[n] = filename:  184
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 579.60046
+n :  198
+db_idx[n] = filename:  198
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 579.60046
+n :  380
+db_idx[n] = filename:  380
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 579.60046
+n :  468
+db_idx[n] = filename:  468
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 579.65411
+n :  325
+db_idx[n] = filename:  325
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 579.70660
+n :  173
+db_idx[n] = filename:  173
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 579.70660
+n :  235
+db_idx[n] = filename:  235
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 579.70660
+n :  284
+db_idx[n] = filename:  284
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 579.70660
+n :  341
+db_idx[n] = filename:  341
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 579.73529
+n :  230
+db_idx[n] = filename:  230
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+similarity : 579.77094
+n :  20
+db_idx[n] = filename:  20
+dataset[n] = graph:  Graph with 18 nodes and 104 edges
+id:  102 
+ graphs:  Graph with 15 nodes and 90 edges
+id:  23 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  57 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  232 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  165 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  452 
+ graphs:  Graph with 15 nodes and 94 edges
+id:  19 
+ graphs:  Graph with 18 nodes and 97 edges
+id:  439 
+ graphs:  Graph with 18 nodes and 97 edges
+id:  179 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  184 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  198 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  380 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  468 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  325 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  173 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  235 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  284 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  341 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  230 
+ graphs:  Graph with 18 nodes and 104 edges
+id:  20 
+ graphs:  Graph with 18 nodes and 104 edges
+쨔
+@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ : 16.351359128952026
+Counter({3: 210, 2: 184, 1: 82, 4: 4, 7: 4})
+Counter({"{'adult', 'table'}": 122, "{'adult', 'table', 'chair'}": 122, "{'child', 'adult', 'table'}": 60, "{'guitar', 'adult'}": 53, "{'adult'}": 43, "{'child'}": 39, "{'adult', 'table', 'laptop'}": 24, "{'child', 'table'}": 6, "{'child', 'adult', 'table', 'chair'}": 4, "{'piano', 'adult', 'table', 'child', 'guitar', 'laptop', 'chair'}": 4, "{'piano', 'adult', 'chair'}": 3, "{'child', 'adult'}": 3, "{'child', 'laptop', 'chair'}": 1})
+란
+============================================================
+Counter({173: 6, 235: 6, 284: 6, 341: 6, 20: 6, 325: 5, 133: 5, 230: 5, 179: 5, 184: 5, 198: 5, 380: 5, 468: 5, 205: 5, 299: 5, 183: 5, 211: 4, 33: 4, 56: 4, 94: 4, 258: 4, 273: 4, 482: 4, 360: 4, 8: 4, 18: 4, 22: 4, 27: 4, 31: 4, 34: 4, 44: 4, 4: 4, 162: 4, 90: 3, 126: 3, 172: 3, 367: 3, 48: 3, 58: 3, 76: 3, 81: 3, 83: 3, 132: 3, 187: 3, 191: 3, 208: 3, 223: 3, 229: 3, 106: 3, 113: 3, 146: 3, 224: 3, 227: 3, 250: 3, 266: 3, 291: 3, 356: 3, 385: 3, 9: 3, 26: 3, 165: 2, 23: 2, 57: 2, 232: 2, 427: 2, 175: 2, 71: 2, 324: 2, 348: 2, 86: 2, 25: 2, 105: 2, 298: 2, 449: 2, 479: 2, 5: 2, 7: 2, 35: 2, 52: 2, 65: 2, 67: 2, 70: 2, 77: 2, 99: 2, 104: 2, 74: 2, 155: 2, 190: 2, 199: 2, 29: 2, 46: 2, 374: 2, 91: 2, 96: 2, 231: 2, 95: 2, 101: 2, 439: 2, 19: 2, 275: 1, 288: 1, 50: 1, 93: 1, 118: 1, 176: 1, 216: 1, 79: 1, 461: 1, 64: 1, 226: 1, 249: 1, 3: 1, 84: 1, 323: 1, 321: 1, 337: 1, 131: 1, 416: 1, 464: 1, 129: 1, 276: 1, 357: 1, 149: 1, 78: 1, 136: 1, 441: 1, 49: 1, 72: 1, 141: 1, 188: 1, 125: 1, 267: 1, 377: 1, 409: 1, 454: 1, 338: 1, 39: 1, 40: 1, 17: 1, 144: 1, 269: 1, 481: 1, 42: 1, 69: 1, 312: 1, 393: 1, 407: 1, 222: 1, 368: 1, 37: 1, 62: 1, 92: 1, 61: 1, 137: 1, 320: 1, 189: 1, 108: 1, 400: 1, 1: 1, 51: 1, 89: 1, 100: 1, 107: 1, 114: 1, 119: 1, 161: 1, 164: 1, 167: 1, 171: 1, 193: 1, 207: 1, 209: 1, 212: 1, 215: 1, 248: 1, 261: 1, 263: 1, 234: 1, 271: 1, 477: 1, 303: 1, 370: 1, 410: 1, 445: 1, 459: 1, 102: 1, 452: 1})

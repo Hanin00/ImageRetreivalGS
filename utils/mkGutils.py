@@ -86,6 +86,8 @@ def graph_generation(graph, global_labels, global_edge_labels, total_ged=0):
         to_insert_edge = random.sample(new_g.nodes(), 1)[0]
         new_g.add_node(str(curr_num_node), label=str(curr_num_node), type=random.choice(global_labels))
         # add edge to the newly inserted ndoe
+
+        
         new_g.add_edge(str(curr_num_node), to_insert_edge, type=random.choice(global_edge_labels))
 
     ## edit edge insertions
@@ -164,19 +166,8 @@ def main():
 
   subG = mkSubgraph(Wu, Wv)
  
-    
-
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
     main()
 
 #node type의 class들 -> name, feature를 전에 만들어놓은 dict를 이용해서 넣을 것; 동일 그래프 내의 node로만 생성하거나, 전체 node에 대해 생성(우선)
-
-    
