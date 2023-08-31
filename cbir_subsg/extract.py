@@ -47,14 +47,13 @@ def load_dataset(args):
 
     gevpair_dbScenegraphs = os.listdir('data/GEDPair/train/walk4_step3_ged10/') #scenegraph file이 있는 폴더명   
     for file_name in gevpair_dbScenegraphs:
-    # for file_name in gevpair_dbScenegraphs[:10]:
         vID = file_name.split('_')[-2] +'-' + file_name.split('_')[-1]+'-' 
         # vName = file_name.split('_')[1] # video Name
         with open("data/GEDPair/train/walk4_step3_ged10/"+file_name, "rb") as fr:
             tmp = pickle.load(fr)
             db.extend(tmp[0][0])
             db_idx.extend([vID + '_' + str(i) for i in range(len(tmp[0]))])
-        
+    
     # user-defined query images
     with open("data/query_graphs.pkl", "rb") as q:
         query = pickle.load(q)
@@ -159,6 +158,7 @@ def feature_extract(args):
             print("Query num: ",idx)
             print("Q graph nodes :", q_check)
             print("Q graph: ", queryG)
+            print("Q graph edges :", queryG.edges(data=True))
             print("number of DB subgraph", e.shape)
             # result = [(query_idx+1, i)]
             result = []
@@ -167,7 +167,8 @@ def feature_extract(args):
                 print("n : ",n)
                 result.append((db_idx[n], dataset[n]))
                 print("db_idx[n] = filename: ", db_idx[n]) 
-                print("dataset[n] = graph: ", dataset[n])
+                print("dataset[n] = graph: ", dataset[n]) #dataset[n] = graph
+                print("result graph edges: ", dataset[n].edges(data=True))
                 
                 candidate_imgs.append(db_idx[n])            
 

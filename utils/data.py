@@ -88,7 +88,8 @@ def load_dataset(name):
                             continue
 
         print("len(dataset[0]): ", len(dataset[0]))
-        # sys.exit()
+
+        sys.exit()
 
 
         end = time.time()

@@ -360,8 +360,6 @@ def main(margs):
     # 파일 목록을 프로세스별로 분할
     num_processes = multiprocessing.cpu_count()
     # split_filenames = distribute_files_by_size(file_list, num_processes)
-
-
     # with open("data/fileNameList_ordered.pkl", "wb") as fw:
     #         pickle.dump( split_filenames  , fw)
     
