@@ -302,6 +302,7 @@ def PairDataset(filenames, F0Dict,PredictDict, total_ged, train, args):
                     
                 try:
                     file_counter = 0
+                    # fpath <- 왜이래함?? 이거 걍 슬라이싱해서 파일 id로 했어야지..
                     save_file = f"data/GEDPair/walk4_step3_ged10_th/walk{args.num_walks}_step{args.num_steps}_ged{total_ged}_{fpath[-8:-4]}_{file_counter}.pkl"
 
                     # 파일이 이미 있으면 새로운 파일명 생성
