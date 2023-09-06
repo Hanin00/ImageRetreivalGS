@@ -46,7 +46,7 @@ def load_dataset(args):
 
 
     gevpair_dbScenegraphs = os.listdir('data/GEDPair/train/walk4_step3_ged10/') #scenegraph file이 있는 폴더명   
-    for file_name in gevpair_dbScenegraphs:
+    for file_name in gevpair_dbScenegraphs[:2]:  #todo 2개만 읽어오도록 변경했음
         vID = file_name.split('_')[-2] +'-' + file_name.split('_')[-1]+'-' 
         # vName = file_name.split('_')[1] # video Name
         with open("data/GEDPair/train/walk4_step3_ged10/"+file_name, "rb") as fr:
@@ -56,6 +56,12 @@ def load_dataset(args):
     
     # user-defined query images
     with open("data/query_graphs.pkl", "rb") as q:
+        #todo - 여기서 RPE 계산해야함
+
+
+
+
+
         query = pickle.load(q)
         query_number = 1
     return db, db_idx, query, query_number
@@ -131,6 +137,7 @@ def feature_extract(args):
 
     db_check = [{i[1] for i in d.nodes(data="name")}for d in dataset]
     temp = []
+
     results = []
     candidate_imgs = []
     model.eval()
@@ -173,7 +180,7 @@ def feature_extract(args):
                 candidate_imgs.append(db_idx[n])            
 
             # [print("id: ", ranks[0], "\n graphs: ", ranks[1])  for ranks in result]
-            showGraph(queryG, 'query', 'qurey_'+str(idx))# query graph 저장
+            showGraph(queryG, 'query', 'query'+str(idx))# query graph 저장
             [showGraph(rank[1],'ranks', 'qid_'+str(idx)+'-rank_'+ str(i)+'-id_'+str(rank[0]))  for i, rank in enumerate (result)]
            
 

@@ -1,6 +1,10 @@
 '''
-만든이:이하은
+만든이: haeun5419@a.ut.ac.kr
 코드 개요: Query를 위한 Query graph 생성
+
+두 개의 쿼리 비디오를 선정하고, 거기에서 node를 제거해서 사용하는 것이 나아보임.
+사용 비디오: 3802296828
+
 '''
 import sys
 import numpy as np
@@ -8,16 +12,162 @@ import pandas as pd
 import torch
 import csv
 
+
+
+
 import networkx as nx
 import matplotlib.pyplot as plt
-from gensim.models import FastText
 from tqdm import tqdm
 import time
 import json
-from collections import Counter
 import pickle
-import nltk
-from nltk.corpus import conll2000
+
+
+querys = []
+with open('data/scenegraph_1/3947_3802296828_3802296828.pkl', 'rb') as f:
+    scenegraphs = pickle.load(f)
+print(len(scenegraphs[0][0])) #548
+
+
+queryG1origin =scenegraphs[0][0][0]
+queryG1origin.remove_node(0)
+querys.append(queryG1origin)
+
+
+queryG1origin =scenegraphs[0][0][324]
+queryG1origin.remove_node(12)
+querys.append(queryG1origin)
+
+
+queryG1origin =scenegraphs[0][0][-200]
+queryG1origin.remove_node(2)
+querys.append(queryG1origin)
+
+
+queryG1origin =scenegraphs[0][0][-134]
+queryG1origin.remove_node(2)
+queryG1origin.remove_node(4)
+querys.append(queryG1origin)
+
+
+queryG1origin =scenegraphs[0][0][-112]
+queryG1origin.remove_node(1)
+queryG1origin.remove_node(2)
+queryG1origin.remove_node(4)
+querys.append(queryG1origin)
+
+
+
+queryG1origin =scenegraphs[0][0][-20]
+queryG1origin.remove_node(5)
+queryG1origin.remove_node(11)
+querys.append(queryG1origin)
+
+
+
+
+
+
+with open('data/scenegraph_1/7460_6673828083_6673828083.pkl', 'rb') as f:
+    scenegraphs = pickle.load(f)
+print(len(scenegraphs[0][0])) #779
+
+
+queryG1origin =scenegraphs[0][0][0]
+queryG1origin.remove_node(2)
+queryG1origin.remove_node(4)
+querys.append(queryG1origin)
+
+queryG1origin =scenegraphs[0][0][300]
+queryG1origin.remove_node(1)
+queryG1origin.remove_node(4)
+querys.append(queryG1origin)
+
+queryG1origin =scenegraphs[0][0][450]
+queryG1origin.remove_node(1)
+queryG1origin.remove_node(4)
+querys.append(queryG1origin)
+
+queryG1origin =scenegraphs[0][0][451]
+queryG1origin.remove_node(1)
+queryG1origin.remove_node(7)
+querys.append(queryG1origin)
+
+queryG1origin =scenegraphs[0][0][532]
+queryG1origin.remove_node(9)
+queryG1origin.remove_node(1)
+queryG1origin.remove_node(0)
+querys.append(queryG1origin)
+
+print(len(querys))
+print(len(querys[0]))
+[print(i.nodes(data="name")) for i in querys]
+
+with open("data/query_graphs.pkl", "wb") as fw:
+    pickle.dump(querys , fw)
+
+with open('data/query_graphs.pkl', 'rb') as f:
+    scenegraphs = pickle.load(f)
+[print(i.nodes(data="name")) for i in scenegraphs]
+
+
+
+
+sys.exit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def vGphShow(nexG):
@@ -25,8 +175,6 @@ def vGphShow(nexG):
     nx.draw(nexG, with_labels=True)
     plt.show()
 
-# with open("data/networkx_ver2.pickle", "rb") as fr:
-#     ver2G = pickle.load(fr)
 
 
 with open("data/networkx_ver1.pickle", "rb") as fr:

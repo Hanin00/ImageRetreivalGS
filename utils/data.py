@@ -127,7 +127,7 @@ class DataSource:
 
 class SceneDataSource(DataSource):
     def __init__(self, dataset_name):
-        self.dataset = load_dataset(dataset_name)
+        self.dataset = load_dataset(dataset_name, )
 
     def gen_data_loaders(self, batch_sizes, train=True):
         n = batch_sizes

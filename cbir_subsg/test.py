@@ -31,35 +31,6 @@ def validation(args, model, dataset, data_source):
         raw_pred = model.predict(pred)
         pre_pred = raw_pred.clone().detach()
 
-    #         if args.method_type == "order":
-    #             pred = model.clf_model(raw_pred.unsqueeze(1)).view(-1)
-    #             # pred = pred.argmax(dim=-1)
-    #             raw_pred *= -1
-    #         elif args.method_type == "ensemble":
-    #             pred = torch.stack([m.clf_model(
-    #                 raw_pred.unsqueeze(1)).argmax(dim=-1) for m in model.models])
-    #             for i in range(pred.shape[1]):
-    #                 print(pred[:, i])
-    #             pred = torch.min(pred, dim=0)[0]
-    #             raw_pred *= -1
-    #         elif args.method_type == "mlp":
-    #             raw_pred = raw_pred[:, 1]
-    #             pred = pred.argmax(dim=-1)
-    #     all_raw_preds.append(raw_pred)
-    #     all_pre_preds.append(pre_pred)
-    #     all_preds.append(pred)
-    #     all_labels.append(labels)
-    # pre_pred = torch.cat(all_pre_preds, dim=-1)
-    # pred = torch.cat(all_preds, dim=-1)
-    # labels = torch.cat(all_labels, dim=-1)
-    # print(pre_pred.shape)
-    # print(pre_pred)
-    # print(pred.shape)
-    # print(pred)
-    # print(labels.shape)
-    # print(labels)
-
-    # print("loss !!:", torch.sum(torch.abs(labels-pre_pred)).item())
 
     mae = mean_absolute_error(labels.cpu(), pre_pred.cpu())
 

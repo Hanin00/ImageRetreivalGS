@@ -5,8 +5,27 @@ import sys, os
 
 
 
-#merge scenegraphs - 비디오에 중복되는 그래프가 많아서, 각 파일(비디오)에서 하나씩만 가져와서 파일을 만든 후, 검색을 해볼 것
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#merge scenegraphs - 비디오에 중복되는 그래프가 많아서, 각 파일(비디오)에서 하나씩만 가져와서 파일을 만든 후, 검색을 해볼 것
 import multiprocessing
 import os
 import pickle
