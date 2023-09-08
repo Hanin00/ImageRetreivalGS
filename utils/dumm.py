@@ -3,28 +3,6 @@ import pickle
 import sys, os
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #merge scenegraphs - 비디오에 중복되는 그래프가 많아서, 각 파일(비디오)에서 하나씩만 가져와서 파일을 만든 후, 검색을 해볼 것
 import multiprocessing
 import os
@@ -37,7 +15,6 @@ import pickle
   몇 번 비디오를 사용했는지 확인 필요.
   데이터 생성시 사용한 scenegraph_1 내 번호를 다음과 같이 나타냄 
   ged10_1229_50.pkl 이와 같은 파일명이 있을 때, scenegraph_1 내 번호는 1229임
-
 '''
 
 

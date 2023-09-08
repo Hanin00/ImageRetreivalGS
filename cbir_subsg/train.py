@@ -18,6 +18,7 @@ def build_model(args):
     model.to(utils.get_device())
     
     # checkpoint = torch.load('checkpoint.pt')
+  
 
     if os.path.exists(args.model_path):
         model.load_state_dict(torch.load(args.model_path,

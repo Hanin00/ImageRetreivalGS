@@ -156,7 +156,7 @@ def main(args):
     folder_path = "data/scenegraph_1/"
     filenames = os.listdir(folder_path)
     rpeGraphs = []
-    for filename in filenames[:4]:
+    for filename in filenames:
         print("filename: ", filename)
         fpath = "data/scenegraph_1/"+str(filename)    
         with open(fpath, 'rb') as file:
@@ -167,7 +167,7 @@ def main(args):
             cnt = 0
             for i in range(length):   
                 dataset[i].graph['gid'] = 0
-                origin_g, origin_enc_agg = utils.mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
+                origin_g, origin_enc_agg = utils.mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임 #txtemb 는 10개씩 있음
                 rpeGraphs.append(origin_g)
     try:
         rpeGraphs = utils.batch_nx_graphs_rpe(rpeGraphs, None)

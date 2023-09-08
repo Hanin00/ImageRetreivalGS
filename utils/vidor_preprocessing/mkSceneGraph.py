@@ -181,7 +181,8 @@ def addEdge(gList,relation, predDict):
             angle_BA = math.degrees(math.atan2(deltaY_BA, deltaX_BA))
 
             predicate = rel['predicate']
-            g.add_edges_from([(rel['subject_tid'],rel['object_tid'], {'distribute': distance}),
+            # g.add_edges_from([(rel['subject_tid'],rel['object_tid'], {'distribute': distance}),
+            g.add_edges_from([(rel['subject_tid'],rel['object_tid'], {'distance': distance}),
                               (rel['subject_tid'],rel['object_tid'], {'angle_AB': angle_AB}),
                                 (rel['subject_tid'],rel['object_tid'], {'angle_BA': angle_BA}),
                                 (rel['subject_tid'],rel['object_tid'], {'predicate': predicate}),
@@ -202,7 +203,6 @@ def dropEmpty(gList):
    dropedList = [g for g in gList if len(g.nodes) > 1]
    dropedList = [g for g in gList if len(g.edges) > 0]
    dropedList = [g for g in gList if len(g.nodes) > 1]
-
    return dropedList
 
 
@@ -219,7 +219,8 @@ def process_file(file_name, path_to_folder, synsDict,predDict):
 def save_results(results, metadata, fidList, chunk_index):
     # 결과값과 metadata를 pickle 파일로 저장
     # with open(f'data/scenegraph/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
-    with open(f'data/scenegraph_1/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
+    # with open(f'data/scenegraph_1/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f: # distance가 distribute로 되어있었음
+    with open(f'data/scenegraph/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
         pickle.dump((results, metadata, fidList), f)
 
 def main():
@@ -233,11 +234,12 @@ def main():
   predDict = data.copy()
 
   # # 폴더 경로 지정
-  path_to_folder = 'data/training_total/'  
-  file_list = os.listdir(path_to_folder)
-  # file_list = file_list[:10]
-  
+  # path_to_folder = 'data/training_total/'  
+  path_to_folder = 'data/training_annotation/'
 
+  file_list = os.listdir(path_to_folder)
+  
+  # file_list = file_list[:10]
   
     
   # 프로세스 풀 생성
