@@ -1,7 +1,4 @@
-import os
-import pickle
-import threading
-
+import sys, os
 import pickle
 import random
 from copy import deepcopy
@@ -9,25 +6,111 @@ from collections import defaultdict
 
 import numpy as np
 import networkx as nx
+import multiprocessing as mp
 
 from surel_gacc import run_walk
 from utils.mkGraphRPE import *
 import random
 import math
-from tqdm import tqdm
+import os
+
+import pickle
 import multiprocessing
 
+from itertools import combinations
+import networkx as nx
 
-def check_deadlock():
-    # 현재 실행 중인 스레드 확인
-    current_thread = threading.current_thread()
 
-    # 모든 스레드 확인
-    all_threads = threading.enumerate()
+import matplotlib.pyplot as plt
+import sys
+import pickle
+import random
 
-    # 모든 스레드의 상태와 락 상태 출력
-    for thread in all_threads:
-        print(f"Thread name: {thread.name}, is alive: {thread.is_alive()}, lock status: {thread.locked()}")
+
+
+'''
+    subgraph 생성
+    -> GEDPair 생성
+    -> 학습
+
+'''
+
+def make_subgraph(graph, max_node, train, R_BFS):
+
+    def split(node, subs, max, train, R_BFS, sub=None):
+        if train:
+            s = max//2
+            max = random.randrange(s, max)
+
+        if sub == None:
+            sub = [node]
+
+        cur = node
+        while True:
+            neig = list(graph.neighbors(cur))
+            neig = list(set(neig)-set(sub))
+            space = max-len(sub)
+            if len(neig) == 0:
+                # 더이상 갈 곳이 없는 경우
+                sub.sort()
+                subs.add(tuple(sub))
+                break
+            elif len(neig) <= space:
+                # 여러 곳으로 갈 수 있을 경우
+                if len(neig) == 1:
+                    sub.extend(neig)
+                    cur = neig[0]
+                else:
+                    sub.extend(neig)
+                    if len(neig) == space:
+                        sub.sort()
+                        subs.add(tuple(sub))
+                        break
+                    if not R_BFS:
+                        # 모든 상황 고려
+                        for i in neig:
+                            cur = i
+                            tmp = sub.copy()
+                            split(cur, subs, max, False, R_BFS, tmp)
+                        break
+                    else:
+                        cur = random.choice(neig)
+            else:
+                # 갈 곳이 많지만 subgraph 노드 개수를 넘을 경우
+                if not R_BFS:
+                    for c in combinations(list(neig), space):
+                        tmp = sub.copy()
+                        tmp.extend(list(c))
+                        tmp.sort()
+                        subs.add(tuple(tmp))
+                    break
+                else:
+                    # 교집합 부분으로 수정해야함
+                    sub.extend(
+                        list(random.choice(list(combinations(neig, space)))))
+                    sub.sort()
+                    subs.add(tuple(sub))
+                    break
+
+    subgraphs = []
+    class_set = set()
+    total_subs = set()
+    for i in graph.nodes():
+        split(i, total_subs, max_node, train, R_BFS)
+    pre = [graph.subgraph(i) for i in total_subs]
+    # 노드 클래스가 중복으로 가지는 subgraph filtering
+    for j in pre:
+        class_sub = tuple([f['name'] for _, f in list(j.nodes.data())])
+        if len(set(class_sub)) == 1:
+            continue
+        elif class_sub not in class_set:
+            subgraphs.append(j)
+            class_set.add(class_sub)
+            class_set.add(tuple(reversed(class_sub)))
+
+    return subgraphs
+
+
 
 def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
     merged_K = np.concatenate([np.asarray(k) for k in K]).tolist()
@@ -48,7 +131,9 @@ def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
     
     return gT_mean 
 
+
 def mkNG2Subs(G, args, F0dict):
+    # print("---- mkNG2Subs ----")
     nmDict = dict((int(x), y['name'] ) for x, y in G.nodes(data=True)) 
     Gnode = list(G.nodes())  
     G_full = csr_matrix(nx.to_scipy_sparse_array(G))
@@ -144,6 +229,7 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
         to_del_edge = random.sample(new_g.edges(), 1)
         deleted_edges.append(to_del_edge[0])
         deleted_edges.append((to_del_edge[0][1], to_del_edge[0][0]))
+        new_g = nx.Graph(new_g)
         new_g.remove_edges_from(to_del_edge)
         assert ((curr_num_egde - new_g.number_of_edges()) == 1)
 
@@ -161,6 +247,8 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
         curr_num_node = new_g.number_of_nodes()
         to_insert_edge = random.sample(new_g.nodes(), 1)[0]
         label_name = random.choice(global_labels)
+        # new_g = deepcopy(new_g)
+        new_g = nx.Graph(new_g) # unfrozen. 위에서 copy 했는데도 frozen임..왜..?
         new_g.add_node(curr_num_node, 
                        name=label_name,
                        bbox=  {'xmin': random.randint(0, 500), 'ymin': random.randint(0, 300), 
@@ -183,11 +271,12 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
             deltaY_BA = center_a[1] - center_b[1]
             angle_BA = math.degrees(math.atan2(deltaY_BA, deltaX_BA))
 
-            predicate=random.choice(global_edge_labels)
-            
+            predicate= random.choice(global_edge_labels)
+            new_g = nx.Graph(new_g)
             new_g.add_edge(curr_num_node, to_insert_edge, 
+                        predicate = predicate,
                         txtemb = PredictDict[predicate],
-                        distribute= distance, angle_AB = angle_AB,
+                        distance= distance, angle_AB = angle_AB,
                         angle_BA = angle_BA
                         )
     
@@ -218,8 +307,9 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
             if ((curr_pair[0], curr_pair[1]) not in deleted_edges):
                 if ((curr_pair[0], curr_pair[1]) not in new_g.edges()):                    
                     new_g.add_edge(curr_pair[0], curr_pair[1], name=random.choice(global_edge_labels),
+                                predicate = predicate,
                                 txtemb = PredictDict[predicate],
-                                distribute= distance, 
+                                distance= distance, 
                                 angle_AB = angle_AB,
                                 angle_BA = angle_BA                               
                     )
@@ -233,103 +323,89 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
     return target_ged, new_g
 
 
-
-lock = threading.Lock()
-
-def PairDataset(filenames, F0Dict,PredictDict, total_ged, train, args):
+def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
     train_num_per_row = 64
+    # file_path,train_num_per_row,  dataset, total_ged, train, args
     for filename in filenames:
         # 파일 처리 작업
-        fpath = "data/scenegraph_1/"+str(filename)    
+        # print("filename: ", filename)
+        fpath = "data/scenegraph/"+str(filename)    
         with open(fpath, 'rb') as file:
           data = pickle.load(file)
-        dataset = data[0][0] #video 내 graphs
+        dataset = data[0] #video 내 graphs
+# with open("data/networkx_ver3_100000/v3_x1000.pickle", "rb") as fr:
+#         dataset = pickle.load(fr)
+        total = []
+        for i in range(len(dataset)):
+            if train:
+                subs = make_subgraph(dataset[i], 4, False, False)
+                total.extend(subs)
+        
         print("------- PairDataset ---------")
         g1_list = []
         g2_list = []
         ged_list = []
-
-        length = len(dataset)
+        
+        # length = len(dataset)
+        length = len(total)
+        # cnt = 0
         if length != 0:
             print("tqdm - length: ", length)
             print("tqdm - filename: ", filename)
             cnt = 0
-            # for i in tqdm(range(length)):    
-            for i in (range(length)):   
-                if train:
-                    # print(" ---- mk GEVPair start ---- ")
-                    for _ in range(train_num_per_row):
-                        try:
-                            dataset[i].graph['gid'] = 0
-                            if cnt > (train_num_per_row//2):
-                                target_ged, new_g = graph_generation(dataset[i], F0Dict, PredictDict, total_ged)
-                                new_g, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
-                                origin_g, enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
-                                graph2 = new_g
-                            else:
-                                #text emb 값
-                                target_ged, new_g = graph_generation(dataset[i], F0Dict, PredictDict, total_ged)
-                                new_g, new_enc_agg = mkNG2Subs(new_g, args, F0Dict, )  # Gs에 Feature 붙임
-                                origin_g, origin_enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
-                                graph2 = new_g
+            for i in range(length):
+                if train:                    
+                    # try: 
+                        total[i].graph['gid'] = 0
+                        #text emb 값
+                        target_ged, new_g = graph_generation(total[i], F0Dict, PredictDict, total_ged)
 
-                            gev = [target_ged['nc'],target_ged['ec'],target_ged['in'],target_ged['ie'],]
-                            graph2.graph['gid'] = 1
+                        new_g, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
+                        origin_g, enc_agg = mkNG2Subs(total[i], args, F0Dict)  # Gs에 Feature 붙임
+                        graph2 = new_g
 
-                            # print("origin_g: ", origin_g)
-                            # print("new_g: ", graph2)
-                            # print("gev: ", gev)
-                            g1_list.append(origin_g)
-                            g2_list.append(graph2)
-                            ged_list.append(gev)  
-                        except:
-                            print("ERR - here")
-                            print("ERR - here")
-                            print("ERR - here")
-                            print("ERR - here")
+                        gev = [target_ged['nc'],target_ged['ec'],target_ged['in'],target_ged['ie'],]
+                        graph2.graph['gid'] = 1
+
+                        g1_list.append(origin_g)
+                        g2_list.append(graph2)
+                        ged_list.append(gev)  
+                    # except:
+                    #     print("ERR - total[i]: {}".format(total[i]))
+                    #     print("ERR - len(total[i]): {}".format(len(total[i])))
+                    #     continue
+
+                # try:
+                if i == length-1:
+                    with open("data/train_sub-16-13/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, filename[:-9], i), "wb") as fw:
+                        pickle.dump([g1_list, g2_list, ged_list], fw)
+                    print("dump! - i: {} / filename: {}".format(i,filename))
+                    g1_list = []
+                    g2_list = []
+                    ged_list = []
+
+                elif cnt == 100:
+                    with open("data/train_sub-16-13/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, filename[:-9], i),  "wb") as fw:
+                        pickle.dump([g1_list, g2_list, ged_list], fw)
+                    print("dump! - i: {} / filename: {} / cnt: {}".format(i, filename, cnt))
+
+                    g1_list = []
+                    g2_list = []
+                    ged_list = []
+
+                    cnt = 0
                 else:
-                    r = random.randrange(length-1)
-                    dataset[r].graph['gid'] = 0
-                    target_ged, new_g = graph_generation(dataset[i], F0Dict, PredictDict, total_ged)
-
-                    new_g, new_enc_agg = mkNG2Subs(new_g, args, F0Dict)
-                    origin_g, origin_enc_agg = mkNG2Subs(dataset[i], args, F0Dict)
-
-                    graph2 = new_g
-                    g1_list.append(origin_g)
-                    g2_list.append(graph2)
-                    ged_list = [total_ged for _ in range(len(g2_list))]
-                    
-                try:
-                    file_counter = 0
-                    # fpath <- 왜이래함?? 이거 걍 슬라이싱해서 파일 id로 했어야지..
-                    save_file = f"data/GEDPair/walk4_step3_ged10_th/walk{args.num_walks}_step{args.num_steps}_ged{total_ged}_{fpath[-8:-4]}_{file_counter}.pkl"
-
-                    # 파일이 이미 있으면 새로운 파일명 생성
-                    while os.path.exists(save_file):
-                        file_counter += 1
-                        save_file = f"data/GEDPair/walk4_step3_ged10_th/walk{args.num_walks}_step{args.num_steps}_ged{total_ged}_{fpath[-8:-4]}_{file_counter}.pkl"
-
-                    # 조건에 따라 파일 저장
-                    if cnt == 100 or i == length-1:
-                        with open(save_file, "wb") as fw:
-                            pickle.dump([g1_list, g2_list, ged_list], fw)
-
-                        g1_list = []
-                        g2_list = []
-                        ged_list = []
-
-                        cnt = 0
-                    else:
-                        cnt += 1
-                except:
-                    print("ERR - dump")
+                    cnt += 1
+                # except:
+                #     print("ERR - dump")
+                #     continue
         else :
             print("length is 0 -> killed")
 
+
 def distribute_files_by_size(file_list, num_processes):
     # 파일 크기에 따라 파일 리스트를 정렬
-    sorted_files = sorted(file_list, key=lambda f: os.path.getsize("data/scenegraph_1/" + f), reverse=True)
+    sorted_files = sorted(file_list, key=lambda f: os.path.getsize("data/scenegraph/" + f), reverse=True)
 
     # 정렬된 파일 리스트를 프로세스에 균등하게 분배
     split_filenames = [[] for _ in range(num_processes)]
@@ -338,8 +414,8 @@ def distribute_files_by_size(file_list, num_processes):
 
     return split_filenames
 
-    
-def process_files_in_threads(file_list, num_threads, margs,):
+
+def main(margs):
     with open('data/class_unique_textemb.pickle', 'rb') as f:  
        data  = pickle.load(f)
     F0Dict = data
@@ -348,48 +424,42 @@ def process_files_in_threads(file_list, num_threads, margs,):
         data  = pickle.load(f)
     PredictDict = data
 
+    # 폴더 내 파일 목록 로드
+    folderpath = "data/scenegraph"
+    file_list = os.listdir(folderpath)
+
+    # file_list = file_list[:5]
     train = True
     total_ged = 10
 
-    def process_files_thread(thread_files, F0Dict,PredictDict, total_ged, train,):
-        # for file in thread_files:
-        PairDataset(thread_files, F0Dict, PredictDict, total_ged, train, margs)
 
-    files_per_thread = len(file_list) // num_threads
-    threads = []
-
+    # # 파일 목록을 프로세스별로 분할
+    num_processes = multiprocessing.cpu_count()
     
+    with open('data/fileNameList_ordered.pkl', 'rb') as f:
+        fileNameList  = pickle.load(f)
+    resultList = []
+    for item in fileNameList:
+        sliced_item = item[-16:-13] 
+        # sliced_item = item[-13:-10]
+        resultList.append(sliced_item)
 
-    # split_filenames = [file_list[i::num_processes] for i in range(num_processes)]
-    split_filenames = distribute_files_by_size(file_list, num_threads)
+    # 프로세스를 생성하고 딕셔너리를 개별적으로 전달
+    processes = []
+    for i in range(num_processes):
+        process = multiprocessing.Process(target=PairDataset, args=(resultList[i], F0Dict, PredictDict, total_ged, train, margs ))
+        process.start()
+        processes.append(process)
 
-    for i in range(num_threads):
-        # start_idx = i * files_per_thread
-        # end_idx = start_idx + files_per_thread if i < num_threads - 1 else len(file_list)
-        # thread_files = file_list[start_idx:end_idx]
-
-        thread = threading.Thread(target=process_files_thread, args=(split_filenames[i], F0Dict,PredictDict, total_ged, train,))
-        thread.start()
-        threads.append(thread)
-
-    for thread in threads:
-        thread.join()
-    return
-
-
+    # 모든 프로세스가 종료될 때까지 기다림
+    for process in processes:
+        process.join()
 
 if __name__ == "__main__":
-    
-    lock = threading.Lock()
     parser = argparse.ArgumentParser(description='Embedding arguments')
     utils.parse_optimizer(parser)
     parse_encoder(parser)
     margs = parser.parse_args()
-    # main(margs)
+    main(margs)
 
-    folderpath = "data/scenegraph_1"
-    file_list = os.listdir(folderpath)
-    # file_list = file_list[:10]
-    # 파일 목록을 프로세스별로 분할
-    num_threads = multiprocessing.cpu_count()
-    process_files_in_threads(file_list, num_threads, margs)
+   

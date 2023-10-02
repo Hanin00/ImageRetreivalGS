@@ -43,6 +43,19 @@ import sys
 from tqdm import tqdm
 import time
 
+from operator import itemgetter
+# from torch_geometric.utils import subgraph,from_networkx,negative_sampling
+import torch
+
+import itertools
+
+import argparse
+from cbir_subsg.conf import parse_encoder
+from utils import utils
+from utils import mkGutils
+from surel_gacc import run_walk, run_sample, sjoin
+import copy
+
 
 
 def gen_batch(iterable, n=1, keep=False):
@@ -72,20 +85,6 @@ def mkPathGraph(path):
   return G
 
 
-
-from operator import itemgetter
-# from torch_geometric.utils import subgraph,from_networkx,negative_sampling
-import torch
-
-import itertools
-
-
-from config.config import parse_encoder
-import argparse
-from utils import utils
-from utils import mkGutils
-from surel_gacc import run_walk, run_sample, sjoin
-import copy
 
 
 # networkx 는 딕셔너리 형태로 그래프를 저장하기 때문에 torch_geometric을 이용해야함
@@ -144,10 +143,6 @@ def mkSubs(G, args, seed ):
   G_full = nx2csr(G)
 
   print("G_full: ", G_full)
-  sys.exit()
-  
-
-
 
 
   ptr = G_full.indptr

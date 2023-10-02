@@ -4,6 +4,31 @@ import os, sys
 from tqdm import tqdm
 
 
+
+import os
+import shutil
+
+# 원본 폴더와 목표 폴더 경로를 설정합니다.
+source_folder = 'data/training_annotation/'
+target_folder = 'data/training_total/'
+
+# 원본 폴더 안의 모든 파일과 하위 폴더를 검사합니다.
+for root, dirs, files in os.walk(source_folder):
+    for filename in files:
+        if filename.endswith('.json'):
+            # 확장자가 .json인 경우
+            source_path = os.path.join(root, filename)
+            target_path = os.path.join(target_folder, filename)
+
+            # 파일을 목표 폴더로 이동합니다.
+            shutil.move(source_path, target_path)
+
+print("모든 파일을 이동했습니다.")
+
+sys.exit()
+
+
+
 # with open('data/Vidor/scenegraph/merge_scenegraphs_1.pkl', 'rb') as fr:
 #   data = pickle.load(fr)
 # print(len(data[0][0]))

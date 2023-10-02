@@ -12,9 +12,9 @@
 import os, sys
 import pandas as pd
 import math
-import networkx as nx
-# from gensim.models import FastText
-# import fasttext.util
+import networkx as nx 
+import fasttext
+import fasttext.util
 from tqdm import tqdm
 import json
 import pickle
@@ -25,17 +25,12 @@ import multiprocessing as mp
 
 # https://daydreamx.tistory.com/entry/NLP-FastText-%EC%9D%98-pretrained-model%EC%97%90-text-classification%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%B6%94%EA%B0%80%ED%95%99%EC%8A%B5%ED%95%98%EA%B8%B0 - fasttext 사용
 
-
-
-
 '''
   전체 데이터 셋을 대상으로 해야하는 것들
   1. text embedding을 위한 class 수집 -> 일단 전체 subject/objects
-  2. 
 
   Guess1. 영상 사이즈도 고려해서 동일하게 변경해야하는 것 아닌가? bbox를 특징으로 할거면 regulize도 필요한 것 아닌가?
 '''
-
 # dict_keys(['version', 'video_id', 'video_hash', 'video_path',
 #  'frame_count', 'fps', 'width', 'height', 'subject/objects', 
 #  'trajectories', 'relation_instances'])
@@ -46,7 +41,6 @@ import multiprocessing as mp
 def mkTotalClass(path_to_folder): # 걸린 시간 : 79.74567 sec
     classList = []
     # # 폴더 경로 지정
-    # path_to_folder = 'data/Vidor/training_annotation/'
     folder_list = os.listdir(path_to_folder) 
     
     for folder in tqdm(folder_list):
@@ -58,20 +52,19 @@ def mkTotalClass(path_to_folder): # 걸린 시간 : 79.74567 sec
               [classList.append(json_data['subject/objects'][idx]['category']) for idx in range(len(json_data['subject/objects']))]
 
     # 데이터프레임 생성
-    
     df = pd.DataFrame({'classList': classList})
     # CSV 파일로 저장
-    df.to_csv('data/Vidor/classList.csv', index=False)
+    df.to_csv('data/classList.csv', index=False)
 
     unique_classList =  list(set(classList))
     df = pd.DataFrame({'classList': unique_classList})
     # CSV 파일로 저장
-    df.to_csv('data/Vidor/classList_unique.csv', index=False)
+    df.to_csv('data/classList_unique.csv', index=False)
 
-def mkTotalPredicate():
+def mkTotalPredicate(path_to_folder):
   predicateList = []
   # # 폴더 경로 지정
-  path_to_folder = 'data/Vidor/training_annotation/'
+  # path_to_folder = 'data/training_annotation/'
   folder_list = os.listdir(path_to_folder) 
   
   for folder in tqdm(folder_list):
@@ -85,43 +78,41 @@ def mkTotalPredicate():
                 # print(predicateList)
             except:
                 continue
-            # sys.exit()
   # 데이터프레임 생성
   df = pd.DataFrame({'predicate': predicateList})
   unique_classList =  list(set(predicateList))
   # CSV 파일로 저장
-  df.to_csv('data/Vidor/predicate_unique.csv', index=False)
+  df.to_csv('data/predicate_unique.csv', index=False)
 
 
+# def mkTextEmb(fname,name):
+#   words = pd.read_csv('data/'+fname+'.csv')
+#   model_fname = '/home/dblab/ha/ImageRetreival/ImageRetreivalGS/data/model'
+#   # words = corpus_fname
+  
+#   fasttext.util.download_model('en', if_exists='ignore')
+#   model = fasttext.load_model('cc.en.300.bin')
+#   fasttext.util.reduce_model(model, 10)
+#   # model = FastText(words, size=10, workers=4, sg=1, iter=6, word_ngrams=1)
+#   # model.save(model_fname) 
 
-def mkTextEmb():
-  # corpus_fname = pd.read_csv('data/Vidor/classList_unique.csv')
-  corpus_fname = pd.read_csv('data/Vidor/predicate_unique.csv')
-  model_fname = '/home/dblab/Haeun/CBIR/ImageRetreivalGS/data/Vidor/model'
-  words = corpus_fname['predicate'].tolist()
-
-  model = fasttext.load_model('cc.en.300.bin')
-  fasttext.util.reduce_model(model, 10)
-  # model = FastText(words, size=10, workers=4, sg=1, iter=6, word_ngrams=1)
-  # model.save(model_fname) 
-
-  synsDict = {}
-  for idx, word in enumerate(words):
-    synsDict.update({word : model.get_word_vector(word)})
-    # print(word,": " ,"emb: " , model.get_word_vector(word))
-    # print(len(model.get_word_vector(word)))
-    # sys.exit()
-
-
-  # with open("data/Vidor/class_unique_textemb.pickle", "wb") as fw:
-  with open("data/predicate_unique_textemb.pickle", "wb") as fw:
-    pickle.dump(synsDict, fw)
+#   synsDict = {}
+#   for idx, word in enumerate(words):
+#     print("word: ", word)
+#     # sys.exit()
+#     # word_vector = model.get_word_vector(word)
+#     # synsDict[word] = word_vector
+#   # for idx, word in enumerate(words):
+#   #   synsDict.update({word : model.get_word_vector(word)})
+#   #   print(word,": " ,"emb: " , model.get_word_vector(word))
+#   #   print(len(model.get_word_vector(word)))
+#   with open("data/"+fname+"_unique_textemb.pkl", "wb") as fw:
+#     pickle.dump(synsDict, fw)
   
 
-    
 '''
-   tid_category_dict - 비디오마다 계속 바뀜 - tid: category
-   synsDict - 전체 데이터셋 대상으로 생성 - 80개 category - class: embedding feature
+    - 비디오마다 계속 바뀜 - tid: category
+   synsDitid_category_dictct - 전체 데이터셋 대상으로 생성 - 80개 category - class: embedding feature
 '''
 def use1video(data, synsDict):
   gList = []
@@ -134,7 +125,7 @@ def use1video(data, synsDict):
   for idx, img in enumerate(data['trajectories']):
     # print("img: ",img)
     # if len(img)>5:
-    if len(img)>4:
+    if len(img)>4: # [] 인 경우 피하기 위해서 이렇게 함
       G = mk1Graph(img, synsDict, tid_category_dict) # json 하나에서 trajectories 하나를 기준으로 graph 하나 만듦 -> scene graph 한장 당 프레임id 하나에 매칭됨 
       gList.append(G)
       fidList.append(idx)
@@ -181,7 +172,6 @@ def addEdge(gList,relation, predDict):
             angle_BA = math.degrees(math.atan2(deltaY_BA, deltaX_BA))
 
             predicate = rel['predicate']
-            # g.add_edges_from([(rel['subject_tid'],rel['object_tid'], {'distribute': distance}),
             g.add_edges_from([(rel['subject_tid'],rel['object_tid'], {'distance': distance}),
                               (rel['subject_tid'],rel['object_tid'], {'angle_AB': angle_AB}),
                                 (rel['subject_tid'],rel['object_tid'], {'angle_BA': angle_BA}),
@@ -191,40 +181,65 @@ def addEdge(gList,relation, predDict):
             
           except:
              continue
-          #    print("idx: ",idx)
-          #    print(g.nodes(data=True))
-          #    print(g.nodes[rel['subject_tid']])
-          #    print([rel['subject_tid']])
-          #    sys.exit()
-
 
 # 데이터셋의 trajectory에 아예 없는 frame이 있어 해당 프레임을 삭제함
-def dropEmpty(gList):
-   dropedList = [g for g in gList if len(g.nodes) > 1]
-   dropedList = [g for g in gList if len(g.edges) > 0]
-   dropedList = [g for g in gList if len(g.nodes) > 1]
-   return dropedList
-
+def dropEmpty(gList, fidList):
+  non_empty_graphs = [g for g in gList if len(g.nodes) > 1 and len(g.edges) > 0]
+  filtered_fidList = [fid for i, fid in enumerate(fidList) if len(gList[i].nodes) > 1 and len(gList[i].edges) > 0]
+  return non_empty_graphs, filtered_fidList
 
 def process_file(file_name, path_to_folder, synsDict,predDict):
   file_path = os.path.join(path_to_folder, file_name)
-  with open(file_path, 'r') as f:
-    json_data = json.load(f)
-    gList, fidList = use1video(json_data, synsDict, ) #1 json data = 1 video data
-    addEdge(gList, json_data['relation_instances'], predDict)  #relation_instance 기준으로 predicate 및 edge 생성, bbox 기준으로 attribute 추가
-    gList = dropEmpty(gList)
-    return gList, fidList
+  fileList = os.listdir(file_path)
 
-
-def save_results(results, metadata, fidList, chunk_index):
-    # 결과값과 metadata를 pickle 파일로 저장
-    # with open(f'data/scenegraph/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
-    # with open(f'data/scenegraph_1/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f: # distance가 distribute로 되어있었음
-    with open(f'data/scenegraph/{chunk_index}_{metadata[0][:-5]}_{metadata[-1][:-5]}.pkl', 'wb') as f:
-        pickle.dump((results, metadata, fidList), f)
+  for fPath in fileList: # json name
+      with open(file_path+'/'+fPath, 'r') as f:
+        json_data = json.load(f)
+        gList, fidList = use1video(json_data, synsDict, ) #1 json data = 1 video data
+        addEdge(gList, json_data['relation_instances'], predDict)  #relation_instance 기준으로 predicate 및 edge 생성, bbox 기준으로 attribute 추가
+        gList, fidList = dropEmpty(gList, fidList)
+        print("gList: ", len(gList))
+        print("fidList: ", len(fidList))
+        metadata = list(fPath)
+        if len(gList)!=0:
+          with open(f'data/scenegraph/'+fPath[:-5]+'.pkl', 'wb') as f:
+            pickle.dump((gList, metadata, fidList), f)
+        else:
+          print("fPath: ", fPath)
 
 def main():
-  # mkTextEmb()
+
+  # path_to_folder = 'data/training_annotation/'
+  # mkTotalClass(path_to_folder)
+  # mkTotalPredicate(path_to_folder)
+  
+  def classTxtEmb():
+    corpus_fname = pd.read_csv('data/classList_unique.csv')
+    words = corpus_fname['classList'].tolist()
+
+    model = fasttext.load_model('cc.en.300.bin')
+    fasttext.util.reduce_model(model, 10)
+
+    synsDict = {}
+    for idx, word in enumerate(words):
+      synsDict.update({word : model.get_word_vector(word)})
+    with open("data/class_unique_textemb.pickle", "wb") as fw:
+      pickle.dump(synsDict, fw)
+  def predictTxtEmb():
+    corpus_fname = pd.read_csv('data/predicate_unique.csv')
+    words = corpus_fname['predicate'].tolist()
+
+    model = fasttext.load_model('cc.en.300.bin')
+    fasttext.util.reduce_model(model, 10)
+
+    synsDict = {}
+    for idx, word in enumerate(words):
+      synsDict.update({word : model.get_word_vector(word)})
+    with open("data/predicate_unique_textemb.pickle", "wb") as fw:
+      pickle.dump(synsDict, fw)
+  
+  # classTxtEmb()
+  # predictTxtEmb()
 
   with open("data/class_unique_textemb.pickle", "rb") as fr:
     synsDict = pickle.load(fr)
@@ -234,42 +249,18 @@ def main():
   predDict = data.copy()
 
   # # 폴더 경로 지정
-  # path_to_folder = 'data/training_total/'  
-  path_to_folder = 'data/training_annotation/'
+  # path_to_folder = 'data/training_total/'
 
+
+  path_to_folder = 'data/training_annotation/'
   file_list = os.listdir(path_to_folder)
   
-  # file_list = file_list[:10]
-  
-    
   # 프로세스 풀 생성
   pool = mp.Pool()
-
-  chunk_index = 0
-  chunk_results = []
-  chunk_fidList = []
-  chunk_metadata = []
-
+  
   for file_name in tqdm(file_list):
       # 파일 처리 작업 수행
-      result, fidList = pool.apply(process_file, args=(file_name, path_to_folder, synsDict, predDict ))
-      # 결과값과 metadata를 chunk에 추가
-      chunk_results.append(result)
-      chunk_fidList.append(fidList)
-      chunk_metadata.append(file_name)
-
-      # 결과값과 metadata를 2개마다 묶어서 저장
-      if len(chunk_results) == 1:
-          save_results(chunk_results, chunk_metadata, chunk_fidList, chunk_index)
-          # chunk 초기화
-          chunk_results = []
-          chunk_fidList = []
-          chunk_metadata = []
-          chunk_index += 1
-
-  # 남은 결과값과 metadata를 저장
-  if chunk_results:
-      save_results(chunk_results, chunk_metadata, chunk_fidList, chunk_index)
+      pool.apply(process_file, args=(file_name, path_to_folder, synsDict, predDict))
 
   # 프로세스 풀 닫기
   pool.close()

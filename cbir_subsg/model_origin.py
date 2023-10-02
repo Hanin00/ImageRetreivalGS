@@ -5,6 +5,9 @@ import torch.nn.functional as F
 import torch_geometric.nn as pyg_nn
 import torch_geometric.utils as pyg_utils
 
+from torch_geometric.nn import GATConv, GATv2Conv
+from utils import utils
+
 import sys
 
 
@@ -13,6 +16,8 @@ class BaselineMLP(nn.Module):
     def __init__(self, input_dim, hidden_dim, args):
         super(BaselineMLP, self).__init__()
         self.emb_model = SkipLastGNN(input_dim, hidden_dim, hidden_dim, args)
+        # self.emb_model = GATv2Conv(input_dim, hidden_dim, hidden_dim, args)
+        
         self.mlp = nn.Sequential(nn.Linear(2 * hidden_dim, 256), nn.ReLU(),
                                  nn.Linear(256, 2))
 
@@ -33,23 +38,22 @@ class GnnEmbedder(nn.Module):
     def __init__(self, input_dim, hidden_dim, args):
         super(GnnEmbedder, self).__init__()
         self.emb_model = SkipLastGNN(input_dim, hidden_dim, hidden_dim, args)
+        # self.emb_model = GATv2Conv(input_dim, hidden_dim, hidden_dim, args)
         self.margin = args.margin
         self.use_intersection = False
-
-        self.clf_model = nn.Sequential(nn.Linear(32, 1))    
+        self.clf_model = nn.Sequential(nn.Linear(1, 1))    
 
     def forward(self, emb_as, emb_bs):
         return emb_as, emb_bs
 
     def predict(self, pred):
         """Predict graph edit distance(ged) of graph pairs, where emb_as, emb_bs = pred.
-
         pred: list (emb_as, emb_bs) of embeddings of graph pairs.
-
         Returns: list of ged of graph pairs.
         """
         emb_as, emb_bs = pred
-        s = F.cosine_similarity(emb_as, emb_bs)
+        s = torch.tensor([torch.dot(emb_as[i], emb_bs[i]) for i in range(len(emb_as))],requires_grad=True).to(utils.get_device())
+        print("s : ", s)
 
         return s
 
@@ -63,16 +67,20 @@ class GnnEmbedder(nn.Module):
         """
         # e = torch.sum(torch.abs(emb_bs - emb_as), dim=1)
         emb_as, emb_bs = pred
-        s = F.cosine_similarity(emb_as, emb_bs)
-        
+        # s = F.cosine_similarity(emb_as, emb_bs)
+        # s = torch.dot(emb_as, emb_bs)
+        s = torch.tensor([torch.dot(emb_as[i], emb_bs[i]) for i in range(len(emb_as))],requires_grad=True).to(utils.get_device())
+        # print("s : ", s)        
         loss_func = nn.MSELoss()
         loss = loss_func(s, labels)
 
         return loss
 
 
+#Layer stack
 class SkipLastGNN(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim, args):  # 1, 64, 64
+        # print("SkipLastGNN: ",hidden_dim)
         super(SkipLastGNN, self).__init__()
         self.dropout = args.dropout
         self.n_layers = args.n_layers
@@ -81,12 +89,11 @@ class SkipLastGNN(nn.Module):
         pre MLP
         '''
         # Linear(1, 64)
-        self.pre_mp = nn.Sequential(nn.Linear(input_dim, 3*hidden_dim if
-                                              args.conv_type == "PNA" else hidden_dim))
+        self.pre_mp = nn.Sequential(nn.Linear(input_dim, hidden_dim))
         '''
         GCN
         '''
-        conv_model = self.build_conv_model(args.conv_type, 1)  # SAGE
+        conv_model = self.build_conv_model(args.conv_type, 1)  # GAT
         if args.conv_type == "PNA":
             self.convs_sum = nn.ModuleList()
             self.convs_mean = nn.ModuleList()
@@ -100,38 +107,24 @@ class SkipLastGNN(nn.Module):
             self.learnable_skip = nn.Parameter(torch.ones(self.n_layers,
                                                           self.n_layers))
 
-        # hidden_input_dim = 64 * (0~7 + 1)
-        '''       
-        (0): SAGEConv(64, 64)
-        (1): SAGEConv(128, 64)
-        (2): SAGEConv(192, 64)
-        (3): SAGEConv(256, 64)
-        (4): SAGEConv(320, 64)
-        (5): SAGEConv(384, 64)
-        (6): SAGEConv(448, 64)
-        (7): SAGEConv(512, 64)
-        '''
         for l in range(args.n_layers):
             if args.skip == 'all' or args.skip == 'learnable':
                 hidden_input_dim = hidden_dim * (l + 1)
             else:
                 hidden_input_dim = hidden_dim
-            if args.conv_type == "PNA":
-                self.convs_sum.append(conv_model(
-                    3*hidden_input_dim, hidden_dim))
-                self.convs_mean.append(conv_model(
-                    3*hidden_input_dim, hidden_dim))
-                self.convs_max.append(conv_model(
-                    3*hidden_input_dim, hidden_dim))
+            if args.conv_type == "GAT": #GATv2Conv
+                # self.convs.append(conv_model(hidden_input_dim, hidden_dim))
+                #https://github.com/tech-srl/how_attentive_are_gats/blob/main/gatv2_conv_DGL.py
+                self.convs.append(conv_model(input_dim, hidden_dim, args.edge_attr_dim ))
             else:
                 self.convs.append(conv_model(hidden_input_dim, hidden_dim))
-
         '''
         post MLP
         '''
         post_input_dim = hidden_dim * (args.n_layers + 1)  # 64 * 9
         if args.conv_type == "PNA":
             post_input_dim *= 3
+
         self.post_mp = nn.Sequential(
             nn.Linear(post_input_dim, hidden_dim),  # 64 * 9, 64
             nn.Dropout(args.dropout),
@@ -147,27 +140,19 @@ class SkipLastGNN(nn.Module):
     def build_conv_model(self, model_type, n_inner_layers):
         if model_type == "GCN":
             return pyg_nn.GCNConv
-        elif model_type == "GIN":
-            # return lambda i, h: pyg_nn.GINConv(nn.Sequential(
-            #    nn.Linear(i, h), nn.ReLU()))
-            return lambda i, h: GINConv(nn.Sequential(
-                nn.Linear(i, h), nn.ReLU(), nn.Linear(h, h)
-            ))
+    
         elif model_type == "SAGE":
+            # print("@@GAT@@")
             return SAGEConv
-        elif model_type == "graph":
-            return pyg_nn.GraphConv
+
         elif model_type == "GAT":
-            return pyg_nn.GATConv
-        elif model_type == "gated":
-            return lambda i, h: pyg_nn.GatedGraphConv(h, n_inner_layers)
-        elif model_type == "PNA":
-            return SAGEConv
+            print("@@GAT@@")
+            return pyg_nn.GATv2Conv
         else:
             print("unrecognized model type")
 
     def forward(self, data):
-        x, edge_index, batch = data.node_feature, data.edge_index, data.batch
+        x, edge_index, edge_attr, batch = data.node_feature, data.edge_index, data.edge_feature, data.batch
         x = self.pre_mp(x) 
 
         all_emb = x.unsqueeze(1)    
@@ -175,16 +160,14 @@ class SkipLastGNN(nn.Module):
         for i in range(len(self.convs_sum) if self.conv_type == "PNA" else    # i -> 0 ~ 7
                        len(self.convs)):
             if self.skip == 'learnable':
-                skip_vals = self.learnable_skip[i,
-                                                :i+1].unsqueeze(0).unsqueeze(-1)
+                skip_vals = self.learnable_skip[i, :i+1].unsqueeze(0).unsqueeze(-1)
                 curr_emb = all_emb * torch.sigmoid(skip_vals)
                 curr_emb = curr_emb.view(x.size(0), -1)         # 539 x 64
-                if self.conv_type == "PNA":
-                    x = torch.cat((self.convs_sum[i](curr_emb, edge_index),
-                                   self.convs_mean[i](curr_emb, edge_index),
-                                   self.convs_max[i](curr_emb, edge_index)), dim=-1)
+                if self.conv_type == "GAT":
+                    x = self.convs[i](curr_emb, edge_index)
                 else:
                     x = self.convs[i](curr_emb, edge_index)
+
             elif self.skip == 'all':
                 if self.conv_type == "PNA":
                     x = torch.cat((self.convs_sum[i](emb, edge_index),
@@ -194,22 +177,22 @@ class SkipLastGNN(nn.Module):
                     x = self.convs[i](emb, edge_index)
             else:
                 x = self.convs[i](x, edge_index)
+            
             x = F.relu(x)
             x = F.dropout(x, p=self.dropout, training=self.training)
+            
             emb = torch.cat((emb, x), 1) 
-            if self.skip == 'learnable':
+
+            if self.skip == 'learnable':                
+                # print("all_emb: " , all_emb.size())
                 all_emb = torch.cat((all_emb, x.unsqueeze(1)), 1)
-
-        # x = pyg_nn.global_mean_pool(x, batch)
-
         emb = pyg_nn.global_add_pool(emb, batch)
         emb = self.post_mp(emb)
 
-        # emb = self.batch_norm(emb)   # TODO: test
-        #out = F.log_softmax(emb, dim=1)
         return emb
     def loss(self, pred, label):
         return F.MSELoss(pred, label)
+
 
 
 class SAGEConv(pyg_nn.MessagePassing):
@@ -254,34 +237,3 @@ class SAGEConv(pyg_nn.MessagePassing):
         return '{}({}, {})'.format(self.__class__.__name__, self.in_channels,
                                    self.out_channels)
 
-
-class GINConv(pyg_nn.MessagePassing):
-    # pytorch geom GINConv + weighted edges
-    def __init__(self, nn, eps=0, train_eps=False, **kwargs):
-        super(GINConv, self).__init__(aggr='add', **kwargs)
-        self.nn = nn
-        self.initial_eps = eps
-        if train_eps:
-            self.eps = torch.nn.Parameter(torch.Tensor([eps]))
-        else:
-            self.register_buffer('eps', torch.Tensor([eps]))
-        self.reset_parameters()
-
-    def reset_parameters(self):
-        # reset(self.nn)
-        self.eps.data.fill_(self.initial_eps)
-
-    def forward(self, x, edge_index, edge_weight=None):
-        """"""
-        x = x.unsqueeze(-1) if x.dim() == 1 else x
-        edge_index, edge_weight = pyg_utils.remove_self_loops(edge_index,
-                                                              edge_weight)
-        out = self.nn((1 + self.eps) * x + self.propagate(edge_index, x=x,
-                                                          edge_weight=edge_weight))
-        return out
-
-    def message(self, x_j, edge_weight):
-        return x_j if edge_weight is None else edge_weight.view(-1, 1) * x_j
-
-    def __repr__(self):
-        return '{}(nn={})'.format(self.__class__.__name__, self.nn)

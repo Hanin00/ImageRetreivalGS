@@ -1,7 +1,6 @@
 import argparse
 from utils import utils
 
-
 def parse_encoder(parser, arg_str=None):
     enc_parser = parser.add_argument_group()
     # utils.parse_optimizer(parser)
@@ -47,25 +46,32 @@ def parse_encoder(parser, arg_str=None):
 
     enc_parser.add_argument('--repeat', type=int, default=1, help='number of training instances to repeat')
 
-    enc_parser.set_defaults(conv_type='SAGE',
+    enc_parser.set_defaults(
+                            conv_type='GAT',
+                            # conv_type='SAGE',
                             method_type='gnn',
                             dataset='scene',     # syn
                             n_layers=8,
-                            batch_size=32,  # 64, batch 개수
+                            batch_size=32,  # 64, batch 개수 #32
                             feature_dim = 13, # rpe = 3, f0 = 1 새로운 데이터(rpe )
-                            hidden_dim= 128,
+                            hidden_dim= 32,
+                            skip="learnable",
                             dropout=0.0,
                             n_batches=10,  # 1000000, total 반복
                             opt='adam',     # opt_enc_parser
                             opt_scheduler='none',
                             opt_restart=10,
                             weight_decay=0.0,
-                            lr=1e-8,
+                            lr=1e-4,
                             margin=0.1,
+                            
                             test_set='',
                             eval_interval=10,   # 1000, batch 반복횟수  
-                            n_workers=40,        # 4
-                            model_path="ckpt/final/hidden_128_layer8/imgretreivalGS_e23.pt",
+                            n_workers=1,        # 4
+                            # model_path="ckpt/final/gat/imgretreivalGS_e0.pt",
+                            model_path="ckpt/final/gat/imgretreivalG_e13.pt",
+                            # model_path="ckpt/final/hidden_32_layer8/imgretreivalGS_e13.pt",    
+                                                    
                             tag='',
                             val_size=64,         # 4096,
                             node_anchored=False, # True
@@ -73,6 +79,8 @@ def parse_encoder(parser, arg_str=None):
                             num_steps =3, 
                             use_weight = False,
                             norm = 'all',
+                            edge_attr_dim = 13,
+                            
                             )    
 
     # return enc_parser.parse_args(arg_str)

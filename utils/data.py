@@ -64,43 +64,40 @@ def load_dataset(name):
     elif name == "scene":
         dataset = [[], [], []]
         start = time.time()
-        print("data load - data.py - datasource")
-        # for filename in os.listdir('data/GEDPair/walk4_step3_ged10/'):
-        #         with open("data/GEDPair/walk4_step3_ged10"+"/"+filename, "rb") as fr:
-
-        num = 60
-        #gpu 06,07,08에서 생성한 데이터
-        for foldername in os.listdir('data/GEDPair/train/'):
-            file_names = os.listdir('data/GEDPair/train/'+foldername)
-            # for j in range(len(file_names)):
-            for j in range(num if len(file_names)>=num else len(file_names) ):
+        
+        for foldername in os.listdir('data/train/'):
+            file_names = os.listdir('data/train/'+foldername)
+        # # train_sub
+        # for foldername in os.listdir('data/train_origin-13-10/'):
+        #     file_names = os.listdir('data/train_origin-13-10/'+foldername)
+            file_names = file_names[:3]
+            for j in range(len(file_names) ):
+            # for j in range(10):
                     filename = file_names[j]
-            #  for filename in os.listdir('data/GEDPair/train/'+foldername):
-                    with open("data/GEDPair/train"+"/"+foldername+'/'+filename, "rb") as fr:
-                        try : 
-                            tmp = pickle.load(fr)
-                            for i in range(0, len(tmp[0])):    
-                                dataset[0].append(tmp[0][i])
-                                dataset[1].append(tmp[1][i])
-                                dataset[2].append(sum(tmp[2][i])) #GEV -> GED
-                        except : 
-                            print("ERR - data.py - load_dataset")
-                            continue
-
-        print("len(dataset[0]): ", len(dataset[0]))
-
-        sys.exit()
+                    print("filename: ",filename)
+                    with open("data/train"+"/"+foldername+'/'+filename, "rb") as fr:
+                        tmp = pickle.load(fr)
+                        for i in range(len(tmp[0])):                            
+                            dataset[0].append(tmp[0][i])
+                            dataset[1].append(tmp[1][i])
+                            dataset[2].append(sum(tmp[2][i])) # GED
+                            # dataset[2].append(tmp[2][i]) # GEV
+                            # print("dataset[0]: ",dataset[0])
+                            # sys.exit()
 
 
+        print("data - len(dataset[0]): ", len(dataset[0]))
         end = time.time()
         print("load time : ", end-start)
+        # sys.exit()
+
         return dataset
 
     if task == "graph":
         train_len = int(0.8 * len(dataset))
         train, test = [], []
         dataset = list(dataset)
-        random.shuffle(dataset)
+        random.shuffle(dataset)  
         has_name = hasattr(dataset[0], "name")
         for i, graph in tqdm(enumerate(dataset)):
             if not type(graph) == nx.Graph:
@@ -132,9 +129,10 @@ class SceneDataSource(DataSource):
     def gen_data_loaders(self, batch_sizes, train=True):
         n = batch_sizes
         l1, l2, l3 = [], [], []
-        l1.append(self.dataset[0][0:0+batch_sizes])
-        l2.append(self.dataset[1][0:0+batch_sizes])
-        l3.append(self.dataset[2][0:0+batch_sizes])
+        for i in range(len(self.dataset[0])//batch_sizes):
+            l1.append(self.dataset[0][i:i+batch_sizes])
+            l2.append(self.dataset[1][i:i+batch_sizes])
+            l3.append(self.dataset[2][i:i+batch_sizes])
         return [[a, b, c] for a, b, c in zip(l1, l2, l3)]
         
 
@@ -276,21 +274,50 @@ class DiskDataSource(DataSource):
 
         return pos_a, pos_b, neg_a, neg_b, pos_label, neg_label
 
-
-if __name__ == "__main__":
-    import matplotlib.pyplot as plt
     
-    plt.rcParams.update({"font.size": 14})
-    for name in ["enzymes", "reddit-binary", "cox2"]:
-        data_source = DiskDataSource(name)
-        train, test, _ = data_source.dataset
-        i = 11
-        neighs = [utils.sample_neigh(train, i) for j in range(10000)]
-        clustering = [nx.average_clustering(graph.subgraph(nodes)) for graph,
-                      nodes in neighs]
-        path_length = [nx.average_shortest_path_length(graph.subgraph(nodes))
-                       for graph, nodes in neighs]
-        #plt.subplot(1, 2, i-9)
-        plt.scatter(clustering, path_length, s=10, label=name)
-    plt.legend()
-    plt.savefig("plots/clustering-vs-path-length.png")
+# class SceneDataSource(DataSource):
+#     def __init__(self, dataset_name):
+#         self.dataset = load_dataset(dataset_name)
+
+#     def gen_data_loaders(self, batch_sizes, train=True):
+#         n = batch_sizes
+#         l1, l2, l3 = [], [], []
+#         for i in range(len(self.dataset[0])//batch_sizes):
+#             l1.append(self.dataset[0][i:i+batch_sizes])
+#             l2.append(self.dataset[1][i:i+batch_sizes])
+#             l3.append(self.dataset[2][i:i+batch_sizes])
+
+#         return [[a, b, c] for a, b, c in zip(l1, l2, l3)]
+
+#     def gen_batch(self, datas, train):
+#         pos_d = datas[2]
+#         print("datas[0]:" ,datas[0])
+#         # sys.exit()
+#         pos_a = utils.batch_nx_graphs(datas[0])
+#         for i in range(len(datas[1])):
+#             if len(datas[1][i].edges()) == 0:
+#                 datas[1][i] = datas[0][i]
+#                 datas[2][i] = 0.0
+#         pos_b = utils.batch_nx_graphs(datas[1])
+
+#         return pos_a, pos_b, pos_d
+
+
+
+# if __name__ == "__main__":
+#     import matplotlib.pyplot as plt
+    
+#     plt.rcParams.update({"font.size": 14})
+#     for name in ["enzymes", "reddit-binary", "cox2"]:
+#         data_source = DiskDataSource(name)
+#         train, test, _ = data_source.dataset
+#         i = 11
+#         neighs = [utils.sample_neigh(train, i) for j in range(10000)]
+#         clustering = [nx.average_clustering(graph.subgraph(nodes)) for graph,
+#                       nodes in neighs]
+#         path_length = [nx.average_shortest_path_length(graph.subgraph(nodes))
+#                        for graph, nodes in neighs]
+#         #plt.subplot(1, 2, i-9)
+#         plt.scatter(clustering, path_length, s=10, label=name)
+#     plt.legend()
+#     plt.savefig("plots/clustering-vs-path-length.png")

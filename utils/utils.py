@@ -177,7 +177,7 @@ device_cache = None
 def get_device():
     global device_cache
     if device_cache is None:
-        device_cache = torch.device("cuda:1") if torch.cuda.is_available() \
+        device_cache = torch.device("cuda:0") if torch.cuda.is_available() \
             else torch.device("cpu")
         #device_cache = torch.device("cpu")
     return device_cache
@@ -252,8 +252,6 @@ def batch_nx_graphs(graphs, anchors=None):
 
 #DSGraph로 변경하는 과정에서 변수명이 key에 없어 된지 않음 -> edge 삭제 후 재생성 시, feature를 변경해서 입력해봄
 def batch_nx_graphs_rpe(graphs, anchors=None):
-    print("len(graphs): ", len(graphs))
-    
     newGraphs = []
     if anchors is not None:
         for anchor, g in zip(anchors, graphs):
@@ -276,12 +274,12 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
                 newG.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
 
         for e in list(g.edges):
-                txtemb = g.edges[e[0], e[1]]['txtemb']
-                distribute = g.edges[e[0], e[1]]["distribute"]
-                angle_AB = g.edges[e[0], e[1]]["angle_AB"]
-                angle_BA = g.edges[e[0], e[1]]["angle_BA"]
-                newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb, distribute,angle_AB,angle_BA), axis=None))
-
+                txtemb = g.edges[e[0], e[1]]['txtemb'] # 10 
+                distance = g.edges[e[0], e[1]]["distance"] #1
+                angle_AB = g.edges[e[0], e[1]]["angle_AB"] # 1
+                angle_BA = g.edges[e[0], e[1]]["angle_BA"] #1 
+                newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb, distance,angle_AB,angle_BA), axis=None))
+                
         newGraphs.append(newG)
 
     batch = Batch.from_data_list([DSGraph(g) for g in newGraphs])  

@@ -174,11 +174,12 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
             deltaY_BA = center_a[1] - center_b[1]
             angle_BA = math.degrees(math.atan2(deltaY_BA, deltaX_BA))
 
-            predicate=random.choice(global_edge_labels)
+            predicate= random.choice(global_edge_labels)
             
             new_g.add_edge(curr_num_node, to_insert_edge, 
+                        predicate = predicate,
                         txtemb = PredictDict[predicate],
-                        distribute= distance, angle_AB = angle_AB,
+                        distance= distance, angle_AB = angle_AB,
                         angle_BA = angle_BA
                         )
     
@@ -209,8 +210,9 @@ def graph_generation(graph, F0Dict, PredictDict, total_ged=0):
                 if ((curr_pair[0], curr_pair[1]) not in deleted_edges):
                     if ((curr_pair[0], curr_pair[1]) not in new_g.edges()):                    
                         new_g.add_edge(curr_pair[0], curr_pair[1], name=random.choice(global_edge_labels),
+                                    predicate = predicate,
                                     txtemb = PredictDict[predicate],
-                                    distribute= distance, 
+                                    distance= distance, 
                                     angle_AB = angle_AB,
                                     angle_BA = angle_BA                               
                         )
@@ -230,106 +232,78 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
     for filename in filenames:
         # 파일 처리 작업
         # print("filename: ", filename)
-        fpath = "data/scenegraph_1/"+str(filename)    
+        fpath = "data/scenegraph/"+str(filename)    
         with open(fpath, 'rb') as file:
           data = pickle.load(file)
-        dataset = data[0][0] #video 내 graphs
-
+        dataset = data[0] #video 내 graphs
         print("------- PairDataset ---------")
-
         g1_list = []
         g2_list = []
         ged_list = []
         
         length = len(dataset)
-        
         # cnt = 0
         if length != 0:
             print("tqdm - length: ", length)
             print("tqdm - filename: ", filename)
             cnt = 0
-            # for i in tqdm(range(length)):    
-            for i in range(length):   
-                if train:
-                    # print(" ---- mk GEVPair start ---- ")
-                    for _ in range(train_num_per_row):
-                        try: 
-                            dataset[i].graph['gid'] = 0
-                            if cnt > (train_num_per_row//2):
-                                target_ged, new_g = graph_generation(dataset[i], F0Dict, PredictDict, total_ged)
-                                
-                                new_g, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
-                                origin_g, enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
-                                graph2 = new_g
-                            else:
-                                #text emb 값
-                                target_ged, new_g = graph_generation(dataset[i], F0Dict, PredictDict, total_ged)
-                                
-                                new_g, new_enc_agg = mkNG2Subs(new_g, args, F0Dict, )  # Gs에 Feature 붙임
-                                origin_g, origin_enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
-                                graph2 = new_g
+            for i in range(length):
+                if train:                    
+                    # try: 
+                        dataset[i].graph['gid'] = 0
+                        #text emb 값
+                        target_ged, new_g = graph_generation(dataset[i], F0Dict, PredictDict, total_ged)
 
-                            gev = [target_ged['nc'],target_ged['ec'],target_ged['in'],target_ged['ie'],]
-                            graph2.graph['gid'] = 1
+                        new_g, enc_agg = mkNG2Subs(new_g, args, F0Dict)  # Gs에 Feature 붙임
+                        origin_g, enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임
+                        graph2 = new_g
 
-                            # print("origin_g: ", origin_g)
-                            # print("new_g: ", graph2)
-                            # print("gev: ", gev)
+                        gev = [target_ged['nc'],target_ged['ec'],target_ged['in'],target_ged['ie'],]
+                        graph2.graph['gid'] = 1
 
+                        g1_list.append(origin_g)
+                        g2_list.append(graph2)
+                        ged_list.append(gev)  
+                    # except:
+                    #     print("ERR - dataset[i]: {}".format(dataset[i]))
+                    #     print("ERR - len(dataset[i]): {}".format(len(dataset[i])))
+                    #     # print("ERR - dataset[i]: {}".format(dataset[i].edges(data=True)))
+                    #     continue
 
-                            g1_list.append(origin_g)
-                            g2_list.append(graph2)
-                            ged_list.append(gev)  
-                        except:
-                            print("ERR - dataset[i]: {}".format(dataset[i]))
-                            print("ERR - len(dataset[i]): {}".format(len(dataset[i])))
-                            # print("ERR - dataset[i]: {}".format(dataset[i].edges(data=True)))
-                            sys.exit()
+                # try:
+                if i == length-1:
+                    # print("data/train/GEDPair/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, filename[:-9], i))
+                    with open("data/train_origin-13-10/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, filename[:-9], i), "wb") as fw:
+                        pickle.dump([g1_list, g2_list, ged_list], fw)
+                    print("dump! - i: {} / filename: {}".format(i,filename))
+                    g1_list = []
+                    g2_list = []
+                    ged_list = []
+
+                elif cnt == 100:
+                    # print("data/train/GEDPair/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, filename[:-9], i))
+                    # with open("data/train/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, filename[:-9], i),  "wb") as fw:
+                    with open("data/train_origin-13-10/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, filename[:-9], i),  "wb") as fw:
+                        pickle.dump([g1_list, g2_list, ged_list], fw)
+                    print("dump! - i: {} / filename: {} / cnt: {}".format(i, filename, cnt))
+
+                    g1_list = []
+                    g2_list = []
+                    ged_list = []
+
+                    cnt = 0
                 else:
-                    r = random.randrange(length-1)
-                    dataset[r].graph['gid'] = 0
-                    target_ged, new_g = graph_generation(dataset[i], F0Dict, PredictDict, total_ged)
-
-                    new_g, new_enc_agg = mkNG2Subs(new_g, args, F0Dict)
-                    origin_g, origin_enc_agg = mkNG2Subs(dataset[i], args, F0Dict)
-
-                    graph2 = new_g
-                    g1_list.append(origin_g)
-                    g2_list.append(graph2)
-                    ged_list = [total_ged for _ in range(len(g2_list))]
-                    
-                try:
-                    if i == length-1:
-                        with open("data/GEDPair/walk4_step3_ged10_20-40/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, fpath[-8:-4], i), "wb") as fw:
-                            pickle.dump([g1_list, g2_list, ged_list], fw)
-                        print("dump! - i: {} / filename: {}".format(i,filename))
-                        g1_list = []
-                        g2_list = []
-                        ged_list = []
-
-                    # elif cnt == 100:
-                    elif cnt == 50:
-                        with open("data/GEDPair/walk4_step3_ged10_20-40/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, fpath[-8:-4], i),  "wb") as fw:
-                            pickle.dump([g1_list, g2_list, ged_list], fw)
-                        print("dump! - i: {} / filename: {} / cnt: {}".format(i, filename, cnt))
-
-                        g1_list = []
-                        g2_list = []
-                        ged_list = []
-
-                        cnt = 0
-                    else:
-                        cnt += 1
-                except:
-                    print("ERR - dump")
-                    continue
+                    cnt += 1
+                # except:
+                #     print("ERR - dump")
+                #     continue
         else :
             print("length is 0 -> killed")
 
 
 def distribute_files_by_size(file_list, num_processes):
     # 파일 크기에 따라 파일 리스트를 정렬
-    sorted_files = sorted(file_list, key=lambda f: os.path.getsize("data/scenegraph_1/" + f), reverse=True)
+    sorted_files = sorted(file_list, key=lambda f: os.path.getsize("data/scenegraph/" + f), reverse=True)
 
     # 정렬된 파일 리스트를 프로세스에 균등하게 분배
     split_filenames = [[] for _ in range(num_processes)]
@@ -349,30 +323,28 @@ def main(margs):
     PredictDict = data
 
     # 폴더 내 파일 목록 로드
-    folderpath = "data/scenegraph_1"
+    folderpath = "data/scenegraph"
     file_list = os.listdir(folderpath)
-
 
     # file_list = file_list[:5]
     train = True
-    total_ged = 5
+    total_ged = 10
 
-    # 파일 목록을 프로세스별로 분할
+    # # 파일 목록을 프로세스별로 분할
     num_processes = multiprocessing.cpu_count()
-    # split_filenames = distribute_files_by_size(file_list, num_processes)
-    # with open("data/fileNameList_ordered.pkl", "wb") as fw:
-    #         pickle.dump( split_filenames  , fw)
     
     with open('data/fileNameList_ordered.pkl', 'rb') as f:
         fileNameList  = pickle.load(f)
-    # fileNameList = fileNameList[:][:20] # walk4_step3_ged10
-    fileNameList = fileNameList[:][20:40] # walk4_step3_ged10_20-40
-
+    resultList = []
+    for item in fileNameList:
+        # sliced_item = item[-10:-7] 
+        sliced_item = item[-13:-10]
+        resultList.append(sliced_item)
 
     # 프로세스를 생성하고 딕셔너리를 개별적으로 전달
     processes = []
     for i in range(num_processes):
-        process = multiprocessing.Process(target=PairDataset, args=(fileNameList[i], F0Dict, PredictDict, total_ged, train, margs ))
+        process = multiprocessing.Process(target=PairDataset, args=(resultList[i], F0Dict, PredictDict, total_ged, train, margs ))
         process.start()
         processes.append(process)
 
