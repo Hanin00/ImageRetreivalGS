@@ -64,13 +64,12 @@ def load_dataset(name):
     elif name == "scene":
         dataset = [[], [], []]
         start = time.time()
-        
         for foldername in os.listdir('data/train/'):
             file_names = os.listdir('data/train/'+foldername)
         # # train_sub
         # for foldername in os.listdir('data/train_origin-13-10/'):
         #     file_names = os.listdir('data/train_origin-13-10/'+foldername)
-            file_names = file_names[:3]
+            file_names = file_names[:1000]
             for j in range(len(file_names) ):
             # for j in range(10):
                     filename = file_names[j]

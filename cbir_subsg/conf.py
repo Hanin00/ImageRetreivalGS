@@ -52,7 +52,7 @@ def parse_encoder(parser, arg_str=None):
                             method_type='gnn',
                             dataset='scene',     # syn
                             n_layers=8,
-                            batch_size=32,  # 64, batch 개수 #32
+                            batch_size=10000,  # 64, batch 개수 #32
                             feature_dim = 13, # rpe = 3, f0 = 1 새로운 데이터(rpe )
                             hidden_dim= 32,
                             skip="learnable",
@@ -68,8 +68,8 @@ def parse_encoder(parser, arg_str=None):
                             test_set='',
                             eval_interval=10,   # 1000, batch 반복횟수  
                             n_workers=1,        # 4
-                            # model_path="ckpt/final/gat/imgretreivalGS_e0.pt",
-                            model_path="ckpt/final/gat/imgretreivalG_e13.pt",
+                            model_path="ckpt/final/gat/imgretreival_e1.pt",
+                            # model_path="ckpt/final/gat/imgretreival_e13.pt",
                             # model_path="ckpt/final/hidden_32_layer8/imgretreivalGS_e13.pt",    
                                                     
                             tag='',

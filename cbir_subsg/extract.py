@@ -20,7 +20,6 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 
-
 '''
     0731 - 기존과 달라진 점
     1. 서브그래프를 사용하지 않음

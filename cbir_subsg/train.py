@@ -89,7 +89,7 @@ def train_loop(args):
 
     data_source = make_data_source(args)
     loaders = data_source.gen_data_loaders(args.batch_size, train=False)
-    print("loaders : ", len(loaders))
+    print("train - loaders : ", len(loaders))
 
     val = []
     batch_n = 0
