@@ -278,7 +278,8 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
                 distance = g.edges[e[0], e[1]]["distance"] #1
                 angle_AB = g.edges[e[0], e[1]]["angle_AB"] # 1
                 angle_BA = g.edges[e[0], e[1]]["angle_BA"] #1 
-                newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb, distance,angle_AB,angle_BA), axis=None))
+                # newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb, distance,angle_AB,angle_BA), axis=None))
+                newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((distance, angle_AB), axis=None), dtype=torch.float32)
                 
         newGraphs.append(newG)
 

@@ -147,6 +147,8 @@ class SkipLastGNN(nn.Module):
                     
                 elif self.conv_type == "GAT":
                     # print("@@GAT@@")
+                    # print("edge_feature :" ,edge_attr)
+                    # sys.exit()
                     x = self.convs[i](curr_emb, edge_index, edge_attr = edge_attr)
                 else:
                     x = self.convs[i](curr_emb, edge_index)

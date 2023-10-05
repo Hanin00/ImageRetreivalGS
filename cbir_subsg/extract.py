@@ -72,7 +72,6 @@ def load_dataset_temp(args,F0Dict):
     return db, db_idx, query, query_number
 
 
-
 def showGraph(graph, type, title):
     #query graph 시각화, 저장
     plt.figure(figsize = (8, 8))
@@ -203,20 +202,17 @@ def feature_extract(args):
             result_dict = dict(zip(db_idx, sim))
             sorted_items = sorted(result_dict.items(), key=lambda item: item[1])
             
-            top_10_items = sorted_items[:10]
-            print("10: ")
-            print(top_10_items)
-            top_10_items = sorted_items[-10:]
-            print(":-10 ")
-            print(top_10_items)
-            
-            
-            print("Top 10 Sorted db_idx and corresponding results:")
-    
-            for db_idx, result_value in sorted_items:
-                print("db_idx:", db_idx, "Result:", result_value)
+            # top_10_items = sorted_items[:10]
+            # print("10: ")
+            # print(top_10_items)
+            # top_10_items = sorted_items[-10:]
+            # print(":-10 ")
+            # print(top_10_items)
 
-            continue
+            # print("Top 10 Sorted db_idx and corresponding results:")
+            for db_idx, result_value in sorted_items[:10]:
+                print("db_idx:", db_idx, "Result:", result_value)
+            # continue
             # graph node 비교 가능하도록 변경 필요
             
             
