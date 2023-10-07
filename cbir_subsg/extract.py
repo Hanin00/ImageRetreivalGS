@@ -20,6 +20,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 
+
 '''
     0731 - 기존과 달라진 점
     1. 서브그래프를 사용하지 않음
@@ -47,6 +48,7 @@ def load_dataset_temp(args,F0Dict):
             # length = 2            
             if length != 0:
                 cnt = 0
+                # 'rpe' 가 없던 scenegraph에 계산해서 rpe 값 node에 넣어주는 부분
                 for i in range(length):   
                     tmp[0][i].graph['gid'] = i
                     origin_g, origin_enc_agg = utils.mkNG2Subs(tmp[0][i], args, F0Dict)  # Gs에 Feature 붙임
@@ -56,7 +58,7 @@ def load_dataset_temp(args,F0Dict):
 
     query = []
     # user-defined query images
-    with open("data/query_graphs.pkl", "rb") as q:
+    with open("data/query_graphs_10.pkl", "rb") as q:
         queryDataset = pickle.load(q)
         #todo - 여기서 RPE 계산해야함
         query_number = 1
@@ -70,6 +72,7 @@ def load_dataset_temp(args,F0Dict):
                 query.append(origin_g)   
 
     return db, db_idx, query, query_number
+
 
 
 def showGraph(graph, type, title):
@@ -181,11 +184,10 @@ def feature_extract(args):
     
     candidate_imgs = []
     model.eval()
-    torch.set_printoptions(precision=10)
+    torch.set_printoptions(precision=15)
     with torch.no_grad():
         emb_db_data = model.emb_model(db_data) # [1327,32]
-        
-        for idx, queryG  in enumerate(querys,9): #i = 쿼리 그래프의 서브 그래프 하나.
+        for idx, queryG  in enumerate(querys): #i = 쿼리 그래프의 서브 그래프 하나.
             extractTimeStart = time.time()
             query = temp.copy()
             query.append(queryG)
@@ -196,25 +198,21 @@ def feature_extract(args):
             extractTimeEnd = time.time()
             print("subGraph 하나에 대한 특징 추출 시간 -+ : ", extractTimeEnd - extractTimeStart)
             retreival_start_time = time.time()  # subgraph 하나에 대한 추출 시간
+            #similarity
             sim = torch.tensor([torch.sum(emb_query_data * emb_db_data[idx], dim=1).to(utils.get_device()) for idx in range(len(emb_db_data))] ).to(utils.get_device())
-            # sim = torch.tensor([torch.dot(emb_query_data, emb_db_data[i]) for i in range(len(emb_db_data))],requires_grad=True).to(utils.get_device())
-        
-            result_dict = dict(zip(db_idx, sim))
-            sorted_items = sorted(result_dict.items(), key=lambda item: item[1])
+            result_dict = dict(zip(db_idx, sim.cpu().numpy()))  # 토치 텐서를 넘파이 배열로 변환
+            sorted_items = sorted(result_dict.items(), key=lambda item: item[1])  # 값을 기준으로 오름차순 정렬
+            # print(sorted())
+            # print(list(sorted(result_dict, key=lambda x: result_dict[x]))[:10])
             
-            # top_10_items = sorted_items[:10]
-            # print("10: ")
-            # print(top_10_items)
-            # top_10_items = sorted_items[-10:]
-            # print(":-10 ")
-            # print(top_10_items)
+            print("Top 10 Sorted db_idx and corresponding results:")
+            print(sorted_items[:10])
+            
+            # for db_idx_sorted, result_value in sorted_items:
+            #      print("db_idx:", db_idx_sorted, "Result:", result_value)
 
-            # print("Top 10 Sorted db_idx and corresponding results:")
-            for db_idx, result_value in sorted_items[:10]:
-                print("db_idx:", db_idx, "Result:", result_value)
             # continue
-            # graph node 비교 가능하도록 변경 필요
-            
+            # # graph node 비교 가능하도록 변경 필요
             
             q_check = {n[1] for n in queryG.nodes(data="name")} #query graph의 name
             # print("Query num: ",idx)
@@ -225,46 +223,70 @@ def feature_extract(args):
             # result = [(query_idx+1, i)]
             result = []
             rIdx = 0
-            # for n, d in rank[:5]:
-            #     print("similarity : {:.5f}".format(d.item()))
-            #     result.append((db_idx[n], dataset[n]))
+            
+            duplicate_info_info = [] # vId_fId, similarity, graph
+            duplicate_info_result = [] # edge distance, node name?
+            
+            
+            # 상위 10개만 확인
+            for n, d in sorted_items[:10]:
+                print("n: ", n)  #vId_fId
+                print("sim: ", d)  #vId_fId
+                print("db_idx.index(n) : ",db_idx.index(n)) #db 내 idx 
+                print("dataset[db_idx.index(n)] : ",dataset[db_idx.index(n)]) #graph
+
+
+            # 전체 결과에서 중복된 노드가 있는지 확인하고, 얼마나 차이나는지 확인            
+            for n, d in sorted_items:
+                # print("n: ", n)  #vId_fId
+                # print("db_idx.index(n) : ",db_idx.index(n)) #db 내 idx 
+                # print("dataset[db_idx.index(n)] : ",dataset[db_idx.index(n)]) #graph
+                # print("d: ", d) # similarity
+                # print("d: ", str(d)[:7]) # similarity
+                # sys.exit()
                 
-            #     #중복된 노드와 엣지 찾기
-            #     duplicate_info = find_duplicate_nodes_and_edges(queryG, dataset[n])
-
-            #     # 결과 출력
-
-            #     # print("query idx: ", idx, "  rank: ", rIdx, "db_idx[n]: ", db_idx[n], "전체 db 내 Idx : ", n)
-            #     # print("_info: ",duplicate_info)              
+                # print(db_idx[db_idx.index(n)])
+                # # print(dataset[db_idx.index(n)])
+                
+                # print("similarity : {:.5f}".format(d.item()))
+                # print("db_idx[n]: ", db_idx.index(n))
+                # print("dataset[db_idx.index(n)]: ", dataset[db_idx.index(n)])
+                result.append([n ,  dataset[db_idx.index(n)]]) # 
+                
+                #중복된 노드와 엣지 찾기
+                duplicate_info = find_duplicate_nodes_and_edges(queryG, dataset[db_idx.index(n)])
+                
+                if(len(duplicate_info)) != 0:
+                    duplicate_info_info.append((n, d, dataset[db_idx.index(n)]))
+                    duplicate_info_result.append((n, duplicate_info))
+                    
+                # 결과 출력
+                # print("query idx: ", idx, "  rank: ", rIdx, "db_idx[n]: ", n , "전체 db 내 Idx : ", db_idx.index(n))
+                # print("_info: ",duplicate_info)              
        
-            #     candidate_imgs.append(db_idx[n])            
-            #     rIdx += 1
+                # candidate_imgs.append(db_idx[n])            
+                candidate_imgs.append(n) # vId_fId
+                rIdx += 1
 
             # [print("id: ", ranks[0], "\n graphs: ", ranks[1])  for ranks in result]
             showGraph(queryG, 'query', 'query'+str(idx))# query graph 저장
-            # [showGraph(rank[1],'ranks', 'qid_'+str(idx)+'-rank_'+ str(rankIdx)+'-id_'+str(rank[0]))  for rankIdx, rank in enumerate (top_10_sorted_items)]           
+            # print("len(duplicate_info_info) : " ,len(duplicate_info_info))
+            # print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+            # sys.exit()
+            if len(duplicate_info_info)!=0:
+                if len(duplicate_info_info) >= 5:
+                    duplicate_info_info = duplicate_info_info[:5]
+                    duplicate_info_result = duplicate_info_result[:5]
+                    
+                [showGraph(rank[2],'ranks', 'qid_'+str(idx)+'-rank_'+ str(rankIdx)+'-id_'+str(rank[0]+'-similarity_'+str(rank[1])[:7]))  
+                    for rankIdx, rank in enumerate (duplicate_info_info)] 
+                
+                [print('@@@@@@\n',' qid: '+ str(idx)+'\nvId_fId: ' + str(duplicate_if[0])+' \nduplicate: '+ str(duplicate_if[1]))
+                    for rankIdx, duplicate_if in enumerate (duplicate_info_result)] 
             #rank[1] : graph / rank[0] : graph db_idx
-
-
-
-
-            retreival_time = time.time() - retreival_start_time
-            print("@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ :", retreival_time)
             
-            # # sys.exit()
-            # # Check similar/same class count with subgraph in DB
-            # checking_in_db = [len(q_check) - len(q_check - i)
-            #                   for i in db_check]
-            # checking_result = Counter(checking_in_db)
-            # print(checking_result)
-
-            # # Check similar/same class with subgraph in DB
-            # value_checking_in_db = [
-            #     str(q_check - (q_check - i)) for i in db_check]
-            # value_checking_result = Counter(value_checking_in_db)
-            # print(value_checking_result)
-            # print("---^^^---"*3)
-            
+            # retreival_time = time.time() - retreival_start_time
+            # print("@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ :", retreival_time)
 
 def main():
     parser = argparse.ArgumentParser(description='embedding arguments')

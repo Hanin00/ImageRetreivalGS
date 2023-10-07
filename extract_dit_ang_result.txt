@@ -1,0 +1,816 @@
+len(db):  548
+len(db):  1327
+total len(db):  1327
+db_data:  Batch(G=[1327], batch=[7500], bbox=[1327], edge_feature=[29766, 2], edge_index=[2, 29766], edge_label_index=[2, 29766], fid=[7500], generated=[7500], name=[1327], node_feature=[7500, 13], node_label_index=[7500], rpe=[7500, 3], tracker=[1327], txtemb=[1327])
+here - feature_extract
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.6088974475860596
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_463', 0.12514883), ('6673828083_305', 0.12515245), ('6673828083_465', 0.12517355), ('6673828083_304', 0.1251808), ('6673828083_457', 0.12518156), ('6673828083_458', 0.12519354), ('6673828083_462', 0.12519446), ('6673828083_303', 0.12519583), ('6673828083_460', 0.12519601), ('6673828083_296', 0.1252131)]
+Q graph nodes : {'child', 'sofa', 'toy'}
+Q graph edges : [(1, 11, {'distance': 260.22730448590517, 'angle_AB': 138.03733582295249, 'angle_BA': -41.96266417704752, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)}), (1, 5, {'distance': 407.61808105136845, 'angle_AB': 132.7133624859215, 'angle_BA': -47.28663751407851, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (1, 12, {'distance': 533.5215553283672, 'angle_AB': 134.65827972074462, 'angle_BA': -45.3417202792554, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (5, 11, {'distance': 150.46345071146015, 'angle_AB': -56.52116019730421, 'angle_BA': 123.47883980269579, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (5, 12, {'distance': 126.89464133681926, 'angle_AB': 140.91709214183155, 'angle_BA': -39.08290785816846, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (11, 12, {'distance': 274.17603834033343, 'angle_AB': 131.45131802609555, 'angle_BA': -48.54868197390444, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)})]
+n:  6673828083_463
+sim:  0.12514883
+db_idx.index(n) :  834
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_305
+sim:  0.12515245
+db_idx.index(n) :  733
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_465
+sim:  0.12517355
+db_idx.index(n) :  836
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_304
+sim:  0.1251808
+db_idx.index(n) :  732
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_457
+sim:  0.12518156
+db_idx.index(n) :  828
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_458
+sim:  0.12519354
+db_idx.index(n) :  829
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_462
+sim:  0.12519446
+db_idx.index(n) :  833
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_303
+sim:  0.12519583
+db_idx.index(n) :  731
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_460
+sim:  0.12519601
+db_idx.index(n) :  831
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_296
+sim:  0.1252131
+db_idx.index(n) :  724
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+@@@@@@
+  qid: 0
+vId_fId: 3802296828_809 
+duplicate: [('away', 108.9207010620051, 152.46884613775825, ('toy', 'child'), ('toy', 'child')), ('away', 9.18130710622637, 188.91252855324757, ('toy', 'child'), ('toy', 'toy'))]
+@@@@@@
+  qid: 0
+vId_fId: 3802296828_805 
+duplicate: [('away', 82.24970204154039, 156.6839024445123, ('toy', 'child'), ('toy', 'child')), ('away', 2.192206983802464, 190.468743794125, ('toy', 'child'), ('toy', 'toy'))]
+@@@@@@
+  qid: 0
+vId_fId: 3802296828_808 
+duplicate: [('away', 103.62465716883156, 153.00932714993345, ('toy', 'child'), ('toy', 'child')), ('away', 6.517892284345976, 189.27689105728314, ('toy', 'child'), ('toy', 'toy'))]
+@@@@@@
+  qid: 0
+vId_fId: 3802296828_806 
+duplicate: [('away', 88.78451479819876, 155.45991361966267, ('toy', 'child'), ('toy', 'child')), ('away', 5.744968505096665, 189.83171243196276, ('toy', 'child'), ('toy', 'toy'))]
+@@@@@@
+  qid: 0
+vId_fId: 3802296828_804 
+duplicate: [('away', 76.91954779066583, 157.4396636611706, ('toy', 'child'), ('toy', 'child')), ('away', 2.1260646593595993, 190.9898462483146, ('toy', 'child'), ('toy', 'toy'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.010966300964355469
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_305', 0.12287036), ('6673828083_463', 0.12290028), ('6673828083_304', 0.12290485), ('6673828083_303', 0.12292041), ('6673828083_465', 0.122924246), ('6673828083_457', 0.122925386), ('6673828083_296', 0.12293391), ('6673828083_297', 0.12293799), ('6673828083_458', 0.12293847), ('6673828083_306', 0.12294376)]
+Q graph nodes : {'child', 'sofa', 'toy', 'baby_walker'}
+Q graph edges : [(2, 11, {'distance': 139.07282265058117, 'angle_AB': 88.14574828515222, 'angle_BA': -91.85425171484778, 'predicate': 'towards', 'txtemb': array([ 0.08657657, -0.06071888, -0.06252459,  0.02238254,  0.00312973,
+        0.04533256,  0.04746905, -0.01666561,  0.03118107, -0.07386651],
+      dtype=float32)}), (2, 4, {'distance': 62.51399843235114, 'angle_AB': -97.35237935989237, 'angle_BA': 82.64762064010765, 'predicate': 'inside', 'txtemb': array([ 0.09949472, -0.0598873 , -0.01837458, -0.06777801,  0.04200921,
+       -0.09386025,  0.03133806, -0.02018313,  0.06071   , -0.07857241],
+      dtype=float32)}), (2, 5, {'distance': 243.94927751481455, 'angle_AB': 5.056213341052543, 'angle_BA': -174.94378665894746, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (4, 11, {'distance': 201.3883065125679, 'angle_AB': 86.4414124974452, 'angle_BA': -93.5585875025548, 'predicate': 'towards', 'txtemb': array([ 0.08657657, -0.06071888, -0.06252459,  0.02238254,  0.00312973,
+        0.04533256,  0.04746905, -0.01666561,  0.03118107, -0.07386651],
+      dtype=float32)}), (4, 5, {'distance': 264.5245735276781, 'angle_AB': 18.40070149913866, 'angle_BA': -161.59929850086135, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (5, 11, {'distance': 265.87309002604985, 'angle_AB': 153.77226238301168, 'angle_BA': -26.227737616988346, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)})]
+n:  6673828083_305
+sim:  0.12287036
+db_idx.index(n) :  733
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_463
+sim:  0.12290028
+db_idx.index(n) :  834
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_304
+sim:  0.12290485
+db_idx.index(n) :  732
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_303
+sim:  0.12292041
+db_idx.index(n) :  731
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_465
+sim:  0.122924246
+db_idx.index(n) :  836
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_457
+sim:  0.122925386
+db_idx.index(n) :  828
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_296
+sim:  0.12293391
+db_idx.index(n) :  724
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_297
+sim:  0.12293799
+db_idx.index(n) :  725
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_458
+sim:  0.12293847
+db_idx.index(n) :  829
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_306
+sim:  0.12294376
+db_idx.index(n) :  734
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+@@@@@@
+  qid: 1
+vId_fId: 3802296828_816 
+duplicate: [('towards', 17.491860467930593, 54.60792782204777, ('baby_walker', 'child'), ('baby_walker', 'child')), ('towards', 88.34969162625995, 50.469630790976815, ('baby_walker', 'child'), ('toy', 'child')), ('inside', 9.642082392483026, 35.96293632221135, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('towards', 44.82362339405614, 52.90359203434075, ('toy', 'child'), ('baby_walker', 'child')), ('towards', 26.03420776427322, 48.76529500326979, ('toy', 'child'), ('toy', 'child'))]
+@@@@@@
+  qid: 1
+vId_fId: 3802296828_805 
+duplicate: [('towards', 5.5316305037383415, 63.115894893336765, ('baby_walker', 'child'), ('baby_walker', 'child')), ('towards', 52.66267223755892, 57.23324020051456, ('baby_walker', 'child'), ('toy', 'child')), ('inside', 2.0470653201120115, 38.65270664536182, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('towards', 67.84711436572508, 61.41155910562974, ('toy', 'child'), ('baby_walker', 'child')), ('towards', 9.652811624427812, 55.528904412807535, ('toy', 'child'), ('toy', 'child'))]
+@@@@@@
+  qid: 1
+vId_fId: 3802296828_809 
+duplicate: [('towards', 21.056031713646377, 62.620869318074995, ('baby_walker', 'child'), ('baby_walker', 'child')), ('towards', 81.93679252486768, 56.181585055218505, ('baby_walker', 'child'), ('toy', 'child')), ('inside', 1.9297755105209617, 34.50266317540961, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('towards', 41.25945214834036, 60.91653353036797, ('toy', 'child'), ('baby_walker', 'child')), ('towards', 19.62130866288095, 54.47724926751148, ('toy', 'child'), ('toy', 'child'))]
+@@@@@@
+  qid: 1
+vId_fId: 3802296828_804 
+duplicate: [('towards', 9.758283638140654, 63.46344443687946, ('baby_walker', 'child'), ('baby_walker', 'child')), ('towards', 48.6563706039577, 58.09801798433188, ('baby_walker', 'child'), ('toy', 'child')), ('inside', 2.3060255383896617, 41.014081303537424, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('towards', 72.07376750012739, 61.75910864917244, ('toy', 'child'), ('baby_walker', 'child')), ('towards', 13.659113258029038, 56.39368219662486, ('toy', 'child'), ('toy', 'child'))]
+@@@@@@
+  qid: 1
+vId_fId: 3802296828_808 
+duplicate: [('towards', 17.305724471458547, 63.38340266463666, ('baby_walker', 'child'), ('baby_walker', 'child')), ('towards', 77.80559951262066, 56.43440241991424, ('baby_walker', 'child'), ('toy', 'child')), ('inside', 1.9724342492602673, 33.875337030727806, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('towards', 45.00975939052819, 61.67906687692964, ('toy', 'child'), ('baby_walker', 'child')), ('towards', 15.490115650633925, 54.73006663220722, ('toy', 'child'), ('toy', 'child'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.011358976364135742
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_305', 0.12399242), ('6673828083_463', 0.1240083), ('6673828083_304', 0.12401958), ('6673828083_465', 0.124031335), ('6673828083_303', 0.12403214), ('6673828083_457', 0.124038205), ('6673828083_296', 0.12404698), ('6673828083_458', 0.124050625), ('6673828083_297', 0.12405206), ('6673828083_462', 0.12405279)]
+Q graph nodes : {'table', 'child', 'stool'}
+Q graph edges : [(8, 9, {'distance': 114.36892060345765, 'angle_AB': 119.03027468248716, 'angle_BA': -60.96972531751285, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (8, 10, {'distance': 244.76110802167898, 'angle_AB': 161.41700039673367, 'angle_BA': -18.582999603266348, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (8, 11, {'distance': 237.58893071858378, 'angle_AB': -150.35980938701678, 'angle_BA': 29.640190612983222, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)}), (9, 10, {'distance': 177.86582021287845, 'angle_AB': -172.8949612582081, 'angle_BA': 7.105038741791901, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (9, 11, {'distance': 264.7777369795278, 'angle_AB': -124.77042562153053, 'angle_BA': 55.22957437846947, 'predicate': 'inside', 'txtemb': array([ 0.09949472, -0.0598873 , -0.01837458, -0.06777801,  0.04200921,
+       -0.09386025,  0.03133806, -0.02018313,  0.06071   , -0.07857241],
+      dtype=float32)}), (10, 11, {'distance': 197.15602958063442, 'angle_AB': -82.5685920288275, 'angle_BA': 97.4314079711725, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)})]
+n:  6673828083_305
+sim:  0.12399242
+db_idx.index(n) :  733
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_463
+sim:  0.1240083
+db_idx.index(n) :  834
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_304
+sim:  0.12401958
+db_idx.index(n) :  732
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_465
+sim:  0.124031335
+db_idx.index(n) :  836
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_303
+sim:  0.12403214
+db_idx.index(n) :  731
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_457
+sim:  0.124038205
+db_idx.index(n) :  828
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_296
+sim:  0.12404698
+db_idx.index(n) :  724
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_458
+sim:  0.124050625
+db_idx.index(n) :  829
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_297
+sim:  0.12405206
+db_idx.index(n) :  725
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_462
+sim:  0.12405279
+db_idx.index(n) :  833
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+@@@@@@
+  qid: 2
+vId_fId: 3802296828_877 
+duplicate: [('next_to', 8.45717597214798, 0.5873460581238135, ('stool', 'stool'), ('stool', 'stool')), ('next_to', 60.06229793267481, 43.62549818107276, ('stool', 'stool'), ('stool', 'table')), ('next_to', 7.286330002506745, 271.62269924466875, ('stool', 'stool'), ('stool', 'table')), ('next_to', 121.93501144607335, 42.97407177237032, ('stool', 'table'), ('stool', 'stool')), ('next_to', 70.32988948554652, 1.2387724668262479, ('stool', 'table'), ('stool', 'table')), ('next_to', 123.10585741571458, 314.00942495891525, ('stool', 'table'), ('stool', 'table')), ('away', 33.786270801378265, 125.63627998124156, ('stool', 'child'), ('stool', 'child')), ('away', 207.33718674363038, 128.52253026041387, ('stool', 'child'), ('table', 'child')), ('next_to', 55.039723637272814, 291.33788988257146, ('stool', 'table'), ('stool', 'stool')), ('next_to', 3.4346016767459844, 335.550734121768, ('stool', 'table'), ('stool', 'table')), ('next_to', 56.21056960691405, 20.302536696026493, ('stool', 'table'), ('stool', 'table')), ('inside', 112.16688760079438, 88.78216579155551, ('stool', 'child'), ('stool', 'child')), ('away', 74.21917193932762, 57.84506262305227, ('table', 'child'), ('stool', 'child')), ('away', 247.77008788157974, 60.73131290222457, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 2
+vId_fId: 3802296828_876 
+duplicate: [('next_to', 6.46153913248807, 0.34412710874771335, ('stool', 'stool'), ('stool', 'stool')), ('next_to', 70.65134855643736, 41.55545684025135, ('stool', 'stool'), ('stool', 'table')), ('next_to', 10.340742213823674, 278.12470534557167, ('stool', 'stool'), ('stool', 'table')), ('next_to', 123.93064828573326, 42.73085282299422, ('stool', 'table'), ('stool', 'stool')), ('next_to', 59.74083886178397, 0.8312688739951568, ('stool', 'table'), ('stool', 'table')), ('next_to', 120.05144520439765, 320.51143105981816, ('stool', 'table'), ('stool', 'table')), ('away', 13.381685091315376, 122.3141808950013, ('stool', 'child'), ('stool', 'child')), ('away', 197.1940611290735, 125.97583874521091, ('stool', 'child'), ('table', 'child')), ('next_to', 57.03536047693272, 291.5811088319475, ('stool', 'table'), ('stool', 'stool')), ('next_to', 7.1544489470165615, 333.4806927809466, ('stool', 'table'), ('stool', 'table')), ('next_to', 53.15615739559712, 13.800530595123604, ('stool', 'table'), ('stool', 'table')), ('inside', 93.40692210011508, 86.06065376160672, ('stool', 'child'), ('stool', 'child')), ('away', 53.814586229264734, 54.52296353681201, ('table', 'child'), ('stool', 'child')), ('away', 237.62696226702286, 58.18462138702162, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 2
+vId_fId: 3802296828_878 
+duplicate: [('next_to', 10.640079072565669, 1.6453041012732967, ('stool', 'stool'), ('stool', 'stool')), ('next_to', 49.643274065109594, 45.40821499218437, ('stool', 'stool'), ('stool', 'table')), ('next_to', 6.4170471245859915, 265.3402071565074, ('stool', 'stool'), ('stool', 'table')), ('next_to', 119.75210834565566, 44.032029815519806, ('stool', 'table'), ('stool', 'stool')), ('next_to', 80.74891335311173, 3.02148927793786, ('stool', 'table'), ('stool', 'table')), ('next_to', 123.97514029363533, 307.7269328707539, ('stool', 'table'), ('stool', 'table')), ('away', 51.83549810524582, 127.91506720643936, ('stool', 'child'), ('stool', 'child')), ('away', 215.09252461176217, 130.4037368253231, ('stool', 'child'), ('table', 'child')), ('next_to', 52.856820536855125, 290.279931839422, ('stool', 'table'), ('stool', 'stool')), ('next_to', 13.8536255443112, 337.3334509328796, ('stool', 'table'), ('stool', 'table')), ('next_to', 57.0798524848348, 26.58502878418787, ('stool', 'table'), ('stool', 'table')), ('inside', 128.52526326328757, 90.49449078398574, ('stool', 'child'), ('stool', 'child')), ('away', 92.26839924319518, 60.123849848250075, ('table', 'child'), ('stool', 'child')), ('away', 255.52542574971153, 62.61251946713383, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 2
+vId_fId: 3802296828_805 
+duplicate: [('next_to', 62.877376960130405, 10.441992292935794, ('stool', 'stool'), ('stool', 'table')), ('next_to', 67.51481045809092, 52.8287180071823, ('stool', 'table'), ('stool', 'table')), ('away', 4.633462871185969, 308.6954162505096, ('stool', 'child'), ('stool', 'child')), ('away', 57.80016577483096, 2.505050990906369, ('stool', 'child'), ('table', 'child')), ('next_to', 0.6195226492903885, 281.4832436477595, ('stool', 'table'), ('stool', 'table')), ('away', 35.79943826676339, 240.90419889232032, ('table', 'child'), ('stool', 'child')), ('away', 17.3672646368816, 70.29626834909566, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 2
+vId_fId: 3802296828_809 
+duplicate: [('next_to', 66.11445813264648, 8.938679240276883, ('stool', 'stool'), ('stool', 'table')), ('next_to', 64.27772928557485, 51.32540495452339, ('stool', 'table'), ('stool', 'table')), ('away', 28.258450377091236, 302.7542441381486, ('stool', 'child'), ('stool', 'child')), ('away', 94.38103987453846, 0.7746411142738054, ('stool', 'child'), ('table', 'child')), ('next_to', 2.617558523225682, 282.98655670041836, ('stool', 'table'), ('stool', 'table')), ('away', 12.174450760858122, 234.9630267799593, ('table', 'child'), ('stool', 'child')), ('away', 53.9481387365891, 67.01657624391548, ('table', 'child'), ('table', 'child'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.661480188369751
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_305', 0.12257685), ('6673828083_304', 0.12259875), ('6673828083_303', 0.12260967), ('6673828083_296', 0.122622825), ('6673828083_297', 0.12262738), ('6673828083_295', 0.12263909), ('6673828083_302', 0.12264171), ('6673828083_463', 0.122641966), ('6673828083_294', 0.12265093), ('6673828083_293', 0.122655444)]
+Q graph nodes : {'table', 'child', 'toy'}
+Q graph edges : [(1, 11, {'distance': 324.7418205282467, 'angle_AB': -27.70923624936072, 'angle_BA': 152.2907637506393, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)}), (1, 10, {'distance': 484.53199068792145, 'angle_AB': -4.557419019714005, 'angle_BA': 175.442580980286, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (10, 11, {'distance': 225.5581964815289, 'angle_AB': -150.08182982405793, 'angle_BA': 29.918170175942063, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)})]
+n:  6673828083_305
+sim:  0.12257685
+db_idx.index(n) :  733
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_304
+sim:  0.12259875
+db_idx.index(n) :  732
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_303
+sim:  0.12260967
+db_idx.index(n) :  731
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_296
+sim:  0.122622825
+db_idx.index(n) :  724
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_297
+sim:  0.12262738
+db_idx.index(n) :  725
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_295
+sim:  0.12263909
+db_idx.index(n) :  723
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_302
+sim:  0.12264171
+db_idx.index(n) :  730
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_463
+sim:  0.122641966
+db_idx.index(n) :  834
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_294
+sim:  0.12265093
+db_idx.index(n) :  722
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_293
+sim:  0.122655444
+db_idx.index(n) :  721
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+@@@@@@
+  qid: 3
+vId_fId: 3802296828_877 
+duplicate: [('away', 120.18429693396746, 5.871957122757802, ('toy', 'child'), ('table', 'child')), ('away', 219.36792098068526, 128.24455069745503, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 3
+vId_fId: 3802296828_809 
+duplicate: [('away', 44.40618501966355, 13.277725934554962, ('toy', 'child'), ('toy', 'child')), ('away', 55.33320893611517, 23.16595648093437, ('toy', 'child'), ('toy', 'toy')), ('away', 181.53392968420138, 121.87593202338226, ('toy', 'child'), ('table', 'child')), ('next_to', 3.1368826944978423, 2.235888429881286, ('toy', 'table'), ('toy', 'table')), ('next_to', 120.34625510784684, 35.91240507431298, ('toy', 'table'), ('toy', 'table')), ('away', 143.58980906638135, 135.65031950925217, ('table', 'child'), ('toy', 'child')), ('away', 43.850415110602626, 99.20663709376285, ('table', 'child'), ('toy', 'toy')), ('away', 82.35030563748359, 0.4966615513149577, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 3
+vId_fId: 3802296828_808 
+duplicate: [('away', 39.11014112649002, 12.737244922379745, ('toy', 'child'), ('toy', 'child')), ('away', 57.996623757995565, 23.530318984969938, ('toy', 'child'), ('toy', 'toy')), ('away', 174.9669895318473, 122.90175228431895, ('toy', 'child'), ('table', 'child')), ('next_to', 2.096243670766853, 2.122033072518411, ('toy', 'table'), ('toy', 'table')), ('next_to', 117.95150839242336, 35.32013855395292, ('toy', 'table'), ('toy', 'table')), ('away', 138.29376517320782, 135.10983849707696, ('table', 'child'), ('toy', 'child')), ('away', 41.18700028872223, 98.84227458972728, ('table', 'child'), ('toy', 'toy')), ('away', 75.78336548512951, 0.5291587096217256, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 3
+vId_fId: 3802296828_876 
+duplicate: [('away', 110.04117131941058, 3.3252656075548472, ('toy', 'child'), ('table', 'child')), ('away', 209.22479536612838, 125.69785918225206, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 3
+vId_fId: 3802296828_807 
+duplicate: [('away', 32.67845030148675, 11.378497910444189, ('toy', 'child'), ('toy', 'child')), ('away', 58.933148735921634, 23.782442222181025, ('toy', 'child'), ('toy', 'toy')), ('away', 165.59644673434718, 123.14873863378494, ('toy', 'child'), ('table', 'child')), ('next_to', 1.9835475239215725, 1.8254603393289304, ('toy', 'table'), ('toy', 'table')), ('next_to', 117.92968573062853, 34.86448075436318, ('toy', 'table'), ('toy', 'table')), ('away', 131.86207434820454, 133.7510914851414, ('table', 'child'), ('toy', 'child')), ('away', 40.25047531079616, 98.59015135251619, ('table', 'child'), ('toy', 'toy')), ('away', 66.41282268762939, 0.7761450590877246, ('table', 'child'), ('table', 'child'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.011219978332519531
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_305', 0.12443845), ('6673828083_463', 0.1244478), ('6673828083_304', 0.124468714), ('6673828083_465', 0.12447198), ('6673828083_457', 0.124478295), ('6673828083_303', 0.12448424), ('6673828083_458', 0.12449108), ('6673828083_462', 0.12449406), ('6673828083_460', 0.12449418), ('6673828083_296', 0.1245003)]
+Q graph nodes : {'table', 'child', 'stool'}
+Q graph edges : [(8, 10, {'distance': 180.48337873610413, 'angle_AB': 110.09159544221028, 'angle_BA': -69.90840455778972, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (8, 11, {'distance': 209.33048034149255, 'angle_AB': 152.39443475113183, 'angle_BA': -27.605565248868185, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)}), (10, 11, {'distance': 143.20789084404532, 'angle_AB': -149.58516827274298, 'angle_BA': 30.414831727257017, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)})]
+n:  6673828083_305
+sim:  0.12443845
+db_idx.index(n) :  733
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_463
+sim:  0.1244478
+db_idx.index(n) :  834
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_304
+sim:  0.124468714
+db_idx.index(n) :  732
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_465
+sim:  0.12447198
+db_idx.index(n) :  836
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_457
+sim:  0.124478295
+db_idx.index(n) :  828
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_303
+sim:  0.12448424
+db_idx.index(n) :  731
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_458
+sim:  0.12449108
+db_idx.index(n) :  829
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_462
+sim:  0.12449406
+db_idx.index(n) :  833
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_460
+sim:  0.12449418
+db_idx.index(n) :  831
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_296
+sim:  0.1245003
+db_idx.index(n) :  724
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+@@@@@@
+  qid: 4
+vId_fId: 3802296828_877 
+duplicate: [('next_to', 57.6572821604985, 8.35133318215307, ('stool', 'table'), ('stool', 'stool')), ('next_to', 6.0521601999716665, 52.56417742134964, ('stool', 'table'), ('stool', 'table')), ('next_to', 58.82812813013973, 262.68402000439187, ('stool', 'table'), ('stool', 'table')), ('away', 62.0447211784695, 177.11796415690705, ('stool', 'child'), ('stool', 'child')), ('away', 235.59563712072162, 174.23171387773473, ('stool', 'child'), ('table', 'child')), ('away', 128.16731067591672, 124.86163886696775, ('table', 'child'), ('stool', 'child')), ('away', 301.71822661816884, 127.74788914614005, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 4
+vId_fId: 3802296828_876 
+duplicate: [('next_to', 59.652919000158406, 8.59455213152917, ('stool', 'table'), ('stool', 'stool')), ('next_to', 4.536890423790879, 50.494136080528236, ('stool', 'table'), ('stool', 'table')), ('next_to', 55.7737159188228, 269.1860261052948, ('stool', 'table'), ('stool', 'table')), ('away', 41.64013546840661, 180.4400632431473, ('stool', 'child'), ('stool', 'child')), ('away', 225.45251150616474, 176.7784053929377, ('stool', 'child'), ('table', 'child')), ('away', 107.76272496585383, 121.5395397807275, ('table', 'child'), ('stool', 'child')), ('away', 291.57510100361196, 125.2011976309371, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 4
+vId_fId: 3802296828_878 
+duplicate: [('next_to', 55.47437906008081, 7.293375139003587, ('stool', 'table'), ('stool', 'stool')), ('next_to', 16.471184067536882, 54.34689423246125, ('stool', 'table'), ('stool', 'table')), ('next_to', 59.697411008060485, 256.4015279162305, ('stool', 'table'), ('stool', 'table')), ('away', 80.09394848233705, 174.83917693170923, ('stool', 'child'), ('stool', 'child')), ('away', 243.3509749888534, 172.3505073128255, ('stool', 'child'), ('table', 'child')), ('away', 146.21653797978428, 127.14042609216555, ('table', 'child'), ('stool', 'child')), ('away', 309.47356448630063, 129.6290957110493, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 4
+vId_fId: 3802296828_809 
+duplicate: [('next_to', 0.0, 0.0, ('stool', 'table'), ('stool', 'table')), ('away', 0.0, 0.0, ('stool', 'child'), ('stool', 'child')), ('away', 66.12258949744722, 301.9796030238748, ('stool', 'child'), ('table', 'child')), ('away', 66.12258949744722, 301.9796030238748, ('table', 'child'), ('stool', 'child')), ('away', 0.0, 0.0, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 4
+vId_fId: 3802296828_805 
+duplicate: [('next_to', 3.2370811725160706, 1.5033130526589105, ('stool', 'table'), ('stool', 'table')), ('away', 23.624987505905267, 5.941172112360988, ('stool', 'child'), ('stool', 'child')), ('away', 29.541715397739722, 305.259295129055, ('stool', 'child'), ('table', 'child')), ('away', 89.74757700335249, 307.92077513623576, ('table', 'child'), ('stool', 'child')), ('away', 36.5808740997075, 3.2796921051801746, ('table', 'child'), ('table', 'child'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.010686635971069336
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_305', 0.12354849), ('6673828083_304', 0.12358183), ('6673828083_463', 0.12358317), ('6673828083_303', 0.12359864), ('6673828083_465', 0.12360854), ('6673828083_457', 0.12361023), ('6673828083_296', 0.12361477), ('6673828083_297', 0.123619705), ('6673828083_458', 0.12362412), ('6673828083_462', 0.123626396)]
+Q graph nodes : {'sofa', 'toy', 'baby_walker'}
+Q graph edges : [(2, 4, {'distance': 39.37321424522006, 'angle_AB': -72.25532837494306, 'angle_BA': 107.74467162505692, 'predicate': 'inside', 'txtemb': array([ 0.09949472, -0.0598873 , -0.01837458, -0.06777801,  0.04200921,
+       -0.09386025,  0.03133806, -0.02018313,  0.06071   , -0.07857241],
+      dtype=float32)}), (2, 12, {'distance': 201.06217943710845, 'angle_AB': 104.10535776433525, 'angle_BA': -75.89464223566476, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (4, 12, {'distance': 240.36898718428714, 'angle_AB': 104.70109905847619, 'angle_BA': -75.29890094152383, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)})]
+n:  6673828083_305
+sim:  0.12354849
+db_idx.index(n) :  733
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_304
+sim:  0.12358183
+db_idx.index(n) :  732
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_463
+sim:  0.12358317
+db_idx.index(n) :  834
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_303
+sim:  0.12359864
+db_idx.index(n) :  731
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_465
+sim:  0.12360854
+db_idx.index(n) :  836
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_457
+sim:  0.12361023
+db_idx.index(n) :  828
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_296
+sim:  0.12361477
+db_idx.index(n) :  724
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_297
+sim:  0.123619705
+db_idx.index(n) :  725
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_458
+sim:  0.12362412
+db_idx.index(n) :  829
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_462
+sim:  0.123626396
+db_idx.index(n) :  833
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+@@@@@@
+  qid: 5
+vId_fId: 3802296828_809 
+duplicate: [('inside', 25.070559697652037, 59.599714160358914, ('baby_walker', 'toy'), ('baby_walker', 'toy'))]
+@@@@@@
+  qid: 5
+vId_fId: 3802296828_358 
+duplicate: [('inside', 16.286465955082924, 35.52856006774947, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('next_to', 5.558245497117241, 99.66411657490244, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 8.608288855494067, 28.39432199824421, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 32.36875253207168, 86.91239929583635, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 46.9710844611034, 29.178135493297106, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 31.730646912845884, 28.805752569457752, ('baby_walker', 'sofa'), ('sofa', 'sofa')), ('next_to', 33.74856225006144, 100.25985786904337, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 47.91509660267275, 28.990063292385145, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 6.938055215106999, 87.50814058997729, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 7.664276713924721, 29.77387678743804, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 7.576160834332796, 28.210011275316816, ('toy', 'sofa'), ('sofa', 'sofa'))]
+@@@@@@
+  qid: 5
+vId_fId: 3802296828_355 
+duplicate: [('inside', 16.126785754779938, 36.669316041108175, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('next_to', 2.1089307139167204, 99.44710365465964, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 11.154307035778032, 28.434297431996896, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 29.981647574131983, 86.72914266461602, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 44.2075700225426, 29.473162460960253, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 27.49087786031646, 28.76698500317795, ('baby_walker', 'sofa'), ('sofa', 'sofa')), ('next_to', 37.19787703326196, 100.04284494880058, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 50.46111478295671, 29.030038726137832, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 9.325160173046697, 87.32488395875696, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 4.900762275363917, 30.06890375510119, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 11.815929886862222, 28.171243709037014, ('toy', 'sofa'), ('sofa', 'sofa'))]
+@@@@@@
+  qid: 5
+vId_fId: 3802296828_805 
+duplicate: [('inside', 21.093718867019064, 63.74975763031112, ('baby_walker', 'toy'), ('baby_walker', 'toy'))]
+@@@@@@
+  qid: 5
+vId_fId: 3802296828_808 
+duplicate: [('inside', 25.113218436391342, 58.97238801567711, ('baby_walker', 'toy'), ('baby_walker', 'toy'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.010811328887939453
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_305', 0.12096795), ('6673828083_304', 0.120992385), ('6673828083_303', 0.12100448), ('6673828083_296', 0.12101841), ('6673828083_297', 0.12102289), ('6673828083_295', 0.12103472), ('6673828083_302', 0.121036835), ('6673828083_306', 0.12104492), ('6673828083_294', 0.12104677), ('6673828083_463', 0.12104875)]
+Q graph nodes : {'dog', 'adult'}
+Q graph edges : [(0, 1, {'distance': 241.0186714758838, 'angle_AB': 70.36216694893118, 'angle_BA': -109.63783305106882, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (0, 3, {'distance': 339.13013726296873, 'angle_AB': 41.11440481234092, 'angle_BA': -138.88559518765908, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (1, 3, {'distance': 174.54583925146997, 'angle_AB': -1.313140340917506, 'angle_BA': 178.6868596590825, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)})]
+n:  6673828083_305
+sim:  0.12096795
+db_idx.index(n) :  733
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_304
+sim:  0.120992385
+db_idx.index(n) :  732
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_303
+sim:  0.12100448
+db_idx.index(n) :  731
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_296
+sim:  0.12101841
+db_idx.index(n) :  724
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_297
+sim:  0.12102289
+db_idx.index(n) :  725
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_295
+sim:  0.12103472
+db_idx.index(n) :  723
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_302
+sim:  0.121036835
+db_idx.index(n) :  730
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_306
+sim:  0.12104492
+db_idx.index(n) :  734
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_294
+sim:  0.12104677
+db_idx.index(n) :  722
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_463
+sim:  0.12104875
+db_idx.index(n) :  834
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+@@@@@@
+  qid: 6
+vId_fId: 6673828083_305 
+duplicate: [('in_front_of', 157.70836548047814, 44.56829674141112, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 92.43897201126137, 90.53611189748807, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 250.73838236269611, 113.30205592520805, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 59.5968996933932, 15.32053460482086, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 5.672493775823568, 61.28834976089782, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 152.62691657561118, 84.0542937886178, ('dog', 'adult'), ('adult', 'adult')), ('next_to', 50.4186023832026, 103.37232103037937, ('adult', 'adult'), ('dog', 'adult'))]
+@@@@@@
+  qid: 6
+vId_fId: 6673828083_304 
+duplicate: [('in_front_of', 165.56957232858232, 44.86852910172891, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 105.75539041456383, 89.55474493825466, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 255.17937366335295, 112.74848223210627, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 67.45810654149739, 15.620766965138657, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 7.643924627478896, 60.30698280166441, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 157.067907876268, 83.50072009551602, ('dog', 'adult'), ('adult', 'adult')), ('next_to', 49.37658034960526, 101.34335366065034, ('adult', 'adult'), ('dog', 'adult'))]
+@@@@@@
+  qid: 6
+vId_fId: 6673828083_303 
+duplicate: [('in_front_of', 171.4761769767969, 45.41240382032784, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 116.95129933172458, 88.84773040489992, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 260.3335001559941, 112.28991757482909, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 73.36471118971195, 16.164641683737585, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 18.839833544639646, 59.59996826830966, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 162.2220343689092, 83.04215543823884, ('dog', 'adult'), ('adult', 'adult')), ('next_to', 49.473133159350624, 99.91346265156373, ('adult', 'adult'), ('dog', 'adult'))]
+@@@@@@
+  qid: 6
+vId_fId: 6673828083_296 
+duplicate: [('in_front_of', 177.87421459405178, 45.969151799034435, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 133.20719614953836, 87.29604833354917, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 277.60450579254484, 111.7663408993964, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 79.76274880696684, 16.721389662444185, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 35.09573036245342, 58.04828619695891, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 179.49304000545993, 82.51857876280616, ('dog', 'adult'), ('adult', 'adult')), ('next_to', 61.49864808089711, 98.85966296535321, ('adult', 'adult'), ('dog', 'adult'))]
+@@@@@@
+  qid: 6
+vId_fId: 6673828083_297 
+duplicate: [('in_front_of', 179.19823679887853, 45.90128579396625, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 130.4271522992665, 86.94321479667076, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 274.1211153781312, 111.6631857462927, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 81.08677101179359, 16.653523657376, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 32.31568651218157, 57.6954526600805, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 176.0096495910463, 82.41542360970246, ('dog', 'adult'), ('adult', 'adult')), ('next_to', 61.49864808089711, 98.85966296535321, ('adult', 'adult'), ('dog', 'adult'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.012064456939697266
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_305', 0.12115909), ('6673828083_304', 0.121185414), ('6673828083_303', 0.12119816), ('6673828083_296', 0.1212118), ('6673828083_297', 0.12121609), ('6673828083_295', 0.12122837), ('6673828083_302', 0.12123054), ('6673828083_306', 0.1212356), ('6673828083_294', 0.12124035), ('6673828083_463', 0.121245325)]
+Q graph nodes : {'adult', 'dog', 'cellphone'}
+Q graph edges : [(0, 5, {'distance': 381.7440241837454, 'angle_AB': -12.63462448522992, 'angle_BA': 167.36537551477008, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (0, 7, {'distance': 381.43053102760405, 'angle_AB': -22.261662664234642, 'angle_BA': 157.73833733576535, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (5, 7, {'distance': 64.04100249059192, 'angle_AB': -107.72762945437776, 'angle_BA': 72.27237054562225, 'predicate': 'behind', 'txtemb': array([ 0.15628378, -0.01378138, -0.0879447 , -0.03124182,  0.05641522,
+       -0.01273377, -0.0445261 , -0.02215454,  0.00462628, -0.0800161 ],
+      dtype=float32)})]
+n:  6673828083_305
+sim:  0.12115909
+db_idx.index(n) :  733
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_304
+sim:  0.121185414
+db_idx.index(n) :  732
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_303
+sim:  0.12119816
+db_idx.index(n) :  731
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_296
+sim:  0.1212118
+db_idx.index(n) :  724
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_297
+sim:  0.12121609
+db_idx.index(n) :  725
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_295
+sim:  0.12122837
+db_idx.index(n) :  723
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_302
+sim:  0.12123054
+db_idx.index(n) :  730
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_306
+sim:  0.1212356
+db_idx.index(n) :  734
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_294
+sim:  0.12124035
+db_idx.index(n) :  722
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_463
+sim:  0.121245325
+db_idx.index(n) :  834
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+@@@@@@
+  qid: 7
+vId_fId: 6673828083_305 
+duplicate: [('in_front_of', 16.98301277261652, 38.42849469274998, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 75.1783705302417, 13.805053194984946, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 48.28638069660025, 7.53932046332698, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 60.43381581806028, 87.3873255964423, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 110.0130296548345, 30.305264491046955, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 98.31274329276874, 35.32049909682076, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 17.29650592875788, 48.05553287175471, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 74.86487737410033, 4.178015015980225, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 47.972887540458885, 2.0877177156777407, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 60.12032266191892, 97.01436377544701, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 110.32652281097586, 20.678226312042234, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 98.6262364489101, 25.69346091781604, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 19.94451736989324, 136.90843550687762, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 7
+vId_fId: 6673828083_304 
+duplicate: [('in_front_of', 24.844219620720708, 38.128262332432186, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 64.40784597520894, 13.0421911966083, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 34.96996229329778, 6.557953504093568, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 58.917058147758894, 88.10335091279431, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 114.45402095549133, 29.751690797945173, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 101.7732971192251, 35.13154166328956, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 25.15771277686207, 47.75530051143691, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 64.09435281906758, 3.415153017603579, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 34.65646913715642, 3.069084674911153, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 58.60356499161753, 97.73038909179903, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 114.76751411163269, 20.124652618940452, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 102.08679027536647, 25.50450348428484, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 16.34928413195024, 137.24899128895942, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 7
+vId_fId: 6673828083_303 
+duplicate: [('in_front_of', 30.750824268935276, 37.58438761383326, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 56.54101066757272, 12.669650206681123, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 23.774053376137033, 5.850938970738817, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 58.68211061298729, 88.29727984280105, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 119.60814744813251, 29.293126140667994, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 105.3047413418434, 35.11146959590657, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 31.064317425076638, 47.21142579283798, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 56.22751751143136, 3.0426120276764017, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 23.46056021999567, 3.7760992082659044, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 58.368617456845925, 97.92431802180576, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 119.92164060427388, 19.666087961663273, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 105.61823449798476, 25.48443141690185, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 11.882589938061145, 136.99562466927046, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 7
+vId_fId: 6673828083_296 
+duplicate: [('in_front_of', 37.14886188619016, 37.02763963512666, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 57.05763703454568, 13.496376059708659, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 7.5181565583232555, 4.299256899388073, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 53.17744036853151, 86.73713474330482, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 136.87915308468325, 28.769549465235308, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 114.37617294594213, 36.820449677072915, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 37.462355042331524, 46.654677814131375, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 56.744143878404316, 3.869337880703938, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 7.204663402181893, 5.327781279616648, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 52.863947212390144, 96.36417292230954, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 137.19264624082462, 19.142511286230587, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 114.68966610208349, 27.193411498068194, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 10.646680563577064, 134.80729954257293, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 7
+vId_fId: 6673828083_297 
+duplicate: [('in_front_of', 38.47288409101691, 37.095505640194844, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 57.05763703454568, 13.496376059708659, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 10.298200408595108, 3.9464233625096554, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 51.941052699254385, 86.61763872629406, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 133.39576267026962, 28.666394312131608, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 114.37617294594213, 36.820449677072915, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 38.78637724715827, 46.722543819199565, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 56.744143878404316, 3.869337880703938, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 9.984707252453745, 5.680614816495066, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 51.62755954311302, 96.24467690529877, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 133.70925582641098, 19.039356133126887, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 114.68966610208349, 27.193411498068194, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 10.317924344052486, 137.56808327237584, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.010645389556884766
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_305', 0.12497326), ('6673828083_304', 0.1250087), ('6673828083_463', 0.12501736), ('6673828083_303', 0.12502518), ('6673828083_296', 0.12504053), ('6673828083_465', 0.12504274), ('6673828083_457', 0.12504414), ('6673828083_297', 0.12504509), ('6673828083_306', 0.12505211), ('6673828083_458', 0.12505753)]
+Q graph nodes : {'adult', 'dog', 'sofa', 'cellphone'}
+Q graph edges : [(0, 5, {'distance': 356.2151737363247, 'angle_AB': -13.060924345128058, 'angle_BA': 166.93907565487194, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (0, 7, {'distance': 381.3928420932936, 'angle_AB': -19.052541100101926, 'angle_BA': 160.9474588998981, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (0, 9, {'distance': 169.25793925249118, 'angle_AB': 95.4242850409439, 'angle_BA': -84.5757149590561, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (5, 7, {'distance': 46.02445002387318, 'angle_AB': -72.94303442338294, 'angle_BA': 107.05696557661706, 'predicate': 'behind', 'txtemb': array([ 0.15628378, -0.01378138, -0.0879447 , -0.03124182,  0.05641522,
+       -0.01273377, -0.0445261 , -0.02215454,  0.00462628, -0.0800161 ],
+      dtype=float32)}), (5, 9, {'distance': 440.1931394285922, 'angle_AB': 145.55180950619228, 'angle_BA': -34.448190493807715, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (7, 9, {'distance': 477.07572774141425, 'angle_AB': 142.10921642848797, 'angle_BA': -37.89078357151205, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)})]
+n:  6673828083_305
+sim:  0.12497326
+db_idx.index(n) :  733
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_304
+sim:  0.1250087
+db_idx.index(n) :  732
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_463
+sim:  0.12501736
+db_idx.index(n) :  834
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_303
+sim:  0.12502518
+db_idx.index(n) :  731
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_296
+sim:  0.12504053
+db_idx.index(n) :  724
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_465
+sim:  0.12504274
+db_idx.index(n) :  836
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_457
+sim:  0.12504414
+db_idx.index(n) :  828
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_297
+sim:  0.12504509
+db_idx.index(n) :  725
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_306
+sim:  0.12505211
+db_idx.index(n) :  734
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_458
+sim:  0.12505753
+db_idx.index(n) :  829
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+@@@@@@
+  qid: 8
+vId_fId: 6673828083_305 
+duplicate: [('in_front_of', 42.51186322003724, 38.854794552648116, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 49.64952008282097, 13.37875333508681, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 22.757530249179524, 7.1130206034288435, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 34.90496537063956, 87.81362545634043, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 135.54188010225522, 29.87896463114882, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 123.84159374018947, 34.894199236922624, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 17.33419486306832, 44.84641130762199, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 74.8271884397899, 7.387136580112941, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 47.93519860614845, 1.1214038484549746, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 60.08263372760848, 93.8052422113143, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 110.3642117452863, 23.88734787617495, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 98.66392538322054, 28.902582481948755, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 1.927964903174498, 102.1238404758828, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 8
+vId_fId: 6673828083_304 
+duplicate: [('in_front_of', 50.37307006814143, 38.55456219233032, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 38.87899552778822, 12.615891336710163, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 9.44111184587706, 6.131653644195431, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 33.38820770033817, 88.52965077269245, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 139.98287140291205, 29.325390938047036, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 127.30214756664583, 34.705241803391424, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 25.195401711172508, 44.54617894730419, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 64.05666388475714, 6.6242745817362945, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 34.61878020284598, 0.14003688922156243, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 58.565876057307094, 94.52126752766631, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 114.80520304594313, 23.333774183073167, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 102.1244792096769, 28.713625048417555, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 1.667268334768501, 102.46439625796458, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 8
+vId_fId: 6673828083_463 
+duplicate: [('in_front_of', 14.569467261654097, 31.862365693131004, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 52.773251780903365, 3.4032059517140567, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 29.135640457702948, 4.69224393525657, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 142.1351653282531, 86.7846614030681, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 120.1095579331531, 22.497728105889756, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 40.39861825785192, 25.18149734831035, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 10.608201095314826, 37.85398244810487, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 77.95092013787229, 2.588410803259812, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 3.9579721007340254, 1.2993728197172985, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 167.31283368522202, 92.77627815804198, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 94.93188957618418, 16.506111350915887, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 15.220949900883, 19.189880593336483, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 36.24492459390303, 50.4303143331733, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 8
+vId_fId: 6673828083_303 
+duplicate: [('in_front_of', 56.279674716356, 38.010687473731394, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 31.012160220151998, 12.243350346782986, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 1.75479707128369, 5.42463911084068, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 33.153260165566564, 88.72357970269918, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 145.13699789555324, 28.866826280769857, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 130.83359178926412, 34.68516973600843, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 31.102006359387076, 44.00230422870526, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 56.18982857712092, 6.251733591809117, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 23.422871285685233, 0.5669776441331891, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 58.33092852253549, 94.71519645767304, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 119.95932953858431, 22.875209525795988, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 105.6559234322952, 28.693552981034564, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 6.133962528657598, 102.21102963827563, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 8
+vId_fId: 6673828083_296 
+duplicate: [('in_front_of', 62.677712333610884, 37.4539394950248, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 31.528786587124955, 13.070076199810522, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 18.010693889097467, 3.872957039489936, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 27.648589921110784, 87.16343460320296, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 162.40800353210398, 28.34324960533717, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 139.90502339336285, 36.39414981717478, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 37.50004397664196, 43.44555624999866, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 56.70645494409388, 7.078459444836653, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 7.166974467871455, 2.1186597154839326, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 52.826258278079706, 93.15505135817682, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 137.23033517513505, 22.351632850363302, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 114.72735503639393, 30.40253306220091, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 28.663233030295807, 100.02270451157811, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.010911226272583008
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_305', 0.12536913), ('6673828083_463', 0.12539929), ('6673828083_304', 0.12540196), ('6673828083_303', 0.12541786), ('6673828083_465', 0.12542516), ('6673828083_457', 0.1254285), ('6673828083_296', 0.12543307), ('6673828083_297', 0.12543786), ('6673828083_458', 0.12544101), ('6673828083_462', 0.12544282)]
+Q graph nodes : {'cellphone', 'dog', 'sofa', 'adult'}
+Q graph edges : [(0, 4, {'distance': 161.29553620605873, 'angle_AB': 84.30707983526285, 'angle_BA': -95.69292016473716, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (0, 5, {'distance': 355.9905195366865, 'angle_AB': -12.904140322989925, 'angle_BA': 167.09585967701008, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (0, 9, {'distance': 168.26244381917195, 'angle_AB': 95.45647396029054, 'angle_BA': -84.54352603970948, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (4, 9, {'distance': 32.7566787083184, 'angle_AB': 167.6609127216738, 'angle_BA': -12.339087278326195, 'predicate': 'beneath', 'txtemb': array([ 0.10302237, -0.07473211, -0.06387768, -0.02668639,  0.03921147,
+       -0.00314621,  0.16335939, -0.03388818,  0.10984283, -0.06831647],
+      dtype=float32)}), (4, 5, {'distance': 408.8532744151623, 'angle_AB': -35.94494829610839, 'angle_BA': 144.0550517038916, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (5, 9, {'distance': 439.0649154737828, 'angle_AB': 145.7670323024643, 'angle_BA': -34.232967697535734, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)})]
+n:  6673828083_305
+sim:  0.12536913
+db_idx.index(n) :  733
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_463
+sim:  0.12539929
+db_idx.index(n) :  834
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_304
+sim:  0.12540196
+db_idx.index(n) :  732
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_303
+sim:  0.12541786
+db_idx.index(n) :  731
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_465
+sim:  0.12542516
+db_idx.index(n) :  836
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_457
+sim:  0.1254285
+db_idx.index(n) :  828
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_296
+sim:  0.12543307
+db_idx.index(n) :  724
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_297
+sim:  0.12543786
+db_idx.index(n) :  725
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_458
+sim:  0.12544101
+db_idx.index(n) :  829
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_462
+sim:  0.12544282
+db_idx.index(n) :  833
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+@@@@@@
+  qid: 9
+vId_fId: 6673828083_305 
+duplicate: [('next_to', 63.66890542861384, 17.752100854199014, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 42.73651741967541, 38.69801053050999, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 49.424865883182804, 13.535537357224943, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 22.532876049541358, 7.269804625566977, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 34.68031117100139, 87.6568414342023, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 135.7665343018934, 30.03574865328695, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 124.06624793982763, 35.05098325906076, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 10.126237458800347, 61.73881850362845, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 102.28762076165856, 9.505270615893526, ('adult', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 75.39563092801711, 15.771003347551492, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 87.54306604947715, 110.69764940732077, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 82.90377942341763, 6.994940680168483, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 71.20349306135188, 12.010175285942289, ('adult', 'cellphone'), ('adult', 'cellphone'))]
+@@@@@@
+  qid: 9
+vId_fId: 6673828083_463 
+duplicate: [('next_to', 0.48353416640995306, 13.016802670561745, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 14.794121461292264, 31.70558167099287, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 52.5485975812652, 3.55998997385219, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 29.360294657341115, 4.8490279573947035, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 141.91051112861493, 86.62787738092996, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 120.33421213279127, 22.65451212802789, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 40.62327245749009, 25.338281370448485, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 38.06863341718349, 54.74638964411134, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 105.41135245974095, 19.48081799926628, ('adult', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 23.50246022113464, 18.191780015723765, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 194.77326600709068, 109.66868535404843, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 67.47145725431551, 0.38629584509057935, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 12.239482420985667, 2.297473397330016, ('adult', 'cellphone'), ('adult', 'cellphone'))]
+@@@@@@
+  qid: 9
+vId_fId: 6673828083_304 
+duplicate: [('next_to', 62.626883395016506, 15.723133484469983, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 50.5977242677796, 38.39777817019219, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 38.65434132815005, 12.772675358848296, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 9.216457646238894, 6.288437666333564, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 33.163553500700004, 88.37286675055432, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 140.20752560255022, 29.48217496018517, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 127.526801766284, 34.86202582552956, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 2.265030610696158, 61.43858614331066, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 91.51709620662581, 10.268132614270172, ('adult', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 62.07921252471465, 16.752370306784904, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 86.02630837917576, 111.41367472367278, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 87.34477072407446, 6.441366987066701, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 74.66404688780824, 11.821217852411088, ('adult', 'cellphone'), ('adult', 'cellphone'))]
+@@@@@@
+  qid: 9
+vId_fId: 6673828083_303 
+duplicate: [('next_to', 62.72343620476187, 14.29324247538338, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 56.504328915994165, 37.85390345159326, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 30.78750602051383, 12.400134368921119, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 1.9794512709218566, 5.581423132978813, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 32.9286059659284, 88.56679568056106, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 145.3616520951914, 29.02361030290799, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 131.05824598890229, 34.841953758146566, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 3.64157403751841, 60.89471142471173, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 83.65026089898959, 10.64067360419735, ('adult', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 50.8833036075539, 17.459384840139656, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 85.79136084440415, 111.60760365367952, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 92.49889721671565, 5.982802329789521, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 78.19549111042653, 11.801145785028098, ('adult', 'cellphone'), ('adult', 'cellphone'))]
+@@@@@@
+  qid: 9
+vId_fId: 6673828083_465 
+duplicate: [('next_to', 3.0346755992744647, 11.31345399332912, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 17.31665960671006, 31.41189187612483, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 48.09037338537337, 3.411890070332081, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 23.334209422552306, 5.936815981573769, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 142.8069132251317, 86.97720311328192, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 111.61000441511572, 23.879985261906974, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 39.30304226264258, 25.212381682201077, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 35.546095271765694, 54.4526998492433, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 100.95312826384912, 19.628917902786387, ('adult', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 29.52854545592345, 17.1039919915447, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 195.66966810360745, 110.01801108640038, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 58.74724953663997, 0.8391772887885054, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 13.559712615833178, 2.171573709082608, ('adult', 'cellphone'), ('adult', 'cellphone'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.010898590087890625
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_305', 0.122030675), ('6673828083_304', 0.12206009), ('6673828083_303', 0.12207437), ('6673828083_296', 0.12208852), ('6673828083_297', 0.1220928), ('6673828083_463', 0.12209327), ('6673828083_295', 0.12210554), ('6673828083_306', 0.1221059), ('6673828083_302', 0.1221077), ('6673828083_465', 0.12211669)]
+Q graph nodes : {'cellphone', 'adult'}
+Q graph edges : [(4, 7, {'distance': 451.4202587390158, 'angle_AB': -38.65980825409009, 'angle_BA': 141.34019174590992, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (4, 5, {'distance': 410.60351922505487, 'angle_AB': -36.632678287295086, 'angle_BA': 143.3673217127049, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (5, 7, {'distance': 43.56604182158393, 'angle_AB': -58.134022306396325, 'angle_BA': 121.86597769360368, 'predicate': 'behind', 'txtemb': array([ 0.15628378, -0.01378138, -0.0879447 , -0.03124182,  0.05641522,
+       -0.01273377, -0.0445261 , -0.02215454,  0.00462628, -0.0800161 ],
+      dtype=float32)})]
+n:  6673828083_305
+sim:  0.122030675
+db_idx.index(n) :  733
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_304
+sim:  0.12206009
+db_idx.index(n) :  732
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_303
+sim:  0.12207437
+db_idx.index(n) :  731
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_296
+sim:  0.12208852
+db_idx.index(n) :  724
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_297
+sim:  0.1220928
+db_idx.index(n) :  725
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_463
+sim:  0.12209327
+db_idx.index(n) :  834
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_295
+sim:  0.12210554
+db_idx.index(n) :  723
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_306
+sim:  0.1221059
+db_idx.index(n) :  734
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_302
+sim:  0.1221077
+db_idx.index(n) :  730
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+n:  6673828083_465
+sim:  0.12211669
+db_idx.index(n) :  836
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 8 edges
+@@@@@@
+  qid: 10
+vId_fId: 6673828083_305 
+duplicate: [('in_front_of', 130.1100503733307, 113.41250936530247, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 40.336795099564085, 4.2800807221867885, ('adult', 'adult'), ('adult', 'adult')), ('in_front_of', 28.636508737498332, 9.295315327960594, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 89.29331085936974, 111.38537939850747, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 81.15353461352504, 6.30721068898179, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 69.45324825145929, 11.322445294755596, ('adult', 'cellphone'), ('adult', 'cellphone')), ('behind', 0.5304432991147507, 87.3148283588962, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 10
+vId_fId: 6673828083_304 
+duplicate: [('in_front_of', 128.5932927030293, 114.12853468165449, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 44.77778640022092, 3.726507029085006, ('adult', 'adult'), ('adult', 'adult')), ('in_front_of', 32.097062563954694, 9.106357894429394, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 87.77655318906835, 112.10140471485948, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 85.59452591418187, 5.753636995880008, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 72.91380207791565, 11.133487861224395, ('adult', 'cellphone'), ('adult', 'cellphone')), ('behind', 4.12567653705775, 87.65538414097797, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 10
+vId_fId: 6673828083_303 
+duplicate: [('in_front_of', 128.3583451682577, 114.32246361166122, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 49.9319128928621, 3.267942371807827, ('adult', 'adult'), ('adult', 'adult')), ('in_front_of', 35.628506786572984, 9.086285827046403, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 87.54160565429675, 112.29533364486622, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 90.74865240682306, 5.295072338602829, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 76.44524630053394, 11.113415793841405, ('adult', 'cellphone'), ('adult', 'cellphone')), ('behind', 8.592370730946847, 87.40201752128903, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 10
+vId_fId: 6673828083_296 
+duplicate: [('in_front_of', 122.85367492380192, 112.762318512165, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 67.20291852941284, 2.744365696375141, ('adult', 'adult'), ('adult', 'adult')), ('in_front_of', 44.69993839067172, 10.795265908212748, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 82.03693540984096, 110.73518854537, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 108.0196580433738, 4.771495663170143, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 85.51667790463267, 12.82239587500775, ('adult', 'cellphone'), ('adult', 'cellphone')), ('behind', 31.121641232585056, 85.21369239459149, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 10
+vId_fId: 6673828083_297 
+duplicate: [('in_front_of', 121.6172872545248, 112.64282249515423, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 63.71952811499921, 2.6412105432714412, ('adult', 'adult'), ('adult', 'adult')), ('in_front_of', 44.69993839067172, 10.795265908212748, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 80.80054774056384, 110.61569252835923, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 104.53626762896016, 4.668340510066443, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 85.51667790463267, 12.82239587500775, ('adult', 'cellphone'), ('adult', 'cellphone')), ('behind', 30.792885013060477, 87.97447612439441, ('cellphone', 'adult'), ('cellphone', 'adult'))]
