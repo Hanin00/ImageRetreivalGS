@@ -64,25 +64,34 @@ def main():
         sliced_item = item[-5:-4]
         filenames.extend(sliced_item)
 
-    filenames = filenames[:3]    
-    
-    
+    # filenames = filenames[:10]
+    filenames = filenames[:10]
     for filename in filenames:
         vId = filename.split('.')[0]
         print("filename : ",filename)
         with open("data/scenegraph/"+ filename, "rb") as fr:
         # with open("data/scenegraph/"+ filename+'.json.pkl', "rb") as fr:
             tmp = pickle.load(fr)
-            length = len(tmp[0])
+            length = len(tmp[2])
             
-            # warmup>>> 
-            origin_g, origin_enc_agg = utils.mkNG2Subs(tmp[0][0], args, F0Dict)  # Gs에 Feature 붙임
-            subs = subgraph.make_subgraph(origin_g, max_node, False, R_BFS)
-            db_data = utils.batch_nx_graphs_rpe(subs, None)
+            try:
+                # warmup>>> 
+                # print("feature_extract - tmp[0][0]: ", tmp[0][0])            
+                origin_g, origin_enc_agg = utils.mkNG2Subs(tmp[0][0], args, F0Dict)  # Gs에 Feature 붙임
+                
+                # print("feature_extract - origin_g: ", origin_g)
+                subs = subgraph.make_subgraph(origin_g, max_node, False, R_BFS)
+                # print("feature_extract - subs: ", subs)
+                db_data = utils.batch_nx_graphs_rpe(subs, None)
+                emb_db_data = model.emb_model(db_data)       
+                # warmup>>> 
+            except:
+                continue
+            
+        
             emb_db_data = model.emb_model(db_data)
-            # warmup>>> 
+            length = 4 # 쿼리 그래프 시퀀스의 길이
 
-            length = 5
             if length != 0:
                 cnt = 0
                 timeList = []
@@ -91,11 +100,12 @@ def main():
                     # print("tmp[0][i]", tmp[0][i])
                     q_start = time.time()
                     tmp[0][i].graph['gid'] = i
-                    origin_g, origin_enc_agg = utils.mkNG2Subs(tmp[0][i], args, F0Dict)  # Gs에 Feature 붙임
-                    fId = tmp[2][i]        
-                    
-                    
-                    print(tmp[0][i])
+                    try: 
+                        origin_g, origin_enc_agg = utils.mkNG2Subs(tmp[0][i], args, F0Dict)  # Gs에 Feature 붙임
+                        fId = tmp[2][i]        
+                        print(tmp[0][i])
+                    except:
+                        print(tmp[0][i])
                     
                     # 그래프 하나에 대해 rpe 계산을 해야함
                     # 그 후 rpe 를 거쳐야함
@@ -119,11 +129,8 @@ def main():
                 print("평균: ", sum(timeList)/ len(timeList))
                 print("평균(첫번째 제외): ", sum(timeList[1:])/ len(timeList[1:]))
                 print(timeList)
+                # print("subGFeature: " ,subGFeature)
                 print("쿼리그래프 -> 서브 그래프 -> 추출",time.time() - start)
-                
-                
-                
-                
     # print("len(fIdList) : ",len(fIdList))
     # print("len(subGFeature) : ",len(subGFeature))
     # print("len(vIdList) : ",len(vIdList))
@@ -185,10 +192,8 @@ def queryFeature():
         - 그래프의 크기 - 노드 3개 -> 서브 그래프 생성 필요 X -> 더미 데이터 생성????
         쿼리 그래프의 시퀀스 길이: 4개 
         특징 추출 시간 비교
-        -> 지금처럼 나오는지 확인; 시퀀스에서 첫번째꺼가 자꾸 오래 걸리는지?
-        
+        -> 지금처럼 나오는지 확인; 시퀀스에서 첫번째꺼가 자꾸 오래 걸리는지 원인 파악
         모델load -> warm up 
-        
         '''
         
         if length != 0:

@@ -7,7 +7,23 @@ import torch_geometric.utils as pyg_utils
 
 from torch_geometric.nn import GATConv, GATv2Conv
 from utils import utils
+
+import numpy as np
+from scipy.special import log1p
+
 import sys
+
+'''
+    문제상황(23.10.08)
+    1. cosine similarity은 두 값 간의 유사도임. 때문에 GED가 정규화 되지 않았으므로 잘 예측할 수 없음
+    2. cosine sim 에서 1은 동일함이지만 normed GED가 1이면 두 값 간의 차이가 큰 것임
+    3. GED 예측이 목적이 아니라, 그래프를 feature space에 잘 embedding하는 것이 목적임
+    
+    해결 방안
+    1. 두 그래프 특징값의 차이를 의미하는 cosine similarity 값에 -log(1-x) 를 취해, 차이가 클수록 더 큰 값이 나오고, 적을 수록 더 작은 값이 나오도록 변경    
+
+'''
+
 
 class BaselineMLP(nn.Module):
     # GNN -> concat -> MLP graph classification baseline
@@ -50,10 +66,11 @@ class GnnEmbedder(nn.Module):
         Returns: list of ged of graph pairs.
         """
         emb_as, emb_bs = pred
-        s = torch.tensor([torch.dot(emb_as[i], emb_bs[i]) for i in range(len(emb_as))],requires_grad=True).to(utils.get_device())
-        # print("GnnEmb - predict - s : ", s)     
-
-        return s
+        # s = torch.tensor([torch.dot(emb_as[i], emb_bs[i]) for i in range(len(emb_as))],requires_grad=True).to(utils.get_device())
+        sim = F.cosine_similarity(emb_as, emb_bs) 
+        sim = -torch.log(1 - sim)
+        
+        return sim
 
     def criterion(self, pred, intersect_embs, labels):
         """Loss function for emb.
@@ -62,13 +79,17 @@ class GnnEmbedder(nn.Module):
         pred: lists of embeddings outputted by forward
         intersect_embs: not used
         labels: labels for each entry in pred
-        """
-        
+        """        
         emb_as, emb_bs = pred
-        s = torch.tensor([torch.dot(emb_as[i], emb_bs[i]) for i in range(len(emb_as))],requires_grad=True).to(utils.get_device())
+        # s = torch.tensor([torch.dot(emb_as[i], emb_bs[i]) for i in range(len(emb_as))],requires_grad=True).to(utils.get_device()) 
+        # # <- 단순한 dot production
+        sim = F.cosine_similarity(emb_as, emb_bs) 
+        # 1-x 값을 0과 1 사이로 클램핑
+        # clamped_x = torch.clamp(1 - sim, min=1e-7, max=1-1e-7)
+        sim = -torch.log(1 - sim)
+
         loss_func = nn.L1Loss() # MAE
-        loss = loss_func(s, labels)
-        # print("GnnEmb - criterion - s : ", s)
+        loss = loss_func(sim, labels)
         return loss
 
 

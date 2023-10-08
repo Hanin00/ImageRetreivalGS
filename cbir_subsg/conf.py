@@ -52,7 +52,8 @@ def parse_encoder(parser, arg_str=None):
                             method_type='gnn',
                             dataset='scene',     # syn
                             n_layers=8,
-                            batch_size=1024,  # 64, batch 개수 #32
+                            # batch_size=1024,  # 64, batch 개수 #32
+                            batch_size = 100,
                             feature_dim = 13, # rpe = 3, f0 = 1 새로운 데이터(rpe )
                             hidden_dim= 32,
                             skip="learnable",

@@ -34,8 +34,6 @@ def main():
   utils.parse_optimizer(parser)
   parse_encoder(parser)
   args = parser.parse_args()
-
-
   
   with open('data/class_unique_textemb.pickle', 'rb') as f:  
       data  = pickle.load(f)
@@ -74,16 +72,6 @@ def main():
   print(total_subgraph)
   print(total_subgraph_fid)
   sys.exit()
-  
-                
-                
-            
-            
-            
-
-
-
-
 
   # origin_g, origin_enc_agg = utils.mkNG2Subs(tmp[i], args, F0Dict)  # Gs에 Feature 붙임 
   #               subs = subgraph.make_subgraph(origin_g, max_node, False, R_BFS)

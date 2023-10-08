@@ -1,6 +1,6 @@
 from utils import utils
-from model import models
-from config.config import parse_encoder
+from cbir_subsg import models
+from cbir_subsg.conf import parse_encoder
 
 from collections import Counter
 
@@ -42,9 +42,6 @@ from collections import defaultdict
 import numpy as np
 import networkx as nx
 import multiprocessing as mp
-
-
-
 
 import random
 import math
@@ -153,22 +150,25 @@ def main(args):
     with open('data/class_unique_textemb.pickle', 'rb') as f:  
         data  = pickle.load(f)
         F0Dict = data
-    folder_path = "data/scenegraph_1/"
+    folder_path = "data/scenegraph"
     filenames = os.listdir(folder_path)
     rpeGraphs = []
+    filenames = filenames[:2]
     for filename in filenames:
         print("filename: ", filename)
-        fpath = "data/scenegraph_1/"+str(filename)    
+        fpath = "data/scenegraph/"+str(filename)    
         with open(fpath, 'rb') as file:
             data = pickle.load(file)
-        dataset = data[0][0] #video 내 graphs
+        dataset = data[0] #video 내 graphs
         length = len(dataset)
+        
         if length != 0:
             cnt = 0
             for i in range(length):   
                 dataset[i].graph['gid'] = 0
                 origin_g, origin_enc_agg = utils.mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 Feature 붙임 #txtemb 는 10개씩 있음
                 rpeGraphs.append(origin_g)
+                
     try:
         rpeGraphs = utils.batch_nx_graphs_rpe(rpeGraphs, None)
     except:
@@ -177,11 +177,16 @@ def main(args):
 
     inference_start = time.time()
     emb_db_data = feature_extract(args, rpeGraphs) # 1293개 그래프에 대해 0.9680685997009277
+    # print("emb_db_data: ",emb_db_data)
+    # sys.exit()
     inference_end = time.time()
     print("inference time: ", inference_end-inference_start)
     print("len(emb_db_data): " ,len(emb_db_data))
     print("len(emb_db_data[0]): " ,len(emb_db_data[0]))
     print("(emb_db_data[0]): " ,(emb_db_data[0]))
+    
+    
+    
 
 # ------------ rpe 계산 ---------------------
 
