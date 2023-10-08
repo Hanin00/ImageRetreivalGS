@@ -95,7 +95,7 @@ def data_generator(data_folder, batch_size):
     random.shuffle(all_files)
     print("len(all_files): ",len(all_files))
     
-    all_files = all_files[:1]
+    # all_files = all_files[:1]
     # while True:
     start = time.time()
     for file_path in all_files:
