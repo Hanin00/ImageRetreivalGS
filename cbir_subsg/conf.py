@@ -64,15 +64,14 @@ def parse_encoder(parser, arg_str=None):
                             opt_restart=10,
                             weight_decay=0.0,
                             lr=1e-4,
-                            margin=0.1,
-                            
+                            margin=0.1,                            
                             test_set='',
                             eval_interval=10,   # 1000, batch 반복횟수  
                             n_workers=1,        # 4
                             # model_path="ckpt/final/gat/imgretreival_e1.pt",
                             # model_path="ckpt/1003/scene_model_wotxtemb.pt",
-                            model_path="ckpt/1009/scene_model_wotxtemb.pt", # without txt
-                                                    
+                            # model_path="ckpt/1009/scene_model_wotxtemb.pt", # without txt
+                            model_path="ckpt/1009/scene_model_wotxtemb_best_e27.pt", # without txt
                             tag='',
                             val_size=64,         # 4096,
                             node_anchored=False, # True

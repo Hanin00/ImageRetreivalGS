@@ -68,7 +68,8 @@ class GnnEmbedder(nn.Module):
         emb_as, emb_bs = pred
         # s = torch.tensor([torch.dot(emb_as[i], emb_bs[i]) for i in range(len(emb_as))],requires_grad=True).to(utils.get_device())
         sim = F.cosine_similarity(emb_as, emb_bs) 
-        sim = -torch.log(1 - sim)
+        # sim = -torch.log(1 - sim) #nan 발생
+        sim - (1-sim)
         
         return sim
 
@@ -86,7 +87,9 @@ class GnnEmbedder(nn.Module):
         sim = F.cosine_similarity(emb_as, emb_bs) 
         # 1-x 값을 0과 1 사이로 클램핑
         # clamped_x = torch.clamp(1 - sim, min=1e-7, max=1-1e-7)
-        sim = -torch.log(1 - sim)
+        # sim = -torch.log(1 - sim) #nan 발생
+        sim - (1-sim)
+        
 
         loss_func = nn.L1Loss() # MAE
         loss = loss_func(sim, labels)

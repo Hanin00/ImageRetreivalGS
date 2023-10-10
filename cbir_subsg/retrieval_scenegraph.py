@@ -55,7 +55,6 @@ def load_dataset_temp(args,F0Dict):
                     db.append(origin_g)
         print("len(db): ", len(db)) 
     print("total len(db): ", len(db))
-    print()
 
 
     #QUERY ----------------------
@@ -222,64 +221,6 @@ def feature_extract(args):
     model.eval()
     torch.set_printoptions(precision=15)
     with torch.no_grad():
-        queryg = querys[1]
-        # print("queryg: ",queryg)
-        # # sys.exit()
-        queryG = [queryg]
-        query = utils.batch_nx_graphs_rpe(queryG, None) ### <- 여기서 문제 생긴 것 같음
-        emb_query_data1 = model.emb_model(query)
-        
-        print("query: ", query)
-        print("emb_query_data - 1 : ", emb_query_data1.to(utils.get_device()) )
-
-        emb_query_data1_2 = model.emb_model(query)
-        cos = nn.CosineSimilarity(dim = 1)
-        print("query: ", query)
-        print("cos: ", cos(emb_query_data1,emb_query_data1_2))
-        print("emb_query_data - 2 : ", emb_query_data1_2.to(utils.get_device()) )
-
-        sim = torch.sum(emb_query_data1 * emb_query_data1, dim=1).to(utils.get_device()) 
-        # sim = torch.sum(emb_query_data1 * emb_query_data1, dim=1).to(utils.get_device()) 
-        # sim = torch.tensor([torch.sum(emb_query_data * emb_db_data[idx], dim=1).to(utils.get_device()) for idx in range(len(emb_db_data))] ).to(utils.get_device())
-        print("emb_query_data1 <-> 1-2 sim : ",sim)
-        
-
-
-        queryG = [queryg]
-
-        # query = utils.batch_nx_graphs_rpe(queryG, None) ### <- 여기서 문제 생긴 것 같음
-        # query = query.to(utils.get_device())    
-        emb_query_data2 = model.emb_model(query)
-            
-        print("emb_query_data - 2 : ",emb_query_data2.to(utils.get_device()) )
-        # 흠.. 다른 emb 값이 나옴. 왜지!!! Batch에서 Graph 를 
-        sim = torch.sum(emb_query_data1 * emb_query_data2, dim=1).to(utils.get_device()) 
-        # sim = torch.tensor([torch.sum(emb_query_data * emb_db_data[idx], dim=1).to(utils.get_device()) for idx in range(len(emb_db_data))] ).to(utils.get_device())
-        print("sim : ",sim)
-        cos = nn.CosineSimilarity(dim = 1)
-        print("cos: ", cos(emb_query_data1,emb_query_data2))
-        
-        another_qg = dataset[-1]
-        aqG = [another_qg]
-        aqG_batch = utils.batch_nx_graphs_rpe(aqG, None) ### <- 여기서 문제 생긴 것 같음
-        emb_query_data3 = model.emb_model(aqG_batch)
-        
-        print("query: ", query)
-        print("emb_query_data3 - 1 : ", emb_query_data3.to(utils.get_device()) )
-        
-        sim2 = torch.sum(emb_query_data1 * emb_query_data3, dim=1).to(utils.get_device()) 
-        # sim = torch.tensor([torch.sum(emb_query_data * emb_db_data[idx], dim=1).to(utils.get_device()) for idx in range(len(emb_db_data))] ).to(utils.get_device())
-        print("sim2 : ",sim2)
-        cos = nn.CosineSimilarity(dim = 1)
-        print("cos: ", cos(emb_query_data1,emb_query_data3))
-        
-        
-        sys.exit()
-        
-        
-        
-        
-        
         emb_db_data = model.emb_model(db_data) # [1327,32]
         for idx, queryG  in enumerate(querys): #i = 쿼리 그래프의 서브 그래프 하나.
             extractTimeStart = time.time()
@@ -288,24 +229,24 @@ def feature_extract(args):
             query = utils.batch_nx_graphs_rpe(query, None) ### <- 여기서 문제 생긴 것 강늠
             query = query.to(utils.get_device())            
             emb_query_data = model.emb_model(query) # 서브그래프 하나에 대한 특징 추출
-            
+            # cos = nn.CosineSimilarity(dim = 1)
+
             extractTimeEnd = time.time()
             print("subGraph 하나에 대한 특징 추출 시간 -+ : ", extractTimeEnd - extractTimeStart)
             retreival_start_time = time.time()  # subgraph 하나에 대한 추출 시간
-            #similarity
-            sim = torch.tensor([torch.sum(emb_query_data * emb_db_data[idx], dim=1).to(utils.get_device()) for idx in range(len(emb_db_data))] ).to(utils.get_device())
+            #similarity - 내적
+            # sim = torch.tensor([torch.sum(emb_query_data * emb_db_data[idx], dim=1).to(utils.get_device()) for idx in range(len(emb_db_data))] ).to(utils.get_device())
+            # result_dict = dict(zip(db_idx, sim.cpu().numpy()))  # 토치 텐서를 넘파이 배열로 변환
+            # sorted_items = sorted(result_dict.items(), key=lambda item: item[1])  # 값을 기준으로 오름차순 정렬
+            #similarity - cosine
+            sim = F.cosine_similarity(emb_query_data, emb_db_data)
+            
             result_dict = dict(zip(db_idx, sim.cpu().numpy()))  # 토치 텐서를 넘파이 배열로 변환
-            sorted_items = sorted(result_dict.items(), key=lambda item: item[1])  # 값을 기준으로 오름차순 정렬
-            # print(sorted())
-            # print(list(sorted(result_dict, key=lambda x: result_dict[x]))[:10])
+            sorted_items = sorted(result_dict.items(), key=lambda item: item[1], reverse=True)  # 값을 기준으로 오름차순 정렬
             
             print("Top 10 Sorted db_idx and corresponding results:")
             print(sorted_items[:10])
             
-            # for db_idx_sorted, result_value in sorted_items:
-            #      print("db_idx:", db_idx_sorted, "Result:", result_value)
-            # continue
-            # # graph node 비교 가능하도록 변경 필요
             
             q_check = {n[1] for n in queryG.nodes(data="name")} #query graph의 name
             # print("Query num: ",idx)
@@ -326,50 +267,25 @@ def feature_extract(args):
                 print("n: ", n)  #vId_fId
                 print("sim: ", d)  #vId_fId
                 print("db_idx.index(n) : ",db_idx.index(n)) #db 내 idx 
-                print("dataset[db_idx.index(n)] : ",dataset[db_idx.index(n)]) #graph
-
-                
-            continue    
-            
+                print("dataset[db_idx.index(n)] : ",dataset[db_idx.index(n)]) #graph            
             
 
             # 전체 결과에서 중복된 노드가 있는지 확인하고, 얼마나 차이나는지 확인            
             for n, d in sorted_items:
-                # print("n: ", n)  #vId_fId
-                # print("db_idx.index(n) : ",db_idx.index(n)) #db 내 idx 
-                # print("dataset[db_idx.index(n)] : ",dataset[db_idx.index(n)]) #graph
-                # print("d: ", d) # similarity
-                # print("d: ", str(d)[:7]) # similarity
-                # sys.exit()
-                
-                # print(db_idx[db_idx.index(n)])
-                # # print(dataset[db_idx.index(n)])
-                
-                # print("similarity : {:.5f}".format(d.item()))
-                # print("db_idx[n]: ", db_idx.index(n))
-                # print("dataset[db_idx.index(n)]: ", dataset[db_idx.index(n)])
-                result.append([n ,  dataset[db_idx.index(n)]]) # 
-                
+                result.append([n ,  dataset[db_idx.index(n)]]) #                 
                 #중복된 노드와 엣지 찾기
                 duplicate_info = find_duplicate_nodes_and_edges(queryG, dataset[db_idx.index(n)])
                 
                 if(len(duplicate_info)) != 0:
                     duplicate_info_info.append((n, d, dataset[db_idx.index(n)]))
                     duplicate_info_result.append((n, duplicate_info))
-                    
-                # 결과 출력
-                # print("query idx: ", idx, "  rank: ", rIdx, "db_idx[n]: ", n , "전체 db 내 Idx : ", db_idx.index(n))
-                # print("_info: ",duplicate_info)              
-       
-                # candidate_imgs.append(db_idx[n])            
+      
                 candidate_imgs.append(n) # vId_fId
                 rIdx += 1
 
             # [print("id: ", ranks[0], "\n graphs: ", ranks[1])  for ranks in result]
             showGraph(queryG, 'query', 'query'+str(idx))# query graph 저장
-            # print("len(duplicate_info_info) : " ,len(duplicate_info_info))
-            # print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-            # sys.exit()
+            
             if len(duplicate_info_info)!=0:
                 if len(duplicate_info_info) >= 5:
                     duplicate_info_info = duplicate_info_info[:5]
@@ -380,10 +296,7 @@ def feature_extract(args):
                 
                 [print('@@@@@@\n',' qid: '+ str(idx)+'\nvId_fId: ' + str(duplicate_if[0])+' \nduplicate: '+ str(duplicate_if[1]))
                     for rankIdx, duplicate_if in enumerate (duplicate_info_result)] 
-            #rank[1] : graph / rank[0] : graph db_idx
-            
-            # retreival_time = time.time() - retreival_start_time
-            # print("@@@@@@@@@@@@@@@@@retreival_time@@@@@@@@@@@@@@@@@ :", retreival_time)
+            # sys.exit()
 
 def main():
     parser = argparse.ArgumentParser(description='embedding arguments')
@@ -396,74 +309,7 @@ def main():
 
 
 if __name__ == "__main__":
-    vec1 = torch.tensor([[-0.014494836330414, -0.005165468901396, -0.046724624931812,
-         -0.020842418074608,  0.039652168750763,  0.094548016786575,
-          0.027805425226688, -0.070029020309448, -0.162854611873627,
-         -0.007172767072916, -0.081028416752815, -0.104311451315880,
-          0.033131036907434,  0.035504102706909, -0.129747629165649,
-         -0.012566989287734, -0.064776763319969, -0.069441460072994,
-         -0.011998843401670, -0.037030465900898, -0.148310482501984,
-          0.005946309305727,  0.020134381949902, -0.096841149032116,
-         -0.015379942953587, -0.055233411490917,  0.094897776842117,
-         -0.005104694515467,  0.183701992034912,  0.120099067687988,
-         -0.044839210808277, -0.060650080442429]])
-    vec2 = torch.tensor([[-0.014494836330414, -0.005165468901396, -0.046724624931812,
-         -0.020842418074608,  0.039652168750763,  0.094548016786575,
-          0.027805425226688, -0.070029020309448, -0.162854611873627,
-         -0.007172767072916, -0.081028416752815, -0.104311451315880,
-          0.033131036907434,  0.035504102706909, -0.129747629165649,
-         -0.012566989287734, -0.064776763319969, -0.069441460072994,
-         -0.011998843401670, -0.037030465900898, -0.148310482501984,
-          0.005946309305727,  0.020134381949902, -0.096841149032116,
-         -0.015379942953587, -0.055233411490917,  0.094897776842117,
-         -0.005104694515467,  0.183701992034912,  0.120099067687988,
-         -0.044839210808277, -0.060650080442429]])
-    
-    sim = torch.sum(vec1 * vec2, dim=1).to(utils.get_device()) 
-    print("sim: ",sim)
-    cos = nn.CosineSimilarity(dim = 1)
-    print("cos: ", cos(vec1, vec2))
-    
-    vec2 = torch.tensor([[-0.014494836330414, -0.005165468901396, -0.046724624931812,
-    -0.020842418074608,  0.039652168750763,  0.094548016786575,
-    0.027805425226688, -0.070029020309448, -0.162854611873627,
-    -0.007172767072916, -0.081028416752815, -0.104311451315880,
-    0.033131036907434,  0.035504102706909, -0.129747629165649,
-    -0.012566989287734, -0.064776763319969, -0.069441460072994,
-    -0.011998843401670, -0.037030465900898, -0.148310482501984,
-    0.005946309305727,  0.020134381949902, -0.096841149032116,
-    -0.015379942953587, -0.055233411490917,  0.094897776842117,
-    -0.005104694515467,  0.183701992034912,  0.094897776842117,
-    -0.044839210808277, -0.060650080442429]])
-    
-    sim = torch.sum(vec1 * vec2, dim=1).to(utils.get_device()) 
-    print("sim: ",sim)
-    cos = nn.CosineSimilarity(dim = 1)
-    print("cos: ", cos(vec1, vec2))
-    
-    vec3 = torch.tensor([[-0.012270055711269, -0.004100099205971, -0.050724439322948,
-         -0.012568246573210,  0.044939838349819,  0.095546767115593,
-          0.032925292849541, -0.064932473003864, -0.163223624229431,
-         -0.009922573342919, -0.076845899224281, -0.102719992399216,
-          0.029639951884747,  0.034212484955788, -0.128898113965988,
-         -0.016621567308903, -0.063070014119148, -0.067925751209259,
-         -0.005379557609558, -0.030336214229465, -0.141939193010330,
-          0.013977487571537,  0.021103031933308, -0.103314884006977,
-         -0.019831305369735, -0.056288234889507,  0.095101520419121,
-         -0.000310614705086,  0.190362334251404,  0.114728808403015,
-         -0.042004764080048, -0.060694187879562]])
-    
-    
-    sim = torch.sum(vec1 * vec3, dim=1).to(utils.get_device()) 
-    print("sim: ",sim)
-    cos = nn.CosineSimilarity(dim = 1)
-    print("cos: ", cos(vec1, vec3))
-    
-    sys.exit()
-    
-    
-    
-    
+       
     torch.set_printoptions(precision=20)
     main()
 

@@ -99,9 +99,10 @@ def data_generator(data_folder, batch_size):
     # while True:
     start = time.time()
     for file_path in all_files:
+        print(file_path)
+        
         with open(file_path, "rb") as fr:
             tmp = pickle.load(fr)
-            print(file_path)
             for i in range(len(tmp[0])):
                 dataset[0].append(tmp[0][i])
                 dataset[1].append(tmp[1][i])
