@@ -25,9 +25,10 @@ import matplotlib.pyplot as plt
     0731 - 기존과 달라진 점
     1. 서브그래프를 사용하지 않음
     2. 그래프 형식이 다름 - edge feature 있음;
-
-    db_idx.extend([i]*len(datas))# 기존에는 그래프의 id를 subgraph 개수만큼 생성
-    하지만, 지금은 비디오 내 프레임별로 scenegraph 를 생성하므로 파일명과 몇 번째 그래프인지를 표현해주면 됨
+    
+    
+    
+    
 '''
 def load_dataset_temp(args,F0Dict):
     # with open("data/scenegraph_1/0_6096540713_6096540713.pkl", "rb") as fr:
@@ -37,7 +38,13 @@ def load_dataset_temp(args,F0Dict):
     seeds = 4
     query_number = 5002
 
-    filenames = ["3802296828.json.pkl", "6673828083.json.pkl"]
+    # filenames = ["3802296828.json.pkl", "6673828083.json.pkl"]
+    # filenames = ["4992338194.json.pkl", "6314288870.json.pkl"]
+    
+    # filenames = ["7645715544.json.pkl"]
+    filenames = ["4239231056.json.pkl"]
+    
+    
     for filename in filenames:
         vId = filename.split('.')[0]
         with open("data/scenegraph/"+ filename, "rb") as fr:
@@ -79,13 +86,16 @@ def load_dataset_temp(args,F0Dict):
     query = []
     query.append(db[3])
     print("query Idx: ", db_idx[3])
-    query.append(db[7])
-    print("query Idx: ", db_idx[7])
-    query.append(db[-7])
-    print("query Idx: ", db_idx[-7])
-    query.append(db[-3])
-    print("query Idx: ", db_idx[-3])
+    query.append(db[39])
+    print("query Idx: ", db_idx[39])    
+    query.append(db[11])
+    print("query Idx: ", db_idx[11])    
     
+    
+    # query.append(db[0])
+    # print("query Idx: ", db_idx[0])
+    # query.append(db[30])
+    # print("query Idx: ", db_idx[30]) 
     
     print("total len(query): ", len(query))
     # sys.exit()

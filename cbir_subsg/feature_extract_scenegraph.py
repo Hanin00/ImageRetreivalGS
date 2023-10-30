@@ -45,7 +45,7 @@ import multiprocessing as mp
 
 import random
 import math
-import os
+import os, sys
 
 import pickle
 import multiprocessing
@@ -137,6 +137,9 @@ def feature_extract(args, graphs):
     else:
         return print("model does not exist")
     model.eval()
+    print(model)
+    sys.exit()
+    
     with torch.no_grad():
         emb_db_data = model.emb_model(graphs)
         return emb_db_data

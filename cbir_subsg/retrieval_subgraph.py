@@ -22,6 +22,11 @@ import matplotlib.pyplot as plt
 
 
 '''
+
+    1027 
+    subgraph 생성 후 검색하도록 변경. - cbir 과 동일한 조건이 되도록
+
+
     0731 - 기존과 달라진 점
     1. 서브그래프를 사용하지 않음
     2. 그래프 형식이 다름 - edge feature 있음;
@@ -40,13 +45,14 @@ def load_dataset_temp(args,F0Dict):
     max_node = 3
     R_BFS = True
     
-    filenames = ["3802296828.json.pkl", "6673828083.json.pkl"]
+    # filenames = ["3802296828.json.pkl", "6673828083.json.pkl"]
+    filenames = ["4992338194.json.pkl", "6314288870.json.pkl"]
     for filename in filenames:
         vId = filename.split('.')[0]
         with open("data/scenegraph/"+ filename, "rb") as fr:
             tmp = pickle.load(fr)            
             db_idx.extend([ str(vId)+ '_' + str(i) for i in tmp[2]])
-            # print("db_idx: ",db_idx)``
+            # print("db_idx: ",db_idx)
             length = len(tmp[0])        
             # length = 2            
             if length != 0:
