@@ -71,7 +71,10 @@ def parse_encoder(parser, arg_str=None):
                             # model_path="ckpt/final/gat/imgretreival_e1.pt",
                             # model_path="ckpt/1003/scene_model_wotxtemb.pt",
                             # model_path="ckpt/1009/scene_model_wotxtemb.pt", # without txt
-                            model_path="ckpt/1009/scene_model_wotxtemb_best_e27.pt", # without txt
+                            # model_path="ckpt/1009/scene_model_wotxtemb_best_e27.pt", # without txt 
+                            
+                            # model_path="ckpt/1117/scene_model_wotxtemb.pt",
+                            model_path="ckpt/1117/scene_model_wotxtemb_best_e27.pt",
                             tag='',
                             val_size=64,         # 4096,
                             node_anchored=False, # True
