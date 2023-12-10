@@ -1,0 +1,628 @@
+cuda available
+here - feature_extract
+24
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.45517492294311523
+N:  7645715544_247_0
+D:  0.97985804
+N:  7645715544_235_0
+D:  0.97966456
+N:  7645715544_254_0
+D:  0.9796371
+N:  7645715544_238_0
+D:  0.9795392
+N:  7645715544_239_0
+D:  0.9794548
+N:  7645715544_240_0
+D:  0.97890526
+N:  7645715544_257_0
+D:  0.9788679
+N:  7645715544_304_3
+D:  0.97880685
+N:  7645715544_307_0
+D:  0.97838897
+N:  7645715544_234_0
+D:  0.97838247
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  0
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.008371829986572266
+N:  7645715544_247_0
+D:  0.97976184
+N:  7645715544_254_0
+D:  0.97958404
+N:  7645715544_235_0
+D:  0.9795528
+N:  7645715544_238_0
+D:  0.97942716
+N:  7645715544_239_0
+D:  0.979343
+N:  7645715544_257_0
+D:  0.97881913
+N:  7645715544_240_0
+D:  0.9787921
+N:  7645715544_304_3
+D:  0.9787019
+N:  7645715544_307_0
+D:  0.9782764
+N:  7645715544_234_0
+D:  0.9782657
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  1
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007964611053466797
+N:  7645715544_247_0
+D:  0.98036665
+N:  7645715544_254_0
+D:  0.9802615
+N:  7645715544_235_0
+D:  0.9797843
+N:  7645715544_238_0
+D:  0.97966117
+N:  7645715544_239_0
+D:  0.97959775
+N:  7645715544_257_0
+D:  0.97946423
+N:  7645715544_240_0
+D:  0.9790646
+N:  7645715544_304_3
+D:  0.9790088
+N:  7645715544_252_0
+D:  0.9788708
+N:  7645715544_307_0
+D:  0.9785883
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  2
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007937908172607422
+N:  7645715544_247_0
+D:  0.97965544
+N:  7645715544_254_0
+D:  0.9795443
+N:  7645715544_235_0
+D:  0.97944635
+N:  7645715544_238_0
+D:  0.9793175
+N:  7645715544_239_0
+D:  0.9792248
+N:  7645715544_257_0
+D:  0.97880566
+N:  7645715544_240_0
+D:  0.9786648
+N:  7645715544_304_3
+D:  0.978603
+N:  7645715544_307_0
+D:  0.97816676
+N:  7645715544_234_0
+D:  0.9781568
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  3
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.00783681869506836
+N:  7645715544_247_0
+D:  0.97959334
+N:  7645715544_254_0
+D:  0.97950876
+N:  7645715544_235_0
+D:  0.979382
+N:  7645715544_238_0
+D:  0.97925764
+N:  7645715544_239_0
+D:  0.9791658
+N:  7645715544_257_0
+D:  0.9787777
+N:  7645715544_240_0
+D:  0.9786062
+N:  7645715544_304_3
+D:  0.9785579
+N:  7645715544_307_0
+D:  0.97811
+N:  7645715544_234_0
+D:  0.9780854
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  4
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007851362228393555
+N:  7645715544_247_0
+D:  0.9796688
+N:  7645715544_254_0
+D:  0.97956043
+N:  7645715544_235_0
+D:  0.9794283
+N:  7645715544_238_0
+D:  0.97929454
+N:  7645715544_239_0
+D:  0.97920257
+N:  7645715544_257_0
+D:  0.9788163
+N:  7645715544_240_0
+D:  0.97864246
+N:  7645715544_304_3
+D:  0.97856885
+N:  7645715544_234_0
+D:  0.9781428
+N:  7645715544_307_0
+D:  0.97814083
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  5
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007860660552978516
+N:  7645715544_247_0
+D:  0.97964126
+N:  7645715544_254_0
+D:  0.97948414
+N:  7645715544_235_0
+D:  0.9794571
+N:  7645715544_238_0
+D:  0.97931623
+N:  7645715544_239_0
+D:  0.979219
+N:  7645715544_257_0
+D:  0.978732
+N:  7645715544_240_0
+D:  0.978655
+N:  7645715544_304_3
+D:  0.97855175
+N:  7645715544_234_0
+D:  0.97818077
+N:  7645715544_307_0
+D:  0.9781445
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  6
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.00785970687866211
+N:  7645715544_247_0
+D:  0.98010826
+N:  7645715544_235_0
+D:  0.97987455
+N:  7645715544_238_0
+D:  0.97974163
+N:  7645715544_254_0
+D:  0.9797292
+N:  7645715544_239_0
+D:  0.97966933
+N:  7645715544_240_0
+D:  0.97913307
+N:  7645715544_304_3
+D:  0.9789363
+N:  7645715544_257_0
+D:  0.9788967
+N:  7645715544_234_0
+D:  0.9786184
+N:  7645715544_307_0
+D:  0.9785798
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  7
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007854461669921875
+N:  7645715544_247_0
+D:  0.97977227
+N:  7645715544_235_0
+D:  0.9795796
+N:  7645715544_254_0
+D:  0.9795614
+N:  7645715544_238_0
+D:  0.9794508
+N:  7645715544_239_0
+D:  0.97936577
+N:  7645715544_240_0
+D:  0.9788144
+N:  7645715544_257_0
+D:  0.9787902
+N:  7645715544_304_3
+D:  0.9786992
+N:  7645715544_234_0
+D:  0.9782972
+N:  7645715544_307_0
+D:  0.9782894
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  8
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007851362228393555
+N:  7645715544_247_0
+D:  0.9799209
+N:  7645715544_235_0
+D:  0.9798446
+N:  7645715544_238_0
+D:  0.97971034
+N:  7645715544_239_0
+D:  0.9796234
+N:  7645715544_254_0
+D:  0.97954273
+N:  7645715544_240_0
+D:  0.9790751
+N:  7645715544_304_3
+D:  0.97888786
+N:  7645715544_257_0
+D:  0.9787313
+N:  7645715544_234_0
+D:  0.97858137
+N:  7645715544_307_0
+D:  0.9785257
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  9
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007850170135498047
+N:  7645715544_235_0
+D:  0.97978604
+N:  7645715544_247_0
+D:  0.9797716
+N:  7645715544_238_0
+D:  0.97964984
+N:  7645715544_239_0
+D:  0.9795605
+N:  7645715544_254_0
+D:  0.9793435
+N:  7645715544_240_0
+D:  0.9790106
+N:  7645715544_304_3
+D:  0.97879195
+N:  7645715544_257_0
+D:  0.9785286
+N:  7645715544_234_0
+D:  0.97852516
+N:  7645715544_307_0
+D:  0.9784391
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  10
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007846832275390625
+N:  4239231056_273_0
+D:  0.9935212
+N:  4239231056_269_0
+D:  0.993303
+N:  4239231056_271_0
+D:  0.9931224
+N:  4239231056_261_0
+D:  0.99310154
+N:  4239231056_260_0
+D:  0.9928104
+N:  4239231056_298_0
+D:  0.9840096
+N:  4239231056_329_0
+D:  0.9835051
+N:  7645715544_232_0
+D:  0.9747369
+N:  4239231056_326_1
+D:  0.97234625
+N:  4239231056_293_2
+D:  0.9721871
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  11
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007848978042602539
+N:  4239231056_273_0
+D:  0.9899029
+N:  4239231056_260_0
+D:  0.9897412
+N:  4239231056_261_0
+D:  0.989707
+N:  4239231056_269_0
+D:  0.98946804
+N:  4239231056_271_0
+D:  0.9892609
+N:  4239231056_329_0
+D:  0.9792815
+N:  4239231056_298_0
+D:  0.9788899
+N:  4239231056_294_1
+D:  0.9718646
+N:  4239231056_293_2
+D:  0.971754
+N:  4239231056_295_2
+D:  0.9714874
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  12
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007854938507080078
+N:  4239231056_273_0
+D:  0.991601
+N:  4239231056_261_0
+D:  0.99131465
+N:  4239231056_260_0
+D:  0.991301
+N:  4239231056_269_0
+D:  0.99111915
+N:  4239231056_271_0
+D:  0.9909801
+N:  4239231056_329_0
+D:  0.982107
+N:  4239231056_298_0
+D:  0.9818652
+N:  4239231056_294_1
+D:  0.97030497
+N:  4239231056_293_2
+D:  0.9702039
+N:  4239231056_295_2
+D:  0.9700142
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  13
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007820367813110352
+N:  4239231056_273_0
+D:  0.9919541
+N:  4239231056_261_0
+D:  0.9913846
+N:  4239231056_269_0
+D:  0.9913473
+N:  4239231056_271_0
+D:  0.991343
+N:  4239231056_260_0
+D:  0.9911565
+N:  4239231056_298_0
+D:  0.9840625
+N:  4239231056_329_0
+D:  0.9837688
+N:  7645715544_232_0
+D:  0.96859264
+N:  4239231056_293_2
+D:  0.96729434
+N:  4239231056_294_1
+D:  0.96718764
+Counter({"{'snowboard', 'adult'}": 239, "{'child', 'adult'}": 187, "{'child', 'snowboard', 'adult'}": 150, "{'adult'}": 18})
+============================================================
+쿼리 번호:  14
+쿼리 그래프:  [(0, 'child'), (4, 'adult'), (7, 'snowboard')]
+쿼리 그래프:  [(0, 4, 'in_front_of'), (4, 7, 'next_to')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.49591612815856934
+N:  7645715544_312_1
+D:  0.9618439
+N:  7645715544_309_2
+D:  0.9602397
+N:  7645715544_302_1
+D:  0.9574829
+N:  7645715544_232_1
+D:  0.9477415
+N:  7645715544_234_1
+D:  0.9466783
+N:  7645715544_235_1
+D:  0.9445643
+N:  7645715544_238_2
+D:  0.94028974
+N:  7645715544_244_2
+D:  0.9362472
+N:  7645715544_246_1
+D:  0.93542653
+N:  7645715544_245_1
+D:  0.9353187
+Counter({"{'child', 'adult'}": 337, "{'adult'}": 257})
+============================================================
+쿼리 번호:  15
+쿼리 그래프:  [(0, 'child'), (2, 'adult'), (3, 'adult')]
+쿼리 그래프:  [(0, 2, 'behind'), (0, 3, 'towards'), (2, 3, 'towards')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.008246660232543945
+N:  7645715544_312_1
+D:  0.9606486
+N:  7645715544_309_2
+D:  0.95921284
+N:  7645715544_302_1
+D:  0.95761436
+N:  7645715544_232_1
+D:  0.9518855
+N:  7645715544_234_1
+D:  0.95101565
+N:  7645715544_235_1
+D:  0.9491914
+N:  7645715544_238_2
+D:  0.94561535
+N:  7645715544_244_2
+D:  0.9432021
+N:  7645715544_246_1
+D:  0.9425229
+N:  7645715544_245_1
+D:  0.9423214
+Counter({"{'child', 'adult'}": 337, "{'adult'}": 257})
+============================================================
+쿼리 번호:  16
+쿼리 그래프:  [(0, 'child'), (2, 'adult'), (3, 'adult')]
+쿼리 그래프:  [(0, 2, 'behind'), (0, 3, 'towards'), (2, 3, 'towards')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.00822138786315918
+N:  7645715544_232_1
+D:  0.9563056
+N:  7645715544_244_2
+D:  0.9560308
+N:  7645715544_234_1
+D:  0.95575756
+N:  7645715544_246_1
+D:  0.95571375
+N:  7645715544_245_1
+D:  0.9553519
+N:  7645715544_235_1
+D:  0.9545554
+N:  7645715544_248_1
+D:  0.954185
+N:  7645715544_312_1
+D:  0.9540391
+N:  7645715544_302_1
+D:  0.95381033
+N:  7645715544_309_2
+D:  0.9529769
+Counter({"{'child', 'adult'}": 337, "{'adult'}": 257})
+============================================================
+쿼리 번호:  17
+쿼리 그래프:  [(0, 'child'), (2, 'adult'), (3, 'adult')]
+쿼리 그래프:  [(0, 2, 'behind'), (0, 3, 'towards'), (2, 3, 'towards')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007974386215209961
+N:  7645715544_246_1
+D:  0.9679632
+N:  7645715544_244_2
+D:  0.96759933
+N:  7645715544_245_1
+D:  0.9672961
+N:  7645715544_248_1
+D:  0.9672481
+N:  7645715544_238_2
+D:  0.95811015
+N:  7645715544_232_1
+D:  0.95795345
+N:  7645715544_234_1
+D:  0.9577322
+N:  7645715544_235_1
+D:  0.9574458
+N:  7645715544_254_2
+D:  0.9565879
+N:  7645715544_255_1
+D:  0.9473622
+Counter({"{'child', 'adult'}": 337, "{'adult'}": 257})
+============================================================
+쿼리 번호:  18
+쿼리 그래프:  [(0, 'child'), (2, 'adult'), (3, 'adult')]
+쿼리 그래프:  [(0, 2, 'behind'), (0, 3, 'towards'), (2, 3, 'towards')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007978439331054688
+N:  7645715544_246_1
+D:  0.96935457
+N:  7645715544_248_1
+D:  0.96906805
+N:  7645715544_244_2
+D:  0.96857965
+N:  7645715544_245_1
+D:  0.9684824
+N:  7645715544_254_2
+D:  0.95965064
+N:  7645715544_238_2
+D:  0.95884067
+N:  7645715544_232_1
+D:  0.9585185
+N:  7645715544_234_1
+D:  0.95824546
+N:  7645715544_235_1
+D:  0.9580447
+N:  7645715544_255_1
+D:  0.951174
+Counter({"{'child', 'adult'}": 337, "{'adult'}": 257})
+============================================================
+쿼리 번호:  19
+쿼리 그래프:  [(0, 'child'), (2, 'adult'), (3, 'adult')]
+쿼리 그래프:  [(0, 2, 'behind'), (0, 3, 'towards'), (2, 3, 'towards')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007935047149658203
+N:  7645715544_255_1
+D:  0.9686118
+N:  7645715544_256_2
+D:  0.9679759
+N:  7645715544_302_1
+D:  0.96542925
+N:  7645715544_254_2
+D:  0.96492356
+N:  7645715544_309_2
+D:  0.9572803
+N:  7645715544_312_1
+D:  0.9552409
+N:  7645715544_234_1
+D:  0.95437163
+N:  7645715544_235_1
+D:  0.9543296
+N:  7645715544_238_2
+D:  0.95328647
+N:  7645715544_232_1
+D:  0.95306003
+Counter({"{'child', 'adult'}": 337, "{'adult'}": 257})
+============================================================
+쿼리 번호:  20
+쿼리 그래프:  [(0, 'child'), (2, 'adult'), (3, 'adult')]
+쿼리 그래프:  [(0, 2, 'behind'), (0, 3, 'towards'), (2, 3, 'towards')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007952213287353516
+N:  7645715544_256_2
+D:  0.9688335
+N:  7645715544_255_1
+D:  0.9685824
+N:  7645715544_254_2
+D:  0.9620078
+N:  7645715544_302_1
+D:  0.953009
+N:  7645715544_235_1
+D:  0.9461554
+N:  7645715544_238_2
+D:  0.94568634
+N:  7645715544_234_1
+D:  0.94563615
+N:  7645715544_232_1
+D:  0.94376427
+N:  7645715544_246_1
+D:  0.9435059
+N:  7645715544_248_1
+D:  0.9431613
+Counter({"{'child', 'adult'}": 337, "{'adult'}": 257})
+============================================================
+쿼리 번호:  21
+쿼리 그래프:  [(0, 'child'), (2, 'adult'), (3, 'adult')]
+쿼리 그래프:  [(0, 2, 'behind'), (0, 3, 'towards'), (2, 3, 'towards')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007949352264404297
+N:  7645715544_309_2
+D:  0.9746643
+N:  7645715544_312_1
+D:  0.9744297
+N:  7645715544_302_1
+D:  0.97324574
+N:  7645715544_255_1
+D:  0.9283332
+N:  7645715544_256_2
+D:  0.92732334
+N:  7645715544_241_1
+D:  0.92652917
+N:  7645715544_242_1
+D:  0.9263733
+N:  7645715544_243_1
+D:  0.92578214
+N:  7645715544_240_1
+D:  0.92555803
+N:  7645715544_239_1
+D:  0.9241212
+Counter({"{'child', 'adult'}": 337, "{'adult'}": 257})
+============================================================
+쿼리 번호:  22
+쿼리 그래프:  [(0, 'child'), (2, 'adult'), (3, 'adult')]
+쿼리 그래프:  [(0, 2, 'behind'), (0, 3, 'towards'), (2, 3, 'towards')]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.007961511611938477
+N:  7645715544_312_1
+D:  0.96448445
+N:  7645715544_309_2
+D:  0.9626828
+N:  7645715544_302_1
+D:  0.9542161
+N:  7645715544_309_3
+D:  0.9031985
+N:  7645715544_312_2
+D:  0.90263826
+N:  7645715544_307_2
+D:  0.9019766
+N:  7645715544_315_2
+D:  0.90171397
+N:  7645715544_314_3
+D:  0.90155417
+N:  7645715544_317_2
+D:  0.90114844
+N:  7645715544_304_2
+D:  0.8999265
+Counter({"{'child', 'adult'}": 337, "{'adult'}": 257})
+============================================================
+쿼리 번호:  23
+쿼리 그래프:  [(0, 'child'), (2, 'adult'), (3, 'adult')]
+쿼리 그래프:  [(0, 2, 'behind'), (0, 3, 'towards'), (2, 3, 'towards')]
+[[<networkx.classes.graph.Graph object at 0x7f3c55153d00>, <networkx.classes.graph.Graph object at 0x7f3c55196700>, <networkx.classes.graph.Graph object at 0x7f3c550fbb20>, <networkx.classes.graph.Graph object at 0x7f3c55127550>, <networkx.classes.graph.Graph object at 0x7f3c5512e430>, <networkx.classes.graph.Graph object at 0x7f3c5512ee80>, <networkx.classes.graph.Graph object at 0x7f3c5510bac0>, <networkx.classes.graph.Graph object at 0x7f3c550ac1f0>, <networkx.classes.graph.Graph object at 0x7f3c550b32e0>, <networkx.classes.graph.Graph object at 0x7f3c5518fdf0>], [('7645715544_247_0', 0.97985804), ('7645715544_235_0', 0.97966456), ('7645715544_254_0', 0.9796371), ('7645715544_238_0', 0.9795392), ('7645715544_239_0', 0.9794548), ('7645715544_240_0', 0.97890526), ('7645715544_257_0', 0.9788679), ('7645715544_304_3', 0.97880685), ('7645715544_307_0', 0.97838897), ('7645715544_234_0', 0.97838247)], [<networkx.classes.graph.Graph object at 0x7f3c55153d00>, <networkx.classes.graph.Graph object at 0x7f3c550fbb20>, <networkx.classes.graph.Graph object at 0x7f3c55196700>, <networkx.classes.graph.Graph object at 0x7f3c55127550>, <networkx.classes.graph.Graph object at 0x7f3c5512e430>, <networkx.classes.graph.Graph object at 0x7f3c5510bac0>, <networkx.classes.graph.Graph object at 0x7f3c5512ee80>, <networkx.classes.graph.Graph object at 0x7f3c550ac1f0>, <networkx.classes.graph.Graph object at 0x7f3c550b32e0>, <networkx.classes.graph.Graph object at 0x7f3c5518fdf0>], [('7645715544_247_0', 0.97976184), ('7645715544_254_0', 0.97958404), ('7645715544_235_0', 0.9795528), ('7645715544_238_0', 0.97942716), ('7645715544_239_0', 0.979343), ('7645715544_257_0', 0.97881913), ('7645715544_240_0', 0.9787921), ('7645715544_304_3', 0.9787019), ('7645715544_307_0', 0.9782764), ('7645715544_234_0', 0.9782657)], [<networkx.classes.graph.Graph object at 0x7f3c55153d00>, <networkx.classes.graph.Graph object at 0x7f3c550fbb20>, <networkx.classes.graph.Graph object at 0x7f3c55196700>, <networkx.classes.graph.Graph object at 0x7f3c55127550>, <networkx.classes.graph.Graph object at 0x7f3c5512e430>, <networkx.classes.graph.Graph object at 0x7f3c5510bac0>, <networkx.classes.graph.Graph object at 0x7f3c5512ee80>, <networkx.classes.graph.Graph object at 0x7f3c550ac1f0>, <networkx.classes.graph.Graph object at 0x7f3c550f5220>, <networkx.classes.graph.Graph object at 0x7f3c550b32e0>], [('7645715544_247_0', 0.98036665), ('7645715544_254_0', 0.9802615), ('7645715544_235_0', 0.9797843), ('7645715544_238_0', 0.97966117), ('7645715544_239_0', 0.97959775), ('7645715544_257_0', 0.97946423), ('7645715544_240_0', 0.9790646), ('7645715544_304_3', 0.9790088), ('7645715544_252_0', 0.9788708), ('7645715544_307_0', 0.9785883)], [<networkx.classes.graph.Graph object at 0x7f3c55153d00>, <networkx.classes.graph.Graph object at 0x7f3c550fbb20>, <networkx.classes.graph.Graph object at 0x7f3c55196700>, <networkx.classes.graph.Graph object at 0x7f3c55127550>, <networkx.classes.graph.Graph object at 0x7f3c5512e430>, <networkx.classes.graph.Graph object at 0x7f3c5510bac0>, <networkx.classes.graph.Graph object at 0x7f3c5512ee80>, <networkx.classes.graph.Graph object at 0x7f3c550ac1f0>, <networkx.classes.graph.Graph object at 0x7f3c550b32e0>, <networkx.classes.graph.Graph object at 0x7f3c5518fdf0>], [('7645715544_247_0', 0.97965544), ('7645715544_254_0', 0.9795443), ('7645715544_235_0', 0.97944635), ('7645715544_238_0', 0.9793175), ('7645715544_239_0', 0.9792248), ('7645715544_257_0', 0.97880566), ('7645715544_240_0', 0.9786648), ('7645715544_304_3', 0.978603), ('7645715544_307_0', 0.97816676), ('7645715544_234_0', 0.9781568)], [<networkx.classes.graph.Graph object at 0x7f3c55153d00>, <networkx.classes.graph.Graph object at 0x7f3c550fbb20>, <networkx.classes.graph.Graph object at 0x7f3c55196700>, <networkx.classes.graph.Graph object at 0x7f3c55127550>, <networkx.classes.graph.Graph object at 0x7f3c5512e430>, <networkx.classes.graph.Graph object at 0x7f3c5510bac0>, <networkx.classes.graph.Graph object at 0x7f3c5512ee80>, <networkx.classes.graph.Graph object at 0x7f3c550ac1f0>, <networkx.classes.graph.Graph object at 0x7f3c550b32e0>, <networkx.classes.graph.Graph object at 0x7f3c5518fdf0>], [('7645715544_247_0', 0.97959334), ('7645715544_254_0', 0.97950876), ('7645715544_235_0', 0.979382), ('7645715544_238_0', 0.97925764), ('7645715544_239_0', 0.9791658), ('7645715544_257_0', 0.9787777), ('7645715544_240_0', 0.9786062), ('7645715544_304_3', 0.9785579), ('7645715544_307_0', 0.97811), ('7645715544_234_0', 0.9780854)], [<networkx.classes.graph.Graph object at 0x7f3c55153d00>, <networkx.classes.graph.Graph object at 0x7f3c550fbb20>, <networkx.classes.graph.Graph object at 0x7f3c55196700>, <networkx.classes.graph.Graph object at 0x7f3c55127550>, <networkx.classes.graph.Graph object at 0x7f3c5512e430>, <networkx.classes.graph.Graph object at 0x7f3c5510bac0>, <networkx.classes.graph.Graph object at 0x7f3c5512ee80>, <networkx.classes.graph.Graph object at 0x7f3c550ac1f0>, <networkx.classes.graph.Graph object at 0x7f3c5518fdf0>, <networkx.classes.graph.Graph object at 0x7f3c550b32e0>], [('7645715544_247_0', 0.9796688), ('7645715544_254_0', 0.97956043), ('7645715544_235_0', 0.9794283), ('7645715544_238_0', 0.97929454), ('7645715544_239_0', 0.97920257), ('7645715544_257_0', 0.9788163), ('7645715544_240_0', 0.97864246), ('7645715544_304_3', 0.97856885), ('7645715544_234_0', 0.9781428), ('7645715544_307_0', 0.97814083)], [<networkx.classes.graph.Graph object at 0x7f3c55153d00>, <networkx.classes.graph.Graph object at 0x7f3c550fbb20>, <networkx.classes.graph.Graph object at 0x7f3c55196700>, <networkx.classes.graph.Graph object at 0x7f3c55127550>, <networkx.classes.graph.Graph object at 0x7f3c5512e430>, <networkx.classes.graph.Graph object at 0x7f3c5510bac0>, <networkx.classes.graph.Graph object at 0x7f3c5512ee80>, <networkx.classes.graph.Graph object at 0x7f3c550ac1f0>, <networkx.classes.graph.Graph object at 0x7f3c5518fdf0>, <networkx.classes.graph.Graph object at 0x7f3c550b32e0>], [('7645715544_247_0', 0.97964126), ('7645715544_254_0', 0.97948414), ('7645715544_235_0', 0.9794571), ('7645715544_238_0', 0.97931623), ('7645715544_239_0', 0.979219), ('7645715544_257_0', 0.978732), ('7645715544_240_0', 0.978655), ('7645715544_304_3', 0.97855175), ('7645715544_234_0', 0.97818077), ('7645715544_307_0', 0.9781445)], [<networkx.classes.graph.Graph object at 0x7f3c55153d00>, <networkx.classes.graph.Graph object at 0x7f3c55196700>, <networkx.classes.graph.Graph object at 0x7f3c55127550>, <networkx.classes.graph.Graph object at 0x7f3c550fbb20>, <networkx.classes.graph.Graph object at 0x7f3c5512e430>, <networkx.classes.graph.Graph object at 0x7f3c5512ee80>, <networkx.classes.graph.Graph object at 0x7f3c550ac1f0>, <networkx.classes.graph.Graph object at 0x7f3c5510bac0>, <networkx.classes.graph.Graph object at 0x7f3c5518fdf0>, <networkx.classes.graph.Graph object at 0x7f3c550b32e0>], [('7645715544_247_0', 0.98010826), ('7645715544_235_0', 0.97987455), ('7645715544_238_0', 0.97974163), ('7645715544_254_0', 0.9797292), ('7645715544_239_0', 0.97966933), ('7645715544_240_0', 0.97913307), ('7645715544_304_3', 0.9789363), ('7645715544_257_0', 0.9788967), ('7645715544_234_0', 0.9786184), ('7645715544_307_0', 0.9785798)], [<networkx.classes.graph.Graph object at 0x7f3c55153d00>, <networkx.classes.graph.Graph object at 0x7f3c55196700>, <networkx.classes.graph.Graph object at 0x7f3c550fbb20>, <networkx.classes.graph.Graph object at 0x7f3c55127550>, <networkx.classes.graph.Graph object at 0x7f3c5512e430>, <networkx.classes.graph.Graph object at 0x7f3c5512ee80>, <networkx.classes.graph.Graph object at 0x7f3c5510bac0>, <networkx.classes.graph.Graph object at 0x7f3c550ac1f0>, <networkx.classes.graph.Graph object at 0x7f3c5518fdf0>, <networkx.classes.graph.Graph object at 0x7f3c550b32e0>], [('7645715544_247_0', 0.97977227), ('7645715544_235_0', 0.9795796), ('7645715544_254_0', 0.9795614), ('7645715544_238_0', 0.9794508), ('7645715544_239_0', 0.97936577), ('7645715544_240_0', 0.9788144), ('7645715544_257_0', 0.9787902), ('7645715544_304_3', 0.9786992), ('7645715544_234_0', 0.9782972), ('7645715544_307_0', 0.9782894)], [<networkx.classes.graph.Graph object at 0x7f3c55153d00>, <networkx.classes.graph.Graph object at 0x7f3c55196700>, <networkx.classes.graph.Graph object at 0x7f3c55127550>, <networkx.classes.graph.Graph object at 0x7f3c5512e430>, <networkx.classes.graph.Graph object at 0x7f3c550fbb20>, <networkx.classes.graph.Graph object at 0x7f3c5512ee80>, <networkx.classes.graph.Graph object at 0x7f3c550ac1f0>, <networkx.classes.graph.Graph object at 0x7f3c5510bac0>, <networkx.classes.graph.Graph object at 0x7f3c5518fdf0>, <networkx.classes.graph.Graph object at 0x7f3c550b32e0>], [('7645715544_247_0', 0.9799209), ('7645715544_235_0', 0.9798446), ('7645715544_238_0', 0.97971034), ('7645715544_239_0', 0.9796234), ('7645715544_254_0', 0.97954273), ('7645715544_240_0', 0.9790751), ('7645715544_304_3', 0.97888786), ('7645715544_257_0', 0.9787313), ('7645715544_234_0', 0.97858137), ('7645715544_307_0', 0.9785257)], [<networkx.classes.graph.Graph object at 0x7f3c55196700>, <networkx.classes.graph.Graph object at 0x7f3c55153d00>, <networkx.classes.graph.Graph object at 0x7f3c55127550>, <networkx.classes.graph.Graph object at 0x7f3c5512e430>, <networkx.classes.graph.Graph object at 0x7f3c550fbb20>, <networkx.classes.graph.Graph object at 0x7f3c5512ee80>, <networkx.classes.graph.Graph object at 0x7f3c550ac1f0>, <networkx.classes.graph.Graph object at 0x7f3c5510bac0>, <networkx.classes.graph.Graph object at 0x7f3c5518fdf0>, <networkx.classes.graph.Graph object at 0x7f3c550b32e0>], [('7645715544_235_0', 0.97978604), ('7645715544_247_0', 0.9797716), ('7645715544_238_0', 0.97964984), ('7645715544_239_0', 0.9795605), ('7645715544_254_0', 0.9793435), ('7645715544_240_0', 0.9790106), ('7645715544_304_3', 0.97879195), ('7645715544_257_0', 0.9785286), ('7645715544_234_0', 0.97852516), ('7645715544_307_0', 0.9784391)], [<networkx.classes.graph.Graph object at 0x7f3c55259af0>, <networkx.classes.graph.Graph object at 0x7f3c552c93d0>, <networkx.classes.graph.Graph object at 0x7f3c552d3130>, <networkx.classes.graph.Graph object at 0x7f3c55299ac0>, <networkx.classes.graph.Graph object at 0x7f3c55310eb0>, <networkx.classes.graph.Graph object at 0x7f3c551da730>, <networkx.classes.graph.Graph object at 0x7f3c5517daf0>, <networkx.classes.graph.Graph object at 0x7f3c55187730>, <networkx.classes.graph.Graph object at 0x7f3c5516fac0>, <networkx.classes.graph.Graph object at 0x7f3c55245ee0>], [('4239231056_273_0', 0.9935212), ('4239231056_269_0', 0.993303), ('4239231056_271_0', 0.9931224), ('4239231056_261_0', 0.99310154), ('4239231056_260_0', 0.9928104), ('4239231056_298_0', 0.9840096), ('4239231056_329_0', 0.9835051), ('7645715544_232_0', 0.9747369), ('4239231056_326_1', 0.97234625), ('4239231056_293_2', 0.9721871)], [<networkx.classes.graph.Graph object at 0x7f3c55259af0>, <networkx.classes.graph.Graph object at 0x7f3c55310eb0>, <networkx.classes.graph.Graph object at 0x7f3c55299ac0>, <networkx.classes.graph.Graph object at 0x7f3c552c93d0>, <networkx.classes.graph.Graph object at 0x7f3c552d3130>, <networkx.classes.graph.Graph object at 0x7f3c5517daf0>, <networkx.classes.graph.Graph object at 0x7f3c551da730>, <networkx.classes.graph.Graph object at 0x7f3c5524caf0>, <networkx.classes.graph.Graph object at 0x7f3c55245ee0>, <networkx.classes.graph.Graph object at 0x7f3c55245520>], [('4239231056_273_0', 0.9899029), ('4239231056_260_0', 0.9897412), ('4239231056_261_0', 0.989707), ('4239231056_269_0', 0.98946804), ('4239231056_271_0', 0.9892609), ('4239231056_329_0', 0.9792815), ('4239231056_298_0', 0.9788899), ('4239231056_294_1', 0.9718646), ('4239231056_293_2', 0.971754), ('4239231056_295_2', 0.9714874)], [<networkx.classes.graph.Graph object at 0x7f3c55259af0>, <networkx.classes.graph.Graph object at 0x7f3c55299ac0>, <networkx.classes.graph.Graph object at 0x7f3c55310eb0>, <networkx.classes.graph.Graph object at 0x7f3c552c93d0>, <networkx.classes.graph.Graph object at 0x7f3c552d3130>, <networkx.classes.graph.Graph object at 0x7f3c5517daf0>, <networkx.classes.graph.Graph object at 0x7f3c551da730>, <networkx.classes.graph.Graph object at 0x7f3c5524caf0>, <networkx.classes.graph.Graph object at 0x7f3c55245ee0>, <networkx.classes.graph.Graph object at 0x7f3c55245520>], [('4239231056_273_0', 0.991601), ('4239231056_261_0', 0.99131465), ('4239231056_260_0', 0.991301), ('4239231056_269_0', 0.99111915), ('4239231056_271_0', 0.9909801), ('4239231056_329_0', 0.982107), ('4239231056_298_0', 0.9818652), ('4239231056_294_1', 0.97030497), ('4239231056_293_2', 0.9702039), ('4239231056_295_2', 0.9700142)], [<networkx.classes.graph.Graph object at 0x7f3c55259af0>, <networkx.classes.graph.Graph object at 0x7f3c55299ac0>, <networkx.classes.graph.Graph object at 0x7f3c552c93d0>, <networkx.classes.graph.Graph object at 0x7f3c552d3130>, <networkx.classes.graph.Graph object at 0x7f3c55310eb0>, <networkx.classes.graph.Graph object at 0x7f3c551da730>, <networkx.classes.graph.Graph object at 0x7f3c5517daf0>, <networkx.classes.graph.Graph object at 0x7f3c55187730>, <networkx.classes.graph.Graph object at 0x7f3c55245ee0>, <networkx.classes.graph.Graph object at 0x7f3c5524caf0>], [('4239231056_273_0', 0.9919541), ('4239231056_261_0', 0.9913846), ('4239231056_269_0', 0.9913473), ('4239231056_271_0', 0.991343), ('4239231056_260_0', 0.9911565), ('4239231056_298_0', 0.9840625), ('4239231056_329_0', 0.9837688), ('7645715544_232_0', 0.96859264), ('4239231056_293_2', 0.96729434), ('4239231056_294_1', 0.96718764)], [<networkx.classes.graph.Graph object at 0x7f3c550d21f0>, <networkx.classes.graph.Graph object at 0x7f3c550c24f0>, <networkx.classes.graph.Graph object at 0x7f3c5509b5b0>, <networkx.classes.graph.Graph object at 0x7f3c5518f430>, <networkx.classes.graph.Graph object at 0x7f3c551963a0>, <networkx.classes.graph.Graph object at 0x7f3c5511e130>, <networkx.classes.graph.Graph object at 0x7f3c5512e2b0>, <networkx.classes.graph.Graph object at 0x7f3c5514c640>, <networkx.classes.graph.Graph object at 0x7f3c55153850>, <networkx.classes.graph.Graph object at 0x7f3c551533d0>], [('7645715544_312_1', 0.9618439), ('7645715544_309_2', 0.9602397), ('7645715544_302_1', 0.9574829), ('7645715544_232_1', 0.9477415), ('7645715544_234_1', 0.9466783), ('7645715544_235_1', 0.9445643), ('7645715544_238_2', 0.94028974), ('7645715544_244_2', 0.9362472), ('7645715544_246_1', 0.93542653), ('7645715544_245_1', 0.9353187)], [<networkx.classes.graph.Graph object at 0x7f3c550d21f0>, <networkx.classes.graph.Graph object at 0x7f3c550c24f0>, <networkx.classes.graph.Graph object at 0x7f3c5509b5b0>, <networkx.classes.graph.Graph object at 0x7f3c5518f430>, <networkx.classes.graph.Graph object at 0x7f3c551963a0>, <networkx.classes.graph.Graph object at 0x7f3c5511e130>, <networkx.classes.graph.Graph object at 0x7f3c5512e2b0>, <networkx.classes.graph.Graph object at 0x7f3c5514c640>, <networkx.classes.graph.Graph object at 0x7f3c55153850>, <networkx.classes.graph.Graph object at 0x7f3c551533d0>], [('7645715544_312_1', 0.9606486), ('7645715544_309_2', 0.95921284), ('7645715544_302_1', 0.95761436), ('7645715544_232_1', 0.9518855), ('7645715544_234_1', 0.95101565), ('7645715544_235_1', 0.9491914), ('7645715544_238_2', 0.94561535), ('7645715544_244_2', 0.9432021), ('7645715544_246_1', 0.9425229), ('7645715544_245_1', 0.9423214)], [<networkx.classes.graph.Graph object at 0x7f3c5518f430>, <networkx.classes.graph.Graph object at 0x7f3c5514c640>, <networkx.classes.graph.Graph object at 0x7f3c551963a0>, <networkx.classes.graph.Graph object at 0x7f3c55153850>, <networkx.classes.graph.Graph object at 0x7f3c551533d0>, <networkx.classes.graph.Graph object at 0x7f3c5511e130>, <networkx.classes.graph.Graph object at 0x7f3c550e3190>, <networkx.classes.graph.Graph object at 0x7f3c550d21f0>, <networkx.classes.graph.Graph object at 0x7f3c5509b5b0>, <networkx.classes.graph.Graph object at 0x7f3c550c24f0>], [('7645715544_232_1', 0.9563056), ('7645715544_244_2', 0.9560308), ('7645715544_234_1', 0.95575756), ('7645715544_246_1', 0.95571375), ('7645715544_245_1', 0.9553519), ('7645715544_235_1', 0.9545554), ('7645715544_248_1', 0.954185), ('7645715544_312_1', 0.9540391), ('7645715544_302_1', 0.95381033), ('7645715544_309_2', 0.9529769)], [<networkx.classes.graph.Graph object at 0x7f3c55153850>, <networkx.classes.graph.Graph object at 0x7f3c5514c640>, <networkx.classes.graph.Graph object at 0x7f3c551533d0>, <networkx.classes.graph.Graph object at 0x7f3c550e3190>, <networkx.classes.graph.Graph object at 0x7f3c5512e2b0>, <networkx.classes.graph.Graph object at 0x7f3c5518f430>, <networkx.classes.graph.Graph object at 0x7f3c551963a0>, <networkx.classes.graph.Graph object at 0x7f3c5511e130>, <networkx.classes.graph.Graph object at 0x7f3c55102850>, <networkx.classes.graph.Graph object at 0x7f3c55102b50>], [('7645715544_246_1', 0.9679632), ('7645715544_244_2', 0.96759933), ('7645715544_245_1', 0.9672961), ('7645715544_248_1', 0.9672481), ('7645715544_238_2', 0.95811015), ('7645715544_232_1', 0.95795345), ('7645715544_234_1', 0.9577322), ('7645715544_235_1', 0.9574458), ('7645715544_254_2', 0.9565879), ('7645715544_255_1', 0.9473622)], [<networkx.classes.graph.Graph object at 0x7f3c55153850>, <networkx.classes.graph.Graph object at 0x7f3c550e3190>, <networkx.classes.graph.Graph object at 0x7f3c5514c640>, <networkx.classes.graph.Graph object at 0x7f3c551533d0>, <networkx.classes.graph.Graph object at 0x7f3c55102850>, <networkx.classes.graph.Graph object at 0x7f3c5512e2b0>, <networkx.classes.graph.Graph object at 0x7f3c5518f430>, <networkx.classes.graph.Graph object at 0x7f3c551963a0>, <networkx.classes.graph.Graph object at 0x7f3c5511e130>, <networkx.classes.graph.Graph object at 0x7f3c55102b50>], [('7645715544_246_1', 0.96935457), ('7645715544_248_1', 0.96906805), ('7645715544_244_2', 0.96857965), ('7645715544_245_1', 0.9684824), ('7645715544_254_2', 0.95965064), ('7645715544_238_2', 0.95884067), ('7645715544_232_1', 0.9585185), ('7645715544_234_1', 0.95824546), ('7645715544_235_1', 0.9580447), ('7645715544_255_1', 0.951174)], [<networkx.classes.graph.Graph object at 0x7f3c55102b50>, <networkx.classes.graph.Graph object at 0x7f3c5510b7c0>, <networkx.classes.graph.Graph object at 0x7f3c5509b5b0>, <networkx.classes.graph.Graph object at 0x7f3c55102850>, <networkx.classes.graph.Graph object at 0x7f3c550c24f0>, <networkx.classes.graph.Graph object at 0x7f3c550d21f0>, <networkx.classes.graph.Graph object at 0x7f3c551963a0>, <networkx.classes.graph.Graph object at 0x7f3c5511e130>, <networkx.classes.graph.Graph object at 0x7f3c5512e2b0>, <networkx.classes.graph.Graph object at 0x7f3c5518f430>], [('7645715544_255_1', 0.9686118), ('7645715544_256_2', 0.9679759), ('7645715544_302_1', 0.96542925), ('7645715544_254_2', 0.96492356), ('7645715544_309_2', 0.9572803), ('7645715544_312_1', 0.9552409), ('7645715544_234_1', 0.95437163), ('7645715544_235_1', 0.9543296), ('7645715544_238_2', 0.95328647), ('7645715544_232_1', 0.95306003)], [<networkx.classes.graph.Graph object at 0x7f3c5510b7c0>, <networkx.classes.graph.Graph object at 0x7f3c55102b50>, <networkx.classes.graph.Graph object at 0x7f3c55102850>, <networkx.classes.graph.Graph object at 0x7f3c5509b5b0>, <networkx.classes.graph.Graph object at 0x7f3c5511e130>, <networkx.classes.graph.Graph object at 0x7f3c5512e2b0>, <networkx.classes.graph.Graph object at 0x7f3c551963a0>, <networkx.classes.graph.Graph object at 0x7f3c5518f430>, <networkx.classes.graph.Graph object at 0x7f3c55153850>, <networkx.classes.graph.Graph object at 0x7f3c550e3190>], [('7645715544_256_2', 0.9688335), ('7645715544_255_1', 0.9685824), ('7645715544_254_2', 0.9620078), ('7645715544_302_1', 0.953009), ('7645715544_235_1', 0.9461554), ('7645715544_238_2', 0.94568634), ('7645715544_234_1', 0.94563615), ('7645715544_232_1', 0.94376427), ('7645715544_246_1', 0.9435059), ('7645715544_248_1', 0.9431613)], [<networkx.classes.graph.Graph object at 0x7f3c550c24f0>, <networkx.classes.graph.Graph object at 0x7f3c550d21f0>, <networkx.classes.graph.Graph object at 0x7f3c5509b5b0>, <networkx.classes.graph.Graph object at 0x7f3c55102b50>, <networkx.classes.graph.Graph object at 0x7f3c5510b7c0>, <networkx.classes.graph.Graph object at 0x7f3c5513e6d0>, <networkx.classes.graph.Graph object at 0x7f3c5513ebb0>, <networkx.classes.graph.Graph object at 0x7f3c551456d0>, <networkx.classes.graph.Graph object at 0x7f3c55136910>, <networkx.classes.graph.Graph object at 0x7f3c5512eb50>], [('7645715544_309_2', 0.9746643), ('7645715544_312_1', 0.9744297), ('7645715544_302_1', 0.97324574), ('7645715544_255_1', 0.9283332), ('7645715544_256_2', 0.92732334), ('7645715544_241_1', 0.92652917), ('7645715544_242_1', 0.9263733), ('7645715544_243_1', 0.92578214), ('7645715544_240_1', 0.92555803), ('7645715544_239_1', 0.9241212)], [<networkx.classes.graph.Graph object at 0x7f3c550d21f0>, <networkx.classes.graph.Graph object at 0x7f3c550c24f0>, <networkx.classes.graph.Graph object at 0x7f3c5509b5b0>, <networkx.classes.graph.Graph object at 0x7f3c550c2670>, <networkx.classes.graph.Graph object at 0x7f3c550d23a0>, <networkx.classes.graph.Graph object at 0x7f3c550b3fa0>, <networkx.classes.graph.Graph object at 0x7f3c550606a0>, <networkx.classes.graph.Graph object at 0x7f3c550600a0>, <networkx.classes.graph.Graph object at 0x7f3c5506aca0>, <networkx.classes.graph.Graph object at 0x7f3c550ac070>], [('7645715544_312_1', 0.96448445), ('7645715544_309_2', 0.9626828), ('7645715544_302_1', 0.9542161), ('7645715544_309_3', 0.9031985), ('7645715544_312_2', 0.90263826), ('7645715544_307_2', 0.9019766), ('7645715544_315_2', 0.90171397), ('7645715544_314_3', 0.90155417), ('7645715544_317_2', 0.90114844), ('7645715544_304_2', 0.8999265)]]

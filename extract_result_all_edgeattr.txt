@@ -1,0 +1,816 @@
+len(db):  548
+len(db):  1327
+total len(db):  1327
+db_data:  Batch(G=[1327], batch=[7500], bbox=[1327], edge_feature=[29766, 13], edge_index=[2, 29766], edge_label_index=[2, 29766], fid=[7500], generated=[7500], name=[1327], node_feature=[7500, 13], node_label_index=[7500], rpe=[7500, 3], tracker=[1327], txtemb=[1327])
+here - feature_extract
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.0465695858001709
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_551', 0.17922167), ('6673828083_541', 0.17942798), ('6673828083_542', 0.17949456), ('6673828083_540', 0.17950459), ('6673828083_545', 0.17952603), ('6673828083_543', 0.17953849), ('6673828083_546', 0.1795576), ('6673828083_544', 0.17963362), ('6673828083_547', 0.17964837), ('6673828083_548', 0.17979185)]
+Q graph nodes : {'sofa', 'toy', 'child'}
+Q graph edges : [(1, 11, {'distance': 260.22730448590517, 'angle_AB': 138.03733582295249, 'angle_BA': -41.96266417704752, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)}), (1, 5, {'distance': 407.61808105136845, 'angle_AB': 132.7133624859215, 'angle_BA': -47.28663751407851, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (1, 12, {'distance': 533.5215553283672, 'angle_AB': 134.65827972074462, 'angle_BA': -45.3417202792554, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (5, 11, {'distance': 150.46345071146015, 'angle_AB': -56.52116019730421, 'angle_BA': 123.47883980269579, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (5, 12, {'distance': 126.89464133681926, 'angle_AB': 140.91709214183155, 'angle_BA': -39.08290785816846, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (11, 12, {'distance': 274.17603834033343, 'angle_AB': 131.45131802609555, 'angle_BA': -48.54868197390444, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)})]
+n:  6673828083_551
+sim:  0.17922167
+db_idx.index(n) :  922
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_541
+sim:  0.17942798
+db_idx.index(n) :  912
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_542
+sim:  0.17949456
+db_idx.index(n) :  913
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_540
+sim:  0.17950459
+db_idx.index(n) :  911
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_545
+sim:  0.17952603
+db_idx.index(n) :  916
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_543
+sim:  0.17953849
+db_idx.index(n) :  914
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_546
+sim:  0.1795576
+db_idx.index(n) :  917
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_544
+sim:  0.17963362
+db_idx.index(n) :  915
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_547
+sim:  0.17964837
+db_idx.index(n) :  918
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_548
+sim:  0.17979185
+db_idx.index(n) :  919
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+@@@@@@
+  qid: 0
+vId_fId: 3802296828_1195 
+duplicate: [('next_to', 255.4955975060358, 173.31465713092598, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 171.96473395016557, 29.591178965673876, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 38.19522036188704, 15.489369532534127, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 176.0527554950581, 78.22227733878944, ('toy', 'sofa'), ('child', 'sofa')), ('next_to', 381.3990717830345, 175.25957436574907, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 297.8682082271643, 31.536096200497, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 164.09869463888577, 17.43428676735725, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 301.9562297720569, 80.16719457361256, ('toy', 'sofa'), ('child', 'sofa')), ('in_front_of', 183.77037462643108, 211.75799241682859, ('sofa', 'child'), ('sofa', 'child')), ('next_to', 25.22784220851338, 181.518386786836, ('sofa', 'sofa'), ('toy', 'sofa')), ('next_to', 108.75870576438362, 37.79490862158393, ('sofa', 'sofa'), ('toy', 'sofa')), ('next_to', 242.52821935266215, 23.69309918844418, ('sofa', 'sofa'), ('sofa', 'sofa')), ('next_to', 104.67068421949108, 86.42600699469949, ('sofa', 'sofa'), ('child', 'sofa')), ('next_to', 122.05355479500079, 172.0526126711, ('child', 'sofa'), ('toy', 'sofa')), ('next_to', 38.52269123913055, 28.329134505847932, ('child', 'sofa'), ('toy', 'sofa')), ('next_to', 95.24682234914798, 14.227325072708183, ('child', 'sofa'), ('sofa', 'sofa')), ('next_to', 42.61071278402309, 76.9602328789635, ('child', 'sofa'), ('child', 'sofa'))]
+@@@@@@
+  qid: 0
+vId_fId: 3802296828_1196 
+duplicate: [('next_to', 254.73495575625944, 173.0707602876238, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 172.33739761135462, 29.44495462963505, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 37.95032481612412, 15.2471815838488, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 180.3539175763498, 78.22173297635311, ('toy', 'sofa'), ('child', 'sofa')), ('next_to', 380.63843003325815, 175.01567752244694, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 298.24087188835335, 31.389871864458172, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 163.85379909312286, 17.192098818671923, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 306.2573918533485, 80.16665021117623, ('toy', 'sofa'), ('child', 'sofa')), ('in_front_of', 184.13369512215274, 211.21978157188448, ('sofa', 'child'), ('sofa', 'child')), ('next_to', 25.98848395828975, 181.27448994353387, ('sofa', 'sofa'), ('toy', 'sofa')), ('next_to', 108.38604210319457, 37.6486842855451, ('sofa', 'sofa'), ('toy', 'sofa')), ('next_to', 242.77311489842506, 23.450911239758852, ('sofa', 'sofa'), ('sofa', 'sofa')), ('next_to', 100.36952213819939, 86.42546263226316, ('sofa', 'sofa'), ('child', 'sofa')), ('next_to', 121.29291304522442, 171.80871582779787, ('child', 'sofa'), ('toy', 'sofa')), ('next_to', 38.8953549003196, 28.182910169809105, ('child', 'sofa'), ('toy', 'sofa')), ('next_to', 95.49171789491089, 13.985137124022856, ('child', 'sofa'), ('sofa', 'sofa')), ('next_to', 46.911874865314786, 76.95968851652717, ('child', 'sofa'), ('child', 'sofa'))]
+@@@@@@
+  qid: 0
+vId_fId: 3802296828_1197 
+duplicate: [('next_to', 255.4955975060358, 173.31465713092598, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 173.07810578062703, 29.151116721472164, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 38.83731962257593, 15.175523151863075, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 183.14313812900127, 78.10268281682801, ('toy', 'sofa'), ('child', 'sofa')), ('next_to', 381.3990717830345, 175.25957436574907, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 298.98158005762576, 31.096033956295287, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 164.74079389957467, 17.120440386686198, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 309.046612406, 80.04760005165113, ('toy', 'sofa'), ('child', 'sofa')), ('in_front_of', 182.75757203470454, 210.91735740625097, ('sofa', 'child'), ('sofa', 'child')), ('next_to', 25.22784220851338, 181.518386786836, ('sofa', 'sofa'), ('toy', 'sofa')), ('next_to', 107.64533393392216, 37.354846377382216, ('sofa', 'sofa'), ('toy', 'sofa')), ('next_to', 241.88612009197325, 23.379252807773128, ('sofa', 'sofa'), ('sofa', 'sofa')), ('next_to', 97.58030158554791, 86.30641247273806, ('sofa', 'sofa'), ('child', 'sofa')), ('next_to', 122.05355479500079, 172.0526126711, ('child', 'sofa'), ('toy', 'sofa')), ('next_to', 39.63606306959201, 27.88907226164622, ('child', 'sofa'), ('toy', 'sofa')), ('next_to', 94.60472308845908, 13.913478692037131, ('child', 'sofa'), ('sofa', 'sofa')), ('next_to', 49.70109541796626, 76.84063835700206, ('child', 'sofa'), ('child', 'sofa'))]
+@@@@@@
+  qid: 0
+vId_fId: 3802296828_1190 
+duplicate: [('next_to', 251.7134627746798, 170.02427089257733, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 164.04057798509592, 31.58795684416276, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 32.833809769875074, 15.567168797114206, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 161.17133223937864, 78.46724974035824, ('toy', 'sofa'), ('child', 'sofa')), ('next_to', 377.6169370516785, 171.96918812740046, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 289.94405226209466, 33.532874078985884, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 158.7372840468738, 17.51208603193733, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 287.0748065163774, 80.41216697518136, ('toy', 'sofa'), ('child', 'sofa')), ('in_front_of', 191.6582381654656, 213.5534667967433, ('sofa', 'child'), ('sofa', 'child')), ('next_to', 29.009976939869375, 178.2280005484874, ('sofa', 'sofa'), ('toy', 'sofa')), ('next_to', 116.68286172945326, 39.791686500072814, ('sofa', 'sofa'), ('toy', 'sofa')), ('next_to', 247.8896299446741, 23.77089845302426, ('sofa', 'sofa'), ('sofa', 'sofa')), ('next_to', 119.55210747517054, 86.6709793962683, ('sofa', 'sofa'), ('child', 'sofa')), ('next_to', 118.2714200636448, 168.7622264327514, ('child', 'sofa'), ('toy', 'sofa')), ('next_to', 30.598535274060907, 30.325912384336817, ('child', 'sofa'), ('toy', 'sofa')), ('next_to', 100.60823294115994, 14.305124337288262, ('child', 'sofa'), ('sofa', 'sofa')), ('next_to', 27.729289528343628, 77.2052052805323, ('child', 'sofa'), ('child', 'sofa'))]
+@@@@@@
+  qid: 0
+vId_fId: 3802296828_1198 
+duplicate: [('next_to', 255.4955975060358, 173.31465713092598, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 173.1948526801168, 29.26991503552992, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 39.06822010986707, 15.2444480266483, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 185.2776888595762, 77.54704913529676, ('toy', 'sofa'), ('child', 'sofa')), ('next_to', 381.3990717830345, 175.25957436574907, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 299.09832695711555, 31.214832270353043, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 164.9716943868658, 17.189365261471423, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 311.1811631365749, 79.49196637011988, ('toy', 'sofa'), ('child', 'sofa')), ('in_front_of', 179.82316724330957, 210.57675669494222, ('sofa', 'child'), ('sofa', 'child')), ('next_to', 25.22784220851338, 181.518386786836, ('sofa', 'sofa'), ('toy', 'sofa')), ('next_to', 107.52858703443238, 37.47364469143997, ('sofa', 'sofa'), ('toy', 'sofa')), ('next_to', 241.65521960468212, 23.448177682558352, ('sofa', 'sofa'), ('sofa', 'sofa')), ('next_to', 95.445750854973, 85.75077879120681, ('sofa', 'sofa'), ('child', 'sofa')), ('next_to', 122.05355479500079, 172.0526126711, ('child', 'sofa'), ('toy', 'sofa')), ('next_to', 39.752809969081795, 28.007870575703976, ('child', 'sofa'), ('toy', 'sofa')), ('next_to', 94.37382260116794, 13.982403566822356, ('child', 'sofa'), ('sofa', 'sofa')), ('next_to', 51.83564614854117, 76.28500467547082, ('child', 'sofa'), ('child', 'sofa'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.005405426025390625
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_551', 0.18066418), ('6673828083_541', 0.18086633), ('6673828083_542', 0.18094185), ('6673828083_540', 0.180952), ('6673828083_545', 0.18098341), ('6673828083_543', 0.18099107), ('6673828083_546', 0.1810177), ('6673828083_544', 0.18109623), ('6673828083_547', 0.18111816), ('6673828083_548', 0.18127528)]
+Q graph nodes : {'sofa', 'child', 'toy', 'baby_walker'}
+Q graph edges : [(2, 11, {'distance': 139.07282265058117, 'angle_AB': 88.14574828515222, 'angle_BA': -91.85425171484778, 'predicate': 'towards', 'txtemb': array([ 0.08657657, -0.06071888, -0.06252459,  0.02238254,  0.00312973,
+        0.04533256,  0.04746905, -0.01666561,  0.03118107, -0.07386651],
+      dtype=float32)}), (2, 4, {'distance': 62.51399843235114, 'angle_AB': -97.35237935989237, 'angle_BA': 82.64762064010765, 'predicate': 'inside', 'txtemb': array([ 0.09949472, -0.0598873 , -0.01837458, -0.06777801,  0.04200921,
+       -0.09386025,  0.03133806, -0.02018313,  0.06071   , -0.07857241],
+      dtype=float32)}), (2, 5, {'distance': 243.94927751481455, 'angle_AB': 5.056213341052543, 'angle_BA': -174.94378665894746, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (4, 11, {'distance': 201.3883065125679, 'angle_AB': 86.4414124974452, 'angle_BA': -93.5585875025548, 'predicate': 'towards', 'txtemb': array([ 0.08657657, -0.06071888, -0.06252459,  0.02238254,  0.00312973,
+        0.04533256,  0.04746905, -0.01666561,  0.03118107, -0.07386651],
+      dtype=float32)}), (4, 5, {'distance': 264.5245735276781, 'angle_AB': 18.40070149913866, 'angle_BA': -161.59929850086135, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (5, 11, {'distance': 265.87309002604985, 'angle_AB': 153.77226238301168, 'angle_BA': -26.227737616988346, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)})]
+n:  6673828083_551
+sim:  0.18066418
+db_idx.index(n) :  922
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_541
+sim:  0.18086633
+db_idx.index(n) :  912
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_542
+sim:  0.18094185
+db_idx.index(n) :  913
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_540
+sim:  0.180952
+db_idx.index(n) :  911
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_545
+sim:  0.18098341
+db_idx.index(n) :  916
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_543
+sim:  0.18099107
+db_idx.index(n) :  914
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_546
+sim:  0.1810177
+db_idx.index(n) :  917
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_544
+sim:  0.18109623
+db_idx.index(n) :  915
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_547
+sim:  0.18111816
+db_idx.index(n) :  918
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_548
+sim:  0.18127528
+db_idx.index(n) :  919
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+@@@@@@
+  qid: 1
+vId_fId: 3802296828_1195 
+duplicate: [('towards', 53.42782669897298, 91.7054318429908, ('baby_walker', 'child'), ('baby_walker', 'child')), ('towards', 53.3459913983574, 79.55152538960508, ('baby_walker', 'child'), ('toy', 'child')), ('inside', 21.764765310732763, 1.0121876139824622, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('next_to', 65.67631265474387, 56.54698497552822, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 46.25001095067174, 102.00390070130007, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 91.82679396948191, 45.65750798605701, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 8.295930413611671, 98.06597017919508, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 125.47358317466686, 112.16777961233483, ('baby_walker', 'sofa'), ('sofa', 'sofa')), ('next_to', 12.383951958504213, 49.43487180607951, ('baby_walker', 'sofa'), ('child', 'sofa')), ('towards', 8.887657163013756, 93.40976763069783, ('toy', 'child'), ('baby_walker', 'child')), ('towards', 8.969492463629336, 81.2558611773121, ('toy', 'child'), ('toy', 'child')), ('next_to', 86.25160866760743, 69.89147313361434, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 66.8253069635353, 88.65941254321395, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 112.40208998234547, 59.001996144143135, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 28.871226426475232, 84.72148202110895, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 104.8982871618033, 98.8232914542487, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 32.95924797136777, 36.09038364799339, ('toy', 'sofa'), ('child', 'sofa')), ('in_front_of', 68.36073531184138, 1.464569836512709, ('sofa', 'child'), ('sofa', 'child'))]
+@@@@@@
+  qid: 1
+vId_fId: 3802296828_1196 
+duplicate: [('towards', 50.4436673971189, 91.09841456649394, ('baby_walker', 'child'), ('baby_walker', 'child')), ('towards', 52.06063857481493, 78.5450730194473, ('baby_walker', 'child'), ('toy', 'child')), ('inside', 20.866669586433538, 2.5316132817997072, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('next_to', 63.64606068272363, 56.24752076330725, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 47.830690940262684, 101.99281763105728, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 91.06615221970554, 45.41361114275486, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 8.668594074800723, 98.2121945152339, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 125.71847872042977, 112.40996756102015, ('baby_walker', 'sofa'), ('sofa', 'sofa')), ('next_to', 16.685114039795906, 49.43541616851584, ('baby_walker', 'sofa'), ('child', 'sofa')), ('towards', 11.871816464867834, 92.80275035420097, ('toy', 'child'), ('baby_walker', 'child')), ('towards', 10.254845287171804, 80.24940880715432, ('toy', 'child'), ('toy', 'child')), ('next_to', 84.22135669558719, 69.59200892139337, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 68.40598695312624, 88.64832947297116, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 111.6414482325691, 58.75809930084098, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 29.243890087664283, 84.86770635714778, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 105.14318270756621, 99.06547940293403, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 37.260410052659466, 36.09092801042972, ('toy', 'sofa'), ('child', 'sofa')), ('in_front_of', 68.72405580756305, 0.9263589915686055, ('sofa', 'child'), ('sofa', 'child'))]
+@@@@@@
+  qid: 1
+vId_fId: 3802296828_1190 
+duplicate: [('towards', 47.42784758950134, 267.99214066520284, ('baby_walker', 'child'), ('baby_walker', 'child')), ('towards', 55.868194069861744, 80.31375396823844, ('baby_walker', 'child'), ('toy', 'child')), ('inside', 22.758495668582697, 13.851725639546927, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('next_to', 58.29300910461515, 51.2565207150456, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 39.97256315751346, 96.96987907843808, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 88.04465923812592, 42.36712174770838, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 0.3717744485420269, 96.06919230070619, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 130.83499376667882, 112.08998034775475, ('baby_walker', 'sofa'), ('sofa', 'sofa')), ('next_to', 2.4974712971752524, 49.18989940451071, ('baby_walker', 'sofa'), ('child', 'sofa')), ('towards', 14.887636272485395, 266.28780487749583, ('toy', 'child'), ('baby_walker', 'child')), ('towards', 6.447289792124991, 82.01808975594547, ('toy', 'child'), ('toy', 'child')), ('next_to', 78.86830511747871, 64.60100887313172, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 60.54785917037702, 83.62539092035196, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 108.61995525098948, 55.711609905794504, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 20.947070461405588, 82.72470414262007, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 110.25969775381526, 98.74549218966862, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 18.07782471568831, 35.84541124642459, ('toy', 'sofa'), ('child', 'sofa')), ('in_front_of', 76.24859885087591, 3.2600442164273886, ('sofa', 'child'), ('sofa', 'child'))]
+@@@@@@
+  qid: 1
+vId_fId: 3802296828_1197 
+duplicate: [('towards', 48.4811695756575, 90.47941693427836, ('baby_walker', 'child'), ('baby_walker', 'child')), ('towards', 51.32150499601653, 78.18294458265194, ('baby_walker', 'child'), ('toy', 'child')), ('inside', 21.936911301804173, 3.8200847760014796, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('next_to', 64.42420962734653, 56.047500781583885, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 47.830690940262684, 101.99281763105728, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 91.82679396948191, 45.65750798605701, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 9.409302244073132, 98.50603242339679, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 124.83148391397796, 112.48162599300588, ('baby_walker', 'sofa'), ('sofa', 'sofa')), ('next_to', 19.474334592447377, 49.55446632804094, ('baby_walker', 'sofa'), ('child', 'sofa')), ('towards', 13.834314286329231, 92.18375272198539, ('toy', 'child'), ('baby_walker', 'child')), ('towards', 10.993978865970206, 79.88728037035897, ('toy', 'child'), ('toy', 'child')), ('next_to', 84.99950564021009, 69.39198893967, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 68.40598695312624, 88.64832947297116, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 112.40208998234547, 59.001996144143135, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 29.984598256936692, 85.16154426531067, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 104.2561879011144, 99.13713783491976, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 40.04963060531094, 36.20997816995482, ('toy', 'sofa'), ('child', 'sofa')), ('in_front_of', 67.34793272011484, 0.6239348259350663, ('sofa', 'child'), ('sofa', 'child'))]
+@@@@@@
+  qid: 1
+vId_fId: 3802296828_1198 
+duplicate: [('towards', 46.4945505592587, 90.31026492505026, ('baby_walker', 'child'), ('baby_walker', 'child')), ('towards', 48.04345136106113, 77.78087553694638, ('baby_walker', 'child'), ('toy', 'child')), ('inside', 21.816946942101872, 1.7118299277355362, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('next_to', 65.36456372329206, 56.421457896696424, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 47.53517415153772, 102.27170843618869, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 91.82679396948191, 45.65750798605701, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 9.526049143562915, 98.38723410933903, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 124.60058342668682, 112.41270111822065, ('baby_walker', 'sofa'), ('sofa', 'sofa')), ('next_to', 21.608885323022292, 50.110100009572186, ('baby_walker', 'sofa'), ('child', 'sofa')), ('towards', 15.820933302728037, 92.01460071275729, ('toy', 'child'), ('baby_walker', 'child')), ('towards', 14.272032500925604, 79.4852113246534, ('toy', 'child'), ('toy', 'child')), ('next_to', 85.93985973615563, 69.76594605478255, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 68.11047016440128, 88.92722027810257, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 112.40208998234547, 59.001996144143135, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 30.101345156426476, 85.04274595125291, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 104.02528741382326, 99.06821296013453, ('toy', 'sofa'), ('sofa', 'sofa')), ('next_to', 42.18418133588585, 36.76561185148607, ('toy', 'sofa'), ('child', 'sofa')), ('in_front_of', 64.41352792871987, 0.28333411462634217, ('sofa', 'child'), ('sofa', 'child'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.005580425262451172
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_551', 0.1797787), ('6673828083_541', 0.18001778), ('6673828083_542', 0.18008624), ('6673828083_540', 0.18009424), ('6673828083_545', 0.18011779), ('6673828083_543', 0.18012977), ('6673828083_546', 0.18015192), ('6673828083_544', 0.1802229), ('6673828083_547', 0.18024205), ('6673828083_548', 0.18038812)]
+Q graph nodes : {'table', 'stool', 'child'}
+Q graph edges : [(8, 9, {'distance': 114.36892060345765, 'angle_AB': 119.03027468248716, 'angle_BA': -60.96972531751285, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (8, 10, {'distance': 244.76110802167898, 'angle_AB': 161.41700039673367, 'angle_BA': -18.582999603266348, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (8, 11, {'distance': 237.58893071858378, 'angle_AB': -150.35980938701678, 'angle_BA': 29.640190612983222, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)}), (9, 10, {'distance': 177.86582021287845, 'angle_AB': -172.8949612582081, 'angle_BA': 7.105038741791901, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (9, 11, {'distance': 264.7777369795278, 'angle_AB': -124.77042562153053, 'angle_BA': 55.22957437846947, 'predicate': 'inside', 'txtemb': array([ 0.09949472, -0.0598873 , -0.01837458, -0.06777801,  0.04200921,
+       -0.09386025,  0.03133806, -0.02018313,  0.06071   , -0.07857241],
+      dtype=float32)}), (10, 11, {'distance': 197.15602958063442, 'angle_AB': -82.5685920288275, 'angle_BA': 97.4314079711725, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)})]
+n:  6673828083_551
+sim:  0.1797787
+db_idx.index(n) :  922
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_541
+sim:  0.18001778
+db_idx.index(n) :  912
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_542
+sim:  0.18008624
+db_idx.index(n) :  913
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_540
+sim:  0.18009424
+db_idx.index(n) :  911
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_545
+sim:  0.18011779
+db_idx.index(n) :  916
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_543
+sim:  0.18012977
+db_idx.index(n) :  914
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_546
+sim:  0.18015192
+db_idx.index(n) :  917
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_544
+sim:  0.1802229
+db_idx.index(n) :  915
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_547
+sim:  0.18024205
+db_idx.index(n) :  918
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_548
+sim:  0.18038812
+db_idx.index(n) :  919
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+@@@@@@
+  qid: 2
+vId_fId: 3802296828_699 
+duplicate: [('next_to', 2.678078503738604, 4.116721149768836, ('stool', 'stool'), ('stool', 'stool')), ('next_to', 121.37723525067288, 46.72717077798741, ('stool', 'stool'), ('stool', 'table')), ('next_to', 54.92446379179863, 285.3634114950209, ('stool', 'stool'), ('stool', 'table')), ('next_to', 127.71410891448272, 38.270004564477674, ('stool', 'table'), ('stool', 'stool')), ('next_to', 9.014952167548444, 4.340445063740901, ('stool', 'table'), ('stool', 'table')), ('next_to', 75.4677236264227, 327.7501372092674, ('stool', 'table'), ('stool', 'table')), ('away', 2.6635406526801546, 2.6938213026895994, ('stool', 'child'), ('stool', 'child')), ('away', 49.35370553477287, 68.14553855069384, ('stool', 'child'), ('table', 'child')), ('next_to', 60.81882110568219, 296.0419570904641, ('stool', 'table'), ('stool', 'stool')), ('next_to', 57.88033564125209, 338.65240671868264, ('stool', 'table'), ('stool', 'table')), ('next_to', 8.572435817622164, 6.561824445674375, ('stool', 'table'), ('stool', 'table')), ('inside', 0.972615795402703, 3.233545525530687, ('stool', 'child'), ('stool', 'child')), ('away', 43.09644179062951, 65.09739605549969, ('table', 'child'), ('stool', 'child')), ('away', 8.920804396823513, 0.35432119250455685, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 2
+vId_fId: 3802296828_700 
+duplicate: [('next_to', 0.0, 0.0, ('stool', 'stool'), ('stool', 'stool')), ('next_to', 130.39218741822134, 42.38672571424651, ('stool', 'stool'), ('stool', 'table')), ('next_to', 63.496899609420794, 291.92523594069525, ('stool', 'stool'), ('stool', 'table')), ('next_to', 130.39218741822134, 42.38672571424651, ('stool', 'table'), ('stool', 'stool')), ('next_to', 0.0, 0.0, ('stool', 'table'), ('stool', 'table')), ('next_to', 66.89528780880053, 334.3119616549418, ('stool', 'table'), ('stool', 'table')), ('away', 0.0, 0.0, ('stool', 'child'), ('stool', 'child')), ('away', 40.43290113794936, 67.79121735818929, ('stool', 'child'), ('table', 'child')), ('next_to', 63.496899609420794, 291.92523594069525, ('stool', 'table'), ('stool', 'stool')), ('next_to', 66.89528780880053, 334.3119616549418, ('stool', 'table'), ('stool', 'table')), ('next_to', 0.0, 0.0, ('stool', 'table'), ('stool', 'table')), ('inside', 0.0, 0.0, ('stool', 'child'), ('stool', 'child')), ('away', 40.43290113794936, 67.79121735818929, ('table', 'child'), ('stool', 'child')), ('away', 0.0, 0.0, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 2
+vId_fId: 3802296828_838 
+duplicate: [('next_to', 4.368183959522156, 32.651759386604496, ('stool', 'stool'), ('stool', 'stool')), ('next_to', 88.0230258766333, 6.112493019607356, ('stool', 'stool'), ('stool', 'table')), ('next_to', 18.239525583050394, 40.21140104596641, ('stool', 'stool'), ('stool', 'table')), ('next_to', 126.02400345869917, 75.038485100851, ('stool', 'table'), ('stool', 'stool')), ('next_to', 42.36916154158803, 36.27423269463915, ('stool', 'table'), ('stool', 'table')), ('next_to', 112.15266183517093, 2.1753246682800977, ('stool', 'table'), ('stool', 'table')), ('away', 57.97128125172321, 302.29670443560804, ('stool', 'child'), ('stool', 'child')), ('away', 146.34749276411048, 32.95223394919836, ('stool', 'child'), ('table', 'child')), ('next_to', 59.12871564989864, 259.27347655409073, ('stool', 'table'), ('stool', 'stool')), ('next_to', 24.526126267212504, 298.0377289603026, ('stool', 'table'), ('stool', 'table')), ('next_to', 45.2573740263704, 332.13663698666164, ('stool', 'table'), ('stool', 'table')), ('inside', 95.33158033972671, 43.65438556107327, ('stool', 'child'), ('stool', 'child')), ('away', 17.538380113773854, 234.50548707741876, ('table', 'child'), ('stool', 'child')), ('away', 105.91459162616113, 34.83898340899093, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 2
+vId_fId: 3802296828_839 
+duplicate: [('next_to', 4.309215546382518, 32.169934830307426, ('stool', 'stool'), ('stool', 'stool')), ('next_to', 88.36859442521187, 6.737373466612482, ('stool', 'stool'), ('stool', 'table')), ('next_to', 18.826424660556725, 40.766110149187696, ('stool', 'stool'), ('stool', 'table')), ('next_to', 126.08297187183881, 74.55666054455394, ('stool', 'table'), ('stool', 'stool')), ('next_to', 42.02359299300946, 35.64935224763403, ('stool', 'table'), ('stool', 'table')), ('next_to', 111.5657627576646, 1.620615565058813, ('stool', 'table'), ('stool', 'table')), ('away', 58.91814407454396, 303.22110249043635, ('stool', 'child'), ('stool', 'child')), ('away', 145.23499198286987, 34.349663663648926, ('stool', 'child'), ('table', 'child')), ('next_to', 59.187684063038276, 259.75530111038785, ('stool', 'table'), ('stool', 'stool')), ('next_to', 24.871694815791074, 298.66260940730774, ('stool', 'table'), ('stool', 'table')), ('next_to', 44.67047494886407, 332.6913460898829, ('stool', 'table'), ('stool', 'table')), ('inside', 95.19221283315497, 42.627475018199334, ('stool', 'child'), ('stool', 'child')), ('away', 18.485242936594602, 235.42988513224708, ('table', 'child'), ('stool', 'child')), ('away', 104.8020908449205, 33.44155369454036, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 2
+vId_fId: 3802296828_840 
+duplicate: [('next_to', 4.309215546382518, 32.169934830307426, ('stool', 'stool'), ('stool', 'stool')), ('next_to', 87.37906575576231, 6.589938027208902, ('stool', 'stool'), ('stool', 'table')), ('next_to', 17.715332810793043, 40.81984629906428, ('stool', 'stool'), ('stool', 'table')), ('next_to', 126.08297187183881, 74.55666054455394, ('stool', 'table'), ('stool', 'stool')), ('next_to', 43.013121662459014, 35.79678768703761, ('stool', 'table'), ('stool', 'table')), ('next_to', 112.67685460742828, 1.5668794151822283, ('stool', 'table'), ('stool', 'table')), ('away', 61.384503986449715, 304.0855972322894, ('stool', 'child'), ('stool', 'child')), ('away', 142.5297386328102, 35.1426454901374, ('stool', 'child'), ('table', 'child')), ('next_to', 59.187684063038276, 259.75530111038785, ('stool', 'table'), ('stool', 'stool')), ('next_to', 23.88216614634152, 298.51517396790416, ('stool', 'table'), ('stool', 'table')), ('next_to', 45.78156679862775, 332.74508223975954, ('stool', 'table'), ('stool', 'table')), ('inside', 95.3655178216406, 41.398397248635604, ('stool', 'child'), ('stool', 'child')), ('away', 20.951602848500357, 236.29437987410006, ('table', 'child'), ('stool', 'child')), ('away', 102.09683749486084, 32.64857186805189, ('table', 'child'), ('table', 'child'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.17308807373046875
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_551', 0.17541516), ('6673828083_541', 0.17567155), ('6673828083_542', 0.17572899), ('6673828083_540', 0.1757379), ('6673828083_545', 0.17574742), ('6673828083_543', 0.17576452), ('6673828083_546', 0.17577612), ('6673828083_544', 0.17584519), ('6673828083_547', 0.175855), ('6673828083_548', 0.17598478)]
+Q graph nodes : {'table', 'toy', 'child'}
+Q graph edges : [(1, 11, {'distance': 324.7418205282467, 'angle_AB': -27.70923624936072, 'angle_BA': 152.2907637506393, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)}), (1, 10, {'distance': 484.53199068792145, 'angle_AB': -4.557419019714005, 'angle_BA': 175.442580980286, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (10, 11, {'distance': 225.5581964815289, 'angle_AB': -150.08182982405793, 'angle_BA': 29.918170175942063, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)})]
+n:  6673828083_551
+sim:  0.17541516
+db_idx.index(n) :  922
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_541
+sim:  0.17567155
+db_idx.index(n) :  912
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_542
+sim:  0.17572899
+db_idx.index(n) :  913
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_540
+sim:  0.1757379
+db_idx.index(n) :  911
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_545
+sim:  0.17574742
+db_idx.index(n) :  916
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_543
+sim:  0.17576452
+db_idx.index(n) :  914
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_546
+sim:  0.17577612
+db_idx.index(n) :  917
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_544
+sim:  0.17584519
+db_idx.index(n) :  915
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_547
+sim:  0.175855
+db_idx.index(n) :  918
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_548
+sim:  0.17598478
+db_idx.index(n) :  919
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+@@@@@@
+  qid: 3
+vId_fId: 3802296828_699 
+duplicate: [('away', 37.322971297718, 67.867558987735, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 3
+vId_fId: 3802296828_700 
+duplicate: [('away', 28.402166900894485, 67.51323779523044, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 3
+vId_fId: 3802296828_838 
+duplicate: [('away', 134.3167585270556, 32.67425438623951, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 3
+vId_fId: 3802296828_839 
+duplicate: [('away', 133.20425774581497, 34.07168410069008, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 3
+vId_fId: 3802296828_840 
+duplicate: [('away', 130.49900439575532, 34.86466592717855, ('table', 'child'), ('table', 'child'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.0055081844329833984
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_551', 0.17404976), ('6673828083_541', 0.17429267), ('6673828083_542', 0.17435154), ('6673828083_540', 0.17435977), ('6673828083_545', 0.17437275), ('6673828083_543', 0.17438772), ('6673828083_546', 0.17440273), ('6673828083_544', 0.17446844), ('6673828083_547', 0.17448208), ('6673828083_548', 0.17461286)]
+Q graph nodes : {'table', 'stool', 'child'}
+Q graph edges : [(8, 10, {'distance': 180.48337873610413, 'angle_AB': 110.09159544221028, 'angle_BA': -69.90840455778972, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (8, 11, {'distance': 209.33048034149255, 'angle_AB': 152.39443475113183, 'angle_BA': -27.605565248868185, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)}), (10, 11, {'distance': 143.20789084404532, 'angle_AB': -149.58516827274298, 'angle_BA': 30.414831727257017, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)})]
+n:  6673828083_551
+sim:  0.17404976
+db_idx.index(n) :  922
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_541
+sim:  0.17429267
+db_idx.index(n) :  912
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_542
+sim:  0.17435154
+db_idx.index(n) :  913
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_540
+sim:  0.17435977
+db_idx.index(n) :  911
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_545
+sim:  0.17437275
+db_idx.index(n) :  916
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_543
+sim:  0.17438772
+db_idx.index(n) :  914
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_546
+sim:  0.17440273
+db_idx.index(n) :  917
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_544
+sim:  0.17446844
+db_idx.index(n) :  915
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_547
+sim:  0.17448208
+db_idx.index(n) :  918
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_548
+sim:  0.17461286
+db_idx.index(n) :  919
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+@@@@@@
+  qid: 4
+vId_fId: 3802296828_699 
+duplicate: [('next_to', 63.43637962890787, 13.055400390045719, ('stool', 'table'), ('stool', 'stool')), ('next_to', 55.262777118026406, 55.665850018264294, ('stool', 'table'), ('stool', 'table')), ('next_to', 11.189994340847846, 276.424732254744, ('stool', 'table'), ('stool', 'table')), ('away', 30.92199102977139, 300.060422835459, ('stool', 'child'), ('stool', 'child')), ('away', 21.095255157681635, 234.60870558745478, ('stool', 'child'), ('table', 'child')), ('away', 97.04458052721861, 1.919180188415794, ('table', 'child'), ('stool', 'child')), ('away', 45.02733433976559, 67.37089743642004, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 4
+vId_fId: 3802296828_700 
+duplicate: [('next_to', 66.11445813264648, 8.938679240276883, ('stool', 'table'), ('stool', 'stool')), ('next_to', 64.27772928557485, 51.32540495452339, ('stool', 'table'), ('stool', 'table')), ('next_to', 2.617558523225682, 282.98655670041836, ('stool', 'table'), ('stool', 'table')), ('away', 28.258450377091236, 302.7542441381486, ('stool', 'child'), ('stool', 'child')), ('away', 12.174450760858122, 234.9630267799593, ('stool', 'child'), ('table', 'child')), ('away', 94.38103987453846, 0.7746411142738054, ('table', 'child'), ('stool', 'child')), ('away', 53.9481387365891, 67.01657624391548, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 4
+vId_fId: 3802296828_838 
+duplicate: [('next_to', 61.74627417312432, 23.713080146327613, ('stool', 'table'), ('stool', 'stool')), ('next_to', 21.908567743986822, 15.05117225988424, ('stool', 'table'), ('stool', 'table')), ('next_to', 47.87493254959608, 49.150080286243295, ('stool', 'table'), ('stool', 'table')), ('away', 29.712830874631976, 0.45753970254054366, ('stool', 'child'), ('stool', 'child')), ('away', 118.08904238701925, 269.80201018895025, ('stool', 'child'), ('table', 'child')), ('away', 36.40975862281525, 301.52206332133426, ('table', 'child'), ('stool', 'child')), ('away', 51.966452889572025, 32.17759283492455, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 4
+vId_fId: 3802296828_839 
+duplicate: [('next_to', 61.80524258626396, 23.231255590030543, ('stool', 'table'), ('stool', 'stool')), ('next_to', 22.25413629256539, 15.676052706889365, ('stool', 'table'), ('stool', 'table')), ('next_to', 47.28803347208975, 49.70478938946458, ('stool', 'table'), ('stool', 'table')), ('away', 30.659693697452724, 0.4668583522877441, ('stool', 'child'), ('stool', 'child')), ('away', 116.97654160577862, 268.40458047449965, ('stool', 'child'), ('table', 'child')), ('away', 35.4628957999945, 302.4464613761626, ('table', 'child'), ('stool', 'child')), ('away', 50.8539521083314, 33.57502254937512, ('table', 'child'), ('table', 'child'))]
+@@@@@@
+  qid: 4
+vId_fId: 3802296828_840 
+duplicate: [('next_to', 61.80524258626396, 23.231255590030543, ('stool', 'table'), ('stool', 'stool')), ('next_to', 21.264607623115836, 15.528617267485785, ('stool', 'table'), ('stool', 'table')), ('next_to', 48.39912532185343, 49.758525539341164, ('stool', 'table'), ('stool', 'table')), ('away', 33.12605360935848, 1.331353094140752, ('stool', 'child'), ('stool', 'child')), ('away', 114.27128825571896, 267.6115986480112, ('stool', 'child'), ('table', 'child')), ('away', 32.996535888088744, 303.31095611801555, ('table', 'child'), ('stool', 'child')), ('away', 48.148698758271735, 34.36800437586359, ('table', 'child'), ('table', 'child'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.005377531051635742
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_551', 0.17822033), ('6673828083_541', 0.1784651), ('6673828083_542', 0.17853189), ('6673828083_540', 0.17854252), ('6673828083_545', 0.17855938), ('6673828083_543', 0.17857277), ('6673828083_546', 0.17859147), ('6673828083_544', 0.17866485), ('6673828083_547', 0.17868198), ('6673828083_548', 0.17882785)]
+Q graph nodes : {'sofa', 'toy', 'baby_walker'}
+Q graph edges : [(2, 4, {'distance': 39.37321424522006, 'angle_AB': -72.25532837494306, 'angle_BA': 107.74467162505692, 'predicate': 'inside', 'txtemb': array([ 0.09949472, -0.0598873 , -0.01837458, -0.06777801,  0.04200921,
+       -0.09386025,  0.03133806, -0.02018313,  0.06071   , -0.07857241],
+      dtype=float32)}), (2, 12, {'distance': 201.06217943710845, 'angle_AB': 104.10535776433525, 'angle_BA': -75.89464223566476, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (4, 12, {'distance': 240.36898718428714, 'angle_AB': 104.70109905847619, 'angle_BA': -75.29890094152383, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)})]
+n:  6673828083_551
+sim:  0.17822033
+db_idx.index(n) :  922
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_541
+sim:  0.1784651
+db_idx.index(n) :  912
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_542
+sim:  0.17853189
+db_idx.index(n) :  913
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_540
+sim:  0.17854252
+db_idx.index(n) :  911
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_545
+sim:  0.17855938
+db_idx.index(n) :  916
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_543
+sim:  0.17857277
+db_idx.index(n) :  914
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_546
+sim:  0.17859147
+db_idx.index(n) :  917
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_544
+sim:  0.17866485
+db_idx.index(n) :  915
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_547
+sim:  0.17868198
+db_idx.index(n) :  918
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_548
+sim:  0.17882785
+db_idx.index(n) :  919
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+@@@@@@
+  qid: 5
+vId_fId: 3802296828_1195 
+duplicate: [('inside', 1.3760188763983123, 24.084863370966843, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('next_to', 22.789214577037768, 155.59612939881094, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 3.3629128729656372, 2.9547562780173564, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 48.93969589177581, 144.7066524093397, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 34.59116766409443, 0.9831742440876354, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 168.36068125237296, 13.118635189052114, ('baby_walker', 'sofa'), ('sofa', 'sofa')), ('next_to', 62.09602232421645, 156.19187069295185, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 42.66972062014432, 2.3590149838764205, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 88.2465036389545, 145.30239370348067, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 4.715640083084253, 1.5789155382285713, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 129.05387350519428, 12.522893894911178, ('toy', 'sofa'), ('sofa', 'sofa'))]
+@@@@@@
+  qid: 5
+vId_fId: 3802296828_1196 
+duplicate: [('inside', 2.274114600697537, 22.5654377031496, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('next_to', 20.75896260501753, 155.29666518658996, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 4.943592862556585, 2.943673207774566, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 48.179054141999444, 144.46275556603757, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 34.21850400290538, 0.8369499080488083, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 168.60557679813587, 13.360823137737441, ('baby_walker', 'sofa'), ('sofa', 'sofa')), ('next_to', 60.06577035219621, 155.8924064807309, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 44.250400609735266, 2.34793191363363, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 87.48586188917812, 145.0584968601785, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 5.088303744273304, 1.4326912021897442, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 129.2987690509572, 12.765081843596505, ('toy', 'sofa'), ('sofa', 'sofa'))]
+@@@@@@
+  qid: 5
+vId_fId: 3802296828_1190 
+duplicate: [('inside', 0.3822885185483784, 11.245325345402378, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('next_to', 15.405911026909052, 150.30566513832832, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 2.9145349201926365, 2.0792653448446288, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 45.15756116041982, 141.4162661709911, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 42.51532362916407, 2.9799521225765204, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 173.72209184438492, 13.040835924472034, ('baby_walker', 'sofa'), ('sofa', 'sofa')), ('next_to', 54.71271877408773, 150.90140643246926, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 36.392272826986044, 2.6750066389855647, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 84.4643689075985, 142.01200746513203, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 3.2085158819853916, 3.5756934167174563, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 134.41528409720624, 12.445094630331099, ('toy', 'sofa'), ('sofa', 'sofa'))]
+@@@@@@
+  qid: 5
+vId_fId: 3802296828_1197 
+duplicate: [('inside', 1.203872885326902, 21.276966208947826, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('next_to', 21.53711154964043, 155.0966452048666, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 4.943592862556585, 2.943673207774566, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 48.93969589177581, 144.7066524093397, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 33.47779583363297, 0.5431119998859231, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 167.71858199168406, 13.432481569723166, ('baby_walker', 'sofa'), ('sofa', 'sofa')), ('next_to', 60.84391929681911, 155.69238649900754, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 44.250400609735266, 2.34793191363363, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 88.2465036389545, 145.30239370348067, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 5.829011913545713, 1.138853294026859, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 128.41177424450538, 12.83674027558223, ('toy', 'sofa'), ('sofa', 'sofa'))]
+@@@@@@
+  qid: 5
+vId_fId: 3802296828_1198 
+duplicate: [('inside', 1.3238372450292033, 23.38522105721377, ('baby_walker', 'toy'), ('baby_walker', 'toy')), ('next_to', 22.477465645585966, 155.47060231997915, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 4.648076073831618, 3.222564012905977, ('baby_walker', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 48.93969589177581, 144.7066524093397, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 33.361048934143184, 0.6619103139436788, ('baby_walker', 'sofa'), ('toy', 'sofa')), ('next_to', 167.48768150439292, 13.363556694937941, ('baby_walker', 'sofa'), ('sofa', 'sofa')), ('next_to', 61.784273392764646, 156.06634361412006, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 43.9548838210103, 2.626822718765041, ('toy', 'sofa'), ('baby_walker', 'sofa')), ('next_to', 88.2465036389545, 145.30239370348067, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 5.945758813035496, 1.2576516080846147, ('toy', 'sofa'), ('toy', 'sofa')), ('next_to', 128.18087375721424, 12.767815400797005, ('toy', 'sofa'), ('sofa', 'sofa'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.005461215972900391
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_551', 0.17710663), ('6673828083_541', 0.17734182), ('6673828083_542', 0.1774047), ('6673828083_540', 0.17741546), ('6673828083_545', 0.17742893), ('6673828083_543', 0.17744355), ('6673828083_546', 0.17745936), ('6673828083_544', 0.1775316), ('6673828083_547', 0.17754589), ('6673828083_548', 0.17768571)]
+Q graph nodes : {'adult', 'dog'}
+Q graph edges : [(0, 1, {'distance': 241.0186714758838, 'angle_AB': 70.36216694893118, 'angle_BA': -109.63783305106882, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (0, 3, {'distance': 339.13013726296873, 'angle_AB': 41.11440481234092, 'angle_BA': -138.88559518765908, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (1, 3, {'distance': 174.54583925146997, 'angle_AB': -1.313140340917506, 'angle_BA': 178.6868596590825, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)})]
+n:  6673828083_551
+sim:  0.17710663
+db_idx.index(n) :  922
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_541
+sim:  0.17734182
+db_idx.index(n) :  912
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_542
+sim:  0.1774047
+db_idx.index(n) :  913
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_540
+sim:  0.17741546
+db_idx.index(n) :  911
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_545
+sim:  0.17742893
+db_idx.index(n) :  916
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_543
+sim:  0.17744355
+db_idx.index(n) :  914
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_546
+sim:  0.17745936
+db_idx.index(n) :  917
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_544
+sim:  0.1775316
+db_idx.index(n) :  915
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_547
+sim:  0.17754589
+db_idx.index(n) :  918
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_548
+sim:  0.17768571
+db_idx.index(n) :  919
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+@@@@@@
+  qid: 6
+vId_fId: 6673828083_551 
+duplicate: [('in_front_of', 185.09897659797858, 52.03351815156409, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 151.90275832910916, 81.88658224755426, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 224.2817690998801, 104.85483521911365, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 86.98751081089364, 22.785756014973835, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 53.79129254202422, 52.638820110964005, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 126.17030331279517, 75.60707308252339, ('dog', 'adult'), ('adult', 'adult')), ('next_to', 10.460241729669661, 90.84859014637134, ('adult', 'adult'), ('dog', 'adult'))]
+@@@@@@
+  qid: 6
+vId_fId: 6673828083_541 
+duplicate: [('in_front_of', 171.82179407951693, 51.64194850559227, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 168.78036463816076, 81.19224649233817, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 241.86459599152388, 103.5750549260295, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 73.710328292432, 22.39418636900201, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 70.66889885107582, 51.944484355747925, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 143.75313020443895, 74.32729278943924, ('dog', 'adult'), ('adult', 'adult')), ('next_to', 12.96016065253309, 91.77149679891794, ('adult', 'adult'), ('dog', 'adult'))]
+@@@@@@
+  qid: 6
+vId_fId: 6673828083_542 
+duplicate: [('in_front_of', 175.93126556692235, 51.68821550216471, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 166.44328993892114, 80.96886524215181, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 238.80759916798164, 103.67137218618385, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 77.81979977983741, 22.44045336557446, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 68.3318241518362, 51.72110310556155, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 140.6961333808967, 74.4236100495936, ('dog', 'adult'), ('adult', 'adult')), ('next_to', 13.954823877337077, 91.4651181794814, ('adult', 'adult'), ('dog', 'adult'))]
+@@@@@@
+  qid: 6
+vId_fId: 6673828083_540 
+duplicate: [('in_front_of', 172.7690156294722, 51.68638898462943, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 170.33549466322316, 81.57649272823271, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 244.34845761301526, 103.80668263751184, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 74.65754984238725, 22.438626848039174, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 72.22402887613822, 52.32873059164245, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 146.23699182593032, 74.5589205009216, ('dog', 'adult'), ('adult', 'adult')), ('next_to', 12.96016065253309, 91.77149679891794, ('adult', 'adult'), ('dog', 'adult'))]
+@@@@@@
+  qid: 6
+vId_fId: 6673828083_545 
+duplicate: [('in_front_of', 177.98311849642644, 51.927218126009166, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 159.28683685494096, 80.94225635892728, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 228.39931923175837, 103.84911882529657, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 79.8716527093415, 22.679455989418912, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 61.17537106785602, 51.694494222337035, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 130.28785344467343, 74.60135668870632, ('dog', 'adult'), ('adult', 'adult')), ('next_to', 10.964942106379965, 90.69542002218132, ('adult', 'adult'), ('dog', 'adult'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.00546574592590332
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_551', 0.17828651), ('6673828083_541', 0.17851931), ('6673828083_542', 0.17858571), ('6673828083_540', 0.17859688), ('6673828083_545', 0.17861366), ('6673828083_543', 0.17862675), ('6673828083_546', 0.17864512), ('6673828083_544', 0.17871909), ('6673828083_547', 0.1787358), ('6673828083_548', 0.1788814)]
+Q graph nodes : {'adult', 'cellphone', 'dog'}
+Q graph edges : [(0, 5, {'distance': 381.7440241837454, 'angle_AB': -12.63462448522992, 'angle_BA': 167.36537551477008, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (0, 7, {'distance': 381.43053102760405, 'angle_AB': -22.261662664234642, 'angle_BA': 157.73833733576535, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (5, 7, {'distance': 64.04100249059192, 'angle_AB': -107.72762945437776, 'angle_BA': 72.27237054562225, 'predicate': 'behind', 'txtemb': array([ 0.15628378, -0.01378138, -0.0879447 , -0.03124182,  0.05641522,
+       -0.01273377, -0.0445261 , -0.02215454,  0.00462628, -0.0800161 ],
+      dtype=float32)})]
+n:  6673828083_551
+sim:  0.17828651
+db_idx.index(n) :  922
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_541
+sim:  0.17851931
+db_idx.index(n) :  912
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_542
+sim:  0.17858571
+db_idx.index(n) :  913
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_540
+sim:  0.17859688
+db_idx.index(n) :  911
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_545
+sim:  0.17861366
+db_idx.index(n) :  916
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_543
+sim:  0.17862675
+db_idx.index(n) :  914
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_546
+sim:  0.17864512
+db_idx.index(n) :  917
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_544
+sim:  0.17871909
+db_idx.index(n) :  915
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_547
+sim:  0.1787358
+db_idx.index(n) :  918
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_548
+sim:  0.1788814
+db_idx.index(n) :  919
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+@@@@@@
+  qid: 7
+vId_fId: 6673828083_551 
+duplicate: [('in_front_of', 44.37362389011696, 30.963273282597008, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 38.04175477023108, 0.653622015764217, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 11.177405621247544, 1.1102091866068378, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 157.5365309994185, 84.44211051805785, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 83.55641639201849, 21.85804378495255, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 43.208914387103846, 25.772502807175833, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 44.68711704625832, 40.59031146160173, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 37.72826161408972, 8.973416163240504, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 11.490898777388907, 10.737247365611559, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 157.22303784327713, 94.06914869706256, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 83.86990954815985, 12.231005605947828, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 43.52240754324521, 16.145464628171112, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 13.538527303726077, 108.2948958642357, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 7
+vId_fId: 6673828083_541 
+duplicate: [('in_front_of', 31.096441371655317, 31.354842928568832, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 44.495599428343496, 1.1749917666436467, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 28.055011930299145, 1.8045449418229182, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 159.48010448466334, 86.03414469469966, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 101.13924328366227, 20.578263491868398, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 42.59664084849021, 26.531279810518683, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 31.40993452779668, 40.98188110757356, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 44.182106272202134, 8.452046412361074, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 28.368505086440507, 11.43158312082764, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 159.16661132852198, 95.66118287370438, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 101.45273643980363, 10.951225312863677, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 42.91013400463157, 16.904241631513962, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 11.040619761461215, 110.39949404765035, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 7
+vId_fId: 6673828083_542 
+duplicate: [('in_front_of', 35.20591285906073, 31.308575931996383, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 41.816826095684235, 0.8906105960147723, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 25.717937231059523, 2.0279261920092893, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 159.19234479219375, 85.78742504876283, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 98.08224646012002, 20.674580752022756, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 44.14915491167051, 26.361348768135805, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 35.519406015202094, 40.9356141110011, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 41.50333293954287, 8.736427582989949, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 26.031430387200885, 11.65496437101401, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 158.8788516360524, 95.41446322776756, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 98.39573961626138, 11.047542573018035, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 44.46264806781187, 16.734310589131084, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 6.1034912348602575, 111.40586817637114, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 7
+vId_fId: 6673828083_540 
+duplicate: [('in_front_of', 32.043662921610576, 31.31040244953167, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 44.255505860528956, 1.3398556798003778, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 29.61014195536154, 1.4202987059283938, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 158.23507581701892, 85.86171955106941, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 103.62310490515364, 20.80989120335075, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 43.228916131282176, 26.635810265542283, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 32.35715607775194, 40.93744062853639, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 43.942012704387594, 8.287182499204343, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 29.923635111502904, 11.047336884933115, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 157.92158266087756, 95.48875773007413, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 103.936598061295, 11.18285302434603, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 43.54240928742354, 17.00877208653756, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 11.973798699702584, 108.85832040561573, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 7
+vId_fId: 6673828083_545 
+duplicate: [('in_front_of', 37.257765788564825, 31.06957330815193, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 40.12398671521515, 0.9948400203287573, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 18.56148414707934, 2.05453507523381, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 158.90046919504937, 85.54134714583664, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 87.67396652389675, 20.852327391135475, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 42.11444276011548, 26.236294749802063, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 37.57125894470619, 40.69661148715665, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 39.81049355907379, 8.632198158675964, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 18.874977303220703, 11.68157325423853, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 158.586976038908, 95.16838532484135, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 87.98745968003811, 11.225289212130754, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 42.42793591625684, 16.609256570797342, ('dog', 'adult'), ('adult', 'cellphone')), ('behind', 2.143910474892188, 114.22115476691702, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.005549430847167969
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_551', 0.1804976), ('6673828083_541', 0.18070613), ('6673828083_542', 0.1807772), ('6673828083_540', 0.1807881), ('6673828083_545', 0.1808127), ('6673828083_543', 0.18082342), ('6673828083_546', 0.18084599), ('6673828083_544', 0.18092363), ('6673828083_547', 0.18094212), ('6673828083_548', 0.18109375)]
+Q graph nodes : {'adult', 'sofa', 'cellphone', 'dog'}
+Q graph edges : [(0, 5, {'distance': 356.2151737363247, 'angle_AB': -13.060924345128058, 'angle_BA': 166.93907565487194, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (0, 7, {'distance': 381.3928420932936, 'angle_AB': -19.052541100101926, 'angle_BA': 160.9474588998981, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (0, 9, {'distance': 169.25793925249118, 'angle_AB': 95.4242850409439, 'angle_BA': -84.5757149590561, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (5, 7, {'distance': 46.02445002387318, 'angle_AB': -72.94303442338294, 'angle_BA': 107.05696557661706, 'predicate': 'behind', 'txtemb': array([ 0.15628378, -0.01378138, -0.0879447 , -0.03124182,  0.05641522,
+       -0.01273377, -0.0445261 , -0.02215454,  0.00462628, -0.0800161 ],
+      dtype=float32)}), (5, 9, {'distance': 440.1931394285922, 'angle_AB': 145.55180950619228, 'angle_BA': -34.448190493807715, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (7, 9, {'distance': 477.07572774141425, 'angle_AB': 142.10921642848797, 'angle_BA': -37.89078357151205, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)})]
+n:  6673828083_551
+sim:  0.1804976
+db_idx.index(n) :  922
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_541
+sim:  0.18070613
+db_idx.index(n) :  912
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_542
+sim:  0.1807772
+db_idx.index(n) :  913
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_540
+sim:  0.1807881
+db_idx.index(n) :  911
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_545
+sim:  0.1808127
+db_idx.index(n) :  916
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_543
+sim:  0.18082342
+db_idx.index(n) :  914
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_546
+sim:  0.18084599
+db_idx.index(n) :  917
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_544
+sim:  0.18092363
+db_idx.index(n) :  915
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_547
+sim:  0.18094212
+db_idx.index(n) :  918
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_548
+sim:  0.18109375
+db_idx.index(n) :  919
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+@@@@@@
+  qid: 8
+vId_fId: 6673828083_551 
+duplicate: [('in_front_of', 69.90247433753768, 31.389573142495145, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 12.512904322810357, 0.22732215586608007, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 36.70625606866827, 1.5365090465049747, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 132.00768055199777, 84.86841037795598, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 109.08526683943921, 21.431743925054413, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 68.73776483452457, 25.346202947277696, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 82.28511132629643, 156.12569516600965, ('dog', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 123.33670041286473, 159.8016440361569, ('dog', 'cellphone'), ('adult', 'sofa')), ('in_front_of', 44.72480598056876, 37.381189897469014, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 37.69057267977928, 5.764294599107789, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 11.528587711699345, 7.5281258014788435, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 157.1853489089667, 90.86002713292984, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 83.90759848247029, 15.440127170080544, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 43.560096477555646, 19.354586192303827, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 57.10744296932751, 162.11731192098352, ('dog', 'adult'), ('cellphone', 'sofa')), ('in_front_of', 98.1590320558958, 165.79326079113076, ('dog', 'adult'), ('adult', 'sofa')), ('next_to', 15.748141728648449, 5.888835235490063, ('dog', 'sofa'), ('dog', 'adult')), ('next_to', 15.934528196916716, 0.4679452667496946, ('dog', 'sofa'), ('dog', 'sofa')), ('next_to', 254.26360683459987, 77.72756872390595, ('dog', 'sofa'), ('adult', 'sofa')), ('behind', 4.478025162992665, 73.51030083324088, ('cellphone', 'adult'), ('cellphone', 'adult')), ('in_front_of', 14.07549135472982, 127.22316070882519, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 96.49087001507786, 158.84005600718643, ('cellphone', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 47.271709623599236, 157.07622480481535, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 215.98564624426527, 73.74432347336436, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 25.10730114717171, 180.04447777637475, ('cellphone', 'sofa'), ('adult', 'adult')), ('in_front_of', 15.240200857742934, 183.95893679859805, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 1.6928543659710726, 2.4870386853106936, ('cellphone', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 39.358734720597226, 1.1889101848365442, ('cellphone', 'sofa'), ('adult', 'sofa')), ('in_front_of', 50.958079667551885, 123.78056763112087, ('adult', 'sofa'), ('dog', 'adult')), ('in_front_of', 133.37345832789993, 155.39746292948212, ('adult', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 84.1542979364213, 153.63363172711104, ('adult', 'sofa'), ('dog', 'adult')), ('in_front_of', 252.86823455708733, 70.30173039566004, ('adult', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 11.775287165650354, 176.60188469867043, ('adult', 'sofa'), ('adult', 'adult')), ('in_front_of', 52.122789170565, 180.51634372089373, ('adult', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 38.57544267879314, 0.9555543923936227, ('adult', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 2.476146407775161, 4.6315032625408605, ('adult', 'sofa'), ('adult', 'sofa'))]
+@@@@@@
+  qid: 8
+vId_fId: 6673828083_541 
+duplicate: [('in_front_of', 56.62529181907604, 31.78114278846697, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 18.966748980922773, 0.7486919067455098, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 53.58386237771987, 2.230844801721055, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 133.95125403724262, 86.4604445545978, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 126.66809373108299, 20.15196363197026, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 68.12549129591093, 26.104979950620546, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 78.08800377910637, 153.43271285289893, ('dog', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 136.22010119836153, 159.32245149736713, ('dog', 'cellphone'), ('adult', 'sofa')), ('in_front_of', 31.447623462107117, 37.77275954344084, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 44.144417337891696, 5.242924848228359, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 28.406194020750945, 8.222461556694924, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 159.12892239421154, 92.45206130957166, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 101.49042537411407, 14.160346876996392, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 42.94782293894201, 20.113363195646677, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 52.91033542213745, 159.4243296078728, ('dog', 'adult'), ('cellphone', 'sofa')), ('in_front_of', 111.04243284139261, 165.314068252341, ('dog', 'adult'), ('adult', 'sofa')), ('next_to', 18.248060651511878, 4.965928582943462, ('dog', 'sofa'), ('dog', 'adult')), ('next_to', 27.36670315023514, 3.3840767498562485, ('dog', 'sofa'), ('dog', 'sofa')), ('next_to', 233.85494816243627, 75.44052659964593, ('dog', 'sofa'), ('adult', 'sofa')), ('behind', 29.057172228179958, 75.61489901665553, ('cellphone', 'adult'), ('cellphone', 'adult')), ('in_front_of', 27.352673873191463, 126.83159106285338, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 102.94471467319028, 159.36142575806585, ('cellphone', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 30.394103314547635, 156.3818890495993, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 217.92921972951012, 72.15228929672254, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 42.69012803881549, 178.7646974832906, ('cellphone', 'sofa'), ('adult', 'adult')), ('in_front_of', 15.85247439635657, 184.71771380194087, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 5.88996191316113, 5.180020998421412, ('cellphone', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 52.24213550609403, 0.7097176460467836, ('cellphone', 'sofa'), ('adult', 'sofa')), ('in_front_of', 64.23526218601353, 123.38899798514906, ('adult', 'sofa'), ('dog', 'adult')), ('in_front_of', 139.82730298601234, 155.91883268036153, ('adult', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 67.2766916273697, 152.93929597189498, ('adult', 'sofa'), ('dog', 'adult')), ('in_front_of', 254.8118080423322, 68.70969621901823, ('adult', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 5.807539725993422, 175.3221044055863, ('adult', 'sofa'), ('adult', 'adult')), ('in_front_of', 52.735062709178635, 181.27512072423656, ('adult', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 42.772550225983196, 1.7374279207170957, ('adult', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 15.359547193271965, 4.1523107237511, ('adult', 'sofa'), ('adult', 'sofa'))]
+@@@@@@
+  qid: 8
+vId_fId: 6673828083_542 
+duplicate: [('in_front_of', 60.734763306481454, 31.73487579189452, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 16.28797564826351, 0.4643107361166354, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 51.246787678480246, 2.454226051907426, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 133.66349434477303, 86.21372490866096, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 123.61109690754074, 20.24828089212462, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 69.67800535909123, 25.93504890823767, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 81.17624136003957, 153.7669091194499, ('dog', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 134.83319455339887, 159.3546761419413, ('dog', 'cellphone'), ('adult', 'sofa')), ('in_front_of', 35.55709494951253, 37.726492546868386, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 41.465644005232434, 5.527306018857233, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 26.069119321511323, 8.445842806881295, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 158.84116270174195, 92.20534166363484, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 98.43342855057182, 14.25666413715075, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 44.50033700212231, 19.9434321532638, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 55.998573003070646, 159.75852587442378, ('dog', 'adult'), ('cellphone', 'sofa')), ('in_front_of', 109.65552619642995, 165.34629289691517, ('dog', 'adult'), ('adult', 'sofa')), ('next_to', 19.242723876315864, 5.272307202380006, ('dog', 'sofa'), ('dog', 'adult')), ('next_to', 28.404019657158386, 3.104711407853131, ('dog', 'sofa'), ('dog', 'sofa')), ('next_to', 238.79230275209332, 75.55199007046129, ('dog', 'sofa'), ('adult', 'sofa')), ('behind', 24.120043701579, 76.62127314537632, ('cellphone', 'adult'), ('cellphone', 'adult')), ('in_front_of', 23.24320238578605, 126.87785805942582, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 100.26594134053101, 159.07704458743697, ('cellphone', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 32.73117801378726, 156.15850779941292, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 217.64146003704053, 72.39900894265938, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 39.63313121527324, 178.86101474344497, ('cellphone', 'sofa'), ('adult', 'adult')), ('in_front_of', 14.299960333176273, 184.547782759558, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 2.801724332227934, 4.845824731870437, ('cellphone', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 50.855228861131366, 0.7419422906209547, ('cellphone', 'sofa'), ('adult', 'sofa')), ('in_front_of', 60.125790698608114, 123.4352649817215, ('adult', 'sofa'), ('dog', 'adult')), ('in_front_of', 137.14852965335308, 155.63445150973266, ('adult', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 69.61376632660932, 152.7159147217086, ('adult', 'sofa'), ('dog', 'adult')), ('in_front_of', 254.5240483498626, 68.95641586495506, ('adult', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 2.7505429024511727, 175.41842166574065, ('adult', 'sofa'), ('adult', 'adult')), ('in_front_of', 51.18254864599834, 181.1051896818537, ('adult', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 39.68431264505, 1.4032316541661203, ('adult', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 13.9726405483093, 4.184535368325271, ('adult', 'sofa'), ('adult', 'sofa'))]
+@@@@@@
+  qid: 8
+vId_fId: 6673828083_540 
+duplicate: [('in_front_of', 57.5725133690313, 31.736702309429806, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 18.726655413108233, 0.9135558199022409, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 55.138992402782264, 1.8465985658265307, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 132.7062253695982, 86.28801941096755, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 129.15195535257436, 20.383591343452615, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 68.7577665787029, 26.209510405644146, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 77.45088442363783, 153.53447131705806, ('dog', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 137.60716273702684, 159.2904078696112, ('dog', 'cellphone'), ('adult', 'sofa')), ('in_front_of', 32.394845012062376, 37.72831906440368, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 43.904323770077156, 5.078060935071628, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 29.961324045813342, 7.8382153208003995, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 157.88389372656712, 92.27963616594141, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 103.97428699560544, 14.391974588478746, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 43.58009822173398, 20.217893650670277, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 52.27321606666891, 159.52608807203194, ('dog', 'adult'), ('cellphone', 'sofa')), ('in_front_of', 112.42949438005792, 165.28202462458506, ('dog', 'adult'), ('adult', 'sofa')), ('next_to', 18.248060651511878, 4.965928582943462, ('dog', 'sofa'), ('dog', 'adult')), ('next_to', 25.367983995158426, 3.363115747526706, ('dog', 'sofa'), ('dog', 'sofa')), ('next_to', 234.5303716233934, 75.74324769001753, ('dog', 'sofa'), ('adult', 'sofa')), ('behind', 29.990351166421327, 74.0737253746209, ('cellphone', 'adult'), ('cellphone', 'adult')), ('in_front_of', 26.405452323236204, 126.87603154189054, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 102.70462110537574, 159.52628967122257, ('cellphone', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 28.83897328948524, 156.76613528549382, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 216.6841910618657, 72.32471444035279, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 45.17398966030686, 178.99632519477296, ('cellphone', 'sofa'), ('adult', 'adult')), ('in_front_of', 15.220199113564604, 184.8222442569645, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 6.527081268629672, 5.078262534262279, ('cellphone', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 53.62919704475934, 0.6776740182908441, ('cellphone', 'sofa'), ('adult', 'sofa')), ('in_front_of', 63.28804063605827, 123.43343846418622, ('adult', 'sofa'), ('dog', 'adult')), ('in_front_of', 139.5872094181978, 156.08369659351825, ('adult', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 65.7215616023073, 153.3235422077895, ('adult', 'sofa'), ('dog', 'adult')), ('in_front_of', 253.56677937468777, 68.88212136264848, ('adult', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 8.291401347484793, 175.55373211706865, ('adult', 'sofa'), ('adult', 'adult')), ('in_front_of', 52.10278742638667, 181.37965117926018, ('adult', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 43.40966958145174, 1.635669456557963, ('adult', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 16.746608731937272, 4.12026709599516, ('adult', 'sofa'), ('adult', 'sofa'))]
+@@@@@@
+  qid: 8
+vId_fId: 6673828083_545 
+duplicate: [('in_front_of', 62.78661623598555, 31.495873168050068, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 14.59513626779443, 0.5685401604306204, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 44.090334594500064, 2.4808349351319468, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 133.37161874762864, 85.96764700573478, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 113.20281697131747, 20.426027531237338, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 67.6432932075362, 25.809994889903926, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 85.21007474862546, 154.36057424072786, ('dog', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 130.81357284851498, 159.53399925841524, ('dog', 'cellphone'), ('adult', 'sofa')), ('in_front_of', 37.608947879016625, 37.48748992302394, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 39.77280462476335, 5.423076594543248, ('dog', 'adult'), ('dog', 'cellphone')), ('in_front_of', 18.91266623753114, 8.472451690105816, ('dog', 'adult'), ('dog', 'adult')), ('in_front_of', 158.54928710459757, 91.95926376070864, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 88.02514861434855, 14.43441077626347, ('dog', 'adult'), ('adult', 'adult')), ('in_front_of', 42.46562485056728, 19.818378134930057, ('dog', 'adult'), ('adult', 'cellphone')), ('in_front_of', 60.03240639165654, 160.35219099570173, ('dog', 'adult'), ('cellphone', 'sofa')), ('in_front_of', 105.63590449154606, 165.5256160133891, ('dog', 'adult'), ('adult', 'sofa')), ('next_to', 16.252842105358752, 6.042005359680076, ('dog', 'sofa'), ('dog', 'adult')), ('next_to', 26.641269525900782, 1.7658520092514038, ('dog', 'sofa'), ('dog', 'sofa')), ('next_to', 245.5540663596897, 75.84005412224714, ('dog', 'sofa'), ('adult', 'sofa')), ('behind', 15.872641991826555, 79.4365597359222, ('cellphone', 'adult'), ('cellphone', 'adult')), ('in_front_of', 21.191349456281955, 127.11686068327027, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 98.57310196006193, 159.18127401175096, ('cellphone', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 39.88763109776744, 156.1318989161884, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 217.34958443989615, 72.64508684558557, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 29.22485127904997, 179.03876138255768, ('cellphone', 'sofa'), ('adult', 'adult')), ('in_front_of', 16.3346724847313, 184.42272874122426, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 1.232109056357956, 4.252159610592486, ('cellphone', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 46.83560715624748, 0.9212654070948929, ('cellphone', 'sofa'), ('adult', 'sofa')), ('in_front_of', 58.07393776910402, 123.67426760556596, ('adult', 'sofa'), ('dog', 'adult')), ('in_front_of', 135.455690272884, 155.73868093404664, ('adult', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 76.7702194105895, 152.68930583848407, ('adult', 'sofa'), ('dog', 'adult')), ('in_front_of', 254.2321727527182, 69.20249376788125, ('adult', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 7.657737033772094, 175.59616830485336, ('adult', 'sofa'), ('adult', 'adult')), ('in_front_of', 53.217260797553365, 180.98013566351995, ('adult', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 35.65047925646411, 0.8095665328881694, ('adult', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 9.953018843425411, 4.363858484799209, ('adult', 'sofa'), ('adult', 'sofa'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.005548715591430664
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_551', 0.1791866), ('6673828083_541', 0.17941613), ('6673828083_542', 0.17948392), ('6673828083_540', 0.17949474), ('6673828083_545', 0.17951354), ('6673828083_543', 0.17952627), ('6673828083_546', 0.17954662), ('6673828083_544', 0.17961982), ('6673828083_547', 0.17963876), ('6673828083_548', 0.17978731)]
+Q graph nodes : {'adult', 'sofa', 'cellphone', 'dog'}
+Q graph edges : [(0, 4, {'distance': 161.29553620605873, 'angle_AB': 84.30707983526285, 'angle_BA': -95.69292016473716, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (0, 5, {'distance': 355.9905195366865, 'angle_AB': -12.904140322989925, 'angle_BA': 167.09585967701008, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (0, 9, {'distance': 168.26244381917195, 'angle_AB': 95.45647396029054, 'angle_BA': -84.54352603970948, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (4, 9, {'distance': 32.7566787083184, 'angle_AB': 167.6609127216738, 'angle_BA': -12.339087278326195, 'predicate': 'beneath', 'txtemb': array([ 0.10302237, -0.07473211, -0.06387768, -0.02668639,  0.03921147,
+       -0.00314621,  0.16335939, -0.03388818,  0.10984283, -0.06831647],
+      dtype=float32)}), (4, 5, {'distance': 408.8532744151623, 'angle_AB': -35.94494829610839, 'angle_BA': 144.0550517038916, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (5, 9, {'distance': 439.0649154737828, 'angle_AB': 145.7670323024643, 'angle_BA': -34.232967697535734, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)})]
+n:  6673828083_551
+sim:  0.1791866
+db_idx.index(n) :  922
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_541
+sim:  0.17941613
+db_idx.index(n) :  912
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_542
+sim:  0.17948392
+db_idx.index(n) :  913
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_540
+sim:  0.17949474
+db_idx.index(n) :  911
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_545
+sim:  0.17951354
+db_idx.index(n) :  916
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_543
+sim:  0.17952627
+db_idx.index(n) :  914
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_546
+sim:  0.17954662
+db_idx.index(n) :  917
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_544
+sim:  0.17961982
+db_idx.index(n) :  915
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_547
+sim:  0.17963876
+db_idx.index(n) :  918
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_548
+sim:  0.17978731
+db_idx.index(n) :  919
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+@@@@@@
+  qid: 9
+vId_fId: 6673828083_551 
+duplicate: [('next_to', 23.710544775080905, 5.2283699701909825, ('dog', 'adult'), ('dog', 'adult')), ('next_to', 23.896931243349172, 10.649259938931351, ('dog', 'adult'), ('dog', 'sofa')), ('next_to', 262.2260098810323, 88.84477392958699, ('dog', 'adult'), ('adult', 'sofa')), ('in_front_of', 70.12712853717585, 31.232789120357012, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 12.28825012317219, 0.3841061780042132, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 36.930910268306434, 1.3797250243668415, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 131.7830263523596, 84.71162635581786, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 109.30992103907738, 21.588527947192546, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 68.96241903416274, 25.50298696941583, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 82.5097655259346, 155.9689111438715, ('dog', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 123.5613546125029, 159.64486001401875, ('dog', 'cellphone'), ('adult', 'sofa')), ('next_to', 16.743637161967683, 5.921024154836701, ('dog', 'sofa'), ('dog', 'adult')), ('next_to', 16.93002363023595, 0.5001341860963322, ('dog', 'sofa'), ('dog', 'sofa')), ('next_to', 255.2591022679191, 77.69537980455931, ('dog', 'sofa'), ('adult', 'sofa')), ('beneath', 15.249537308306799, 346.0243356800571, ('adult', 'sofa'), ('adult', 'sofa')), ('in_front_of', 17.264373658700094, 54.27359709347548, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 65.15100500164795, 22.656701795114255, ('adult', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 15.931844610169321, 24.42053299748531, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 184.64578123083535, 107.75243432893632, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 56.447166160601626, 1.4522800259259228, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 16.09966415568698, 2.462178996297361, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 29.647010647458842, 179.00971911698997, ('adult', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 70.69859973402714, 182.6856679871372, ('adult', 'cellphone'), ('adult', 'sofa')), ('in_front_of', 12.947267399920406, 127.43838350509719, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 95.36264606026845, 159.05527880345844, ('cellphone', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 46.14348566878982, 157.29144760108738, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 214.85742228945585, 73.95954626963636, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 26.235525101981125, 180.25970057264675, ('cellphone', 'sofa'), ('adult', 'adult')), ('in_front_of', 14.11197690293352, 184.17415959487005, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 0.5646304111616587, 2.7022614815826955, ('cellphone', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 40.48695867540664, 0.9736873885645423, ('cellphone', 'sofa'), ('adult', 'sofa'))]
+@@@@@@
+  qid: 9
+vId_fId: 6673828083_541 
+duplicate: [('next_to', 26.210463697944334, 6.1512766227375835, ('dog', 'adult'), ('dog', 'adult')), ('next_to', 35.329106196667595, 7.733128455824797, ('dog', 'adult'), ('dog', 'sofa')), ('next_to', 241.81735120886873, 86.55773180532698, ('dog', 'adult'), ('adult', 'sofa')), ('in_front_of', 56.849946018714206, 31.624358766328836, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 18.742094781284607, 0.9054759288836429, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 53.808516577358034, 2.074060779582922, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 133.72659983760445, 86.30366053245967, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 126.89274793072116, 20.308747654108394, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 68.3501454955491, 26.26176397275868, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 78.31265797874454, 153.2759288307608, ('dog', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 136.4447553979997, 159.165667475229, ('dog', 'cellphone'), ('adult', 'sofa')), ('next_to', 19.243556084831113, 4.9981175022901, ('dog', 'sofa'), ('dog', 'adult')), ('next_to', 28.362198583554374, 3.416265669202886, ('dog', 'sofa'), ('dog', 'sofa')), ('next_to', 234.8504435957555, 75.4083376802993, ('dog', 'sofa'), ('adult', 'sofa')), ('beneath', 22.209167153453905, 46.2313471068353, ('adult', 'sofa'), ('adult', 'sofa')), ('in_front_of', 3.9871911402384512, 54.6651667394473, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 71.60484965976036, 22.135332044234826, ('adult', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 0.9457616988822792, 25.11486875270139, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 186.5893547160802, 109.34446850557813, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 74.0299930522454, 2.732060319010074, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 15.487390617073345, 3.2209559996402106, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 25.449903100268784, 176.31673680387928, ('adult', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 83.58200051952394, 182.20647544834748, ('adult', 'cellphone'), ('adult', 'sofa')), ('in_front_of', 26.22444991838205, 127.04681385912538, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 101.81649071838086, 159.57664855433785, ('cellphone', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 29.26587935973822, 156.5971118458713, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 216.8009957747007, 72.36751209299455, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 43.8183519936249, 178.9799202795626, ('cellphone', 'sofa'), ('adult', 'adult')), ('in_front_of', 14.724250441547156, 184.9329365982129, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 4.761737958351716, 5.395243794693414, ('cellphone', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 53.370359460903444, 0.49449484977478164, ('cellphone', 'sofa'), ('adult', 'sofa'))]
+@@@@@@
+  qid: 9
+vId_fId: 6673828083_542 
+duplicate: [('next_to', 27.20512692274832, 5.84489800330104, ('dog', 'adult'), ('dog', 'adult')), ('next_to', 36.36642270359084, 8.012493797827915, ('dog', 'adult'), ('dog', 'sofa')), ('next_to', 246.75470579852578, 86.66919527614233, ('dog', 'adult'), ('adult', 'sofa')), ('in_front_of', 60.95941750611962, 31.578091769756387, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 16.063321448625345, 0.6210947582547686, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 51.47144187811841, 2.297442029769293, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 133.43884014513486, 86.05694088652282, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 123.83575110717891, 20.405064914262752, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 69.9026595587294, 26.0918329303758, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 81.40089555967774, 153.61012509731177, ('dog', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 135.05784875303704, 159.19789211980316, ('dog', 'cellphone'), ('adult', 'sofa')), ('next_to', 20.2382193096351, 5.304496121726643, ('dog', 'sofa'), ('dog', 'adult')), ('next_to', 29.39951509047762, 3.1369003271997684, ('dog', 'sofa'), ('dog', 'sofa')), ('next_to', 239.78779818541256, 75.51980115111465, ('dog', 'sofa'), ('adult', 'sofa')), ('beneath', 21.041304194458416, 37.8553416294086, ('adult', 'sofa'), ('adult', 'sofa')), ('in_front_of', 8.096662627643866, 54.61889974287486, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 68.9260763271011, 22.419713214863698, ('adult', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 1.3913130003573428, 25.33825000288776, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 186.30159502361062, 109.0977488596413, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 70.97299622870315, 2.6357430588557165, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 17.039904680253642, 3.051024957257333, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 28.53814068120198, 176.65093307043026, ('adult', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 82.19509387456128, 182.23870009292165, ('adult', 'cellphone'), ('adult', 'sofa')), ('in_front_of', 22.114978430976635, 127.09308085569782, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 99.1377173857216, 159.29226738370897, ('cellphone', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 31.602954058977843, 156.37373059568492, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 216.51323608223112, 72.61423173893138, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 40.76135517008265, 179.07623753971697, ('cellphone', 'sofa'), ('adult', 'adult')), ('in_front_of', 13.171736378366859, 184.76300555583, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 1.6735003774185202, 5.0610475281424385, ('cellphone', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 51.98345281594078, 0.5267194943489528, ('cellphone', 'sofa'), ('adult', 'sofa'))]
+@@@@@@
+  qid: 9
+vId_fId: 6673828083_540 
+duplicate: [('next_to', 26.210463697944334, 6.1512766227375835, ('dog', 'adult'), ('dog', 'adult')), ('next_to', 33.33038704159088, 7.75408945815434, ('dog', 'adult'), ('dog', 'sofa')), ('next_to', 242.49277466982585, 86.86045289569857, ('dog', 'adult'), ('adult', 'sofa')), ('in_front_of', 57.797167568669465, 31.579918287291672, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 18.502001213470066, 1.070339842040374, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 55.36364660242043, 1.6898145436883976, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 132.48157116996003, 86.13123538882942, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 129.37660955221253, 20.540375365590748, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 68.98242077834107, 26.36629442778228, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 77.675538623276, 153.37768729491992, ('dog', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 137.831816936665, 159.13362384747305, ('dog', 'cellphone'), ('adult', 'sofa')), ('next_to', 19.243556084831113, 4.9981175022901, ('dog', 'sofa'), ('dog', 'adult')), ('next_to', 26.36347942847766, 3.3953046668733435, ('dog', 'sofa'), ('dog', 'sofa')), ('next_to', 235.52586705671263, 75.71105877067089, ('dog', 'sofa'), ('adult', 'sofa')), ('beneath', 23.85443180093597, 39.50368613430476, ('adult', 'sofa'), ('adult', 'sofa')), ('in_front_of', 4.93441269019371, 54.62072626041014, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 71.36475609194582, 21.970468131078093, ('adult', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 2.500891723944676, 24.730622516806868, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 185.3443260484358, 109.17204336194789, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 76.51385467373677, 2.5004326075277206, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 16.11966589986531, 3.3254864546638103, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 24.812783744800242, 176.41849526803838, ('adult', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 84.96906205818925, 182.1744318205915, ('adult', 'cellphone'), ('adult', 'sofa')), ('in_front_of', 25.27722836842679, 127.09125433816254, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 101.57639715056632, 159.74151246749457, ('cellphone', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 27.710749334675825, 156.98135808176582, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 215.5559671070563, 72.5399372366248, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 46.30221361511627, 179.21154799104497, ('cellphone', 'sofa'), ('adult', 'adult')), ('in_front_of', 14.09197515875519, 185.0374670532365, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 5.398857313820258, 5.293485330534281, ('cellphone', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 54.75742099956875, 0.46245122201884215, ('cellphone', 'sofa'), ('adult', 'sofa'))]
+@@@@@@
+  qid: 9
+vId_fId: 6673828083_545 
+duplicate: [('next_to', 24.21524515179121, 5.07519984600097, ('dog', 'adult'), ('dog', 'adult')), ('next_to', 34.60367257233324, 9.351353196429642, ('dog', 'adult'), ('dog', 'sofa')), ('next_to', 253.51646940612216, 86.95725932792818, ('dog', 'adult'), ('adult', 'sofa')), ('in_front_of', 63.011270435623715, 31.339089145911935, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 14.370482068156264, 0.7253241825687535, ('dog', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 44.31498879413823, 2.3240509129938136, ('dog', 'cellphone'), ('dog', 'adult')), ('in_front_of', 133.14696454799048, 85.81086298359665, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 113.42747117095564, 20.58281155337547, ('dog', 'cellphone'), ('adult', 'adult')), ('in_front_of', 67.86794740717437, 25.96677891204206, ('dog', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 85.43472894826363, 154.20379021858972, ('dog', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 131.03822704815315, 159.3772152362771, ('dog', 'cellphone'), ('adult', 'sofa')), ('next_to', 17.248337538677987, 6.074194279026713, ('dog', 'sofa'), ('dog', 'adult')), ('next_to', 27.636764959220017, 1.7980409285980414, ('dog', 'sofa'), ('dog', 'sofa')), ('next_to', 246.54956179300893, 75.8078652029005, ('dog', 'sofa'), ('adult', 'sofa')), ('beneath', 15.142763754509861, 22.25320140918376, ('adult', 'sofa'), ('adult', 'sofa')), ('in_front_of', 10.14851555714796, 54.3798971190304, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 67.23323694663202, 22.315483790549713, ('adult', 'cellphone'), ('dog', 'cellphone')), ('in_front_of', 8.547766084337525, 25.36485888611228, ('adult', 'cellphone'), ('dog', 'adult')), ('in_front_of', 186.00971942646623, 108.85167095671511, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 60.564716292479886, 2.4579964197429973, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 15.005192528698615, 2.925970938923591, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 32.57197406978787, 177.24459819170818, ('adult', 'cellphone'), ('cellphone', 'sofa')), ('in_front_of', 78.17547216967739, 182.41802320939559, ('adult', 'cellphone'), ('adult', 'sofa')), ('in_front_of', 20.06312550147254, 127.33208347954228, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 97.44487800525252, 159.39649680802296, ('cellphone', 'sofa'), ('dog', 'cellphone')), ('in_front_of', 38.759407142958025, 156.3471217124604, ('cellphone', 'sofa'), ('dog', 'adult')), ('in_front_of', 216.22136048508673, 72.86030964185757, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 30.353075233859386, 179.25398417882968, ('cellphone', 'sofa'), ('adult', 'adult')), ('in_front_of', 15.206448529921886, 184.63795153749626, ('cellphone', 'sofa'), ('adult', 'cellphone')), ('in_front_of', 2.36033301116737, 4.467382406864488, ('cellphone', 'sofa'), ('cellphone', 'sofa')), ('in_front_of', 47.96383111105689, 0.706042610822891, ('cellphone', 'sofa'), ('adult', 'sofa'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.005714893341064453
+Top 10 Sorted db_idx and corresponding results:
+[('6673828083_551', 0.17650735), ('6673828083_541', 0.17675868), ('6673828083_542', 0.176822), ('6673828083_540', 0.17683181), ('6673828083_545', 0.17684555), ('6673828083_543', 0.17685995), ('6673828083_546', 0.17687728), ('6673828083_544', 0.1769458), ('6673828083_547', 0.17696282), ('6673828083_548', 0.17710327)]
+Q graph nodes : {'adult', 'cellphone'}
+Q graph edges : [(4, 7, {'distance': 451.4202587390158, 'angle_AB': -38.65980825409009, 'angle_BA': 141.34019174590992, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (4, 5, {'distance': 410.60351922505487, 'angle_AB': -36.632678287295086, 'angle_BA': 143.3673217127049, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (5, 7, {'distance': 43.56604182158393, 'angle_AB': -58.134022306396325, 'angle_BA': 121.86597769360368, 'predicate': 'behind', 'txtemb': array([ 0.15628378, -0.01378138, -0.0879447 , -0.03124182,  0.05641522,
+       -0.01273377, -0.0445261 , -0.02215454,  0.00462628, -0.0800161 ],
+      dtype=float32)})]
+n:  6673828083_551
+sim:  0.17650735
+db_idx.index(n) :  922
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_541
+sim:  0.17675868
+db_idx.index(n) :  912
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_542
+sim:  0.176822
+db_idx.index(n) :  913
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_540
+sim:  0.17683181
+db_idx.index(n) :  911
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_545
+sim:  0.17684555
+db_idx.index(n) :  916
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_543
+sim:  0.17685995
+db_idx.index(n) :  914
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_546
+sim:  0.17687728
+db_idx.index(n) :  917
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_544
+sim:  0.1769458
+db_idx.index(n) :  915
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_547
+sim:  0.17696282
+db_idx.index(n) :  918
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+n:  6673828083_548
+sim:  0.17710327
+db_idx.index(n) :  919
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 13 edges
+@@@@@@
+  qid: 10
+vId_fId: 6673828083_551 
+duplicate: [('in_front_of', 227.2127655546889, 110.46729428691802, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 13.88018183674808, 4.167139983907617, ('adult', 'adult'), ('adult', 'adult')), ('in_front_of', 26.467320168166566, 0.25268096168433374, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 186.39602604072795, 108.44016432012302, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 54.69692135070903, 2.1400100171126155, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 14.349419345794388, 1.774449005110668, ('adult', 'cellphone'), ('adult', 'cellphone')), ('behind', 6.936433365281914, 58.70128871625426, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 10
+vId_fId: 6673828083_541 
+duplicate: [('in_front_of', 229.15633903993375, 112.05932846355984, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 31.463008728391856, 5.446920276991769, ('adult', 'adult'), ('adult', 'adult')), ('in_front_of', 27.0795937067802, 0.5060960416585161, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 188.3395995259728, 110.03219849676483, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 72.27974824235281, 3.419790310196767, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 13.737145807180752, 2.533226008453518, ('adult', 'cellphone'), ('adult', 'cellphone')), ('behind', 31.515580430469207, 60.80588689966891, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 10
+vId_fId: 6673828083_542 
+duplicate: [('in_front_of', 228.86857934746416, 111.81260881762299, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 28.406011904849606, 5.350603016837411, ('adult', 'adult'), ('adult', 'adult')), ('in_front_of', 25.527079643599905, 0.33616499927563837, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 188.0518398335032, 109.78547885082799, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 69.22275141881056, 3.3234730500424092, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 15.28965987036105, 2.36329496607064, ('adult', 'cellphone'), ('adult', 'cellphone')), ('behind', 26.57845190386825, 61.81226102838971, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 10
+vId_fId: 6673828083_540 
+duplicate: [('in_front_of', 227.91131037228934, 111.88690331992959, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 33.94687034988323, 5.215292565509415, ('adult', 'adult'), ('adult', 'adult')), ('in_front_of', 26.447318423988236, 0.6106264966821158, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 187.09457085832838, 109.85977335313459, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 74.76360986384418, 3.1881625987144133, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 14.369421089972718, 2.6377564634771176, ('adult', 'cellphone'), ('adult', 'cellphone')), ('behind', 32.448759368710576, 59.2647132576343, ('cellphone', 'adult'), ('cellphone', 'adult'))]
+@@@@@@
+  qid: 10
+vId_fId: 6673828083_545 
+duplicate: [('in_front_of', 228.57670375031978, 111.56653091469681, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 17.99773196862634, 5.172856377724692, ('adult', 'adult'), ('adult', 'adult')), ('in_front_of', 27.56179179515493, 0.2111109809418963, ('adult', 'adult'), ('adult', 'cellphone')), ('in_front_of', 187.75996423635883, 109.53940094790181, ('adult', 'cellphone'), ('adult', 'cellphone')), ('in_front_of', 58.814471482587294, 3.14572641092969, ('adult', 'cellphone'), ('adult', 'adult')), ('in_front_of', 13.254947718806022, 2.238240947736898, ('adult', 'cellphone'), ('adult', 'cellphone')), ('behind', 18.331050194115804, 64.62754761893558, ('cellphone', 'adult'), ('cellphone', 'adult'))]

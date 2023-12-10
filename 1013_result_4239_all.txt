@@ -1,0 +1,248 @@
+len(db):  155
+total len(db):  155
+query Idx:  4239231056_178
+query Idx:  4239231056_214
+query Idx:  4239231056_186
+total len(query):  3
+cuda available
+db_data:  Batch(G=[155], batch=[909], bbox=[155], edge_feature=[2488, 13], edge_index=[2, 2488], edge_label_index=[2, 2488], fid=[909], generated=[909], name=[155], node_feature=[909, 13], node_label_index=[909], rpe=[909, 3], tracker=[155], txtemb=[155])
+here - feature_extract
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.4338712692260742
+Top 10 Sorted db_idx and corresponding results:
+[('4239231056_178', 1.0), ('4239231056_179', 0.99999976), ('4239231056_177', 0.9999994), ('4239231056_185', 0.9452401), ('4239231056_184', 0.94522536), ('4239231056_183', 0.94516563), ('4239231056_182', 0.9451393), ('4239231056_180', 0.9451371), ('4239231056_181', 0.945137), ('4239231056_176', 0.93242383)]
+Q graph nodes : {'child', 'snowboard', 'adult'}
+Q graph edges : [(0, 6, {'distance': 45.8530260724415, 'angle_AB': -115.16787014978162, 'angle_BA': 64.8321298502184, 'predicate': 'beneath', 'txtemb': array([ 0.10302237, -0.07473211, -0.06387768, -0.02668639,  0.03921147,
+       -0.00314621,  0.16335939, -0.03388818,  0.10984283, -0.06831647],
+      dtype=float32)}), (0, 4, {'distance': 467.6636077353037, 'angle_AB': 10.721256775258057, 'angle_BA': -169.27874322474196, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (2, 8, {'distance': 13.0, 'angle_AB': -90.0, 'angle_BA': 90.0, 'predicate': 'beneath', 'txtemb': array([ 0.10302237, -0.07473211, -0.06387768, -0.02668639,  0.03921147,
+       -0.00314621,  0.16335939, -0.03388818,  0.10984283, -0.06831647],
+      dtype=float32)}), (4, 6, {'distance': 495.936739917502, 'angle_AB': -164.9830001521174, 'angle_BA': 15.016999847882593, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)})]
+n:  4239231056_178
+sim:  1.0
+db_idx.index(n) :  3
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 4 edges
+n:  4239231056_179
+sim:  0.99999976
+db_idx.index(n) :  4
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 4 edges
+n:  4239231056_177
+sim:  0.9999994
+db_idx.index(n) :  2
+dataset[db_idx.index(n)] :  Graph with 6 nodes and 4 edges
+n:  4239231056_185
+sim:  0.9452401
+db_idx.index(n) :  10
+dataset[db_idx.index(n)] :  Graph with 7 nodes and 5 edges
+n:  4239231056_184
+sim:  0.94522536
+db_idx.index(n) :  9
+dataset[db_idx.index(n)] :  Graph with 7 nodes and 5 edges
+n:  4239231056_183
+sim:  0.94516563
+db_idx.index(n) :  8
+dataset[db_idx.index(n)] :  Graph with 7 nodes and 5 edges
+n:  4239231056_182
+sim:  0.9451393
+db_idx.index(n) :  7
+dataset[db_idx.index(n)] :  Graph with 7 nodes and 5 edges
+n:  4239231056_180
+sim:  0.9451371
+db_idx.index(n) :  5
+dataset[db_idx.index(n)] :  Graph with 7 nodes and 5 edges
+n:  4239231056_181
+sim:  0.945137
+db_idx.index(n) :  6
+dataset[db_idx.index(n)] :  Graph with 7 nodes and 5 edges
+n:  4239231056_176
+sim:  0.93242383
+db_idx.index(n) :  1
+dataset[db_idx.index(n)] :  Graph with 5 nodes and 4 edges
+@@@@@@
+  qid: 0
+vId_fId: 4239231056_178 
+duplicate: [('beneath', 0.0, 0.0, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 32.8530260724415, 25.16787014978162, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 0.0, 0.0, ('child', 'adult'), ('child', 'adult')), ('beneath', 32.8530260724415, 25.16787014978162, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 0.0, 0.0, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 0.0, 0.0, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+@@@@@@
+  qid: 0
+vId_fId: 4239231056_179 
+duplicate: [('beneath', 0.6711611853709698, 4.395615467735794, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 30.320801505432435, 28.859256136232887, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 0.2767230241470884, 0.18067165786862738, ('child', 'adult'), ('child', 'adult')), ('beneath', 33.52418725781247, 20.772254682045826, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 2.5322245670090666, 3.691385986451266, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 2.7663839551834144, 0.14641307973968765, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+@@@@@@
+  qid: 0
+vId_fId: 4239231056_177 
+duplicate: [('beneath', 1.3277523506551319, 0.6174177605741988, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 33.75963944999368, 18.042853800879826, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 6.456893825217321, 0.2213241316426071, ('child', 'adult'), ('child', 'adult')), ('beneath', 31.52527372178637, 24.550452389207422, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 0.9066133775521763, 7.125016348901795, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 5.347859885843263, 0.07271290019721732, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+@@@@@@
+  qid: 0
+vId_fId: 4239231056_185 
+duplicate: [('beneath', 2.6760646230759377, 3.1778234732950494, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 31.8441003463196, 23.122461660894388, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 32.85272930653207, 1.157221380642909, ('child', 'adult'), ('child', 'adult')), ('beneath', 30.176961449365564, 28.34569362307667, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 1.0089257261219, 2.045408488887233, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 32.07011037836389, 0.9368792895066917, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+@@@@@@
+  qid: 0
+vId_fId: 4239231056_184 
+duplicate: [('beneath', 1.1044014550540808, 1.3971810272963694, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 32.316039701760616, 20.931475350722778, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 27.958592981093716, 1.0231135155611124, ('child', 'adult'), ('child', 'adult')), ('beneath', 33.95742752749558, 26.56505117707799, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 0.536986370680884, 4.236394799058843, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 25.676705468475063, 1.221273929011204, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.4677541255950928
+Top 10 Sorted db_idx and corresponding results:
+[('4239231056_214', 0.9999999), ('4239231056_216', 0.9999995), ('4239231056_213', 0.9999988), ('4239231056_209', 0.9999985), ('4239231056_212', 0.99999845), ('4239231056_218', 0.9999982), ('4239231056_220', 0.99999666), ('4239231056_219', 0.9999951), ('4239231056_215', 0.9999949), ('4239231056_211', 0.9999931)]
+Q graph nodes : {'child', 'snowboard', 'adult'}
+Q graph edges : [(0, 6, {'distance': 40.80747480548141, 'angle_AB': -97.03794076318468, 'angle_BA': 82.96205923681534, 'predicate': 'beneath', 'txtemb': array([ 0.10302237, -0.07473211, -0.06387768, -0.02668639,  0.03921147,
+       -0.00314621,  0.16335939, -0.03388818,  0.10984283, -0.06831647],
+      dtype=float32)}), (0, 4, {'distance': 276.6952294492986, 'angle_AB': 9.989986780098434, 'angle_BA': -170.01001321990157, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (0, 5, {'distance': 359.07833407210745, 'angle_AB': 18.258344161349736, 'angle_BA': -161.74165583865027, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (2, 8, {'distance': 10.44030650891055, 'angle_AB': -73.30075576600639, 'angle_BA': 106.69924423399362, 'predicate': 'beneath', 'txtemb': array([ 0.10302237, -0.07473211, -0.06387768, -0.02668639,  0.03921147,
+       -0.00314621,  0.16335939, -0.03388818,  0.10984283, -0.06831647],
+      dtype=float32)}), (4, 7, {'distance': 36.41771546926029, 'angle_AB': -44.44374777291933, 'angle_BA': 135.55625222708068, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (4, 5, {'distance': 94.08772502298055, 'angle_AB': 43.2773379283772, 'angle_BA': -136.7226620716228, 'predicate': 'behind', 'txtemb': array([ 0.15628378, -0.01378138, -0.0879447 , -0.03124182,  0.05641522,
+       -0.01273377, -0.0445261 , -0.02215454,  0.00462628, -0.0800161 ],
+      dtype=float32)}), (4, 6, {'distance': 291.27049284127634, 'angle_AB': -162.3115337517672, 'angle_BA': 17.688466248232814, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)}), (5, 6, {'distance': 378.3186487605389, 'angle_AB': -156.1451519230966, 'angle_BA': 23.8548480769034, 'predicate': 'towards', 'txtemb': array([ 0.08657657, -0.06071888, -0.06252459,  0.02238254,  0.00312973,
+        0.04533256,  0.04746905, -0.01666561,  0.03118107, -0.07386651],
+      dtype=float32)}), (5, 7, {'distance': 99.53014618697192, 'angle_AB': -115.27772223555296, 'angle_BA': 64.72227776444704, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)})]
+n:  4239231056_214
+sim:  0.9999999
+db_idx.index(n) :  39
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_216
+sim:  0.9999995
+db_idx.index(n) :  41
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_213
+sim:  0.9999988
+db_idx.index(n) :  38
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_209
+sim:  0.9999985
+db_idx.index(n) :  34
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_212
+sim:  0.99999845
+db_idx.index(n) :  37
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_218
+sim:  0.9999982
+db_idx.index(n) :  43
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_220
+sim:  0.99999666
+db_idx.index(n) :  45
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_219
+sim:  0.9999951
+db_idx.index(n) :  44
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_215
+sim:  0.9999949
+db_idx.index(n) :  40
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_211
+sim:  0.9999931
+db_idx.index(n) :  36
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+@@@@@@
+  qid: 1
+vId_fId: 4239231056_214 
+duplicate: [('beneath', 0.0, 0.0, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 30.36716829657086, 23.73718499717829, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 0.0, 0.0, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 82.38310462280884, 8.268357381251302, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 82.38310462280884, 8.268357381251302, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 0.0, 0.0, ('child', 'adult'), ('child', 'adult')), ('beneath', 30.36716829657086, 23.73718499717829, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 0.0, 0.0, ('adult', 'snowboard'), ('adult', 'snowboard')), ('next_to', 0.0, 0.0, ('adult', 'snowboard'), ('adult', 'snowboard')), ('behind', 0.0, 0.0, ('adult', 'adult'), ('adult', 'adult')), ('away', 0.0, 0.0, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 191.7403466543044, 47.03381151621424, ('adult', 'snowboard'), ('adult', 'snowboard')), ('towards', 0.0, 0.0, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 191.7403466543044, 47.03381151621424, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 0.0, 0.0, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+@@@@@@
+  qid: 1
+vId_fId: 4239231056_216 
+duplicate: [('beneath', 0.21081379850595283, 2.079921990611112, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 32.56126355424609, 21.074184231111147, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 8.05187851724969, 0.08594485736966107, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 71.63256157519027, 8.679033375936992, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 90.43498314005853, 8.182412523881641, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 10.750543047618578, 0.4106759946856897, ('child', 'adult'), ('child', 'adult')), ('beneath', 30.577982095076813, 25.8171069877894, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 2.1940952576752295, 2.6630007660671424, ('adult', 'snowboard'), ('adult', 'snowboard')), ('next_to', 1.929383508367735, 5.846333432451942, ('adult', 'snowboard'), ('adult', 'snowboard')), ('behind', 2.1611238674934583, 1.2819339988617884, ('adult', 'adult'), ('adult', 'adult')), ('away', 6.494703842281524, 0.20567228867307108, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 188.7180672239366, 48.746137881185234, ('adult', 'snowboard'), ('adult', 'snowboard')), ('towards', 9.081258996176075, 0.45426313651464056, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 185.24564281202288, 46.82813922754117, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 3.022279430367817, 1.7123263649709912, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+@@@@@@
+  qid: 1
+vId_fId: 4239231056_213 
+duplicate: [('beneath', 0.9657223429294319, 4.0029994171390655, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 32.24885342116957, 0.3281039554277356, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 2.143881867603966, 0.13107273436903633, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 83.97255397472725, 8.017951863913112, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 80.23922275520488, 8.137284646882266, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 1.5894493519184039, 0.2504055173381907, ('child', 'adult'), ('child', 'adult')), ('beneath', 31.33289063950029, 27.740184414317355, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 1.8816851245987056, 23.409081041750554, ('adult', 'snowboard'), ('adult', 'snowboard')), ('next_to', 0.7205397401595519, 1.0803248145360413, ('adult', 'snowboard'), ('adult', 'snowboard')), ('behind', 1.3596278786953064, 0.8997393889182916, ('adult', 'adult'), ('adult', 'adult')), ('away', 5.219388942234104, 0.017415886240797818, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 193.97583728404646, 47.06339498048246, ('adult', 'snowboard'), ('adult', 'snowboard')), ('towards', 4.378685957120183, 0.37120628567137715, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 196.9597355965385, 47.05122740245504, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 2.23549062974206, 0.02958346426821379, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+@@@@@@
+  qid: 1
+vId_fId: 4239231056_209 
+duplicate: [('beneath', 2.4799390120078115, 8.086066545125888, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 33.158945535092236, 4.271991710835536, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 15.322749449261664, 1.1660285906647712, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 100.1220339556574, 7.6996540353336975, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 67.06035517354718, 7.102328790586531, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 17.738929332848556, 0.568703345917605, ('child', 'adult'), ('child', 'adult')), ('beneath', 27.88722928456305, 31.823251542304178, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 2.791777238521373, 28.009176708013825, ('adult', 'snowboard'), ('adult', 'snowboard')), ('next_to', 5.834503407385704, 4.724988401364442, ('adult', 'snowboard'), ('adult', 'snowboard')), ('behind', 1.242423580204246, 4.617529674287113, ('adult', 'adult'), ('adult', 'adult')), ('away', 19.6225755922286, 0.18602152307008168, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 197.32902170099666, 47.11041010629212, ('adult', 'snowboard'), ('adult', 'snowboard')), ('towards', 20.57137367672385, 1.5333096290933952, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 211.362922246533, 47.219833039284325, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 5.588675046692245, 0.07659859007787873, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+@@@@@@
+  qid: 1
+vId_fId: 4239231056_212 
+duplicate: [('beneath', 1.6925251945185877, 1.7594699468063908, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 30.98403345328716, 21.78150359965541, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 5.097690972773023, 0.023882195904658232, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 90.29693667962573, 8.025310670871793, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 77.28541365003582, 8.244475185346644, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 7.9138320568168865, 0.24304671037950953, ('child', 'adult'), ('child', 'adult')), ('beneath', 32.05969349108945, 25.49665494398468, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 0.616865156716301, 1.9556813975228806, ('adult', 'snowboard'), ('adult', 'snowboard')), ('next_to', 2.530968719040608, 2.5658782350350364, ('adult', 'snowboard'), ('adult', 'snowboard')), ('behind', 2.2060961702818958, 1.2237853083895303, ('adult', 'adult'), ('adult', 'adult')), ('away', 6.9525780301772215, 0.07816339038109277, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 191.28799437279434, 47.15616131789885, ('adult', 'snowboard'), ('adult', 'snowboard')), ('towards', 9.702613543474513, 0.2296978810661301, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 198.69292468448162, 46.95564812583315, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 0.45235228151005913, 0.12234980168460652, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+subGraph 하나에 대한 특징 추출 시간 -+ :  0.00846242904663086
+Top 10 Sorted db_idx and corresponding results:
+[('4239231056_186', 0.99999994), ('4239231056_190', 0.9999955), ('4239231056_189', 0.9999937), ('4239231056_187', 0.99999034), ('4239231056_188', 0.99998885), ('4239231056_191', 0.9999306), ('4239231056_192', 0.999921), ('4239231056_215', 0.9999121), ('4239231056_217', 0.9999115), ('4239231056_219', 0.9999061)]
+Q graph nodes : {'child', 'snowboard', 'adult'}
+Q graph edges : [(0, 6, {'distance': 45.77390086064329, 'angle_AB': -111.80140948635182, 'angle_BA': 68.19859051364818, 'predicate': 'beneath', 'txtemb': array([ 0.10302237, -0.07473211, -0.06387768, -0.02668639,  0.03921147,
+       -0.00314621,  0.16335939, -0.03388818,  0.10984283, -0.06831647],
+      dtype=float32)}), (0, 4, {'distance': 428.3252269012415, 'angle_AB': 11.650974752879067, 'angle_BA': -168.34902524712092, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (0, 5, {'distance': 501.8079812039661, 'angle_AB': 14.18855185122464, 'angle_BA': -165.81144814877538, 'predicate': 'in_front_of', 'txtemb': array([-0.03126321, -0.03234394, -0.00477387,  0.01656471,  0.10052793,
+       -0.00554609, -0.00827835,  0.0285108 , -0.02228347,  0.02812929],
+      dtype=float32)}), (2, 8, {'distance': 14.035668847618199, 'angle_AB': -94.08561677997488, 'angle_BA': 85.91438322002513, 'predicate': 'beneath', 'txtemb': array([ 0.10302237, -0.07473211, -0.06387768, -0.02668639,  0.03921147,
+       -0.00314621,  0.16335939, -0.03388818,  0.10984283, -0.06831647],
+      dtype=float32)}), (4, 7, {'distance': 37.13825520941984, 'angle_AB': -46.63657704161672, 'angle_BA': 133.36342295838327, 'predicate': 'next_to', 'txtemb': array([ 0.03773815,  0.05723552,  0.05257287,  0.03913138,  0.10150143,
+       -0.00991846,  0.02685143,  0.10155926,  0.02920863,  0.02696889],
+      dtype=float32)}), (4, 5, {'distance': 76.29711659034042, 'angle_AB': 28.58049325681835, 'angle_BA': -151.41950674318167, 'predicate': 'behind', 'txtemb': array([ 0.15628378, -0.01378138, -0.0879447 , -0.03124182,  0.05641522,
+       -0.01273377, -0.0445261 , -0.02215454,  0.00462628, -0.0800161 ],
+      dtype=float32)}), (4, 6, {'distance': 455.162882933132, 'angle_AB': -163.5358697031579, 'angle_BA': 16.464130296842114, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)}), (5, 6, {'distance': 530.0023584853185, 'angle_AB': -161.80435196736104, 'angle_BA': 18.19564803263897, 'predicate': 'towards', 'txtemb': array([ 0.08657657, -0.06071888, -0.06252459,  0.02238254,  0.00312973,
+        0.04533256,  0.04746905, -0.01666561,  0.03118107, -0.07386651],
+      dtype=float32)}), (5, 7, {'distance': 75.85842075867386, 'angle_AB': -123.16635469383934, 'angle_BA': 56.833645306160676, 'predicate': 'away', 'txtemb': array([ 0.17342564, -0.08245583, -0.1379933 , -0.04392625,  0.13262963,
+       -0.06423892,  0.01651991, -0.17140785,  0.06223915, -0.06057323],
+      dtype=float32)})]
+n:  4239231056_186
+sim:  0.99999994
+db_idx.index(n) :  11
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_190
+sim:  0.9999955
+db_idx.index(n) :  15
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_189
+sim:  0.9999937
+db_idx.index(n) :  14
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_187
+sim:  0.99999034
+db_idx.index(n) :  12
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_188
+sim:  0.99998885
+db_idx.index(n) :  13
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_191
+sim:  0.9999306
+db_idx.index(n) :  16
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_192
+sim:  0.999921
+db_idx.index(n) :  17
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_215
+sim:  0.9999121
+db_idx.index(n) :  40
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_217
+sim:  0.9999115
+db_idx.index(n) :  42
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+n:  4239231056_219
+sim:  0.9999061
+db_idx.index(n) :  44
+dataset[db_idx.index(n)] :  Graph with 8 nodes and 9 edges
+@@@@@@
+  qid: 2
+vId_fId: 4239231056_186 
+duplicate: [('beneath', 0.0, 0.0, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 31.73823201302509, 17.71579270637693, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 0.0, 0.0, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 73.48275430272463, 2.5375770983455723, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 73.48275430272463, 2.5375770983455723, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 0.0, 0.0, ('child', 'adult'), ('child', 'adult')), ('beneath', 31.73823201302509, 17.71579270637693, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 0.0, 0.0, ('adult', 'snowboard'), ('adult', 'snowboard')), ('next_to', 0.0, 0.0, ('adult', 'snowboard'), ('adult', 'snowboard')), ('behind', 0.0, 0.0, ('adult', 'adult'), ('adult', 'adult')), ('away', 0.0, 0.0, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 379.30446217445814, 40.369515009318576, ('adult', 'snowboard'), ('adult', 'snowboard')), ('towards', 0.0, 0.0, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 379.30446217445814, 40.369515009318576, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 0.0, 0.0, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+@@@@@@
+  qid: 2
+vId_fId: 4239231056_190 
+duplicate: [('beneath', 5.568179874694039, 0.661584677694151, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 33.233964656658834, 17.22748822645096, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 25.494617339356296, 0.02158439510365895, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 54.33018848327487, 2.745162094289933, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 98.97737164208093, 2.5159927032419134, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 19.152565819449762, 0.20758499594436053, ('child', 'adult'), ('child', 'adult')), ('beneath', 26.17005213833105, 17.05420802868278, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 1.4957326436337457, 0.48830447992597215, ('adult', 'snowboard'), ('adult', 'snowboard')), ('next_to', 6.087894283682132, 2.1151520289092574, ('adult', 'snowboard'), ('adult', 'snowboard')), ('behind', 6.233180876711032, 0.7734517253172513, ('adult', 'adult'), ('adult', 'adult')), ('away', 29.202790905721486, 0.24158831731452324, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 371.3699834726168, 41.45800610424584, ('adult', 'snowboard'), ('adult', 'snowboard')), ('towards', 22.922236611072663, 0.10014637968936313, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 350.10167126873665, 40.6111033266331, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 7.934478701841286, 1.0884910949272637, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+@@@@@@
+  qid: 2
+vId_fId: 4239231056_189 
+duplicate: [('beneath', 1.1756946186877713, 2.1475854282985125, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 33.233964656658834, 17.22748822645096, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 18.537171926477697, 0.10796669165090123, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 61.11348223402911, 2.5414263003058135, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 92.01992622920233, 2.6455437899964735, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 12.369272068695523, 0.0038492019602411887, ('child', 'adult'), ('child', 'adult')), ('beneath', 30.56253739433732, 15.568207278078418, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 1.4957326436337457, 0.48830447992597215, ('adult', 'snowboard'), ('adult', 'snowboard')), ('next_to', 4.0260497160857085, 3.290532906032297, ('adult', 'snowboard'), ('adult', 'snowboard')), ('behind', 6.001121543899117, 1.0813545257711965, ('adult', 'adult'), ('adult', 'adult')), ('away', 20.596144675358744, 0.11514278663651112, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 371.54171336465487, 39.75078438781148, ('adult', 'snowboard'), ('adult', 'snowboard')), ('towards', 14.391798081441607, 0.11631095876677477, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 358.7083174990994, 40.254372222682065, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 7.762748809803242, 0.6187306215070976, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+@@@@@@
+  qid: 2
+vId_fId: 4239231056_187 
+duplicate: [('beneath', 0.8294907521548254, 0.9469514467734683, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 31.73823201302509, 17.71579270637693, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 5.098928096453108, 0.004108844305271475, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 72.99802211081061, 2.551584008484612, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 78.58168239917774, 2.533468254040301, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 0.48473219191401995, 0.014006910139039874, ('child', 'adult'), ('child', 'adult')), ('beneath', 30.908741260870265, 16.768841259603462, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 0.0, 0.0, ('adult', 'snowboard'), ('adult', 'snowboard')), ('next_to', 2.9678540508911126, 7.493599440661981, ('adult', 'snowboard'), ('adult', 'snowboard')), ('behind', 4.440111501785708, 0.9045827967893239, ('adult', 'adult'), ('adult', 'adult')), ('away', 6.179030216800982, 0.033433626229310676, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 370.28650223744023, 39.09688039435429, ('adult', 'snowboard'), ('adult', 'snowboard')), ('towards', 1.5811249982452864, 0.0007160323007155966, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 373.12543195765716, 40.336081383089265, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 9.01795993701792, 1.2726346149642893, ('adult', 'snowboard'), ('adult', 'snowboard'))]
+@@@@@@
+  qid: 2
+vId_fId: 4239231056_188 
+duplicate: [('beneath', 0.5356427155732035, 1.7641993171588268, ('child', 'snowboard'), ('child', 'snowboard')), ('beneath', 32.190823153437165, 15.46121774044191, ('child', 'snowboard'), ('adult', 'snowboard')), ('in_front_of', 11.745702680475176, 0.333311932998841, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 67.05972442449269, 2.6657843660541616, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 85.2284569831998, 2.2042651653467313, ('child', 'adult'), ('child', 'adult')), ('in_front_of', 6.423029878231944, 0.12820726770858926, ('child', 'adult'), ('child', 'adult')), ('beneath', 31.202589297451887, 15.951593389218104, ('adult', 'snowboard'), ('child', 'snowboard')), ('beneath', 0.4525911404120748, 2.2545749659350207, ('adult', 'snowboard'), ('adult', 'snowboard')), ('next_to', 5.99525844295956, 8.752280773852895, ('adult', 'snowboard'), ('adult', 'snowboard')), ('behind', 4.648853043730924, 2.173717311154487, ('adult', 'adult'), ('adult', 'adult')), ('away', 12.929912656152283, 0.495716725222934, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 369.0452308518078, 39.661275344916646, ('adult', 'snowboard'), ('adult', 'snowboard')), ('towards', 7.752178973621199, 0.22195420301011382, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 366.37454951830586, 39.87379828409564, ('adult', 'snowboard'), ('adult', 'snowboard')), ('away', 10.259231322650322, 0.7082396644019298, ('adult', 'snowboard'), ('adult', 'snowboard'))]
