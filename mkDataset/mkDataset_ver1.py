@@ -412,31 +412,36 @@ class TargetGraph:
             self.graph.nodes[node_id].update(node_attributes) # 기존 노드가 있다면 속성 업데이트
         else:
             self.graph.add_node(node_id, **node_attributes) # 기존 노드가 없다면 노드 추가
+    
             
+
     def apply_edge_insertion(self, edge_tuple, new_predicate, tsg):
         # print("ie")
-        try:
-            edge_attributes = tsg.edges[edge_tuple]
+        if tsg.has_edge(*edge_tuple): # insertion
+            edge_attributes = tsg.edges[edge_tuple] 
             if self.graph.has_edge(*edge_tuple): # 기존 엣지가 있다면 속성 업데이트
                 self.graph.edges[edge_tuple].update(edge_attributes)
-            else: # 기존 엣지가 없다면 엣지 추가
-                self.graph.add_edge(edge_tuple[0], edge_tuple[1], **edge_attributes)
-        except:  # insert가 아니라 delete를 한 경우
-            if self.graph.has_edge(*edge_tuple):  # 여기 코드만 필요
+            else: #없으면 추가
+                self.graph.add_edge(edge_tuple[0], edge_tuple[1], **edge_attributes)      
+        else: # deletion
+            if self.graph.has_edge(*edge_tuple):  # 있으면 삭제
                 self.graph.remove_edge(*edge_tuple)
-            elif self.graph.has_edge(edge_tuple[1], edge_tuple[0]):
+            else: # self.graph.has_edge(edge_tuple[1], edge_tuple[0]): #반대 방향으로 있을 수 있는 edge 삭제. 
                 self.graph.remove_edge(edge_tuple[1], edge_tuple[0])
-            else:
-                # print(self.graph.has_edge())
-                # print(self.graph.has_edge(*edge_tuple))
-                # print("edge_tuple : ",edge_tuple)
-                print("????")
-                
-
-
-
-
-
+        
+        
+        # try: #insertion인 경우
+        #     edge_attributes = tsg.edges[edge_tuple]
+        #     if self.graph.has_edge(*edge_tuple): # 기존 엣지가 있다면 속성 업데이트
+        #         self.graph.edges[edge_tuple].update(edge_attributes)
+        #     else: # 기존 엣지가 없다면 엣지 추가
+        #         self.graph.add_edge(edge_tuple[0], edge_tuple[1], **edge_attributes)
+        # except:  # insert가 아니라 delete를 한 경우
+        #     if self.graph.has_edge(*edge_tuple):  # 여기 코드만 필요
+        #         self.graph.remove_edge(*edge_tuple)
+        #     elif self.graph.has_edge(edge_tuple[1], edge_tuple[0]):
+        #         self.graph.remove_edge(edge_tuple[1], edge_tuple[0])
+        
 # 'node_index'와 'edge_tuple'을 추출하는 함수
 def extract_labels_and_tuples(tombstone):
     node_labels = [op['new_label'] for op in tombstone if 'new_label' in op]
@@ -457,7 +462,7 @@ def sequential_overlap_search(tombstone_list):
     for tIdx in range(len(tombstone_list)):
         if all(tIdx not in pair for pair in notDuplicatePair):
             notDuplicatePair.append((tIdx, tIdx))  
-    
+
     return notDuplicatePair
 
 
@@ -546,8 +551,9 @@ def mkTargetGraph(original_scenegraph, tsg_operations_list, tsg_list, tombstone_
             #GED 추가
             for key, value in tsg_operations_list[tsgOperation].items():
                 targetGED[key] += value
-        
-        target_graphs.append([tIdx, target_graph.graph, targetGED, tsgIdxList]  ) 
+                
+        tsg_graphs = [tsg_list[tsgOperation] for tsgOperation in  tsgIdxList]
+        target_graphs.append([tIdx, target_graph.graph, targetGED, tsgIdxList, tsg_graphs]  ) 
         # target_graphs.append([tIdx, target_graph.graph, targetGED, tsgIdxList]  ) 
         #target_graphs.append(targetGraph Idx, TargetGraph, 전체 사용한 GEV , 사용한 tsg 그래프 Idx,  )
     return target_graphs
@@ -608,21 +614,13 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
                         #total_ged를 기반으로 operations를 생성하고, 각 operation을 해당 subgraph에 적용
                         tsg_operations, TSG, tombstone = mkTSGGenerator(SSG, F0Dict, PredictDict, total_ged, max_node_idx)
                         # 모든 tsg_operations, TSG, tombstone을 바탕으로 TargetGraph를 생성해야 하므로, 일단 SourceGraph에 대응하는 targetGraph를 모두 모아둠      
-                        
-                        # print("tsg_operations: ",tsg_operations)
-                                    
                         tsg_list.append(TSG)
                         tsg_operations_list.append(tsg_operations)
                         tombstone_list.append(tombstone)                      
                     # RPE가 없는 그래프에 충돌하지 않는 tsg_operation들을 적용하여 TargetGraph를 생성
                     #target grpah의 조건에 맞게  target graph(scene graph 생성)
-                    # print("before mkTargetGraph")
-                    # print("tsg_operations_list: ",tsg_operations_list)
-                    # print("tsg_list: ",tsg_list)
-                    # print("tombstone_list: ",tombstone_list)
                     TG_list = mkTargetGraph(dataset[i], tsg_operations_list, tsg_list, tombstone_list)
                     SG_TG_list.append([SourceGraph, TG_list]) # Source Graph와 대응되는 TargetGraph 의 List - metadata
-                    # print("TG_list: ",TG_list)
                     # print(TG_list[0]) #[0, <networkx.classes.graph.Graph object at 0x7fa2867ab2b0>, {'nc': 0, 'ec': 0, 'in': 15, 'ie': 15}, [0, 1, 5]]
                     # print(TG_list[1]) #[1, <networkx.classes.graph.Graph object at 0x7fa2867ab2b0>, {'nc': 0, 'ec': 0, 'in': 15, 'ie': 15}, [0, 1, 5]]                   
                     
@@ -647,13 +645,8 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
                     if i == length-1:
                     # if i == 1:    
                         with open("data/meta_dataset01/walk4_step3_ged10/{}_{}.pickle".format(filename[:-9], len(SG_TG_list)), "wb") as fw:
-                            pickle.dump(SG_TG_list, fw)
-                            
-                        print("g1_list: ",len(g1_list))
-                        print("g2_list: ",len(g2_list))
-                        print("ged_list: ",len(ged_list))
-                        
-                        
+                            pickle.dump(SG_TG_list, fw)       
+                                                    
                         with open("data/dataset01/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}_{}.pickle".format(args.num_walks,args.num_steps,total_ged, filename[:-9], len(SG_TG_list), len(ged_list)), "wb") as f:
                             pickle.dump([g1_list, g2_list, ged_list], f, protocol=pickle.HIGHEST_PROTOCOL)
                         print("dump! - i: {} / filename: {}".format(i, filename)) # subgraph개수..? scenegraph 개수를 따로 해둬야 하나..?
@@ -670,12 +663,10 @@ def distribute_files_by_size(file_list, num_processes):
     split_filenames = [[] for _ in range(num_processes)]
     for i, file_name in enumerate(sorted_files):
         split_filenames[i % num_processes].append(file_name)
-
     return split_filenames
 
 
 def main(margs):
-    
     # node class txtemb load <- mkScenegraph에서 만든 것
     with open('data/class_unique_textemb.pickle', 'rb') as f:  
        data  = pickle.load(f)
@@ -685,7 +676,6 @@ def main(margs):
     with open('data/predicate_unique_textemb.pickle', 'rb') as f:
         data  = pickle.load(f)
     PredictDict = data
-    
     
     # 폴더 내 파일(Scenegraph) 목록 로드
     folderpath = "data/scenegraph"
@@ -704,21 +694,21 @@ def main(margs):
     resultList = []
     for item in fileNameList:
         # sliced_item = item[7:13]
-        sliced_item = item[-13:-12]
-        # sliced_item = item[-15:-14]
+        # sliced_item = item[-13:-12]
+        sliced_item = item[-15:-14]
         resultList.append(sliced_item)
 
-    # PairDataset (resultList[0], F0Dict, PredictDict, provisedGED, train, margs)
+    PairDataset (resultList[0], F0Dict, PredictDict, provisedGED, train, margs)
     # 프로세스를 생성하고 딕셔너리를 개별적으로 전달
-    processes = []
-    for i in range(num_processes):
-        process = multiprocessing.Process(target=PairDataset, args=(resultList[i], F0Dict, PredictDict, provisedGED, train, margs ))
-        process.start()
-        processes.append(process)
+    # processes = []
+    # for i in range(num_processes):
+    #     process = multiprocessing.Process(target=PairDataset, args=(resultList[i], F0Dict, PredictDict, provisedGED, train, margs ))
+    #     process.start()
+    #     processes.append(process)
 
-    # # 모든 프로세스가 종료될 때까지 기다림
-    for process in processes:
-        process.join()
+    # # # 모든 프로세스가 종료될 때까지 기다림
+    # for process in processes:
+    #     process.join()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Embedding arguments')

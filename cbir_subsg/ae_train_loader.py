@@ -192,7 +192,8 @@ def train_loop(args):
         os.makedirs("plots/")
 
     model = build_model(args)
-    data_folder = 'data/train/'
+    # data_folder = 'data/train/'
+    data_folder = 'data/dataset01/'
     batch_size = args.batch_size
     max_epoch = 200
     
@@ -208,7 +209,7 @@ def train_loop(args):
         
         train(args, model, data_gen, epoch)
         
-        # torch.save(model.state_dict(), args.model_path)
+        torch.save(model.state_dict(), args.model_path)
         torch.save(model.state_dict(), 
                    args.model_path[:-7] + "_allepoch_e" + str(epoch + 1) + ".pt")
         print("time: ", time.time() - start)
