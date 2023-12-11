@@ -3,8 +3,6 @@
   subgraph 기반의 TaGSim 이용 데이터 생성
   
   동일 비디오 - 동일 scenegraph 가 하나의 파일에 있음
-  
-
 '''
 import sys, os
 import pickle
@@ -249,7 +247,6 @@ def mkTSGGenerator(graph, F0Dict, PredictDict, total_ged=0, max_node_idx=10):
         deleted_edges.append(to_del_edge[0])
         deleted_edges.append((to_del_edge[0][1], to_del_edge[0][0])) #양방향 그래프
         new_g.remove_edges_from(to_del_edge)
-        # sys.exit()
         # tombstone['edge'][to_del_edge] = {'operation': 'ec', 'predicate': new_g[to_del_edge[0]][to_del_edge[1]]['predicate']}
         assert ((curr_num_egde - new_g.number_of_edges()) == 1)
 
@@ -265,7 +262,6 @@ def mkTSGGenerator(graph, F0Dict, PredictDict, total_ged=0, max_node_idx=10):
                 toassigned_new_edgetype = random.choice(global_edge_labels)
                 # if toassigned_new_edgetype != new_g.edges[idx[0]][idx[1]]['predicate']:
                 if toassigned_new_edgetype != new_g.edges[idx[0], idx[1]]['predicate']:
-                    # sys.exit()
                     break
                     # tombstone['edge'][(idx[0], idx[1])] = {'operation': 'ie', 'new_predicate': toassigned_new_edgetype}
             tombstone.append({'operation': 'ec', 'edge_tuple': (idx[0], idx[1]), 
@@ -431,7 +427,11 @@ class TargetGraph:
             elif self.graph.has_edge(edge_tuple[1], edge_tuple[0]):
                 self.graph.remove_edge(edge_tuple[1], edge_tuple[0])
             else:
+                # print(self.graph.has_edge())
+                # print(self.graph.has_edge(*edge_tuple))
+                # print("edge_tuple : ",edge_tuple)
                 print("????")
+                
 
 
 
@@ -445,16 +445,19 @@ def extract_labels_and_tuples(tombstone):
 
 # 순차적으로 겹치는 부분이 있는지 탐색하는 함수
 def sequential_overlap_search(tombstone_list):
-    
     notDuplicatePair = []
     for i in range(len(tombstone_list)):
         for j in range(i + 1, len(tombstone_list)):
             labels_a, tuples_a = extract_labels_and_tuples(tombstone_list[i])
             labels_b, tuples_b = extract_labels_and_tuples(tombstone_list[j])
-
             if not set(labels_a).intersection(labels_b) and not set(tuples_a).intersection(tuples_b):
                 notDuplicatePair.append((i, j))
                 # print(f"No overlap between tombstone {i} and tombstone {j}")
+    #  notDuplicatePair에 포함되지 않은 Index의 tombstone을 tIdx로 지정하고, (tIdx, tIdx)를 notDuplicatePair에 추가
+    for tIdx in range(len(tombstone_list)):
+        if all(tIdx not in pair for pair in notDuplicatePair):
+            notDuplicatePair.append((tIdx, tIdx))  
+    
     return notDuplicatePair
 
 
@@ -514,38 +517,39 @@ def get_target_operations(no_duplication):
 def mkTargetGraph(original_scenegraph, tsg_operations_list, tsg_list, tombstone_list):
     target_graphs = []
     current_target_graph = None
+    tsg4tg_list = []
+    # print("tombstone_list: ",tombstone_list)
+    #todo - 중첩되지 않는 쌍이 없는 경우(모든 tombstone_list가 동일할 경우, Target graph 가 생성되지 않음 - 노드가 3개인데, GED가 10인 경우?) 
 
     notDuplicatePair = sequential_overlap_search(tombstone_list)
-    tsg4tg_list = get_target_operations(notDuplicatePair) # 원소 하나가 중복 제거된 tsg 집합
+    tsg4tg_list.extend(get_target_operations(notDuplicatePair)) # 원소 하나가 중복 제거된 tsg 집합
     # print("중복 제거 후:", tsg4tg_list)      
     # print("tsg_operations_list: ", tsg_operations_list)
+    # 
+    # print("notDuplicatePair: ",notDuplicatePair)
+    # print("tsg4tg_list: ",tsg4tg_list)
+       
     
     for tIdx, tsgIdxList in enumerate(tsg4tg_list): #TG 
         # print(" tsg_operations_list[tIdx]: ",  tsg_operations_list[tIdx])
-        # sys.exit()
         target_graph = TargetGraph(original_scenegraph)
         targetGED =  {'nc': 0, 'ec': 0, 'in': 0, 'ie': 0}
         # todo - tsgIdxList의 평균 개수, min, max 필요
         # todo - edge insertion에 동일 edge에 대해 insertion되는 경우를 보였음. 이에 대해 확인 후 처리 필요
-        # print("tIdx : ",tIdx)
-        # print("tsgIdxList: ", tsgIdxList)
         for tsgOperation in tsgIdxList: #Tsg 번호
             # 중복되지 않는 operation을 가진 tsg 들을 하나의 TargetGraph에 적용시킴
-            # print("tIdx: ", tIdx, "tombstone: ", tombstone ) #tombstone = tombstone_list[tsgOperation]
-            # print(target_graph.graph.nodes(data=True))
-            # print(target_graph.graph.edges(data=True))
             # 기본 targetGraphClass에서 사용하는 method 에 tsg를 보내서, 동일한 노드를 복사해서 넣을 수 있도록 변경해야함(bbox나 txtembedding 값 때문에)
-            # print("tsgOperation: ",tsgOperation)
             cur_tsg = tsg_list[tsgOperation]
             for operation in tombstone_list[tsgOperation]:
                 #operation에 맞는 tsg 를 argument로 넣어서 동일한 노드, edge를 복제하게 함
-                target_graph.apply_tsg_operation(operation, cur_tsg)
-                #GED 추가
+                target_graph.apply_tsg_operation(operation, cur_tsg)               
+            #GED 추가
             for key, value in tsg_operations_list[tsgOperation].items():
                 targetGED[key] += value
+        
         target_graphs.append([tIdx, target_graph.graph, targetGED, tsgIdxList]  ) 
+        # target_graphs.append([tIdx, target_graph.graph, targetGED, tsgIdxList]  ) 
         #target_graphs.append(targetGraph Idx, TargetGraph, 전체 사용한 GEV , 사용한 tsg 그래프 Idx,  )
-        #실제 데이터가 있어도 될 것 같긴한데..있으면 만드는데 너무 시간 많이 걸릴 것 같은데..
     return target_graphs
 
 
@@ -575,12 +579,18 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
             print("tqdm - filename: ", filename)
             
             SG_TG_list = []
-            for i in range(length):
+            if train: 
                 g1_list = []
                 g2_list = []
-                ged_list = []
+                ged_list = [] 
                 
-                if train:              
+                cnt = 0
+                for i in range(length):
+                    
+                    # print("scenegraph loop")
+
+                    
+                    # print("train == True")     
                     # Source Graph 에 RPE 속성을 추가하고, SubGraph로 나눔
                     dataset[i].graph['gid'] = 0 # i로 올라가게 해야 하는 것 아님?
                     # originSourceGraph = dataset[i]
@@ -588,87 +598,106 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
                     #R_BFS(Random breath-firs search)로 서브 그래프 생성
                     sourceSubGraphs = make_subgraph(SourceGraph, 4, False, False)                    
                     
+                    # print("sourceSubGraphs: ", sourceSubGraphs)
                     tsg_list = [] #syntheic graph from subgraph
                     tsg_operations_list = [] #GEV from provide GED   
                     tombstone_list = []
                     
-                    max_node_idx = len(dataset[i].nodes)                       
+                    max_node_idx = len(dataset[i].nodes)            
+                    # print("max_node_idx: ",max_node_idx)
                     
                     #scenegraph당 생성? video 당 생성.
                     for ssgIdx, SSG in enumerate(sourceSubGraphs):                        
                         #total_ged를 기반으로 operations를 생성하고, 각 operation을 해당 subgraph에 적용
                         tsg_operations, TSG, tombstone = mkTSGGenerator(SSG, F0Dict, PredictDict, total_ged, max_node_idx)
-                        # 모든 tsg_operations, TSG, tombstone을 바탕으로 TargetGraph를 생성해야 하므로, 일단 SourceGraph에 대응하는 targetGraph를 모두 모아둠                
-                        tsg_operations_list.append(tsg_operations)
+                        # 모든 tsg_operations, TSG, tombstone을 바탕으로 TargetGraph를 생성해야 하므로, 일단 SourceGraph에 대응하는 targetGraph를 모두 모아둠      
+                        
+                        # print("tsg_operations: ",tsg_operations)
+                                    
                         tsg_list.append(TSG)
+                        tsg_operations_list.append(tsg_operations)
                         tombstone_list.append(tombstone)                      
-                        # sys.exit()
                     # RPE가 없는 그래프에 충돌하지 않는 tsg_operation들을 적용하여 TargetGraph를 생성
                     #target grpah의 조건에 맞게  target graph(scene graph 생성)
+                    # print("before mkTargetGraph")
+                    # print("tsg_operations_list: ",tsg_operations_list)
+                    # print("tsg_list: ",tsg_list)
+                    # print("tombstone_list: ",tombstone_list)
                     TG_list = mkTargetGraph(dataset[i], tsg_operations_list, tsg_list, tombstone_list)
                     SG_TG_list.append([SourceGraph, TG_list]) # Source Graph와 대응되는 TargetGraph 의 List - metadata
+                    # print("TG_list: ",TG_list)
                     # print(TG_list[0]) #[0, <networkx.classes.graph.Graph object at 0x7fa2867ab2b0>, {'nc': 0, 'ec': 0, 'in': 15, 'ie': 15}, [0, 1, 5]]
                     # print(TG_list[1]) #[1, <networkx.classes.graph.Graph object at 0x7fa2867ab2b0>, {'nc': 0, 'ec': 0, 'in': 15, 'ie': 15}, [0, 1, 5]]                   
                     
-
-
                     for TGidx, tg_ in enumerate(TG_list) : 
+                        # print("TG_list loop")
                         #text emb 값 할당
                         TG_rpe, enc_agg = mkNG2Subs(tg_[1], args, F0Dict)  # Gs에 Feature 붙임
 
                         for tsgIdx in tg_[3]:
-                            cur_tsg = tsg_list[tsgIdx]
+                            cur_tsg = deepcopy(tsg_list[tsgIdx])
                             for nodeIdx in cur_tsg.nodes():
                                 node_attributes = TG_rpe.nodes[nodeIdx]
                                 cur_tsg.nodes[nodeIdx].update(node_attributes)
                             #print("cur_tsg: ",cur_tsg.nodes()) # meta - subgraph의 평균 노드 개수
                             # print(sourceSubGraphs[tsgIdx], cur_tsg, tsg_operations_list[tsgIdx]) #기존 데이터셋 규격
                         #meta dataset
+                            g1_list.append(sourceSubGraphs[tsgIdx]) #source subgraph
+                            g2_list.append(cur_tsg) #target subgraph
+                            ged_list.append(list(tsg_operations_list[tsgIdx].values()))  # source subgraph to target subgraph - GEV({}X, []O)
 
-                        g1_list.append(sourceSubGraphs[tsgIdx])
-                        g2_list.append(cur_tsg)
-                        ged_list.append(list(tsg_operations_list[tsgIdx].values()))  
+
+                    # try:
+                    if i == length-1:
+                        with open("data/meta_dataset01/walk4_step3_ged10/{}_{}.pickle".format(filename[:-9], len(SG_TG_list)), "wb") as fw:
+                            pickle.dump(SG_TG_list, fw)
                         
-                        if(len(ged_list) == 0):
-                            print(SourceGraph)
-                            print(TG_rpe)
-                            print(g1_list)
-                            sys.exit()
+                        
+                        with open("data/dataset01/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}_{}.pickle".format(args.num_walks,args.num_steps,total_ged, filename[:-9], len(SG_TG_list), len(ged_list)), "wb") as f:
+                            pickle.dump([g1_list, g2_list, ged_list], f, protocol=pickle.HIGHEST_PROTOCOL)
+                        print("dump! - i: {} / filename: {}".format(i,filename))
+                        
+                        g1_list = []
+                        g2_list = []
+                        ged_list = []
+
+                    elif cnt == 100:
+                        with open("data/meta_dataset01/walk4_step3_ged10/{}_{}.pickle".format(filename[:-9], len(SG_TG_list)), "wb") as fw:
+                            pickle.dump(SG_TG_list, fw)
                         
                         
-                        # ged_list.append(tsg_operations_list[tsgIdx])  
+                        with open("data/dataset01/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}_{}.pickle".format(args.num_walks,args.num_steps,total_ged, filename[:-9], len(SG_TG_list), len(ged_list)), "wb") as f:
+                            pickle.dump([g1_list, g2_list, ged_list], f, protocol=pickle.HIGHEST_PROTOCOL)
+                        print("dump! - i: {} / filename: {} / cnt: {}".format(i, filename, cnt))
 
-                # 완성된 dataset 저장
-                if i == length-1:
-                # if i == 1:
-                    with open("data/meta_dataset01/walk4_step3_ged10/{}_{}.pkl".format(filename[:-9], len(SG_TG_list)), "wb") as fw:
-                        pickle.dump(SG_TG_list, fw)
-                    
-                    with open("data/dataset01/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, filename[:-9], len(SG_TG_list), len(ged_list)), "wb") as fw:
-                    # with open("data/dataset01/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, filename[:-9], i), "wb") as fw: #SG_TG_list = scenegraph 개수, len(ged_list) = subgraph 개수
-                        pickle.dump([g1_list, g2_list, ged_list], fw)
-                    print("dump! - i: {} / filename: {}".format(i, filename)) # subgraph개수..? scenegraph 개수를 따로 해둬야 하나..?
-                    g1_list = []
-                    g2_list = []
-                    ged_list = []
-                    
-                    return
+                        g1_list = []
+                        g2_list = []
+                        ged_list = []
 
-                # elif cnt == 100:
-                #     with open("data/dataset01/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}.pkl".format(args.num_walks,args.num_steps,total_ged, filename[:-9], i),  "wb") as fw:
-                #         pickle.dump([g1_list, g2_list, ged_list], fw)
-                #     print("dump! - i: {} / filename: {} / cnt: {}".format(i, filename, cnt))
+                        cnt = 0
+                    else:
+                        cnt += 1
 
-                #     g1_list = []
-                #     g2_list = []
-                #     ged_list = []
 
-                #     cnt = 0
-                # else:
-                #     cnt += 1
-                # except:
-                #     print("ERR - dump")
-                #     continue
+
+
+                    # # 완성된 dataset 저장
+                    # if i == length-1:
+                    # # if i == 1:    
+                    #     with open("data/meta_dataset01/walk4_step3_ged10/{}_{}.pickle".format(filename[:-9], len(SG_TG_list)), "wb") as fw:
+                    #         pickle.dump(SG_TG_list, fw)
+                            
+                    #     print("g1_list: ",len(g1_list))
+                    #     print("g2_list: ",len(g2_list))
+                    #     print("ged_list: ",len(ged_list))
+                        
+                        
+                    #     with open("data/dataset01/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}_{}.pickle".format(args.num_walks,args.num_steps,total_ged, filename[:-9], len(SG_TG_list), len(ged_list)), "wb") as f:
+                    #         pickle.dump([g1_list, g2_list, ged_list], f, protocol=pickle.HIGHEST_PROTOCOL)
+                    #     print("dump! - i: {} / filename: {}".format(i, filename)) # subgraph개수..? scenegraph 개수를 따로 해둬야 하나..?
+                
+                
+                
         else :
             print("length is 0 -> killed")
 
@@ -700,10 +729,10 @@ def main(margs):
     
     # 폴더 내 파일(Scenegraph) 목록 로드
     folderpath = "data/scenegraph"
-    file_list = os.listdir(folderpath)
+    # file_list = os.listdir(folderpath)
 
     # @@@ temp
-    file_list = file_list[:5]
+    # file_list = file_list[:5]
     train = True
     provisedGED = 10
 
@@ -714,21 +743,22 @@ def main(margs):
         fileNameList  = pickle.load(f)
     resultList = []
     for item in fileNameList:
-        # sliced_item = item[-10:-7] 
-        sliced_item = item[-15:-14]
+        # sliced_item = item[7:13]
+        sliced_item = item[-13:-12]
+        # sliced_item = item[-15:-14]
         resultList.append(sliced_item)
 
-    # PairDataset (resultList[0], F0Dict, PredictDict, provisedGED, train, margs)
+    PairDataset (resultList[0], F0Dict, PredictDict, provisedGED, train, margs)
     # 프로세스를 생성하고 딕셔너리를 개별적으로 전달
-    processes = []
-    for i in range(num_processes):
-        process = multiprocessing.Process(target=PairDataset, args=(resultList[i], F0Dict, PredictDict, provisedGED, train, margs ))
-        process.start()
-        processes.append(process)
+    # processes = []
+    # for i in range(num_processes):
+    #     process = multiprocessing.Process(target=PairDataset, args=(resultList[i], F0Dict, PredictDict, provisedGED, train, margs ))
+    #     process.start()
+    #     processes.append(process)
 
-    # # 모든 프로세스가 종료될 때까지 기다림
-    for process in processes:
-        process.join()
+    # # # 모든 프로세스가 종료될 때까지 기다림
+    # for process in processes:
+    #     process.join()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Embedding arguments')
