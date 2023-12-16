@@ -78,9 +78,8 @@ def parse_encoder(parser, arg_str=None):
                             
                             
                             # model_path = "ckpt/dataset_01/1215/imgretreival_e13.pt",
-                            # model_path = "ckpt/dataset_01/1215_all/imgretreival_.pt",  #layer04
-                           # model_path = "ckpt/dataset_01/1215/imgretreival_.pt",  #layer04 -ged norm min, max 변경
-                            model_path = "ckpt/dataset_01/1216_ged3-7/imgretrieval_.pt",
+                            model_path = "ckpt/dataset_01/1215_pred/imgretreival_.pt",
+                            
                                                     
                             tag='',
                             val_size=64,         # 4096,
@@ -89,7 +88,7 @@ def parse_encoder(parser, arg_str=None):
                             num_steps =3, 
                             use_weight = False,
                             norm = 'all',
-                            edge_attr_dim = 13,
+                            edge_attr_dim = 10,
                             
                             )    
 

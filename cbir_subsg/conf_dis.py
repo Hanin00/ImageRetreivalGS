@@ -1,5 +1,5 @@
-# import argparse
-# from utils import utils
+import argparse
+from utils import utils
 
 def parse_encoder(parser, arg_str=None):
     enc_parser = parser.add_argument_group()
@@ -52,7 +52,8 @@ def parse_encoder(parser, arg_str=None):
                             method_type='gnn',
                             dataset='scene',     # syn
                             n_layers=4,
-                            batch_size=1024,  # 64, batch 개수 #32
+                            # batch_size=1024,  # 64, batch 개수 #32
+                            batch_size = 1024,
                             feature_dim = 13, # rpe = 3, f0 = 1 새로운 데이터(rpe )
                             hidden_dim= 32,
                             skip="learnable",
@@ -63,25 +64,18 @@ def parse_encoder(parser, arg_str=None):
                             opt_restart=10,
                             weight_decay=0.0,
                             lr=1e-4,
-                            margin=0.1,
-                            
+                            margin=0.1,                            
                             test_set='',
                             eval_interval=10,   # 1000, batch 반복횟수  
                             n_workers=1,        # 4
-                            # model_path="ckpt/final/1003/imgretreival_alledgeattr.pt",
-                            # model_path="ckpt/final/1009/imgretreival_alledgeattr.pt",
-                            # model_path="ckpt/final/gat/imgretreival_e13.pt",
-                            # model_path="ckpt/final/1009/imgretreival_alledgeattr_best_e27.pt",    
+                            # model_path="ckpt/final/gat/imgretreival_e1.pt",
+                            # model_path="ckpt/1003/scene_model_wotxtemb.pt",
+                            # model_path="ckpt/1009/scene_model_wotxtemb.pt", # without txt
+                            # model_path="ckpt/1009/scene_model_wotxtemb_best_e27.pt", # without txt 
                             
-                            # model_path="ckpt/final/1117/imgretreival_e13.pt",
-                            # model_path = "ckpt/final/1117/imgretreival_e13_best_e27.pt",
+                            # model_path="ckpt/1117/scene_model_wotxtemb.pt",
+                            model_path = "ckpt/dataset_01/1215_dis/imgretreival_.pt",
                             
-                            
-                            # model_path = "ckpt/dataset_01/1215/imgretreival_e13.pt",
-                            # model_path = "ckpt/dataset_01/1215_all/imgretreival_.pt",  #layer04
-                           # model_path = "ckpt/dataset_01/1215/imgretreival_.pt",  #layer04 -ged norm min, max 변경
-                            model_path = "ckpt/dataset_01/1216_ged3-7/imgretrieval_.pt",
-                                                    
                             tag='',
                             val_size=64,         # 4096,
                             node_anchored=False, # True
@@ -89,7 +83,7 @@ def parse_encoder(parser, arg_str=None):
                             num_steps =3, 
                             use_weight = False,
                             norm = 'all',
-                            edge_attr_dim = 13,
+                            edge_attr_dim = 2,
                             
                             )    
 

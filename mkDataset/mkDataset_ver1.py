@@ -325,7 +325,6 @@ def mkTSGGenerator(graph, F0Dict, PredictDict, total_ged=0, max_node_idx=10):
         while (True):
             try:
                 curr_pair = random.sample(new_g.nodes(), 2)
-
                 bbox_a = new_g.nodes[curr_pair[0]]['bbox']
                 bbox_b = new_g.nodes[curr_pair[1]]['bbox']
 
@@ -644,10 +643,10 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
                     # 완성된 dataset 저장
                     if i == length-1:
                     # if i == 1:    
-                        with open("data/meta_dataset01/walk4_step3_ged10/{}_{}.pickle".format(filename[:-9], len(SG_TG_list)), "wb") as fw:
+                        with open("data/meta_dataset01/walk4_step3_ged5/{}_{}.pickle".format(filename[:-9], len(SG_TG_list)), "wb") as fw:
                             pickle.dump(SG_TG_list, fw)       
                                                     
-                        with open("data/dataset01/walk4_step3_ged10/walk{}_step{}_ged{}_{}_{}_{}.pickle".format(args.num_walks,args.num_steps,total_ged, filename[:-9], len(SG_TG_list), len(ged_list)), "wb") as f:
+                        with open("data/dataset01/walk4_step3_ged5/walk{}_step{}_ged{}_{}_{}_{}.pickle".format(args.num_walks,args.num_steps,total_ged, filename[:-9], len(SG_TG_list), len(ged_list)), "wb") as f:
                             pickle.dump([g1_list, g2_list, ged_list], f, protocol=pickle.HIGHEST_PROTOCOL)
                         print("dump! - i: {} / filename: {}".format(i, filename)) # subgraph개수..? scenegraph 개수를 따로 해둬야 하나..?
                 
@@ -665,6 +664,19 @@ def distribute_files_by_size(file_list, num_processes):
         split_filenames[i % num_processes].append(file_name)
     return split_filenames
 
+# 각 서버 간 processor 수가 안맞는 부분 해결 위해.. (동일한 비디오에 대해 수행하게 하려고.)
+def split_list(lst, num_proc):
+    avg = len(lst) // num_proc
+    remainder = len(lst) % num_proc
+    result = []
+
+    start = 0
+    for i in range(num_proc):
+        end = start + avg + (1 if i < remainder else 0)
+        result.append(lst[start:end])
+        start = end
+
+    return result
 
 def main(margs):
     # node class txtemb load <- mkScenegraph에서 만든 것
@@ -684,7 +696,7 @@ def main(margs):
     # @@@ temp
     # file_list = file_list[:5]
     train = True
-    provisedGED = 10
+    provisedGED = 5
 
     # # 파일 목록을 프로세스별로 분할
     num_processes = multiprocessing.cpu_count()
@@ -692,14 +704,14 @@ def main(margs):
     with open('data/fileNameList_ordered.pkl', 'rb') as f:
         fileNameList  = pickle.load(f)
     resultList = []
-    for item in fileNameList:
-        # sliced_item = item[7:13]
-        # sliced_item = item[-13:-12]
-        sliced_item = item[-15:-14]
-        resultList.append(sliced_item)
-
-    PairDataset (resultList[0], F0Dict, PredictDict, provisedGED, train, margs)
-    # 프로세스를 생성하고 딕셔너리를 개별적으로 전달
+    # for item in fileNameList:
+    #     sliced_item = item[7:14]  
+    #     # sliced_item = item[-13:-12]
+    #     # sliced_item = item[-15:-14]
+    #     resultList.append(sliced_item)
+    
+    # # PairDataset (resultList[0], F0Dict, PredictDict, provisedGED, train, margs)
+    # # 프로세스를 생성하고 딕셔너리를 개별적으로 전달
     # processes = []
     # for i in range(num_processes):
     #     process = multiprocessing.Process(target=PairDataset, args=(resultList[i], F0Dict, PredictDict, provisedGED, train, margs ))
@@ -709,6 +721,56 @@ def main(margs):
     # # # 모든 프로세스가 종료될 때까지 기다림
     # for process in processes:
     #     process.join()
+
+# 원래는 여기까지가 정상 동작 코드
+
+
+#중간에 취소 눌러서 재 시작..
+
+    for item in fileNameList:
+            sliced_item = item[7:14]  
+            # sliced_item = item[-13:-12]
+            # sliced_item = item[-15:-14]
+            resultList.extend(sliced_item)
+
+    print(resultList[0])
+    total_list = [file.split('.')[0] for file in resultList]
+    # 2. '_'를 기준으로 슬라이싱하여 [3]을 원소로 하는 리스트 exist_list 생성
+    
+    folder_path = 'data/dataset01/walk4_step3_ged5/'
+    file_names = os.listdir(folder_path)
+
+    exist_list = [file.split('_')[3] for file in file_names]
+
+    # 3. total_list의 원소 중 exist_list에 없는 원소들을 모아 unexi_list로 모음
+    unexi_list = [item+'.json.pkl' for item in total_list if item not in exist_list]
+
+    # 결과 출력
+    print("Total List:", total_list)
+    print("Exist List:", exist_list)
+    print("Unexistent List:", unexi_list)
+    print("Exist List:", len(exist_list))
+    
+    print("Total List:", total_list[0])
+    print("Unexistent List:", len(unexi_list))
+    print("Unexistent List:", unexi_list[0])
+    
+    
+    sys.exit()
+    
+    regen_resultList = split_list(unexi_list, num_processes)
+
+    # PairDataset (resultList[0], F0Dict, PredictDict, provisedGED, train, margs)
+    # 프로세스를 생성하고 딕셔너리를 개별적으로 전달
+    processes = []
+    for i in range(num_processes):
+        process = multiprocessing.Process(target=PairDataset, args=(regen_resultList[i], F0Dict, PredictDict, provisedGED, train, margs ))
+        process.start()
+        processes.append(process)
+
+    # # 모든 프로세스가 종료될 때까지 기다림
+    for process in processes:
+        process.join()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Embedding arguments')

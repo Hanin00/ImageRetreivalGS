@@ -1,6 +1,6 @@
 from utils import utils, subgraph
 from cbir_subsg import models
-from cbir_subsg.conf import parse_encoder
+from cbir_subsg.conf_all import parse_encoder
 
 import torch
 import torch.nn as nn
@@ -40,6 +40,8 @@ import matplotlib.pyplot as plt
     ['4239231056', '7645715544']
 
 '''
+
+#retrieval_subgraph에서 
 def load_dataset_temp(args,F0Dict):
     # with open("data/scenegraph_1/0_6096540713_6096540713.pkl", "rb") as fr:
     #     datas = pickle.load(fr)
@@ -51,15 +53,16 @@ def load_dataset_temp(args,F0Dict):
     max_node = 3
     R_BFS = True
     
-    # filenames = ["3802296828.json.pkl", "6673828083.json.pkl"]
-    # filenames = ["7645715544.json.pkl"]
+    # filenames = ['4239231056.json.pkl', '7645715544.json.pkl','2406271188.json.pkl']
+    filenames = ['4239231056.json.pkl', '7645715544.json.pkl', '2406271188.json.pkl', '2430799380.json.pkl', 
+                 '3828379201.json.pkl', '4148862873.json.pkl', '5454696393.json.pkl', '5759653927.json.pkl'] #1215
     
-    filenames = ['4239231056.json.pkl', '7645715544.json.pkl']
     for filename in filenames:
         vId = filename.split('.')[0]
         with open("data/scenegraph/"+ filename, "rb") as fr:
             tmp = pickle.load(fr)            
-            length = len(tmp[0])
+            length = len(tmp[0]) 
+            
             # length = 2            
             if length != 0:
                 cnt = 0
@@ -75,7 +78,6 @@ def load_dataset_temp(args,F0Dict):
                 db_reIdx = [i for i in range(len(db))]
         # print("len(db): ", len(db)) 
         # print("len(db): ", len(db_idx)) 
-        
     print("total len(db): ", len(db))
     query = []
     # user-defined query images
@@ -92,7 +94,8 @@ def load_dataset_temp(args,F0Dict):
                 origin_g, origin_enc_agg = utils.mkNG2Subs(queryDataset[0][i], args, F0Dict)  # Gs에 Feature 붙임
                 query.append(origin_g)
     
-    with open("result/dataset_retrieval_target.pkl", "wb") as fw:
+    # with open("result/dataset_retrieval_target.pkl", "wb") as fw:
+    with open("result/dataset_retrieval_target_1215_sceneg_4005_subg_12926_all.pkl", "wb") as fw:
         pickle.dump([db, db_idx, db_reIdx, query, query_number], fw)
             
                     
@@ -100,7 +103,8 @@ def load_dataset_temp(args,F0Dict):
 
 
 def load_dataset(): #동일 조건 하에서
-    with open("result/dataset_retrieval_target.pkl", "rb") as fr:
+    # with open("result/dataset_retrieval_target.pkl", "rb") as fr:
+    with open("result/dataset_retrieval_target_1215_sceneg_4005_subg_12926_all.pkl", "rb") as fr:
         datas = pickle.load(fr)
     db, db_idx, db_reIdx, query, query_number = datas
                     
@@ -195,8 +199,8 @@ def feature_extract(args):
         F0Dict = data
     
     # db, db_idx, db_reIdx, query, query_number\
-    # dataset, db_idx, db_reIdx, querys, query_number = load_dataset_temp(args, F0Dict)
-    # sys.exit()
+    dataset, db_idx, db_reIdx, querys, query_number = load_dataset_temp(args, F0Dict)
+    sys.exit()
     
     dataset, db_idx, db_reIdx, querys, query_number  = load_dataset()   
 
@@ -306,7 +310,6 @@ def feature_extract(args):
     
     with open("result/result_graphs_alledges.pkl", "wb") as fw:
         pickle.dump(result_graph, fw)
-            
     
     # # Final image rank
     # imgs = Counter(candidate_imgs)      

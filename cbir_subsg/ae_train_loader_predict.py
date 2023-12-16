@@ -2,7 +2,7 @@ from cbir_subsg.test import validation
 from utils import utils
 from utils import data
 from cbir_subsg import models
-from cbir_subsg.conf import parse_encoder
+from cbir_subsg.conf_predict import parse_encoder
 
 import torch.optim as optim
 import torch.nn as nn
@@ -16,7 +16,6 @@ import networkx as nx
 from deepsnap.graph import Graph as DSGraph
 from deepsnap.batch import Batch
 import numpy as np
-
 
 
 
@@ -48,19 +47,17 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
         newG = nx.Graph()
         newG.add_nodes_from(g.nodes(data=True))
         newG.add_edges_from(g.edges())
+        
 
         for v in list(g.nodes):
                 rpe = g.nodes[v]['rpe']
                 f0 = g.nodes[v]["txtemb"]
                 newG.nodes[v]["node_feature"] = torch.tensor(np.concatenate((rpe, f0), axis=None))
-
-        for e in list(g.edges):
+        
+        for e in list(g.edges):            
                 txtemb = g.edges[e[0], e[1]]['txtemb'] # 10 
-                distance = g.edges[e[0], e[1]]["distance"] #1
-                angle_AB = g.edges[e[0], e[1]]["angle_AB"] # 1
-                angle_BA = g.edges[e[0], e[1]]["angle_BA"] #1 
-                newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb, distance,angle_AB,angle_BA), axis=None))
-                
+                newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb), axis=None))
+
         newGraphs.append(newG)
         # print("newGraphs: ",newGraphs)
     batch = Batch.from_data_list([DSGraph(g) for g in newGraphs])  
@@ -84,7 +81,7 @@ class DataSource:
 def data_generator(data_folder, batch_size):
     dataset = [[], [], []]
 
-    min_value = 3
+    min_value = 2
     max_value = 7
     
     # 전체 파일 목록을 가져옵니다.
@@ -110,8 +107,7 @@ def data_generator(data_folder, batch_size):
             print(file_path)
             print(file_path)
             continue
-                
-                
+      
         for i in range(len(tmp[0])):
             dataset[0].append(tmp[0][i])
             dataset[1].append(tmp[1][i])
@@ -201,10 +197,9 @@ def train_loop(args):
         os.makedirs("plots/")
 
     model = build_model(args)
-    # data_folder = 'data/train/'
     data_folder = 'data/dataset01/'
     batch_size = args.batch_size
-    max_epoch = 100
+    max_epoch = 6
     
     max_batches = args.max_batches
     # train(args, model, data_gen)
@@ -218,7 +213,7 @@ def train_loop(args):
         
         train(args, model, data_gen, epoch)
         
-        torch.save(model.state_dict(), args.model_path)
+        # torch.save(model.state_dict(), args.model_path)
         torch.save(model.state_dict(), 
                    args.model_path[:-7] + "_allepoch_e" + str(epoch + 1) + ".pt")
         print("time: ", time.time() - start)
@@ -254,8 +249,9 @@ def train_loop(args):
 
 def main(force_test=False):
     parser = argparse.ArgumentParser(description='Embedding arguments')
-    parser.add_argument('--max_batches', type=int, default=2000, help='Maximum number of batches to train on')
+    parser.add_argument('--max_batches', type=int, default=1000, help='Maximum number of batches to train on')
     
+
     utils.parse_optimizer(parser)
     parse_encoder(parser)
     args = parser.parse_args()
