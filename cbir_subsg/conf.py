@@ -77,10 +77,19 @@ def parse_encoder(parser, arg_str=None):
                             # model_path = "ckpt/final/1117/imgretreival_e13_best_e27.pt",
                             
                             
+                            #학습
                             # model_path = "ckpt/dataset_01/1215/imgretreival_e13.pt",
-                            # model_path = "ckpt/dataset_01/1215_all/imgretreival_.pt",  #layer04
-                           # model_path = "ckpt/dataset_01/1215/imgretreival_.pt",  #layer04 -ged norm min, max 변경
-                            model_path = "ckpt/dataset_01/1216_ged3-7/imgretrieval_.pt",
+                            # model_path = "ckpt/dataset_01/1215_all/imgretreival_.pt",  #layer04 ged norm min max - 1, 10
+                            # model_path = "ckpt/dataset_01/1215/imgretreival_.pt",  
+                            # model_path = "ckpt/dataset_01/1216_ged3-7/imgretrieval_.pt",#layer04 #ged norm min max - 3, 7변경
+                            model_path = "ckpt/dataset_01/1217/imgretreival_.pt",   # 
+                            
+                            #검색
+                            # model_path = "ckpt/dataset_01/1215_all/imgretreival__best_e6.pt",  #layer04 ged norm min max - 1, 10
+                            # model_path = "ckpt/dataset_01/1215_all/imgretreival__best_e13.pt",  #layer04 ged norm min max - 1, 10
+                            # model_path = "ckpt/dataset_01/1216_ged3-7/imgretrieval__best_e6.pt",#layer04 #ged norm min max - 3, 7변경
+                            # model_path = "ckpt/dataset_01/1215_all/imgretreival__best_e6.pt",  #layer08   - 1, 10
+                            
                                                     
                             tag='',
                             val_size=64,         # 4096,

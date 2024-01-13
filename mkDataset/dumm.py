@@ -110,7 +110,8 @@ import os, sys
 #         print(f"An error occurred: {e}")
 
 # # 사용 예시
-# directory_path = 'data/dataset01/walk4_step3_ged5'  # 폴더 경로를 적절히 수정
+# # directory_path = 'data/dataset01/walk4_step3_ged5'  # 폴더 경로를 적절히 수정
+# directory_path = 'data/dataset01_01/walk4_step3_ged5'  # 폴더 경로를 적절히 수정
 # output_file_path = 'file_names.txt'  # 저장할 텍스트 파일의 경로 및 파일명을 지정
 
 # save_file_names_to_text(directory_path, output_file_path)

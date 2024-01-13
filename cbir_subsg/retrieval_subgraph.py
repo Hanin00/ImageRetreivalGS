@@ -1,6 +1,7 @@
 from utils import utils, subgraph
 from cbir_subsg import models
-from cbir_subsg.conf_all import parse_encoder
+# from cbir_subsg.conf_all import parse_encoder
+from cbir_subsg.conf import parse_encoder
 
 import torch
 import torch.nn as nn
@@ -52,17 +53,25 @@ def load_dataset_temp(args,F0Dict):
     
     max_node = 3
     R_BFS = True
-    
+    # 2430799380 빼고 해보기..?
     # filenames = ['4239231056.json.pkl', '7645715544.json.pkl','2406271188.json.pkl']
+    
+    # filenames = ['4239231056.json.pkl', '7645715544.json.pkl'] #2
+    
     filenames = ['4239231056.json.pkl', '7645715544.json.pkl', '2406271188.json.pkl', '2430799380.json.pkl', 
+    #  ] # 4
                  '3828379201.json.pkl', '4148862873.json.pkl', '5454696393.json.pkl', '5759653927.json.pkl'] #1215
     
+    cnt_video = 0
     for filename in filenames:
         vId = filename.split('.')[0]
+        
         with open("data/scenegraph/"+ filename, "rb") as fr:
             tmp = pickle.load(fr)            
             length = len(tmp[0]) 
-            
+            print("length : ",length)
+        
+            cnt_video += length
             # length = 2            
             if length != 0:
                 cnt = 0
@@ -78,24 +87,48 @@ def load_dataset_temp(args,F0Dict):
                 db_reIdx = [i for i in range(len(db))]
         # print("len(db): ", len(db)) 
         # print("len(db): ", len(db_idx)) 
+    print("cnt_video: ", cnt_video)
     print("total len(db): ", len(db))
-    query = []
-    # user-defined query images
-    with open("data/seq_g3_4239231056_7645715544.pkl", "rb") as q:
-        queryDataset = pickle.load(q)
-        #todo - 여기서 RPE 계산해야함        
+    
+   
+    
+    # query = []
+    # # user-defined query images
+    # with open("data/seq_g3_4239231056_7645715544.pkl", "rb") as q:
+    #     queryDataset = pickle.load(q)
+    #     #todo - 여기서 RPE 계산해야함        
         
-        length = len(queryDataset[0])
-        if length != 0:
-            cnt = 0
-            query_number = [idx for idx in queryDataset[2]]
-            for i in range(length):   
-                # queryDataset[i].graph['gid'] = i
-                origin_g, origin_enc_agg = utils.mkNG2Subs(queryDataset[0][i], args, F0Dict)  # Gs에 Feature 붙임
-                query.append(origin_g)
+    #     length = len(queryDataset[0])
+    #     if length != 0:
+    #         cnt = 0
+    #         query_number = [idx for idx in queryDataset[2]]
+    #         for i in range(length):   
+    #             # queryDataset[i].graph['gid'] = i
+    #             origin_g, origin_enc_agg = utils.mkNG2Subs(queryDataset[0][i], args, F0Dict)  # Gs에 Feature 붙임
+    #             query.append(origin_g)
+    
+    query = []
+    queryDataset = [[],[],[]]
+    for i in range(0, len(db_reIdx), 40):
+        queryDataset[0].append(db[i])
+        queryDataset[1].append(db_idx[i].split('_')[0])
+        queryDataset[2].append(db_idx[i].split('_')[1])
+    print(queryDataset)  
+    
+    
+
+    length = len(queryDataset[0])
+    if length != 0:
+        cnt = 0
+        query_number = [idx for idx in queryDataset[2]]
+        for i in range(length):   
+            # queryDataset[i].graph['gid'] = i
+            origin_g, origin_enc_agg = utils.mkNG2Subs(queryDataset[0][i], args, F0Dict)  # Gs에 Feature 붙임
+            query.append(origin_g)
+    
     
     # with open("result/dataset_retrieval_target.pkl", "wb") as fw:
-    with open("result/dataset_retrieval_target_1215_sceneg_4005_subg_12926_all.pkl", "wb") as fw:
+    with open("result/vid08_1217_from_db.pkl", "wb") as fw:
         pickle.dump([db, db_idx, db_reIdx, query, query_number], fw)
             
                     
@@ -104,7 +137,9 @@ def load_dataset_temp(args,F0Dict):
 
 def load_dataset(): #동일 조건 하에서
     # with open("result/dataset_retrieval_target.pkl", "rb") as fr:
-    with open("result/dataset_retrieval_target_1215_sceneg_4005_subg_12926_all.pkl", "rb") as fr:
+    # with open("result/vid02_1215_sceneg_198_subg_615.pkl", "rb") as fr:
+    # with open("result/vid04_1215_sceneg_935_subg_2145.pkl", "rb") as fr:
+    with open("result/vid08_1217_from_db.pkl", "rb") as fr:
         datas = pickle.load(fr)
     db, db_idx, db_reIdx, query, query_number = datas
                     
@@ -181,7 +216,6 @@ def showGraph(graph, type, title):
     edgecolor='black',
     format='png', dpi=200)
 
-
 def feature_extract(args):
     ''' Extract feature from subgraphs
     It extracts all subgraphs feature using a trained model.
@@ -199,8 +233,8 @@ def feature_extract(args):
         F0Dict = data
     
     # db, db_idx, db_reIdx, query, query_number\
-    dataset, db_idx, db_reIdx, querys, query_number = load_dataset_temp(args, F0Dict)
-    sys.exit()
+    # dataset, db_idx, db_reIdx, querys, query_number = load_dataset_temp(args, F0Dict)
+    # sys.exit()
     
     dataset, db_idx, db_reIdx, querys, query_number  = load_dataset()   
 
@@ -308,7 +342,10 @@ def feature_extract(args):
             
     # print(result_graph)
     
-    with open("result/result_graphs_alledges.pkl", "wb") as fw:
+    # with open("result/result_graphs_alledges_video02.pkl", "wb") as fw:
+    # with open("result/result_graphs_alledges_epoch13_video08.pkl", "wb") as fw:
+    # with open("result/result_graphs_alledges_layer08_video08.pkl", "wb") as fw:
+    with open("result/1217/vid08_1217_from_db.pkl", "wb") as fw:
         pickle.dump(result_graph, fw)
     
     # # Final image rank

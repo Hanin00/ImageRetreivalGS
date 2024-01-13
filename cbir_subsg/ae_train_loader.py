@@ -84,8 +84,8 @@ class DataSource:
 def data_generator(data_folder, batch_size):
     dataset = [[], [], []]
 
-    min_value = 3
-    max_value = 7
+    min_value = 1
+    max_value = 10
     
     # 전체 파일 목록을 가져옵니다.
     all_files = []
@@ -202,7 +202,8 @@ def train_loop(args):
 
     model = build_model(args)
     # data_folder = 'data/train/'
-    data_folder = 'data/dataset01/'
+    # data_folder = 'data/dataset01/'
+    data_folder = 'data/dataset01_01/'
     batch_size = args.batch_size
     max_epoch = 100
     

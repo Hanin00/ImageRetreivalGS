@@ -74,7 +74,8 @@ def parse_encoder(parser, arg_str=None):
                             # model_path="ckpt/1009/scene_model_wotxtemb_best_e27.pt", # without txt 
                             
                             # model_path="ckpt/1117/scene_model_wotxtemb.pt",
-                            model_path = "ckpt/dataset_01/1215_dis/imgretreival_.pt",
+                            # model_path = "ckpt/dataset_01/1215_dis/imgretreival_.pt",                            
+                            model_path = "ckpt/dataset_01/1215_dis/imgretreival__best_e6.pt",
                             
                             tag='',
                             val_size=64,         # 4096,
