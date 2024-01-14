@@ -2,6 +2,14 @@
 만든이: haeun5419@a.ut.ac.kr
 코드 개요: Query를 위한 Query graph 생성
 
+
+1. 서브 그래프 생성
+2. 노드 또는 엣지의 추가/제거
+! 이때 노드는 이미 생성된 서브 그래프들과 걸쳐있되, 동일하진 않아야함
+    -> 해당 내용을 살펴보려면 그래프가 충분히 커야할 것으로 보임
+
+
+
 두 개의 쿼리 비디오를 선정하고, 거기에서 node를 제거해서 사용하는 것이 나아보임.
 사용 비디오: 3802296828
 
@@ -24,9 +32,8 @@ import pickle
 querys = []
 with open('data/scenegraph/3802296828.json.pkl', 'rb') as f:
     scenegraphs = pickle.load(f)
+
 print(len(scenegraphs[0])) #548
-print(scenegraphs[0][0].edges(data=True)) #548
-sys.exit()
 
 
 queryG1origin =scenegraphs[0][0]

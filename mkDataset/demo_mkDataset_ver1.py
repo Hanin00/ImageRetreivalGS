@@ -586,10 +586,7 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
                 
                 cnt = 0
                 for i in range(length):
-                    
-                    # print("scenegraph loop")
-
-                    
+                    # print("scenegraph loop")                    
                     # print("train == True")     
                     # Source Graph 에 RPE 속성을 추가하고, SubGraph로 나눔
                     dataset[i].graph['gid'] = 0 # i로 올라가게 해야 하는 것 아님?
