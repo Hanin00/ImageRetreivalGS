@@ -57,14 +57,14 @@ def load_dataset_temp(args,F0Dict):
     
     # filenames = ['4239231056.json.pkl', '7645715544.json.pkl'] #2
     
-    filenames = ['4239231056.json.pkl', '7645715544.json.pkl', '2406271188.json.pkl', '2430799380.json.pkl', 
-    #  ] # 4
-                 '3828379201.json.pkl', '4148862873.json.pkl', '5454696393.json.pkl', '5759653927.json.pkl'] #1215
+    # filenames = ['4239231056.json.pkl', '7645715544.json.pkl', '2406271188.json.pkl', '2430799380.json.pkl', 
+    #              '3828379201.json.pkl', '4148862873.json.pkl', '5454696393.json.pkl', '5759653927.json.pkl'] #1215
+    
+    filenames = ['4239231056.json.pkl'] 
     
     cnt_video = 0
     for filename in filenames:
-        vId = filename.split('.')[0]
-        
+        vId = filename.split('.')[0]        
         with open("data/dataset02/scenegraph_v2/"+ filename, "rb") as fr:
             tmp = pickle.load(fr)            
             length = len(tmp[0]) 
@@ -88,6 +88,13 @@ def load_dataset_temp(args,F0Dict):
         # print("len(db): ", len(db_idx)) 
     print("cnt_video: ", cnt_video)
     print("total len(db): ", len(db))
+    
+    
+    #dataset 저장 - 
+    
+    
+    
+    
     
    
     

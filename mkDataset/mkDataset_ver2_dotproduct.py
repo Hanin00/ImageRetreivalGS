@@ -552,9 +552,9 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
                     SourceGraph, enc_agg = mkNG2Subs(dataset[i], args, F0Dict)  # Gs에 RPE Feature 붙임
                     #R_BFS(Random breath-firs search)로 서브 그래프 생성
                     
+                    
+
                     #todo 해당 subgraph 생성 방법 변경 필요 @@@@@@@@@@@@@@
-                    
-                    
                     sourceSubGraphs = make_subgraph(SourceGraph, 4, False, False)                    
                     
                     # print("sourceSubGraphs: ", sourceSubGraphs)
@@ -602,7 +602,7 @@ def PairDataset(filenames, F0Dict,PredictDict,total_ged, train, args ):
                         with open("data/dataset02/meta_dataset02/walk4_step3_ged5/{}_{}.pickle".format(filename[:-9], len(SG_TG_list)), "wb") as fw:
                             pickle.dump(SG_TG_list, fw)       
                                                     
-                        with open("data/dataset02/walk4_step3_ged5/walk{}_step{}_ged{}_{}_{}_{}.pickle".format(args.num_walks,args.num_steps,total_ged, filename[:-9], len(SG_TG_list), len(ged_list)), "wb") as f:
+                        with open("data/dataset02/training/walk4_step3_ged5/walk{}_step{}_ged{}_{}_{}_{}.pickle".format(args.num_walks,args.num_steps,total_ged, filename[:-9], len(SG_TG_list), len(ged_list)), "wb") as f:
                             pickle.dump([g1_list, g2_list, ged_list], f, protocol=pickle.HIGHEST_PROTOCOL)
                         print("dump! - i: {} / filename: {}".format(i, filename)) # subgraph개수..? scenegraph 개수를 따로 해둬야 하나..?
                 
@@ -662,10 +662,9 @@ def main(margs):
     resultList = []
 
     for item in fileNameList:
-            sliced_item = item[-2:-1]
+            sliced_item = item[:10]  
             # sliced_item = item[7:14]  
-            # sliced_item = item[-13:-12]
-            # sliced_item = item[-15:-14]
+            # sliced_item = item[14:]  
             resultList.extend(sliced_item)
 
     print(resultList[0])
@@ -673,7 +672,7 @@ def main(margs):
     
     # 2. '_'를 기준으로 슬라이싱하여 [3]을 원소로 하는 리스트 exist_list 생성    
     # folder_path = 'data/dataset01/walk4_step3_ged5/'
-    folder_path = 'data/dataset02/walk4_step3_ged5/'
+    folder_path = 'data/dataset02/training/walk4_step3_ged5/'
     file_names = os.listdir(folder_path)
 
     exist_list = [file.split('_')[3] for file in file_names]
