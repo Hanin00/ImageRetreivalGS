@@ -89,14 +89,18 @@ def load_dataset_temp(args,F0Dict):
     print("cnt_video: ", cnt_video)
     print("total len(db): ", len(db))
     
+    #retrieval 검색에 사용할 query graph를 위해서 고정된 db가 필요 ----vvvv--- 
+    #dataset 저장 - dump
+    with open("data/dataset02/retrieval/retrieval_db.pkl", "wb") as fw:
+        pickle.dump(db, db_idx, db_reIdx, cnt_video, fw)
+    #retrieval 검색에 사용할 query graph를 위해서 고정된 db가 필요 ----^^^^---
     
-    #dataset 저장 - 
+    sys.exit()
     
     
+    with open("data/dataset02/retrieval/retreival_db.pkl", "rb") as fr:
+        db, db_idx, db_reIdx, cnt_video = pickle.load(fr)  
     
-    
-    
-   
     
     # query = []
     # # user-defined query images

@@ -20,31 +20,28 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 
+'''
+
+    우선 기존에 했던 모델로 검색 성능을 확인할거라
+    dataset 01 에서 생성해야함.
+
+    이미지 한 장당 10개 이상의 객체를 갖는 것을 사용
+
+
+    고정된 서브 그래프 데이터셋을 검색 대상이 되는 db라고 할 때, 
+    db 내에서 특정 
+    1. 동일한 서브 그래프를 쿼리 그래프로 사용하여 검색
+    2. 존재하는 서브 그래프에 걸치는 그래프를 생성, 쿼리 그래프로 사용하여 검색
+    3. 없는 그래프를 생성하여 쿼리그래프로 사용
 
 '''
-    1103
-    0에 가까울 수록 비슷한 것
 
 
-    0731 - 기존과 달라진 점
-    1. 서브그래프를 사용하지 않음
-    2. 그래프 형식이 다름 - edge feature 있음;
 
-    db_idx.extend([i]*len(datas))# 기존에는 그래프의 id를 subgraph 개수만큼 생성
-    하지만, 지금은 비디오 내 프레임별로 scenegraph 를 생성하므로 파일명과 몇 번째 그래프인지를 표현해주면 됨
-    
-    
-    1117
-    
-    query Graph 출처 비디오
-    ['4239231056', '7645715544']
-    
-    
-    1119
-    서브그래프로 만든 후 embedding 하고 검색함
 
-'''
+#retrieval_subgraph에서 
 def load_dataset_temp(args,F0Dict):
+    
     # with open("data/scenegraph_1/0_6096540713_6096540713.pkl", "rb") as fr:
     #     datas = pickle.load(fr)
     db = []
@@ -54,67 +51,95 @@ def load_dataset_temp(args,F0Dict):
     
     max_node = 3
     R_BFS = True
+    # 2430799380 빼고 해보기..?
+
     
-    # filenames = ["3802296828.json.pkl", "6673828083.json.pkl"]
-    # filenames = ["7645715544.json.pkl"]
-    
-    # filenames = ['4239231056.json.pkl', '7645715544.json.pkl']
-    
-    filenames = ['3802296828.pkl'] 
-    
+    filenames = ['8402409351.json.pkl']                 #length :  619 / cnt_video:  619 / total len(db):  4341
+    # filenames = ['8718578847.json.pkl']                #length :  617 / cnt_video:  617 / total len(db):  617
+    # filenames = ['6121794107.json.pkl']                 #length :  884 / cnt_video:  884 / total len(db):  3333
+    # filenames = ['6514779107.json.pkl']               #length :  206 / cnt_video:  206 / total len(db):  2386
+    # filenames = ['12292269854.json.pkl']            #length :  1448 / cnt_video:  1448 / total len(db):  15989
+    # filenames = ['3881536171.json.pkl']             #length :  268 / cnt_video:  268 / total len(db):  2990
+        
+    cnt_video = 0
     for filename in filenames:
-        vId = filename.split('.')[0]
-        with open("data/dataset02/scenegraph_v2/"+ filename, "rb") as fr:
+        vId = filename.split('.')[0]        
+        # with open("data/dataset02/scenegraph_v2/"+ filename, "rb") as fr: #dataset v2를 학습한 모델로 실함할 때
+        with open("data/scenegraph/"+ filename, "rb") as fr: #dataset v1를 학습한 모델로 실험할 때
             tmp = pickle.load(fr)            
-            length = len(tmp[0])
+            length = len(tmp[0]) 
+            print("length : ",length)
+        
+            cnt_video += length
             # length = 2            
             if length != 0:
                 cnt = 0
-                # 'rpe' 가 없던 scenegraph에 계산해서 rpe 값 node에 넣어주는 부분
+                # 'rpe' 가 없던 scenegraph에 계산
+                # 해서 rpe 값 node에 넣어주는 부분
                 for i in range(length):   
                     # tmp[0][i].graph['gid'] = i
                     # 서브 그래프를 만든 후에 rpe를 계산? rpe를 계산한 다음에 서브그래프를 만들어야 해당 이미지에서 해당 노드를 더 잘표현하는 것 아닌가?
                     origin_g, origin_enc_agg = utils.mkNG2Subs(tmp[0][i], args,F0Dict)  # Gs에 Feature 붙임
                     # print(origin_g.nodes(data="rpe"))
-                    # subs = subgraph.make_subgraph(origin_g, max_node, False, R_BFS) # subgraph 로 나눔
-                    db.append(origin_g)    
-                    db_idx.append(str(vId)+ '_' + str(tmp[2][i]))
-
+                    subs = subgraph.make_subgraph(origin_g, max_node, False, R_BFS) # subgraph 로 나눔
+                    db.extend(subs)    
+                    db_idx.extend([str(vId)+ '_' + str(tmp[2][i])+'_'+str(subIdx) for subIdx in range(len(subs))])                
                 db_reIdx = [i for i in range(len(db))]
         # print("len(db): ", len(db)) 
         # print("len(db): ", len(db_idx)) 
-        
-        
-    with open("result_scenegraph/dataset_retrieval_target_sceneG.pkl", "wb") as fw:
-        pickle.dump([db, db_idx, db_reIdx, query, query_number], fw)
+    print("cnt_video: ", cnt_video)
+    print("total len(db): ", len(db))
+    
+    #retrieval 검색에 사용할 query graph를 위해서 고정된 db가 필요 ----vvvv--- 
+    #dataset 저장 - dump
+    # with open("data/dataset02/retrieval/retrieval_db.pkl", "wb") as fw:
+    #     pickle.dump((db, db_idx, db_reIdx, cnt_video), fw)
+    with open("data/retrieval_test_subgraph/subgraph_dataset_8402409351.pkl", "wb") as fw:
+        pickle.dump([db, db_idx, db_reIdx], fw)
             
     sys.exit()
+    #retrieval 검색에 사용할 query graph를 위해서 고정된 db가 필요 ----^^^^---           
     
     
     
     
-    
-    
-    
-    
-    print("total len(db): ", len(db))
-    query = []
-    # user-defined query images
+    # query = []
+    # # user-defined query images
     # with open("data/seq_g3_4239231056_7645715544.pkl", "rb") as q:
-    with open("data/v2_seq_g3_4239231056_7645715544.pkl", "rb") as q:
-        queryDataset = pickle.load(q)
-        #todo - 여기서 RPE 계산해야함       
-               
-        length = len(queryDataset[0])
-        if length != 0:
-            cnt = 0
-            query_number = [idx for idx in queryDataset[2]]
-            for i in range(length):   
-                # queryDataset[i].graph['gid'] = i
-                origin_g, origin_enc_agg = utils.mkNG2Subs(queryDataset[0][i], args, F0Dict)  # Gs에 Feature 붙임
-                query.append(origin_g)
+    #     queryDataset = pickle.load(q)
+    #     #todo - 여기서 RPE 계산해야함        
+        
+    #     length = len(queryDataset[0])
+    #     if length != 0:
+    #         cnt = 0
+    #         query_number = [idx for idx in queryDataset[2]]
+    #         for i in range(length):   
+    #             # queryDataset[i].graph['gid'] = i
+    #             origin_g, origin_enc_agg = utils.mkNG2Subs(queryDataset[0][i], args, F0Dict)  # Gs에 Feature 붙임
+    #             query.append(origin_g)
     
-    with open("result_scenegraph/dataset_retrieval_target_sceneG.pkl", "wb") as fw:
+    query = []
+    queryDataset = [[],[],[]]
+    for i in range(0, len(db_reIdx), 40):
+        queryDataset[0].append(db[i])
+        queryDataset[1].append(db_idx[i].split('_')[0])
+        queryDataset[2].append(db_idx[i].split('_')[1])
+    print(queryDataset)  
+    
+    
+
+    length = len(queryDataset[0])
+    if length != 0:
+        cnt = 0
+        query_number = [idx for idx in queryDataset[2]]
+        for i in range(length):   
+            # queryDataset[i].graph['gid'] = i
+            origin_g, origin_enc_agg = utils.mkNG2Subs(queryDataset[0][i], args, F0Dict)  # Gs에 Feature 붙임
+            query.append(origin_g)
+    
+    
+    # with open("result/dataset_retrieval_target.pkl", "wb") as fw:
+    with open("result/vid08_1217_from_db.pkl", "wb") as fw:
         pickle.dump([db, db_idx, db_reIdx, query, query_number], fw)
             
                     
@@ -122,8 +147,10 @@ def load_dataset_temp(args,F0Dict):
 
 
 def load_dataset(): #동일 조건 하에서
-    # with open("result/dataset_retrieval_target_sceneG.pkl", "rb") as fr:
-    with open("result_scenegraph/dataset_retrieval_target_sceneG.pkl", "rb") as fr:
+    # with open("result/dataset_retrieval_target.pkl", "rb") as fr:
+    # with open("result/vid02_1215_sceneg_198_subg_615.pkl", "rb") as fr:
+    # with open("result/vid04_1215_sceneg_935_subg_2145.pkl", "rb") as fr:
+    with open("result/vid08_1217_from_db.pkl", "rb") as fr:
         datas = pickle.load(fr)
     db, db_idx, db_reIdx, query, query_number = datas
                     
@@ -161,18 +188,19 @@ def find_duplicate_nodes_and_edges(graph1, graph2):
             #    print("node 가 동일함")
             
                if data1['predicate'] == data2['predicate']:
+                    # print("predicate도 동일함")
                     if 'dotproduct' in data1 and 'dotproduct' in data2:
                        dotproduct_diff = abs(data1['dotproduct'] - data2['dotproduct'])
                     else:
                        dotproduct_diff = None
-                                    
+                
                     if data1['predicate'] == data2['predicate']:
                         predicate = data1['predicate']
                     else:
                         predicate = (data1['predicate'], data2['predicate'])
                     
                     # result.append((predicate, distance_diff, angleAB_diff, (node1_name_graph1, node2_name_graph1, data1), (node3_name_graph2, node4_name_graph2, data2)))
-                    result.append((predicate, dotproduct_diff, (node1_name_graph1, node2_name_graph1, ), (node3_name_graph2, node4_name_graph2,)))
+                        result.append((predicate, dotproduct_diff, (node1_name_graph1, node2_name_graph1, ), (node3_name_graph2, node4_name_graph2,)))
     return result
 
 def showGraph(graph, type, title):
@@ -192,7 +220,6 @@ def showGraph(graph, type, title):
     edgecolor='black',
     format='png', dpi=200)
 
-
 def feature_extract(args):
     ''' Extract feature from subgraphs
     It extracts all subgraphs feature using a trained model.
@@ -211,10 +238,10 @@ def feature_extract(args):
     
     # db, db_idx, db_reIdx, query, query_number\
     dataset, db_idx, db_reIdx, querys, query_number = load_dataset_temp(args, F0Dict)
-    db_data = utils.batch_nx_graphs_rpe(dataset, None)
     sys.exit()
     
     dataset, db_idx, db_reIdx, querys, query_number  = load_dataset()   
+
     db_data = utils.batch_nx_graphs_rpe(dataset, None)
      
     # print(db_data.G[0])
@@ -241,12 +268,14 @@ def feature_extract(args):
 
     result_graph = []
     
-    
+    # candidate_imgs = []
+    # candidate_imgs_idx = []
     model.eval()
     torch.set_printoptions(precision=15)
     with torch.no_grad():
         emb_db_data = model.emb_model(db_data) # [1327,32]
-
+        print(len(querys))
+        
         for idx, queryG  in enumerate(querys): #i = 쿼리 그래프의 서브 그래프 하나.
             # 쿼리 그래프마다 비슷한 비디오를 검색 -> 
             candidate_imgs = []
@@ -272,7 +301,6 @@ def feature_extract(args):
 
             q_check = {n[1] for n in queryG.nodes(data="name")} #query graph의 name
 
-
             rIdx = 0            
             result = []
             for n, d in sorted_items[:10]:
@@ -280,9 +308,13 @@ def feature_extract(args):
                 # print("D: ", d)
                 # n 이 어떤 그래프이고, 해당 그래프 node에 bbox를 칠 수 있으면 더 시각화가 잘 될 것 같음                
                 result.append((n, dataset[db_idx.index(n)], db_reIdx[db_idx.index(n)]))
+
+                # candidate_imgs.append(n) #하나의 동영상에서 검색 시
                 candidate_imgs.append(n.split('_')[1]) #하나의 동영상에서 검색 시 + 프레임 번호까지만(동일 프레임인 경우, 묶으려고)
                 candidate_imgs_idx.append(db_reIdx[db_idx.index(n)])
 
+            retreival_time = time.time() - retreival_start_time
+                        
             # Check similar/same class count with subgraph in DB
             checking_in_db = [len(q_check) - len(q_check - i)
                               for i in db_check]
@@ -293,6 +325,7 @@ def feature_extract(args):
             value_checking_in_db = [
                 str(q_check - (q_check - i))  for i in db_check]
             value_checking_result = Counter(value_checking_in_db)
+            
             print(value_checking_result)
             print("==="*20)
             print("쿼리 번호: ",idx)
@@ -310,13 +343,14 @@ def feature_extract(args):
             
             rank_list = [dataset[candidate_imgs_idx[cidx]] for cidx in range(len(candidate_imgs_idx))]
             result_graph.extend((rank_list, sorted_items[:10]))
-    
             
     # print(result_graph)
-    # sys.exit()    
-    with open("result_scenegraph/result_scene_graphs_alledges.pkl", "wb") as fw:
+    
+    # with open("result/result_graphs_alledges_video02.pkl", "wb") as fw:
+    # with open("result/result_graphs_alledges_epoch13_video08.pkl", "wb") as fw:
+    # with open("result/result_graphs_alledges_layer08_video08.pkl", "wb") as fw:
+    with open("result/1217/vid08_1217_from_db.pkl", "wb") as fw:
         pickle.dump(result_graph, fw)
-            
     
     # # Final image rank
     # imgs = Counter(candidate_imgs)      

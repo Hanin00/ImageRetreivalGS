@@ -87,7 +87,7 @@ def parse_encoder(parser, arg_str=None):
                             num_steps =3, 
                             use_weight = False,
                             norm = 'all',
-                            edge_attr_dim = 11,
+                            edge_attr_dim = 13,
                             
                             )    
 

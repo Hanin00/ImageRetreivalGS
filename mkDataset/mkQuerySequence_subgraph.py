@@ -14,7 +14,7 @@
 사용 비디오: 3802296828
 
 '''
-import sys
+import sys, os
 import numpy as np
 import pandas as pd
 
@@ -42,7 +42,7 @@ from utils import utils, subgraph
 # # 예제 거리 (500픽셀) 사용
 # example_distance = 500
 # normalized_distance = normalize_distance(example_distance, diagonal_length)
-
+ 
 
 # 서브 그래프 생성 후 이상 행동에서 scenegraph 생성 - 
 
@@ -53,35 +53,85 @@ db_idx = []
 max_node = 3
 R_BFS = True
 
+with open("data/retrieval_test_subgraph/subgraph_dataset_8402409351.pkl", "rb") as fr:
+        db, db_idx, db_reIdx = pickle.load(fr)  
+for  i in range(len(db)):
+    if len(db[i].nodes()) > 5:
+        print(db[i].nodes(data="name"))
 
-# 근데 쿼리 그래프는 rpe가 없는디.. 어카지.. 이게 영향을 미치진 않나..?
+sys.exit()
 
 
-vId = str(4239231056)
-with open("data/dataset02/scenegraph_v2/"+vId+".pkl", "rb") as fr:
-    tmp = pickle.load(fr)            
-    length = len(tmp[0]) 
-    print("length : ",length)
 
-    graphs = tmp[0]
-    # length = 2
-    if length != 0:
-        cnt = 0
-        # 'rpe' 가 없던 scenegraph에 계산해서 rpe 값 node에 넣어주는 부분
-        for i in range(length):   
-            # tmp[0][i].graph['gid'] = i
-            # 서브 그래프를 만든 후에 rpe를 계산? rpe를 계산한 다음에 서브그래프를 만들어야 해당 이미지에서 해당 노드를 더 잘표현하는 것 아닌가?
-            # print(origin_g.nodes(data="rpe"))
-            subs = subgraph.make_subgraph(graphs[i], max_node, False, R_BFS) # subgraph 로 나눔
-            print(subs[0].nodes(data=True))
-            print(subs[0].edges(data=True))
-                        
-            db.extend(subs)            
-            sys.exit()
-            db.extend(subs)    
-            db_idx.extend([str(vId)+ '_' + str(tmp[2][i])+'_'+str(subIdx) for subIdx in range(len(subs))])                
-        db_reIdx = [i for i in range(len(db))]
 
+
+
+
+# 근데 쿼리 그래프는 rpe가 없는디.. 어카지.. 이게 영향을 미치진 않나..? -> 
+
+
+# vId = str(4239231056)
+# vId = str(8888541668)
+
+#한 장면에서 10개 이상의 객체가 나오는 비디오
+
+# vId = str(8402409351)
+# vId = str(8718578847)
+# vId = str(6121794107)
+# vId = str(6514779107)
+# vId = str(12292269854)
+# vId = str(3881536171)
+
+
+# folder_path = 'data/dataset02/scenegraph_v2/'
+
+# # 폴더 내의 모든 파일 및 디렉토리 목록을 가져옴
+# file_list = os.listdir(folder_path)
+# for vId in file_list:    
+#     with open("data/dataset02/scenegraph_v2/"+vId, "rb") as fr:
+#         db, db_idx, db_reIdx = pickle.load(fr)  
+
+    
+#     for  i in range(len(db)):
+#         if len(db[i].nodes()) > 10:
+#             print("vId : ",vId)
+#             print(db[i].nodes(data="name"))
+            
+
+# sys.exit()
+
+
+
+with open("data/dataset02/retrieval/retrieval_db.pkl", "rb") as fr:
+        db, db_idx, db_reIdx, cnt_video = pickle.load(fr)  
+for  i in range(len(db)):
+    if len(db[i].nodes()) > 5:
+        print(db[i].nodes(data="name"))
+
+sys.exit()
+
+
+
+
+
+
+
+# print(db[0].nodes(data=True))
+print(db[0].nodes(data="name"))
+# print(db[0].edges(data=True))
+
+
+print(db[0].edges(data="predicate"))
+
+print(len(db[0].nodes()))
+print(len(db[0].edges()))
+
+sys.exit()
+
+print(db[0])
+print(db[0].nodes(data=True))
+print(db[0].edges(data=True))
+sys.exit()
 
 #2. subgraph에서 노드 삭제
 

@@ -141,7 +141,15 @@ def load_dataset(): #동일 조건 하에서
     # with open("result/vid04_1215_sceneg_935_subg_2145.pkl", "rb") as fr:
     with open("result/vid08_1217_from_db.pkl", "rb") as fr:
         datas = pickle.load(fr)
+        
     db, db_idx, db_reIdx, query, query_number = datas
+    print(query.nodes(data=True))
+    print(query.edges(data=True))
+    sys.exit()
+    
+    
+    
+    
                     
     return db, db_idx, db_reIdx, query, query_number
 
@@ -237,6 +245,7 @@ def feature_extract(args):
     # sys.exit()
     
     dataset, db_idx, db_reIdx, querys, query_number  = load_dataset()   
+    
 
     db_data = utils.batch_nx_graphs_rpe(dataset, None)
      
