@@ -177,11 +177,16 @@ device_cache = None
 def get_device():
     global device_cache
     if device_cache is None:
+<<<<<<< HEAD
         device_cache = torch.device("cuda:0") if torch.cuda.is_available() \
             else torch.device("cpu")
         if torch.cuda.is_available():
             print("cuda available")
             torch.cuda.empty_cache()
+=======
+        device_cache = torch.device("cuda") if torch.cuda.is_available() \
+            else torch.device("cpu")
+>>>>>>> master
         #device_cache = torch.device("cpu")
     return device_cache
 
@@ -261,6 +266,7 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
             for v in g.nodes:
                 g.nodes[v]["node_feature"] = torch.tensor([float(v == anchor)])
                 print("g.nodes[v] : ",  g.nodes[v])
+<<<<<<< HEAD
             for e in g.edges:
                 g.edges[e]["edge_feature"] = torch.tensor([float(v == anchor)])
                 print("g.edges[v] : ",  g.edges[v])
@@ -268,11 +274,22 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
     # print("utils - graphs: ",graphs)
     for g in graphs:
         # print("utils - g: ",g)
+=======
+            
+            for e in g.edges:
+                g.edges[e]["edge_feature"] = torch.tensor([float(v == anchor)])
+                print("g.edges[v] : ",  g.edges[v])
+
+    for g in graphs:
+>>>>>>> master
         newG = nx.Graph()
         newG.add_nodes_from(g.nodes(data=True))
         newG.add_edges_from(g.edges())
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
         for v in list(g.nodes):
                 rpe = g.nodes[v]['rpe']
                 f0 = g.nodes[v]["txtemb"]
@@ -283,11 +300,18 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
                 distance = g.edges[e[0], e[1]]["distance"] #1
                 angle_AB = g.edges[e[0], e[1]]["angle_AB"] # 1
                 angle_BA = g.edges[e[0], e[1]]["angle_BA"] #1 
+<<<<<<< HEAD
                 newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb, distance,angle_AB,angle_BA), axis=None))
         newGraphs.append(newG)
         
     # print("utils - newGraphs: ",newGraphs)
     
+=======
+                # newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb, distance,angle_AB,angle_BA), axis=None))
+                newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((distance, angle_AB), axis=None), dtype=torch.float32)
+                
+        newGraphs.append(newG)
+>>>>>>> master
 
     batch = Batch.from_data_list([DSGraph(g) for g in newGraphs])  
 
@@ -308,20 +332,35 @@ from utils.mkGraphRPE import *
 from surel_gacc import run_walk
 
 def mkMergeGraph(S, K, gT, nodeNameDict, F0dict, nodeIDDict):
+<<<<<<< HEAD
 
     merged_K = np.concatenate([np.asarray(k) for k in K]).tolist()
     # print("merged_K: ",merged_K)
     merged_K = [nodeIDDict[i] for i in merged_K]
+=======
+    merged_K = np.concatenate([np.asarray(k) for k in K]).tolist()
+    # print("merged_K: ",merged_K)
+    merged_K = [nodeIDDict[i] for i in merged_K]
+    # print("after merged_K: ", merged_K)
+>>>>>>> master
     
     sum_dict = {}
     count_dict = {}
     for k, gf in zip(merged_K, gT):
         if k in sum_dict:
+<<<<<<< HEAD
+=======
+            sum_dict[k] += gf
+>>>>>>> master
             count_dict[k] += 1
         else:
             sum_dict[k] = gf
             count_dict[k] = 1 
+<<<<<<< HEAD
     gT_mean = {k: sum_dict[k] / count_dict[k] for k in sum_dict} #
+=======
+    gT_mean = {k: sum_dict[k] / count_dict[k] for k in sum_dict}
+>>>>>>> master
     
     return gT_mean 
 
@@ -363,12 +402,19 @@ def mkNG2Subs(G, args, F0dict):
     listA = [a.flatten().tolist() for a in K] 
     flatten_listA = list(itertools.chain(*listA)) 
 
+<<<<<<< HEAD
     gT_concatenated = torch.cat((gT, gT), axis=1)    
+=======
+    gT_concatenated = torch.cat((gT, gT), axis=1)
+>>>>>>> master
     enc_agg = torch.mean(gT_concatenated, dim=0)
 
     nodeIDDict = dict(zip(candidates, Gnode))
     rpeDict = mkMergeGraph (S, K, gT, nmDict, F0dict, nodeIDDict)
+<<<<<<< HEAD
     
+=======
+>>>>>>> master
     for nodeId in list(G.nodes()):
         G.nodes()[nodeId]['rpe']  = rpeDict[nodeId]
 

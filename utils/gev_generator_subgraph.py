@@ -22,6 +22,10 @@ import networkx as nx
 
 
 import matplotlib.pyplot as plt
+<<<<<<< HEAD
+=======
+import sys
+>>>>>>> master
 import pickle
 import random
 

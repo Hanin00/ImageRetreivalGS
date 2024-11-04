@@ -17,9 +17,15 @@ def build_model(args):
         model = models.GnnEmbedder(args.feature_dim , args.hidden_dim, args) #feature vector("rpe")가 num_walks = 4라 5차원
     model.to(utils.get_device())
     
+<<<<<<< HEAD
     
     
     # checkpoint = torch.load('checkpoint.pt')
+=======
+    # checkpoint = torch.load('checkpoint.pt')
+  
+
+>>>>>>> master
     if os.path.exists(args.model_path):
         model.load_state_dict(torch.load(args.model_path,
                                          map_location=utils.get_device()))
@@ -89,7 +95,11 @@ def train_loop(args):
 
     data_source = make_data_source(args)
     loaders = data_source.gen_data_loaders(args.batch_size, train=False)
+<<<<<<< HEAD
     print("loaders : ", len(loaders))
+=======
+    print("train - loaders : ", len(loaders))
+>>>>>>> master
 
     val = []
     batch_n = 0

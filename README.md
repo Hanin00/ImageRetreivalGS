@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+=======
+# 23.12.02에 push 한 것들은 distance, angle 만을 특징으로 한 것.
+
+
+
+
+
+>>>>>>> master
 # CBIR-SubSG
 Contents based Image Retrieval Method based on Scene Graph using Subgraph Learning.   
 Main idea is Subgraph Learning and A* Graph Edit Distance.   
@@ -31,4 +40,7 @@ To use the GED, follow these steps:
 - java
 
 Detailed library requirements can be found in requirements.txt   
+<<<<<<< HEAD
 # Addr_Translate
+=======
+>>>>>>> master

@@ -29,20 +29,30 @@ import matplotlib.pyplot as plt
 
 
 def main():
+<<<<<<< HEAD
   # argument
+=======
+>>>>>>> master
   parser = argparse.ArgumentParser(description='Embedding arguments')
   parser.add_argument('--max_batches', type=int, default=1000, help='Maximum number of batches to train on')
   utils.parse_optimizer(parser)
   parse_encoder(parser)
   args = parser.parse_args()
+<<<<<<< HEAD
 
 
   # node txtemb dictionary 
+=======
+  
+>>>>>>> master
   with open('data/class_unique_textemb.pickle', 'rb') as f:  
       data  = pickle.load(f)
   F0Dict = data
   
+<<<<<<< HEAD
   # file size ordering
+=======
+>>>>>>> master
   with open('data/fileNameList_ordered.pkl', 'rb') as f:
       fileNameList  = pickle.load(f)
   filenames = []
@@ -51,6 +61,7 @@ def main():
       sliced_item = item[-5:-4]
       filenames.extend(sliced_item)
 
+<<<<<<< HEAD
   filenames = filenames[:3]    
   total_subgraph = []
   total_subgraph_fid = []
@@ -119,6 +130,37 @@ def main():
             
             
             
+=======
+  filenames = filenames[:1]    
+  
+  total_subgraph = []
+  total_subgraph_fid = []
+  
+  
+  max_node = 3
+  R_BFS = True
+
+  data_folder = 'data/scenegraph/'
+  for foldername in os.listdir(data_folder):
+      file_names = os.listdir(os.path.join(data_folder, foldername))
+      
+      with open(file_names, "rb") as fr:
+        tmp = pickle.load(fr)
+        for i in range(len(tmp[0])):
+            origin_g, origin_enc_agg = utils.mkNG2Subs(tmp[0][i], args, F0Dict)
+            tmpsub = subgraph.make_subgraph(tmp[0][i], max_node, False, R_BFS)
+            for subg in tmpsub:
+              if len(subg.nodes()) == 3:
+                total_subgraph.append(subg)
+                total_subgraph_fid.append(tmp[2][i])
+  print(total_subgraph)
+  print(total_subgraph_fid)
+  sys.exit()
+
+  # origin_g, origin_enc_agg = utils.mkNG2Subs(tmp[i], args, F0Dict)  # Gs에 Feature 붙임 
+  #               subs = subgraph.make_subgraph(origin_g, max_node, False, R_BFS)
+
+>>>>>>> master
 
 
 

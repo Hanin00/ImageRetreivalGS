@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 # import argparse
 # from utils import utils
+=======
+import argparse
+from utils import utils
+>>>>>>> master
 
 def parse_encoder(parser, arg_str=None):
     enc_parser = parser.add_argument_group()
@@ -51,8 +56,14 @@ def parse_encoder(parser, arg_str=None):
                             # conv_type='SAGE',
                             method_type='gnn',
                             dataset='scene',     # syn
+<<<<<<< HEAD
                             n_layers=4,
                             batch_size=1024,  # 64, batch 개수 #32
+=======
+                            n_layers=8,
+                            # batch_size=1024,  # 64, batch 개수 #32
+                            batch_size = 1024,
+>>>>>>> master
                             feature_dim = 13, # rpe = 3, f0 = 1 새로운 데이터(rpe )
                             hidden_dim= 32,
                             skip="learnable",
@@ -63,6 +74,7 @@ def parse_encoder(parser, arg_str=None):
                             opt_restart=10,
                             weight_decay=0.0,
                             lr=1e-4,
+<<<<<<< HEAD
                             margin=0.1,
                             
                             test_set='',
@@ -91,6 +103,19 @@ def parse_encoder(parser, arg_str=None):
                             # model_path = "ckpt/dataset_01/1215_all/imgretreival__best_e6.pt",  #layer08   - 1, 10
                             
                                                     
+=======
+                            margin=0.1,                            
+                            test_set='',
+                            eval_interval=10,   # 1000, batch 반복횟수  
+                            n_workers=1,        # 4
+                            # model_path="ckpt/final/gat/imgretreival_e1.pt",
+                            # model_path="ckpt/1003/scene_model_wotxtemb.pt",
+                            # model_path="ckpt/1009/scene_model_wotxtemb.pt", # without txt
+                            # model_path="ckpt/1009/scene_model_wotxtemb_best_e27.pt", # without txt 
+                            
+                            # model_path="ckpt/1117/scene_model_wotxtemb.pt",
+                            model_path="ckpt/1117/scene_model_wotxtemb_best_e27.pt",
+>>>>>>> master
                             tag='',
                             val_size=64,         # 4096,
                             node_anchored=False, # True
@@ -98,7 +123,11 @@ def parse_encoder(parser, arg_str=None):
                             num_steps =3, 
                             use_weight = False,
                             norm = 'all',
+<<<<<<< HEAD
                             edge_attr_dim = 13,
+=======
+                            edge_attr_dim = 2,
+>>>>>>> master
                             
                             )    
 

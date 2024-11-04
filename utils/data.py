@@ -64,17 +64,30 @@ def load_dataset(name):
     elif name == "scene":
         dataset = [[], [], []]
         start = time.time()
+<<<<<<< HEAD
         
         for foldername in os.listdir('data/train_sub/'):
             file_names = os.listdir('data/train_sub/'+foldername)
         # # train_sub
         # for foldername in os.listdir('data/train_origin-13-10/'):
         #     file_names = os.listdir('data/train_origin-13-10/'+foldername)
+=======
+        for foldername in os.listdir('data/train/'):
+            file_names = os.listdir('data/train/'+foldername)
+        # # train_sub
+        # for foldername in os.listdir('data/train_origin-13-10/'):
+        #     file_names = os.listdir('data/train_origin-13-10/'+foldername)
+            file_names = file_names[:1000]
+>>>>>>> master
             for j in range(len(file_names) ):
             # for j in range(10):
                     filename = file_names[j]
                     print("filename: ",filename)
+<<<<<<< HEAD
                     with open("data/train_sub"+"/"+foldername+'/'+filename, "rb") as fr:
+=======
+                    with open("data/train"+"/"+foldername+'/'+filename, "rb") as fr:
+>>>>>>> master
                         tmp = pickle.load(fr)
                         for i in range(len(tmp[0])):                            
                             dataset[0].append(tmp[0][i])

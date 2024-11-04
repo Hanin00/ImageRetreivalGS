@@ -1,6 +1,9 @@
 from utils import utils, subgraph
 from cbir_subsg import models
+<<<<<<< HEAD
 # from cbir_subsg.conf_all import parse_encoder
+=======
+>>>>>>> master
 from cbir_subsg.conf import parse_encoder
 
 import torch
@@ -39,10 +42,19 @@ import matplotlib.pyplot as plt
     
     query Graph 출처 비디오
     ['4239231056', '7645715544']
+<<<<<<< HEAD
 
 '''
 
 #retrieval_subgraph에서 
+=======
+    
+    
+    1119
+    서브그래프로 만든 후 embedding 하고 검색함
+
+'''
+>>>>>>> master
 def load_dataset_temp(args,F0Dict):
     # with open("data/scenegraph_1/0_6096540713_6096540713.pkl", "rb") as fr:
     #     datas = pickle.load(fr)
@@ -53,6 +65,7 @@ def load_dataset_temp(args,F0Dict):
     
     max_node = 3
     R_BFS = True
+<<<<<<< HEAD
     # 2430799380 빼고 해보기..?
     # filenames = ['4239231056.json.pkl', '7645715544.json.pkl','2406271188.json.pkl']
     
@@ -72,6 +85,18 @@ def load_dataset_temp(args,F0Dict):
             print("length : ",length)
         
             cnt_video += length
+=======
+    
+    # filenames = ["3802296828.json.pkl", "6673828083.json.pkl"]
+    # filenames = ["7645715544.json.pkl"]
+    
+    filenames = ['4239231056.json.pkl', '7645715544.json.pkl']
+    for filename in filenames:
+        vId = filename.split('.')[0]
+        with open("data/scenegraph/"+ filename, "rb") as fr:
+            tmp = pickle.load(fr)            
+            length = len(tmp[0])
+>>>>>>> master
             # length = 2            
             if length != 0:
                 cnt = 0
@@ -87,6 +112,7 @@ def load_dataset_temp(args,F0Dict):
                 db_reIdx = [i for i in range(len(db))]
         # print("len(db): ", len(db)) 
         # print("len(db): ", len(db_idx)) 
+<<<<<<< HEAD
     print("cnt_video: ", cnt_video)
     print("total len(db): ", len(db))
     
@@ -130,12 +156,34 @@ def load_dataset_temp(args,F0Dict):
     # with open("result/dataset_retrieval_target.pkl", "wb") as fw:
     with open("result/overlapped.pkl", "wb") as fw:
     # with open("result/vid08_1217_from_db.pkl", "wb") as fw:
+=======
+        # // 서브 그래프 개수 확인
+        # // 장면 그래프에 대해서 scenegraph에서 
+    print("total len(db): ", len(db))
+    query = []
+    # user-defined query images
+    with open("data/seq_g3_4239231056_7645715544.pkl", "rb") as q:
+        queryDataset = pickle.load(q)
+        #todo - 여기서 RPE 계산해야함        
+        
+        length = len(queryDataset[0])
+        if length != 0:
+            cnt = 0
+            query_number = [idx for idx in queryDataset[2]]
+            for i in range(length):   
+                # queryDataset[i].graph['gid'] = i
+                origin_g, origin_enc_agg = utils.mkNG2Subs(queryDataset[0][i], args, F0Dict)  # Gs에 Feature 붙임
+                query.append(origin_g)
+    
+    with open("result/dataset_retrieval_target.pkl", "wb") as fw:
+>>>>>>> master
         pickle.dump([db, db_idx, db_reIdx, query, query_number], fw)
             
                     
     return db, db_idx, db_reIdx, query, query_number
 
 
+<<<<<<< HEAD
 
 
 
@@ -321,13 +369,22 @@ def load_dataset(): #동일 조건 하에서
     
     sys.exit()
     
+=======
+def load_dataset(): #동일 조건 하에서
+    with open("result/dataset_retrieval_target.pkl", "rb") as fr:
+        datas = pickle.load(fr)
+    db, db_idx, db_reIdx, query, query_number = datas
+>>>>>>> master
                     
     return db, db_idx, db_reIdx, query, query_number
 
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> master
 def find_duplicate_nodes_and_edges(graph1, graph2):
     common_nodes = set()
     
@@ -398,6 +455,10 @@ def showGraph(graph, type, title):
     edgecolor='black',
     format='png', dpi=200)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 def feature_extract(args):
     ''' Extract feature from subgraphs
     It extracts all subgraphs feature using a trained model.
@@ -418,6 +479,7 @@ def feature_extract(args):
     # dataset, db_idx, db_reIdx, querys, query_number = load_dataset_temp(args, F0Dict)
     # sys.exit()
     
+<<<<<<< HEAD
     # 랜덤이라서 노드 개수가 3개 이상이었다 아니었다가 해서 된 걸로 사용..
     dataset, db_idx, db_reIdx, querys, query_number = load_dataset_query(args, F0Dict)
     sys.exit()
@@ -425,6 +487,9 @@ def feature_extract(args):
     dataset, db_idx, db_reIdx, querys, query_number  = load_dataset()   
     
 
+=======
+    dataset, db_idx, db_reIdx, querys, query_number  = load_dataset()   
+>>>>>>> master
     db_data = utils.batch_nx_graphs_rpe(dataset, None)
      
     # print(db_data.G[0])
@@ -459,6 +524,10 @@ def feature_extract(args):
         emb_db_data = model.emb_model(db_data) # [1327,32]
         print(len(querys))
         
+<<<<<<< HEAD
+=======
+        
+>>>>>>> master
         for idx, queryG  in enumerate(querys): #i = 쿼리 그래프의 서브 그래프 하나.
             # 쿼리 그래프마다 비슷한 비디오를 검색 -> 
             candidate_imgs = []
@@ -469,6 +538,10 @@ def feature_extract(args):
             query.append(queryG)
             query = utils.batch_nx_graphs_rpe(query, None)
             query = query.to(utils.get_device())            
+<<<<<<< HEAD
+=======
+            
+>>>>>>> master
             emb_query_data = model.emb_model(query) # 서브그래프 하나에 대한 특징 추출            
             
             extractTimeEnd = time.time()
@@ -507,7 +580,10 @@ def feature_extract(args):
             value_checking_in_db = [
                 str(q_check - (q_check - i))  for i in db_check]
             value_checking_result = Counter(value_checking_in_db)
+<<<<<<< HEAD
             
+=======
+>>>>>>> master
             print(value_checking_result)
             print("==="*20)
             print("쿼리 번호: ",idx)
@@ -526,6 +602,7 @@ def feature_extract(args):
             rank_list = [dataset[candidate_imgs_idx[cidx]] for cidx in range(len(candidate_imgs_idx))]
             result_graph.extend((rank_list, sorted_items[:10]))
             
+<<<<<<< HEAD
     # print(result_graph)
     
     # with open("result/result_graphs_alledges_video02.pkl", "wb") as fw:
@@ -533,6 +610,13 @@ def feature_extract(args):
     # with open("result/result_graphs_alledges_layer08_video08.pkl", "wb") as fw:
     with open("result/1217/vid08_1217_from_db.pkl", "wb") as fw:
         pickle.dump(result_graph, fw)
+=======
+    print(result_graph)
+        
+    with open("result/result_graphs_distance_angle.pkl", "wb") as fw:
+        pickle.dump(result_graph, fw)
+            
+>>>>>>> master
     
     # # Final image rank
     # imgs = Counter(candidate_imgs)      

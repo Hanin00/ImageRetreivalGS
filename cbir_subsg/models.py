@@ -71,7 +71,10 @@ class GnnEmbedder(nn.Module):
         # sim = -torch.log(1 - sim) #nan 발생
         sim = (1-sim)
         
+<<<<<<< HEAD
         
+=======
+>>>>>>> master
         return sim
 
     def criterion(self, pred, intersect_embs, labels):

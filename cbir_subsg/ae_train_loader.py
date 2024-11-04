@@ -19,7 +19,10 @@ import numpy as np
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 def build_model(args):
     if args.method_type == "gnn":
         model = models.GnnEmbedder(args.feature_dim, args.hidden_dim, args)  # feature vector("rpe")가 num_walks = 4라 5차원
@@ -30,6 +33,12 @@ def build_model(args):
     if os.path.exists(args.model_path):
         model.load_state_dict(torch.load(args.model_path,
                                          map_location=utils.get_device()))
+<<<<<<< HEAD
+=======
+    
+
+
+>>>>>>> master
     return model
 
 def batch_nx_graphs_rpe(graphs, anchors=None):
@@ -59,6 +68,7 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
                 distance = g.edges[e[0], e[1]]["distance"] #1
                 angle_AB = g.edges[e[0], e[1]]["angle_AB"] # 1
                 angle_BA = g.edges[e[0], e[1]]["angle_BA"] #1 
+<<<<<<< HEAD
                 newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb, distance,angle_AB,angle_BA), axis=None))
                 
         newGraphs.append(newG)
@@ -67,6 +77,14 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
     
     # print("batch: ",batch)
 
+=======
+                # newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((txtemb, distance,angle_AB,angle_BA), axis=None))
+                newG.edges[e]["edge_feature"] = torch.tensor(np.concatenate((distance, angle_AB), axis=None), dtype=torch.float32)
+                
+        newGraphs.append(newG)
+    batch = Batch.from_data_list([DSGraph(g) for g in newGraphs])  
+    
+>>>>>>> master
     try:
         batch = batch.to(utils.get_device())
     except:
@@ -74,8 +92,11 @@ def batch_nx_graphs_rpe(graphs, anchors=None):
     # print(batch)
     return batch
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> master
 class DataSource:
     def gen_batch(batch_target, batch_neg_target, batch_neg_query, train):
         raise NotImplementedError
@@ -83,7 +104,11 @@ class DataSource:
 
 def data_generator(data_folder, batch_size):
     dataset = [[], [], []]
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> master
     min_value = 1
     max_value = 10
     
@@ -97,6 +122,7 @@ def data_generator(data_folder, batch_size):
     random.shuffle(all_files)
     print("len(all_files): ",len(all_files))
     
+<<<<<<< HEAD
     # all_files = all_files[:3]
     # while True:
     start = time.time()
@@ -121,6 +147,29 @@ def data_generator(data_folder, batch_size):
             if len(dataset[0]) == batch_size:
                 yield dataset
                 dataset = [[], [], []]
+=======
+    # all_files = all_files[:1]
+    # while True:
+    start = time.time()
+    for file_path in all_files:
+        print(file_path)
+        
+        with open(file_path, "rb") as fr:
+            tmp = pickle.load(fr)
+            for i in range(len(tmp[0])):
+                dataset[0].append(tmp[0][i])
+                dataset[1].append(tmp[1][i])
+                #dataset[2].append(sum(tmp[2][i]))  # GED
+                # normalized_value = (value - min_value) / (max_value - min_value)
+                dataset[2].append((sum(tmp[2][i]) - min_value) / (max_value - min_value))  # GED 정규화
+                # print("GED: ",sum(tmp[2][i]) )
+                # print("dataset[2]: ",dataset[2])
+                # sys.exit()
+
+                if len(dataset[0]) == batch_size:
+                    yield dataset
+                    dataset = [[], [], []]
+>>>>>>> master
 
     if len(dataset[0]) > 0:
         yield dataset
@@ -182,7 +231,10 @@ def train(args, model, data_generator, epochNum):
         if batch_idx >= args.max_batches:
             break
         
+<<<<<<< HEAD
     print("1epoch 끝")
+=======
+>>>>>>> master
     # 1 에포크가 끝날 때마다 가장 작은 손실을 갖는 모델 저장
     if best_model is not None:
         # torch.save(best_model, args.model_path)
@@ -190,7 +242,10 @@ def train(args, model, data_generator, epochNum):
         print("best loss: ",best_loss)
         torch.save(best_model, 
         args.model_path[:-3]+"_best_e"+str(epochNum+1)+".pt")
+<<<<<<< HEAD
     print("1epoch 끝")
+=======
+>>>>>>> master
 
 
 def train_loop(args):
@@ -201,6 +256,7 @@ def train_loop(args):
         os.makedirs("plots/")
 
     model = build_model(args)
+<<<<<<< HEAD
     # data_folder = 'data/train/'
     # data_folder = 'data/dataset01/'
     data_folder = 'data/dataset01_01/'
@@ -210,16 +266,45 @@ def train_loop(args):
     max_batches = args.max_batches
     # train(args, model, data_gen)
     
+=======
+    data_folder = 'data/train/'
+    batch_size = args.batch_size
+    max_epoch = 200
+    max_batches = args.max_batches
+    # train(args, model, data_gen)
+    
+    # # ------data parallel
+    # if torch.cuda.device_count() > 1: # DataParallel로 감쌈
+    #     print("Using", torch.cuda.device_count(), "GPUs.")
+    #     model = nn.DataParallel(model)
+            
+    # # 'DataParallel'로 모델을 래핑한 경우
+    # if isinstance(model, nn.DataParallel):
+    #     # 'clf_model'을 'DataParallel' 객체의 하위 모델로 설정
+    #     clf_model = model.module.clf_model
+    # else:
+    #     # 'DataParallel'이 아닌 경우 그대로 사용
+    #     clf_model = model.clf_model
+    # # data parallel------
+        
+>>>>>>> master
     for epoch in range(max_epoch):
         start = time.time()
         print("epoch : ", epoch)
         
         # 데이터를 매 에포크마다 새로 불러옵니다.
+<<<<<<< HEAD
         data_gen = data_generator(data_folder, batch_size)
         
         train(args, model, data_gen, epoch)
         
         torch.save(model.state_dict(), args.model_path)
+=======
+        data_gen = data_generator(data_folder, batch_size)        
+        train(args, model, data_gen, epoch)
+        
+        # torch.save(model.state_dict(), args.model_path)
+>>>>>>> master
         torch.save(model.state_dict(), 
                    args.model_path[:-7] + "_allepoch_e" + str(epoch + 1) + ".pt")
         print("time: ", time.time() - start)
@@ -255,8 +340,14 @@ def train_loop(args):
 
 def main(force_test=False):
     parser = argparse.ArgumentParser(description='Embedding arguments')
+<<<<<<< HEAD
     parser.add_argument('--max_batches', type=int, default=2000, help='Maximum number of batches to train on')
     
+=======
+    parser.add_argument('--max_batches', type=int, default=1000, help='Maximum number of batches to train on')
+    
+
+>>>>>>> master
     utils.parse_optimizer(parser)
     parse_encoder(parser)
     args = parser.parse_args()
