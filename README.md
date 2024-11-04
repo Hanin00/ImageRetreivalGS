@@ -1,4 +1,4 @@
-# 23.12.02에 push 한 것들은 distance, angle 만을 특징으로 한 것.
+#### (참고) 23.12.02에 push 한 것들은 distance, angle 만을 특징으로 한 것.
 
 
 
